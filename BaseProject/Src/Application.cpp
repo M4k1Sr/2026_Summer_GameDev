@@ -1,4 +1,4 @@
-#include <DxLib.hgt>
+#include <DxLib.h>
 #include <EffekseerForDXLib.h>
 #include "Manager/InputManager.h"
 #include "Manager/ResourceManager.h"
