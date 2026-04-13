@@ -3,11 +3,13 @@
 #include "../Manager/SceneManager.h"
 #include "../Manager/InputManager.h"
 #include "../Manager/Camera.h"
+#include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "GameScene.h"
+#include "../Application.h"
 
 GameScene::GameScene(void)
 	:
@@ -15,6 +17,10 @@ GameScene::GameScene(void)
 	skyDome_(nullptr),
 	player_(nullptr),
 	objMng_(nullptr),
+	isPause_(false),
+	pauseImg_(-1),
+	isSousa_(false),
+	sousaImg_(-1),
 	SceneBase()
 {
 }
@@ -25,6 +31,13 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
+
+	//ポーズ画面画像
+	// imgPause_ = LoadGraph();
+	
+	//操作画像
+	// imgSousa_ = LoadGraph();
+	
 	// ステージ初期化
 	stage_ = new Stage();
 	stage_->Init();
@@ -72,24 +85,44 @@ void GameScene::Init(void)
 
 void GameScene::Update(void)
 {
-	// ステージ更新
-	stage_->Update();
 
-	// プレイヤー更新
-	player_->Update();
+	auto& ins = InputManager::GetInstance();
 
-	// スカイドーム更新
-	skyDome_->Update();
+	//ESC押下時ポーズ画面に遷移
+	if (ins.IsTrgDown(KEY_INPUT_ESCAPE) )
+	{
+		isPause_ = !isPause_;  // ポーズのON/OFF切り替え
+	}
 
-	// オブジェクト更新
-	objMng_->Update();
+	//ポーズ画面中はゲームを静止させる
+	if (!isPause_)
+	{
 
-	// シーン遷移
-	auto const& ins = InputManager::GetInstance();
-	if (ins.IsTrgDown(KEY_INPUT_SPACE))
+		// ステージ更新
+		stage_->Update();
+
+		// プレイヤー更新
+		player_->Update();
+
+		// スカイドーム更新
+		skyDome_->Update();
+
+		// オブジェクト更新
+		objMng_->Update();
+
+	}
+
+	if (isPause_)
+	{
+
+	}
+
+
+	//ポーズ画面に遷移
+	/*if (ins.IsTrgDown())
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::DEBUG);
-	}
+	}*/
 
 }
 
@@ -107,6 +140,19 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
+	//ポーズ画面
+	IsPause();
+
+	//ポーズの時背景を暗くする
+	if (isPause_)
+	{
+		// 透過背景
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		DrawGraph(0, 0, sousaImg_, TRUE);
+	}
 }
 
 void GameScene::Release(void)
@@ -127,4 +173,36 @@ void GameScene::Release(void)
 	objMng_->Release();
 	delete objMng_;
 
+	//ポーズ画像解放
+	DeleteGraph(pauseImg_);
+
+	//操作画像解放
+	DeleteGraph(sousaImg_);
+
+}
+
+void GameScene::IsPause(void)
+{
+
+	if (isPause_)
+	{
+
+		// 透過背景
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		// 中心座標（例：ゲーム画面が 1366x768 の場合）
+		int screenW = 1366;
+		int screenH = 768;
+
+		int imageW = 512;  // この画像の幅
+		int imageH = 512;  // この画像の高さ
+
+		int drawX = (screenW - imageW) / 2;
+		int drawY = (screenH - imageH) / 2;
+
+		// 描画
+		DrawGraph(drawX, drawY - 50, pauseImg_, TRUE);
+	}
 }

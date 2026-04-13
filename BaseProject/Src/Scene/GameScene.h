@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+#include "../Framework.h"
 class Stage;
 class SkyDome;
 class Player;
@@ -28,6 +29,9 @@ public:
 	// 解放
 	void Release(void) override;
 
+	//ポーズ画面
+	void IsPause(void);
+
 private:
 
 	// ステージ
@@ -41,5 +45,25 @@ private:
 	
 	// オブジェクト
 	ObjectManager* objMng_;
+
+	//ポーズ画面
+	bool isPause_;
+
+	//ポーズ画像
+	int pauseImg_;
+
+	//操作画面判別
+	bool isSousa_;
+
+	//操作説明画像
+	int sousaImg_;
+
+
+
+
+
+
+
+
 
 };
