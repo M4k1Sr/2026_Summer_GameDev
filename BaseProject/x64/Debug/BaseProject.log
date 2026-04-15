@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿  Application.cpp
   LINK : 前回のインクリメンタル リンクで C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
 EffekseerForDXLib_vs2019_x64_d.lib(EffekseerForDXLib.obj) : warning LNK4099: PDB 'EffekseerForDXLib_vs2019_x64_d.pdb' が 'EffekseerForDXLib_vs2019_x64_d.lib(EffekseerForDXLib.obj)' で、または 'C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\EffekseerForDXLib_vs2019_x64_d.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -88,3 +89,6 @@ Effekseer_vs2019_x64_d.lib(Effekseer.CompiledMaterial.obj) : warning LNK4099: PD
   コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
 >>>>>>> 松岡
+=======
+﻿  BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> m4k
