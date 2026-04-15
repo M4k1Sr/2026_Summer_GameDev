@@ -75,18 +75,18 @@ void GameScene::Update(void)
 	// ステージ更新
 	stage_->Update();
 
-	// プレイヤー更新
-	player_->Update();
-
 	// スカイドーム更新
 	skyDome_->Update();
 
 	// オブジェクト更新
 	objMng_->Update();
 
+	// プレイヤー更新
+	player_->Update();
+
 	// シーン遷移
 	auto const& ins = InputManager::GetInstance();
-	if (ins.IsTrgDown(KEY_INPUT_SPACE))
+	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::DEBUG);
 	}

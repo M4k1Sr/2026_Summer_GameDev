@@ -129,7 +129,7 @@ void Player::ProcessMove(void)
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
 		// ダッシュキー
-		if (ins.IsNew(KEY_INPUT_RSHIFT)) { isDash = true; }
+		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
 	}
 	else
 	{
@@ -201,7 +201,7 @@ void Player::ProcessJump(void)
 	auto& ins = InputManager::GetInstance();
 
 	// 持続ジャンプ処理
-	bool isHitKeyNew = ins.IsNew(KEY_INPUT_BACKSLASH)
+	bool isHitKeyNew = ins.IsNew(KEY_INPUT_SPACE)
 		|| ins.IsPadBtnNew(
 			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
@@ -224,7 +224,7 @@ void Player::ProcessJump(void)
 	}
 
 	// 初期ジャンプ処理
-	bool isHitKey = ins.IsTrgDown(KEY_INPUT_BACKSLASH)
+	bool isHitKey = ins.IsTrgDown(KEY_INPUT_SPACE)
 		|| ins.IsPadBtnTrgDown(
 			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 

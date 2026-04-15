@@ -84,7 +84,7 @@ void TitleScene::Update(void)
 
 	// ƒV[ƒ“‘JˆÚ
 	auto const& ins = InputManager::GetInstance();
-	if (ins.IsTrgDown(KEY_INPUT_SPACE))
+	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
 	}
