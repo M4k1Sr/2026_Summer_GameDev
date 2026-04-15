@@ -21,6 +21,8 @@ GameScene::GameScene(void)
 	pauseImg_(-1),
 	isSousa_(false),
 	sousaImg_(-1),
+	mousePos_X(0),
+	mousePos_Y(0),
 	SceneBase()
 {
 }
@@ -32,11 +34,7 @@ GameScene::~GameScene(void)
 void GameScene::Init(void)
 {
 
-	//ポーズ画面画像
-	// imgPause_ = LoadGraph();
-	
-	//操作画像
-	// imgSousa_ = LoadGraph();
+   
 	
 	// ステージ初期化
 	stage_ = new Stage();
@@ -97,6 +95,8 @@ void GameScene::Update(void)
 	//ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
+		//マウスポインタを非表示にする
+		SetMouseDispFlag(false);
 
 		// ステージ更新
 		stage_->Update();
@@ -109,21 +109,7 @@ void GameScene::Update(void)
 
 		// オブジェクト更新
 		objMng_->Update();
-
 	}
-
-	if (isPause_)
-	{
-
-	}
-
-
-	//ポーズ画面に遷移
-	/*if (ins.IsTrgDown())
-	{
-		sceMng_.ChangeScene(SceneManager::SCENE_ID::DEBUG);
-	}*/
-
 }
 
 void GameScene::Draw(void)
@@ -140,19 +126,9 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
-	//ポーズ画面
+	////ポーズ画面
 	IsPause();
 
-	//ポーズの時背景を暗くする
-	if (isPause_)
-	{
-		// 透過背景
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-		DrawGraph(0, 0, sousaImg_, TRUE);
-	}
 }
 
 void GameScene::Release(void)
@@ -192,17 +168,17 @@ void GameScene::IsPause(void)
 		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-		// 中心座標（例：ゲーム画面が 1366x768 の場合）
-		int screenW = 1366;
-		int screenH = 768;
+		SetFontSize(64);
 
-		int imageW = 512;  // この画像の幅
-		int imageH = 512;  // この画像の高さ
+		DrawBox(400,200,1600,400, 0xffffff, false);
+		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
 
-		int drawX = (screenW - imageW) / 2;
-		int drawY = (screenH - imageH) / 2;
+		DrawBox(400, 600, 1600, 800, 0xffffff, false);
+		DrawFormatString(670, 670, 0xffffff, "ゲームを終了しますか?");
 
-		// 描画
-		DrawGraph(drawX, drawY - 50, pauseImg_, TRUE);
+		//マウスポインタを表示状態にする
+		SetMouseDispFlag(TRUE);
+
+		
 	}
 }

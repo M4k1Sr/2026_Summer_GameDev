@@ -58,12 +58,8 @@ private:
 	//操作説明画像
 	int sousaImg_;
 
-
-
-
-
-
-
+	//マウスポインタ座標
+	int mousePos_X, mousePos_Y;
 
 
 };

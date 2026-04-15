@@ -73,4 +73,6 @@ private:
 
 	// ƒvƒbƒVƒ…‰æ‘œ
 	int imgPush_;
+
+	bool isEnd_;
 };
