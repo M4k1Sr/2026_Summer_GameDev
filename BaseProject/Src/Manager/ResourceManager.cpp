@@ -41,7 +41,11 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::PUSH_SPACE, res);
 
 	// タイトル惑星モデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
+	/*res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
+	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);*/
+
+	// タイトル惑星モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
 	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
 
 	// 回転惑星モデル

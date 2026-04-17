@@ -36,37 +36,22 @@ void TitleScene::Init(void)
 
 	imgPush_ = resMng_.Load(ResourceManager::SRC::PUSH_SPACE).handleId_;
 
-	// 定点カメラ
+	//// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
+
+
+
 
 	// メイン惑星
 	bigPlanet_.SetModel(resMng_.LoadModelDuplicate(
 		ResourceManager::SRC::PIT_FALL_PLANET));
-	bigPlanet_.scl = AsoUtility::VECTOR_ONE;
+	bigPlanet_.scl = {0.7,0.4,0.4};
 	bigPlanet_.quaRot = Quaternion::Identity();
-	bigPlanet_.quaRotLocal = Quaternion::Identity();
-	bigPlanet_.pos = AsoUtility::VECTOR_ZERO;
+	bigPlanet_.quaRotLocal = Quaternion(1.0f, 1.0f, 0.0f, 0.0f);;
+	bigPlanet_.pos = { 0.0f, -500.0f,400.0f };
 	bigPlanet_.Update();
 
-
-	// 回転惑星
-	rollPlanet_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::ROLL_PLANET));
-	rollPlanet_.scl = VGet(ROLL_PLANET_SCALE, ROLL_PLANET_SCALE, ROLL_PLANET_SCALE);
-	rollPlanet_.quaRot = Quaternion::Identity();
-	rollPlanet_.quaRotLocal = Quaternion::Euler(ROLL_PLANET_ANGLE);
-	rollPlanet_.pos = ROLL_PLANET_POS;
-	rollPlanet_.Update();
-
-
-	// ニンゲン
-	player_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::PLAYER));
-	player_.scl = VGet(PLAYER_SCALE, PLAYER_SCALE, PLAYER_SCALE);
-	player_.quaRot = Quaternion::Euler(PLAYER_ANGLE);
-	player_.quaRotLocal = Quaternion::Euler(PLAYER_LOCAL_ANGLE);
-	player_.pos = PLAYER_POS;
-	player_.Update();
+	
 
 	// アニメーションコントローラー
 	animationController_ = 
@@ -85,19 +70,6 @@ void TitleScene::Update(void)
 
 	auto& ins = InputManager::GetInstance();
 
-	//ESC押下でフラグをtrueに
-	if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
-	{
-		isEnd_ = true;
-	}
-
-
-	//ESC押下でポーズ画面
-	if (!isEnd_)
-	{
-
-		// シーン遷移
-		auto const& ins = InputManager::GetInstance();
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
@@ -114,27 +86,10 @@ void TitleScene::Update(void)
 
 		skyDome_->Update();
 
-	}
-	else // ポーズ画面
-	{
-		// Yキー：終了する
-		if (CheckHitKey(KEY_INPUT_Y) )
-		{
-
-			exit(0);
-		}
-
-		// Nキー：キャンセルして通常に戻る
-		if (CheckHitKey(KEY_INPUT_N) )
-		{
-			isEnd_ = false;
-		}
-	}
 }
 
 void TitleScene::Draw(void)
 {
-
 
 	// スカイドーム
 	skyDome_->Draw();
@@ -150,48 +105,6 @@ void TitleScene::Draw(void)
 	// タイトル描画
 	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_TITLE_POS_Y, 1.0f, 0.0f, imgTitle_, true);
 	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_PUSH_POS_Y, 1.0f, 0.0f, imgPush_, true);
-
-	//ESC押下時ゲーム終了か確認
-	if (isEnd_)
-	{
-		// メッセージ内容
-		const char* message = "本当にゲームを終了しますか？ [Y]es / [N]o or [B] / [A]";
-
-		// フォントサイズを設定（32pxにする）
-		SetFontSize(32);
-
-		// メッセージの描画幅を取得
-		int textWidth = GetDrawStringWidth(message, strlen(message));
-
-		// ボックスの余白サイズ（左右に40px、上下に20px余裕を持たせる）
-		const int marginX = 40;
-		const int marginY = 20;
-
-		// ボックスのサイズを計算（テキスト幅＋余白）
-		int boxWidth = textWidth + marginX * 2;
-		int boxHeight = 32 + marginY * 2; // 32pxフォント + 上下余白
-
-		// 画面の中心座標
-		int centerX = Application::SCREEN_SIZE_X / 2;
-		int centerY = Application::SCREEN_SIZE_Y / 2;
-
-		// ボックスの座標（中央揃え）
-		int boxLeft = centerX - boxWidth / 2;
-		int boxTop = centerY - boxHeight / 2;
-		int boxRight = centerX + boxWidth / 2;
-		int boxBottom = centerY + boxHeight / 2;
-
-		// ボックス描画（半透明）
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180);
-		DrawBox(boxLeft, boxTop, boxRight, boxBottom, 0x000000, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-		// メッセージ描画（中央揃え）
-		int textX = centerX - textWidth / 2;
-		int textY = centerY - 16; // 32pxフォントなので半分ずらす
-
-		DrawString(textX, textY, message, 0xFFFFFF);
-	}
 
 }	
 
