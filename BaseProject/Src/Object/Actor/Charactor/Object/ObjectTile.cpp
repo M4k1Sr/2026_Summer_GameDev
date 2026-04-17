@@ -104,7 +104,6 @@ void ObjectTile::UpdateProcess(void)
 	// 状態別更新
 	stateUpdate_();
 
-	
 }
 
 void ObjectTile::UpdateProcessPost(void)
@@ -208,6 +207,9 @@ void ObjectTile::UpdateEnd(void)
 
 void ObjectTile::UpdateProcessFloorMove(void)
 {
+	// 移動前の位置を保存
+	prevPos_ = transform_.pos;
+
 	// 経過時間取得(デルタタイム)
 	moveTimer_ += SceneManager::GetInstance().GetDeltaTime();
 	// 線形補間用ステップ計算
@@ -217,11 +219,15 @@ void ObjectTile::UpdateProcessFloorMove(void)
 	if (moveTimer_ > moveTime_)
 	{
 		transform_.pos = movePlacePos_;
-		return;
+	}
+	else
+	{
+		// 線形補間で移動(これでオーバーせずにピタッと止まる)
+		transform_.pos = AsoUtility::Lerp(startPos_, movePlacePos_, t);
 	}
 
-	// 線形補間で移動(これでオーバーせずにピタッと止まる)
-	transform_.pos = AsoUtility::Lerp(startPos_, movePlacePos_, t);
 	transform_.Update();
 
+	// 移動速度計算
+	velocity_ = VSub(transform_.pos, prevPos_);
 }

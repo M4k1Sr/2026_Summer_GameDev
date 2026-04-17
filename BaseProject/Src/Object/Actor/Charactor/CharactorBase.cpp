@@ -178,23 +178,10 @@ void CharactorBase::CollisionGravity(void)
 			true,
 			false);
 
-		// 
-		
-
 		// ジャンプ判定
 		if (isHit)
 		{
 			isJump_ = false;
-
-			// 動く床の上に乗っているか
-			if (hitCol->GetTag() == ColliderBase::TAG::TILE)
-			{
-				isOnTile = true;
-
-				// とりあえず固定値で速度設定
-				tileVelocity = VGet(0.0f, 0.5f, 0.0f);	// 毎フレーム0.5fフレーム上昇する床
-
-			}
 		}
 	}
 
@@ -204,15 +191,7 @@ void CharactorBase::CollisionGravity(void)
 		jumpPow_ = AsoUtility::VECTOR_ZERO;
 		// ジャンプの入力受付時間をリセット
 		stepJump_ = 0.0f;
-
-		// 動く床に乗っている場合は床の移動量を加算
-		if (isOnTile)
-		{
-			transform_.pos = VAdd(transform_.pos, tileVelocity);
-		}
-
 	}
-
 }
 
 void CharactorBase::CollisionCapsule(void)
