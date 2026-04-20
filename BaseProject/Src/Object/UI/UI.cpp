@@ -5,7 +5,7 @@ UI::UI(void)
 	:
 	clock_(-1),
 	secondHand_(-1),
-	handPos_(VGet(0.0f, 0.0f, 0.0f))
+	handPos_(VGet(HAND_POS_X, HAND_POS_Y, 0.0f))
 {
 }
 
@@ -37,8 +37,7 @@ void UI::InitLoad(void)
 	// ïbêj
 	secondHand_ = resMng_.Load(ResourceManager::SRC::CLOCK_HAND).handleId_;
 
-	//ïbêjèâä˙ç¿ïW
-	handPos_ = VGet(HAND_POS, HAND_POS, 0.0f);
+
 		
 }
 

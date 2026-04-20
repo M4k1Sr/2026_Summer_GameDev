@@ -37,10 +37,11 @@ protected:
 	void InitPost(void) override;
 
 	//時計の座標
-	static constexpr int CLOCK_POS = 135;
+	static constexpr int CLOCK_POS = 150;
 
 	//秒針の座標
-	static constexpr int HAND_POS = 120;
+	static constexpr int HAND_POS_X = 145;
+	static constexpr int HAND_POS_Y = 120;
 
 	//時計大きさ
 	static constexpr float SCALE = 0.3f;
