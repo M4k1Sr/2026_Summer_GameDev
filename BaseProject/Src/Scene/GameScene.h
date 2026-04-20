@@ -4,6 +4,7 @@
 class Stage;
 class SkyDome;
 class Player;
+class UI;
 class ObjectManager;
 
 class GameScene : public SceneBase
@@ -42,9 +43,14 @@ private:
 
 	// プレイヤー
 	Player* player_;
+
+	//UI
+	UI* ui_;
 	
 	// オブジェクト
 	ObjectManager* objMng_;
+
+	Transform clock_;
 
 	//ポーズ画面
 	bool isPause_;

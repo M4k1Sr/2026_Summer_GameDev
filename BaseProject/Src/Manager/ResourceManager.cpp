@@ -80,6 +80,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
 
+	// タイトルPush画像
+	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
+	resourcesMap_.emplace(SRC::OBJECT_CLOCK, res);
+
+	// タイトルPush画像
+	res = new RES(RES_T::IMG, PATH_IMG + "second_hand.png");
+	resourcesMap_.emplace(SRC::CLOCK_HAND, res);
 }
 
 void ResourceManager::Release(void)

@@ -2,12 +2,14 @@
 #include <vector>
 #include "../Manager/SceneManager.h"
 #include "../Manager/InputManager.h"
+#include "../Manager/ResourceManager.h"
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
+#include"../Object/UI/UI.h"
 #include "GameScene.h"
 #include "../Application.h"
 
@@ -16,6 +18,7 @@ GameScene::GameScene(void)
 	stage_(nullptr),
 	skyDome_(nullptr),
 	player_(nullptr),
+	ui_(nullptr),
 	objMng_(nullptr),
 	isPause_(false),
 	pauseImg_(-1),
@@ -34,8 +37,7 @@ GameScene::~GameScene(void)
 void GameScene::Init(void)
 {
 
-   
-	
+
 	// ステージ初期化
 	stage_ = new Stage();
 	stage_->Init();
@@ -48,9 +50,15 @@ void GameScene::Init(void)
 	skyDome_ = new SkyDome(player_->GetTransform());
 	skyDome_->Init();
 
+	ui_ = new UI();
+	ui_->Init();
+
+
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
+
+
 
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
@@ -104,8 +112,13 @@ void GameScene::Update(void)
 		// プレイヤー更新
 		player_->Update();
 
+
+
 		// スカイドーム更新
 		skyDome_->Update();
+		
+		// UI更新
+		ui_->Update();
 
 		// オブジェクト更新
 		objMng_->Update();
@@ -120,8 +133,12 @@ void GameScene::Draw(void)
 	// ステージ描画
 	stage_->Draw();
 
+
 	// プレイヤー描画
 	player_->Draw();
+	
+	// UI描画
+	ui_->Draw();
 
 	// オブジェクト描画
 	objMng_->Draw();
@@ -140,6 +157,10 @@ void GameScene::Release(void)
 	// スカイドーム解放
 	skyDome_->Release();
 	delete skyDome_;
+	
+	// UI解放
+	ui_->Release();
+	delete ui_;
 
 	// プレイヤー解放
 	player_->Release();

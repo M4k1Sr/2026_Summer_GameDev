@@ -1,5 +1,6 @@
-﻿  TitleScene.cpp
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,20): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,24): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,28): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+﻿  UI.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\UI\UI.cpp(24,36): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\UI\UI.cpp(24,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  GameScene.cpp
+  コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

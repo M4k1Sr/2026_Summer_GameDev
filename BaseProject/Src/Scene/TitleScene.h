@@ -27,6 +27,8 @@ public:
 	// 解放
 	void Release(void) override;
 
+	void IsPause(void);
+
 private:
 
 	// アニメーション処理
