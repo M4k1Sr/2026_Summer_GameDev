@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../Utility/AsoUtility.h"
+#include"../Manager/SceneManager.h"
 #include "../Object/Common/Transform.h"
 #include "../Manager/InputManager.h"
 #include "../Manager/SceneManager.h"
@@ -21,6 +22,8 @@ TitleScene::TitleScene(void)
 	animationController_(nullptr),
 	skyDome_(nullptr),
 	isEnd_(false),
+	mosPosX_(0),
+	mosPosY_(0),
 	SceneBase()
 {
 }
@@ -66,9 +69,11 @@ void TitleScene::Init(void)
 void TitleScene::Update(void)
 {
 
-	auto& ins = InputManager::GetInstance();
+	if (!isEnd_)
+	{
+		auto& ins = InputManager::GetInstance();
 
-	//ゲームシーンへ遷移
+		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
@@ -90,6 +95,7 @@ void TitleScene::Update(void)
 		animationController_->Update();
 
 		skyDome_->Update();
+	}
 
 }
 
@@ -141,17 +147,51 @@ void TitleScene::IsPause(void)
 
 		SetFontSize(64);
 
-		DrawBox(400, 200, 1600, 400, 0xffffff, false);
+		DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, false);
 		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
 
-		DrawBox(400, 600, 1600, 800, 0xffffff, false);
+		DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, false);
 		DrawFormatString(670, 670, 0xffffff, "ゲームを終了しますか?");
 
 		//マウスポインタを表示状態にする
 		SetMouseDispFlag(TRUE);
 
+		//マウスポインタの座標を取得
+		GetMousePoint(&mosPosX_, &mosPosY_);
 
 
+		//この中にマウスカーソルがあるかを判定
+		bool continueGame =
+			(mosPosX_ >= DRAWBOX_SX && mosPosX_ <= DRAWBOX_EX &&
+				mosPosY_ >= DRAWBOX_GAME_SY && mosPosY_ <= DRAWBOX_GAME_EY);
+
+		bool exitGame =
+			(mosPosX_ >= DRAWBOX_SX && mosPosX_ <= DRAWBOX_EX &&
+				mosPosY_ >= DRAWBOX_GAMEEND_SY && mosPosY_ <= DRAWBOX_GAMEEND_EY);
+
+	//マウスカーソルがあるときの処理
+		//ゲームを続ける
+		if(continueGame)
+					{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			{
+				isEnd_ = false;
+			}
+		}
+		//ゲームを終了する
+		else if(exitGame)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			{
+				DxLib_End();
+			}
+		}
 
 	}
 }
