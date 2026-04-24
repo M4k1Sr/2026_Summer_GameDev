@@ -8,6 +8,7 @@
 #include "../../../Manager/Resource.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../../Application.h"
@@ -21,6 +22,27 @@ Player::Player(void)
 
 Player::~Player(void)
 {
+}
+
+void Player::Draw(void)
+{
+	CharactorBase::Draw();
+#ifdef _DEBUG
+
+	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+	// pos_ は ObjectBase のメンバ変数であると想定しています
+	DrawFormatString(50, 50, GetColor(0, 0, 0),
+		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+
+	ObjectTile* tile = objMng_->GetTileAt(player_.pos);
+	if (tile == nullptr) {
+		DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+	}
+	else {
+		DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
+	}
+#endif
 }
 
 void Player::Release(void)
@@ -144,6 +166,16 @@ void Player::ProcessMove(void)
 		{
 			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1,
 				InputManager::JOYPAD_BTN::L_TRIGGER);
+		}
+	}
+
+	// プレイヤーの移動計算の最後（または座標を確定させる直前）
+	if (objMng_ != nullptr)
+	{
+		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+		if (tile != nullptr)
+		{
+			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
 		}
 	}
 

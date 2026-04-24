@@ -94,7 +94,4 @@ protected:
 
 private:
 
-	// 床オブジェクト
-	ObjectTile* objTile_;
-
 };

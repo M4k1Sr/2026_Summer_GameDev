@@ -144,3 +144,26 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	return object;
 }
 
+ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		if (auto tile = dynamic_cast<ObjectTile*>(object))
+		{
+			VECTOR tilePos = tile->GetPos();
+
+			// XZ•½–Ê‚Ì‚İ‚Å‹——£ŒvZ
+			float dx = tilePos.x - pos.x;
+			float dz = tilePos.z - pos.z;
+			float distXZ = sqrtf(dx * dx + dz * dz);
+
+			// XZ‚Ì”ÍˆÍ“à‚È‚çOK‚Æ‚·‚éi‚‚³Y‚Í–³‹j
+			if (distXZ < 50.0f)
+			{
+				return tile;
+			}
+		}
+	}
+	return nullptr;
+}
+

@@ -25,6 +25,24 @@ ObjectTile::~ObjectTile(void)
 {
 }
 
+void ObjectTile::Draw(void)
+{
+	ObjectBase::Draw();
+#ifdef _DEBUG
+
+	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+	// pos_ は ObjectBase のメンバ変数であると想定しています
+	DrawFormatString(50, 100, GetColor(0, 0, 0),
+		"Tile Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+
+	DrawFormatString(70, 120, GetColor(0, 0, 0),
+		"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
+		velocity_.x, velocity_.y, velocity_.z);
+
+#endif
+}
+
 void ObjectTile::InitLoad(void)
 {
 	// 基底クラスのリソースロード

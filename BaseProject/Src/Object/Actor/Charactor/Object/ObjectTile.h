@@ -24,8 +24,14 @@ public:
 	// デストラクタ
 	~ObjectTile(void) override;
 
+	// デバッグ描画処理
+	void Draw(void) override;
+
 	// 動く床の速度取得
 	VECTOR GetVelocity(void) const { return velocity_; }
+
+	// 床の座標取得
+	VECTOR GetPos(void) const { return transform_.pos; }
 
 protected:
 

@@ -29,17 +29,18 @@ void GameScene::Init(void)
 	stage_ = new Stage();
 	stage_->Init();
 
+	// オブジェクト初期化
+	objMng_ = new ObjectManager();
+	objMng_->Init();
+
 	// プレイヤー初期化
 	player_ = new Player();
 	player_->Init();
+	player_->SetObjectManager(objMng_);
 
 	// スカイドーム初期化
 	skyDome_ = new SkyDome(player_->GetTransform());
 	skyDome_->Init();
-
-	// オブジェクト初期化
-	objMng_ = new ObjectManager();
-	objMng_->Init();
 
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
@@ -101,12 +102,11 @@ void GameScene::Draw(void)
 	// ステージ描画
 	stage_->Draw();
 
-	// プレイヤー描画
-	player_->Draw();
-
 	// オブジェクト描画
 	objMng_->Draw();
 
+	// プレイヤー描画
+	player_->Draw();
 }
 
 void GameScene::Release(void)
@@ -119,12 +119,12 @@ void GameScene::Release(void)
 	skyDome_->Release();
 	delete skyDome_;
 
-	// プレイヤー解放
-	player_->Release();
-	delete skyDome_;
-
 	// オブジェクト解放
 	objMng_->Release();
 	delete objMng_;
+
+	// プレイヤー解放
+	player_->Release();
+	delete player_;
 
 }
