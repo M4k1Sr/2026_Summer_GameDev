@@ -64,8 +64,22 @@ private:
 	//操作説明画像
 	int sousaImg_;
 
-	//マウスポインタ座標
-	int mousePos_X, mousePos_Y;
+
+	//マウスカーソル取得用座標
+	int mosPosX_, mosPosY_;
+
+	//ポーズ画面の選択ボックス座標
+	static constexpr int DRAWBOX_SX = 400;
+
+	static constexpr int DRAWBOX_EX = 1600;
+
+	static constexpr int DRAWBOX_GAMEEND_SY = 600;
+
+	static constexpr int DRAWBOX_GAMEEND_EY = 800;
+
+	static constexpr int DRAWBOX_GAME_SY = 200;
+
+	static constexpr int DRAWBOX_GAME_EY = 400;
 
 
 };

@@ -42,6 +42,8 @@ void TitleScene::Init(void)
 	//// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
 
+	
+
 
 	// メイン惑星
 	bigPlanet_.SetModel(resMng_.LoadModelDuplicate(
@@ -172,10 +174,11 @@ void TitleScene::IsPause(void)
 	//マウスカーソルがあるときの処理
 		//ゲームを続ける
 		if(continueGame)
-					{
+		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
 				isEnd_ = false;
@@ -187,6 +190,7 @@ void TitleScene::IsPause(void)
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
 				DxLib_End();
