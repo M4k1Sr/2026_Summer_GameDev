@@ -11,6 +11,7 @@
 #include "../Object/Actor/SkyDome.h"
 #include "../Application.h"
 #include "TitleScene.h"
+#include<EffekseerForDXLib.h>
 
 TitleScene::TitleScene(void)
 	:
@@ -193,7 +194,10 @@ void TitleScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				// Effekseerを終了する。
+				Effkseer_End();
 				DxLib_End();
+
 			}
 		}
 

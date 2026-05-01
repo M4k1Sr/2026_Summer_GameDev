@@ -12,6 +12,7 @@
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
 #include "../Application.h"
+#include<EffekseerForDXLib.h>
 
 GameScene::GameScene(void)
 	:
@@ -236,6 +237,8 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				// Effekseerを終了する。
+				Effkseer_End();
 				DxLib_End();
 			}
 		}
