@@ -41,7 +41,11 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::PUSH_SPACE, res);
 
 	// タイトル惑星モデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
+	/*res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
+	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);*/
+
+	// タイトル惑星モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
 	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
 
 	// 回転惑星モデル
@@ -76,6 +80,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
 
+	// タイトルPush画像
+	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
+	resourcesMap_.emplace(SRC::OBJECT_CLOCK, res);
+
+	// タイトルPush画像
+	res = new RES(RES_T::IMG, PATH_IMG + "second_hand.png");
+	resourcesMap_.emplace(SRC::CLOCK_HAND, res);
 }
 
 void ResourceManager::Release(void)
