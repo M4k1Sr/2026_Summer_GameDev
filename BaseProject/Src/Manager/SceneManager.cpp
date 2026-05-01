@@ -118,7 +118,6 @@ void SceneManager::Update(void)
 
 void SceneManager::Draw(void)
 {
-	
 
 	// 描画先グラフィック領域の指定
 	// (３Ｄ描画で使用するカメラの設定などがリセットされる)
@@ -133,8 +132,6 @@ void SceneManager::Draw(void)
 	// Effekseerにより再生中のエフェクトを更新する。
 	UpdateEffekseer3D();
 
-
-
 	// 各シーンの描画処理
 	scene_->Draw();
 
@@ -142,7 +139,7 @@ void SceneManager::Draw(void)
 	camera_->DrawDebug();
 
 	// Effekseerにより再生中のエフェクトを描画する。
-	DrawEffekseer3D();
+ 	DrawEffekseer3D();
 	
 	// 暗転・明転
 	fader_->Draw();
