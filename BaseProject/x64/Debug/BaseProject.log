@@ -1,2 +1,7 @@
-﻿  Player.cpp
+﻿  CharactorBase.cpp
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(300,27): warning C4244: '=': 'double' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(303,27): warning C4244: '=': 'double' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(306,27): warning C4244: '=': 'double' から 'BYTE' への変換です。データが失われる可能性があります。
+  ColliderCapsule.cpp
+  コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

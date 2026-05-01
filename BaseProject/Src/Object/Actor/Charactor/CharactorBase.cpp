@@ -213,7 +213,7 @@ void CharactorBase::CollisionCapsule(void)
 		
 		// ステージは除外
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-		
+
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 

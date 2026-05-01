@@ -246,6 +246,9 @@ void ObjectTile::UpdateProcessFloorMove(void)
 
 	transform_.Update();
 
+	// 衝突メッシュを更新
+	MV1RefreshCollInfo(transform_.modelId, -1);
+
 	// 移動速度計算
 	velocity_ = VSub(transform_.pos, prevPos_);
 }
