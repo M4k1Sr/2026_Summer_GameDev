@@ -22,6 +22,8 @@ public:
 		PLAYER_SHADOW,
 		OBJECT_BOX,
 		OBJECT_TILE,
+		OBJECT_CLOCK,
+		CLOCK_HAND,
 	};
 
 	// 明示的にインステンスを生成する

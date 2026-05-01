@@ -250,6 +250,15 @@ void Camera::ProcessMove(void)
 void Camera::SetBeforeDrawFixedPoint(void)
 {
 	// 何もしない
+	 // 注視点（見たい場所）
+	targetPos_ = VGet(0.0f, 0.0f, 0.0f);  // 原点を見る
+
+	// カメラ位置（斜め上後方）
+	transform_.pos = VGet(0.0f, 800.0f, -400.0f);
+
+	// 上方向はY
+	transform_.quaRot = Quaternion::Identity();
+
 }
 
 void Camera::SetBeforeDrawFree(void)

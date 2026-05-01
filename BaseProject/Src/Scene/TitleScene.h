@@ -27,6 +27,8 @@ public:
 	// 解放
 	void Release(void) override;
 
+	void IsPause(void);
+
 private:
 
 	// アニメーション処理
@@ -68,9 +70,29 @@ private:
 	static constexpr VECTOR PLAYER_ANGLE = {0.0f,  -90.0f * DX_PI_F / 180.0f, 0.0f };
 	static constexpr VECTOR PLAYER_LOCAL_ANGLE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
+	//ポーズ画面の選択ボックス座標
+	static constexpr int DRAWBOX_SX = 400;
+
+	static constexpr int DRAWBOX_EX = 1600;
+
+	static constexpr int DRAWBOX_GAMEEND_SY = 600;
+
+	static constexpr int DRAWBOX_GAMEEND_EY = 800;
+
+	static constexpr int DRAWBOX_GAME_SY = 200;
+
+	static constexpr int DRAWBOX_GAME_EY = 400;
+
 	// タイトル画像
 	int imgTitle_;
 
 	// プッシュ画像
 	int imgPush_;
+
+	//ポーズ画面
+	bool isEnd_;
+
+	//マウスカーソル取得用座標
+	int mosPosX_, mosPosY_;
+
 };

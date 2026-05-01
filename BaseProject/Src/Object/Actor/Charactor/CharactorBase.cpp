@@ -53,7 +53,7 @@ void CharactorBase::Update(void)
 	animationController_->Update();
 
 	// 各キャラクターごとの更新後処理
-	UpdateProcessPost();
+ 	UpdateProcessPost();
 
 }
 

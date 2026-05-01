@@ -146,5 +146,6 @@ void SkyDome::UpdateFollow(void)
 	// í«è]
 	transform_.pos = followTransform_.pos;
 
-	transform_.Update();
+	transform_.Update();                                                  
+
 }
