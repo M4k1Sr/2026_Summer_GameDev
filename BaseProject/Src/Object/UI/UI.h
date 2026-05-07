@@ -1,5 +1,6 @@
 #pragma once
 #include<DxLib.h>
+#include"../../Framework.h"
 #include"../Actor/ActorBase.h"
 #include"../Common/Transform.h"
 
@@ -11,6 +12,7 @@ public:
 	UI(void);
 	//デストラクタ
 	~UI(void);
+
 
 	// 更新
 	void Update(void) override;
@@ -40,8 +42,8 @@ protected:
 	static constexpr int CLOCK_POS = 150;
 
 	//秒針の座標
-	static constexpr int HAND_POS_X = 145;
-	static constexpr int HAND_POS_Y = 120;
+	static constexpr float HAND_POS_X = 150;
+	static constexpr float HAND_POS_Y = 125;
 
 	//時計大きさ
 	static constexpr float SCALE = 0.3f;
@@ -54,16 +56,31 @@ protected:
 
 private:
 
-	
+	//最大時間
+	float maxTime_;
 
-	//時計
-	int clock_;
+	//現在時間
+	float time_;
 
-	//秒針
-	int secondHand_;
+	//針の角度
+	float angle_;
 
-	//秒針の座標
+	//前フレーム時間
+	int oldTime_;
+
+	//秒針画像
+	int secondHandImg_;
+
+	//秒針座標
 	VECTOR handPos_;
 
+	//時計画像
+	int clockImg_;
+
+	//針回転の中心点X
+	int centerX_;
+
+	//針回転の中心点Y
+	int centerY_;
 };
 
