@@ -159,7 +159,7 @@ void CharactorBase::CollisionGravity(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 
-		// ステージ以外は処理を飛ばす
+		// ステージ・ボックス以外は処理を飛ばす
 		if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
 			&& hitCol->GetTag() != ColliderBase::TAG::BOX
 			&& hitCol->GetTag() != ColliderBase::TAG::TILE) continue;
@@ -177,6 +177,8 @@ void CharactorBase::CollisionGravity(void)
 			2.0f,
 			true,
 			false);
+
+		transform_.Update();
 
 		// ジャンプ判定
 		if (isHit)

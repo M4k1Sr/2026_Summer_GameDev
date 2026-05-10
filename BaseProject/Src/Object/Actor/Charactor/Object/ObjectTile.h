@@ -110,8 +110,8 @@ private:
 	void ChangeState(STATE state);
 	void ChangeStateNone(void);
 	void ChangeStateStop(void);
-	void ChangeStateUp(void);
-	void ChangeStateDown(void);
+	void ChangeStateRight(void);
+	void ChangeStateLeft(void);
 	void ChangeStateEnd(void);
 
 	void UpdateNone(void);

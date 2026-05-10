@@ -40,6 +40,11 @@ void ObjectTile::Draw(void)
 		"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
 		velocity_.x, velocity_.y, velocity_.z);
 
+	// コライダーのデバッグ描画（もしメソッドがあれば）
+	for (auto& col : ownColliders_) {
+		col.second->Draw();
+	}
+
 #endif
 }
 
@@ -103,10 +108,10 @@ void ObjectTile::InitPost(void)
 		std::bind(&ObjectTile::ChangeStateStop, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::UP),
-		std::bind(&ObjectTile::ChangeStateUp, this));
+		std::bind(&ObjectTile::ChangeStateRight, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::DOWN),
-		std::bind(&ObjectTile::ChangeStateDown, this));
+		std::bind(&ObjectTile::ChangeStateLeft, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::END),
 		std::bind(&ObjectTile::ChangeStateEnd, this));
@@ -114,6 +119,10 @@ void ObjectTile::InitPost(void)
 	// 初期状態設定
 	ChangeState(STATE::UP);
 
+	// 自分の transform_ のアドレスをコライダーに叩き込む
+	for (auto& col : ownColliders_) {
+		col.second->SetFollow(&this->transform_);
+	}
 }
 
 void ObjectTile::UpdateProcess(void)
@@ -153,7 +162,7 @@ void ObjectTile::ChangeStateStop(void)
 
 }
 
-void ObjectTile::ChangeStateUp(void)
+void ObjectTile::ChangeStateRight(void)
 {
 	
 	// 経過時間
@@ -164,13 +173,13 @@ void ObjectTile::ChangeStateUp(void)
 	// 初期位置
 	startPos_ = transform_.pos;
 	// 移動する場所
-	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_U, MOVE_UP_TILE));
+	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_R, MOVE_UP_TILE));
 
 	stateUpdate_ = std::bind(&ObjectTile::UpdateUp, this);
 
 }
 
-void ObjectTile::ChangeStateDown(void)
+void ObjectTile::ChangeStateLeft(void)
 {
 	// 経過時間
 	moveTimer_ = 0.0f;
@@ -180,7 +189,7 @@ void ObjectTile::ChangeStateDown(void)
 	// 初期位置
 	startPos_ = transform_.pos;
 	// 移動する場所
-	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_D, MOVE_UP_TILE));
+	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_L, MOVE_UP_TILE));
 
 	stateUpdate_ = std::bind(&ObjectTile::UpdateDown, this);
 }
@@ -246,7 +255,7 @@ void ObjectTile::UpdateProcessFloorMove(void)
 
 	transform_.Update();
 
-	// 衝突メッシュを更新
+	// モデルを最新行列に合わせる
 	MV1RefreshCollInfo(transform_.modelId, -1);
 
 	// 移動速度計算

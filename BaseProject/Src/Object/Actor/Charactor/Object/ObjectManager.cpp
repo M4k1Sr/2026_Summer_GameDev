@@ -164,6 +164,7 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 			}
 		}
 	}
+
 	return nullptr;
 }
 
