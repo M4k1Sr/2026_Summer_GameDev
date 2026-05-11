@@ -21,6 +21,8 @@ public:
 	// 解放
 	void Release(void) override;
 
+	bool GetIsGameOver(void) const;
+
 protected:
 
 	// リソースロード
@@ -43,7 +45,7 @@ protected:
 
 	//秒針の座標
 	static constexpr float HAND_POS_X = 150;
-	static constexpr float HAND_POS_Y = 125;
+	static constexpr float HAND_POS_Y = 150;
 
 	//時計大きさ
 	static constexpr float SCALE = 0.3f;
@@ -51,8 +53,16 @@ protected:
 	//針の大きさ
 	static constexpr float HAND_SCALE = 0.1f;
 
+	//針の回転中心点
+	static constexpr int HAND_CENTER_X = 512;
+	static constexpr int HAND_CENTER_Y = 750;
+
+	static constexpr float TOP_ANGLE = -DX_PI_F;
+
 	//時計の処理
 	void Clock(void);
+
+	
 
 private:
 
@@ -82,5 +92,15 @@ private:
 
 	//針回転の中心点Y
 	int centerY_;
+
+	//針のスピード
+	float speed_;
+
+	bool isGameOver_;
+
+	float prevAngle_;
+
+	
+
 };
 

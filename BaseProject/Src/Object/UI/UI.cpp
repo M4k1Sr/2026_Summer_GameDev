@@ -3,15 +3,16 @@
 
 UI::UI(void)
 	:
-	maxTime_(30.0f),
-	time_(30.0f),
+	maxTime_(120.0f),
+	time_(120.0f	),
 	angle_(0.0f),
 	oldTime_(0),
 	secondHandImg_(-1),
 	handPos_(VGet(HAND_POS_X, HAND_POS_Y, 0.0f)),
 	clockImg_(-1),
-	centerX_(HAND_POS_X),
-	centerY_(HAND_POS_Y)
+	centerX_(HAND_CENTER_X),
+	centerY_(HAND_CENTER_Y),
+	isGameOver_(false)
 {
 }
 
@@ -28,9 +29,7 @@ void UI::Draw(void)
 {
 	DrawRotaGraph(CLOCK_POS, CLOCK_POS, SCALE, 0.0f, clockImg_, TRUE);
 
-	//DrawRotaGraph2(handPos_.x, handPos_.y, centerX_,centerY_,HAND_SCALE, angle_, secondHandImg_, TRUE);
-
-	DrawRotaGraph(handPos_.x, handPos_.y, HAND_SCALE, angle_, secondHandImg_, TRUE);
+	DrawRotaGraph2(handPos_.x, handPos_.y, centerX_, centerY_, HAND_SCALE, angle_, secondHandImg_, TRUE);
 
 }
 
@@ -67,9 +66,13 @@ void UI::InitPost(void)
 	//デルタタイム計算に使用
 	oldTime_ = GetNowCount();
 
+	//2分で１周
+	speed_ = DX_TWO_PI_F / 120.0f;
+
 	//制限時間を初期時間に設定
 	time_ = maxTime_;
 
+	angle_ = 0.0f ;
 }
 
 void UI::Clock(void)
@@ -80,6 +83,7 @@ void UI::Clock(void)
 	//デルタタイム計算
 	float deltaTime = (now - oldTime_) / 1000.0f; // ミリ秒を秒に変換
 
+	//現在時間を保存
 	oldTime_ = now;
     
 	//時間減少
@@ -95,5 +99,24 @@ void UI::Clock(void)
 	float rate = time_ / maxTime_;
 
 	//角度計算
-	angle_ = ((1.0f - rate) * DX_TWO_PI_F) - DX_PI_F / 2;
+	angle_ = ((1.0f - rate) * DX_TWO_PI_F);
+
+	// 12時をまたいだか？
+	if (!isGameOver_)
+	{
+		if (prevAngle_ < TOP_ANGLE && angle_ >= TOP_ANGLE)
+		{
+			isGameOver_ = true;
+		}
+	}
+
+	// 保存
+	prevAngle_ = angle_;
+}
+
+bool UI::GetIsGameOver(void) const
+{
+
+		return isGameOver_;
+
 }
