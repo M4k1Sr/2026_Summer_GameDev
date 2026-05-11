@@ -6,6 +6,7 @@
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/Charactor/Player.h"
+#include "../Object/Actor/Charactor/Boss/BossManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "GameScene.h"
 
@@ -14,6 +15,7 @@ GameScene::GameScene(void)
 	stage_(nullptr),
 	skyDome_(nullptr),
 	player_(nullptr),
+	bossMng_(nullptr),
 	objMng_(nullptr),
 	SceneBase()
 {
@@ -38,14 +40,34 @@ void GameScene::Init(void)
 	player_->Init();
 	player_->SetObjectManager(objMng_);
 
-	// スカイドーム初期化
-	skyDome_ = new SkyDome(player_->GetTransform());
-	skyDome_->Init();
-
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
 		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
+
+	// ボス初期化
+	bossMng_ = new BossManager();
+	bossMng_->Init();
+
+	// ボス(全て)のコライダーを登録
+	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
+	for (const auto& boss : bosses)
+	{
+		// ボスがモデルコライダーを持っていれば登録
+		const ColliderBase* bossCollider =
+		boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+		if (bossCollider != nullptr)
+		{
+			player_->AddHitCollider(bossCollider);
+		}
+	}
+
+	// ステージモデルのコライダーをボスに登録
+	bossMng_->AddHitCollider(stageCollider);
+
+	// スカイドーム初期化
+	skyDome_ = new SkyDome(player_->GetTransform());
+	skyDome_->Init();
 
 	// オブジェクト(全て)のコライダーを登録
 	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
@@ -85,6 +107,9 @@ void GameScene::Update(void)
 	// プレイヤー更新
 	player_->Update();
 
+	// ボス更新
+	bossMng_->Update();
+
 	// シーン遷移
 	auto const& ins = InputManager::GetInstance();
 	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
@@ -107,6 +132,10 @@ void GameScene::Draw(void)
 
 	// プレイヤー描画
 	player_->Draw();
+
+	// ボス描画
+	bossMng_->Draw();
+
 }
 
 void GameScene::Release(void)
@@ -126,5 +155,8 @@ void GameScene::Release(void)
 	// プレイヤー解放
 	player_->Release();
 	delete player_;
-
+	
+	// ボス解放
+	bossMng_->Release();
+	delete bossMng_;
 }

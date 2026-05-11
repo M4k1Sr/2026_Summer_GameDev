@@ -26,7 +26,7 @@ void ObjectManager::Init(void)
 void ObjectManager::Update(void)
 {
 	// XV
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->Update();
 	}
@@ -35,7 +35,7 @@ void ObjectManager::Update(void)
 void ObjectManager::Draw(void)
 {
 	// •`‰æ
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->Draw();
 	}
@@ -45,7 +45,7 @@ void ObjectManager::Draw(void)
 void ObjectManager::Release(void)
 {
 	// ‰ð•ú
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->Release();
 		delete object;
@@ -55,7 +55,7 @@ void ObjectManager::Release(void)
 
 void ObjectManager::AddHitCollider(const ColliderBase* hitCollider)
 {
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->AddHitCollider(hitCollider);
 	}
@@ -138,7 +138,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	if (object != nullptr)
 	{
 		object->Init();
-		objects_.emplace_back(object);
+		bosses_.emplace_back(object);
 	}
 
 	return object;
@@ -146,7 +146,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 
 ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 {
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{

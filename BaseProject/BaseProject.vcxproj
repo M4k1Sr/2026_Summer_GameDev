@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossDiablo.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossOrc.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossPixie.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectManager.cpp" />
@@ -54,6 +59,11 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossBase.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossDiablo.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossOrc.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossPixie.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBase.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectManager.h" />

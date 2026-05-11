@@ -22,6 +22,9 @@ public:
 		PLAYER_SHADOW,
 		OBJECT_BOX,
 		OBJECT_TILE,
+		OBJECT_BOSS_PIXIE,
+		OBJECT_BOSS_ORC,
+		OBJECT_BOSS_DIABLO,
 	};
 
 	// 明示的にインステンスを生成する

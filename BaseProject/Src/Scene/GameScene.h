@@ -3,6 +3,7 @@
 class Stage;
 class SkyDome;
 class Player;
+class BossManager;
 class ObjectManager;
 
 class GameScene : public SceneBase
@@ -38,6 +39,9 @@ private:
 
 	// プレイヤー
 	Player* player_;
+	
+	// ボス
+	BossManager* bossMng_;
 	
 	// オブジェクト
 	ObjectManager* objMng_;

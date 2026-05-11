@@ -76,6 +76,18 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
 
+	// ボスモデル(ピクシー)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Pixie/BossPixie.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_BOSS_PIXIE, res);
+
+	// ボスモデル(オーク)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Orc/BossOrc.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_BOSS_ORC, res);
+
+	// ボスモデル(ディアブロ)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_BOSS_DIABLO, res);
+
 }
 
 void ResourceManager::Release(void)

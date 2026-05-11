@@ -1,18 +1,18 @@
 #pragma once
 #include <vector>
-#include "ObjectBase.h"
-class ObjectBase;
+#include "BossBase.h"
+class BossBase;
 class ColliderBase;
 
-class ObjectManager
+class BossManager
 {
 public:
 
 	// コンストラクタ
-	ObjectManager(void);
+	BossManager(void);
 
 	// デストラクタ
-	~ObjectManager(void);
+	~BossManager(void);
 
 	// 初期化
 	void Init(void);
@@ -27,7 +27,7 @@ public:
 	void Release(void);
 
 	// オブジェクト
-	const std::vector<ObjectBase*>& GetObjects(void) const { return bosses_; }
+	const std::vector<BossBase*>& GetBosses(void) const { return bosses_; }
 
 	// 衝突対象となるコライダを登録
 	void AddHitCollider(const ColliderBase* hitCollider);
@@ -36,14 +36,12 @@ public:
 	void LoadCsvData(void);
 
 	// オブジェクト生成
-	ObjectBase* Create(const ObjectBase::ObjectData& data);
-		
-	// プレイヤーの足元の判定用に追加
-	ObjectTile* GetTileAt(const VECTOR& pos);
+	BossBase* Create(const BossBase::BossData& data);
 
 private:
 
 	// オブジェクト
-	std::vector<ObjectBase*> bosses_;
+	std::vector<BossBase*> bosses_;
 
 };
+
