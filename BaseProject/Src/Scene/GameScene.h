@@ -4,6 +4,7 @@
 class Stage;
 class SkyDome;
 class Player;
+class IronBall;
 class UI;
 class ObjectManager;
 
@@ -43,6 +44,9 @@ private:
 
 	// ƒvƒŒƒCƒ„[
 	Player* player_;
+
+	//“S‹…
+	IronBall* ironBall_;
 
 	//UI
 	UI* ui_;

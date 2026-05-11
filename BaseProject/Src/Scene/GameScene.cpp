@@ -7,6 +7,7 @@
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
+#include "../Object/Actor/IronBall.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Object/UI/UI.h"
@@ -19,6 +20,7 @@ GameScene::GameScene(void)
 	stage_(nullptr),
 	skyDome_(nullptr),
 	player_(nullptr),
+	ironBall_(nullptr),
 	ui_(nullptr),
 	objMng_(nullptr),
 	isPause_(false),
@@ -50,6 +52,10 @@ void GameScene::Init(void)
 	// スカイドーム初期化
 	skyDome_ = new SkyDome(player_->GetTransform());
 	skyDome_->Init();
+
+	//鉄球初期化
+	ironBall_ = new IronBall();
+	ironBall_->Init();
 
 	ui_ = new UI();
 	ui_->Init();
@@ -86,7 +92,7 @@ void GameScene::Init(void)
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->SetFollow(&player_->GetTransform());
 	camera->AddHitCollider(stageCollider);
-	camera->ChangeMode(Camera::MODE::FOLLOW);
+	camera->ChangeMode(Camera::MODE::FREE);
 
 }
 
@@ -113,11 +119,12 @@ void GameScene::Update(void)
 		// プレイヤー更新
 		player_->Update();
 
-
-
 		// スカイドーム更新
 		skyDome_->Update();
-		
+
+		//鉄球更新
+		ironBall_->Update();
+
 		// UI更新
 		ui_->Update();
 
@@ -134,15 +141,17 @@ void GameScene::Draw(void)
 	// ステージ描画
 	stage_->Draw();
 
-
 	// プレイヤー描画
-	player_->Draw();
+	//player_->Draw();
 	
+	//鉄球描画
+	ironBall_->Draw();
+
 	// UI描画
 	ui_->Draw();
 
 	// オブジェクト描画
-	objMng_->Draw();
+	//objMng_->Draw();
 
 	////ポーズ画面
 	IsPause();
@@ -166,6 +175,10 @@ void GameScene::Release(void)
 	// プレイヤー解放
 	player_->Release();
 	delete skyDome_;
+
+	//鉄球解放
+	ironBall_->Release();
+	delete ironBall_;
 
 	// オブジェクト解放
 	objMng_->Release();

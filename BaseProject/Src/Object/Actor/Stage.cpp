@@ -46,7 +46,7 @@ void Stage::InitLoad(void)
 
 void Stage::InitTransform(void)
 {
-	transform_.scl = AsoUtility::VECTOR_ONE;
+	transform_.scl = MAIN_STAGE_SCALE;
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Identity();
 	transform_.pos = MAIN_STAGE_POS;

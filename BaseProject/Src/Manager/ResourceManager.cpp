@@ -65,7 +65,7 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::MAIN_STAGE, res);
 
 	// サブステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/SubStage.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/FirstStage.mv1");
 	resourcesMap_.emplace(SRC::SUB_STAGE, res);
 
 	// スカイドームモデル
@@ -79,6 +79,10 @@ void ResourceManager::Init(void)
 	// 動く床モデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
+
+	// 鉄球モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/IronBall.mv1");
+	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
 	// タイトルPush画像
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
