@@ -229,8 +229,8 @@ void Player::ProcessMove(void)
 		if (!isJump_)
 		{
 			// IDLEó‘Ô‚É–ß‚·
-			animationController_->Play(
-				static_cast<int>(ANIM_TYPE::IDLE), true);
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
 		}
 	}
 }

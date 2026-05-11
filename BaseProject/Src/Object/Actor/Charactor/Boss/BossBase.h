@@ -28,12 +28,6 @@ public:
 	// デストラクタ
 	virtual ~BossBase(void) override;
 
-	// 更新
-	virtual void Update(void) override;
-
-	// 描画
-	virtual void Draw(void) override;
-
 protected:
 
 	// 状態管理

@@ -11,7 +11,6 @@ public:
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
-		NONE,
 		IDLE,
 		SURPRISE,
 		CHARGE,
@@ -27,7 +26,6 @@ public:
 	// 状態
 	enum class STATE
 	{
-		NONE,
 		IDLE,
 		SURPRISE,
 		CHARGE,
@@ -109,7 +107,6 @@ private:
 	float step_;
 
 	void ChangeState(STATE state);
-	void ChangeStateNone(void);
 	void ChangeStateIdle(void);
 	void ChangeStateSurprise(void);
 	void ChangeStateCharge(void);
@@ -120,7 +117,6 @@ private:
 	void ChangeStateDown(void);
 	void ChangeStateEnd(void);
 
-	void UpdateNone(void);
 	void UpdateIdle(void);
 	void UpdateSurprise(void);
 	void UpdateCharge(void);

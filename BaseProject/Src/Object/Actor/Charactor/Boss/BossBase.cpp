@@ -15,21 +15,6 @@ BossBase::~BossBase(void)
 {
 }
 
-void BossBase::Update(void)
-{
-	// 状態更新
-	// これからの状態更新は、stateUpdate_に代入された関数が実行される
-	stateUpdate_();
-
-	// 基底クラスの更新
-	CharactorBase::Update();
-}
-
-void BossBase::Draw(void)
-{
-	CharactorBase::Draw();
-}
-
 void BossBase::ChangeState(int state)
 {
 

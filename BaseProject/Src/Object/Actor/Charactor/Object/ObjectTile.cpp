@@ -1,4 +1,4 @@
-#include <DxLib.h>
+	#include <DxLib.h>
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Manager/InputManager.h"
 #include "../../../../Manager/SceneManager.h"

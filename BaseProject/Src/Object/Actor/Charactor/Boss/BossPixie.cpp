@@ -63,15 +63,21 @@ void BossPixie::InitCollider(void)
 void BossPixie::InitAnimation(void)
 {
 	//モデルアニメーション制御の初期化
-	animationController_ = new AnimationController(transform_.modelId);
+	animationController_ = 
+		new AnimationController(transform_.modelId);
 
-	//// アニメーション追加
-	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Player/Idle.mv1");
-	//animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
-	//animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
-	//animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
+	// アニメーション追加
+	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Idle.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::SURPRISE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Surprise.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::CHARGE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Charge.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Enemy/Pixie/Throw.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK_WAVE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Attack_Wave.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK_END), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Attack_End.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::DAMAGE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Damage.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::DOWN), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Down.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::END), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/End.mv1");
 
-		// アニメーション再生
+	// アニメーション再生
 	animationController_->Play(
 		static_cast<int>(ANIM_TYPE::IDLE), true);
 
@@ -82,8 +88,6 @@ void BossPixie::InitPost(void)
 	// 基底クラスの初期化後処理
 
 	// 初期遷移状態初期処理登録
-	stateChanges_.emplace(static_cast<int>(STATE::NONE),
-		std::bind(&BossPixie::ChangeStateNone, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::IDLE),
 		std::bind(&BossPixie::ChangeStateIdle, this));
@@ -140,48 +144,59 @@ void BossPixie::ChangeState(STATE state)
 
 }
 
-void BossPixie::ChangeStateNone(void)
-{
-}
 
 void BossPixie::ChangeStateIdle(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateIdle, this);
+
 }
 
 void BossPixie::ChangeStateSurprise(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateSurprise, this);
+
 }
 
 void BossPixie::ChangeStateCharge(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateCharge, this);
+
 }
 
 void BossPixie::ChangeStateThrow(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateThrow, this);
+
 }
 
 void BossPixie::ChangeStateAttackWave(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateAttackWave, this);
+
 }
 
 void BossPixie::ChangeStateAttackEnd(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateAttackEnd, this);
+
 }
 
 void BossPixie::ChangeStateDamage(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateDamage, this);
+
 }
 
 void BossPixie::ChangeStateDown(void)
 {
+	stateUpdate_ = std::bind(&BossPixie::UpdateDown, this);
+
 }
 
 void BossPixie::ChangeStateEnd(void)
 {
-}
+	stateUpdate_ = std::bind(&BossPixie::UpdateEnd, this);
 
-void BossPixie::UpdateNone(void)
-{
 }
 
 void BossPixie::UpdateIdle(void)
