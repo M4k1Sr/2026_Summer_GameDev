@@ -35,14 +35,21 @@ void Player::Draw(void)
 		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
 		transform_.pos.x, transform_.pos.y, transform_.pos.z);
 
-	ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-	if (tile == nullptr) {
-		DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+	if (isJump_ == true) {
+		DrawFormatString(50, 240, GetColor(255, 0, 0), "Jumping");
 	}
 	else {
-		DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
-	}
+		DrawFormatString(50, 240, GetColor(0, 255, 0), "unJumping");
+
+		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+		if (tile == nullptr) {
+			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+		}
+		else {
+			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
+		}
 #endif
+	}
 }
 
 void Player::Release(void)
@@ -176,7 +183,7 @@ void Player::ProcessMove(void)
 		if (tile != nullptr)
 		{
 			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // ƒ^ƒCƒ‹‚É’Ç]
-		}
+		}		
 	}
 
 	if (!AsoUtility::EqualsVZero(dir))

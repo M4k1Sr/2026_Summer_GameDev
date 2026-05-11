@@ -82,7 +82,6 @@ protected:
 	// d—ÍŒvZ
 	void CalcGravityPow(void);
 
-
 	// Õ“Ë”»’è
 	virtual void CollisionReserve(void) {}
 	void Collision(void);

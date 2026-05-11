@@ -178,8 +178,6 @@ void CharactorBase::CollisionGravity(void)
 			true,
 			false);
 
-		transform_.Update();
-
 		// ジャンプ判定
 		if (isHit)
 		{
@@ -191,6 +189,7 @@ void CharactorBase::CollisionGravity(void)
 	{
 		// ジャンプリセット
 		jumpPow_ = AsoUtility::VECTOR_ZERO;
+
 		// ジャンプの入力受付時間をリセット
 		stepJump_ = 0.0f;
 	}
