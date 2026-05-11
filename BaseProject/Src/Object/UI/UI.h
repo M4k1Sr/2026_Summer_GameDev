@@ -1,5 +1,6 @@
 #pragma once
 #include<DxLib.h>
+#include"../../Framework.h"
 #include"../Actor/ActorBase.h"
 #include"../Common/Transform.h"
 
@@ -12,12 +13,15 @@ public:
 	//デストラクタ
 	~UI(void);
 
+
 	// 更新
 	void Update(void) override;
 	// 描画
 	void Draw(void) override;
 	// 解放
 	void Release(void) override;
+
+	bool GetIsGameOver(void) const;
 
 protected:
 
@@ -40,8 +44,8 @@ protected:
 	static constexpr int CLOCK_POS = 150;
 
 	//秒針の座標
-	static constexpr int HAND_POS_X = 145;
-	static constexpr int HAND_POS_Y = 120;
+	static constexpr float HAND_POS_X = 150;
+	static constexpr float HAND_POS_Y = 150;
 
 	//時計大きさ
 	static constexpr float SCALE = 0.3f;
@@ -49,21 +53,54 @@ protected:
 	//針の大きさ
 	static constexpr float HAND_SCALE = 0.1f;
 
+	//針の回転中心点
+	static constexpr int HAND_CENTER_X = 512;
+	static constexpr int HAND_CENTER_Y = 750;
+
+	static constexpr float TOP_ANGLE = -DX_PI_F;
+
 	//時計の処理
 	void Clock(void);
 
-private:
-
 	
 
-	//時計
-	int clock_;
+private:
 
-	//秒針
-	int secondHand_;
+	//最大時間
+	float maxTime_;
 
-	//秒針の座標
+	//現在時間
+	float time_;
+
+	//針の角度
+	float angle_;
+
+	//前フレーム時間
+	int oldTime_;
+
+	//秒針画像
+	int secondHandImg_;
+
+	//秒針座標
 	VECTOR handPos_;
+
+	//時計画像
+	int clockImg_;
+
+	//針回転の中心点X
+	int centerX_;
+
+	//針回転の中心点Y
+	int centerY_;
+
+	//針のスピード
+	float speed_;
+
+	bool isGameOver_;
+
+	float prevAngle_;
+
+	
 
 };
 

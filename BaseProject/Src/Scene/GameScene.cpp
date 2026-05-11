@@ -27,6 +27,7 @@ GameScene::GameScene(void)
 	sousaImg_(-1),
 	mosPosX_(0),
 	mosPosY_(0),
+	isEnd_(false),
 	SceneBase()
 {
 }
@@ -123,6 +124,15 @@ void GameScene::Update(void)
 
 		// オブジェクト更新
 		objMng_->Update();
+	}
+
+
+	//ゲーム終了フラグ :時間制限
+	isEnd_ = ui_->GetIsGameOver();
+
+	if (isEnd_)
+	{
+
 	}
 }
 

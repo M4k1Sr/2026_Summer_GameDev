@@ -81,5 +81,7 @@ private:
 
 	static constexpr int DRAWBOX_GAME_EY = 400;
 
+	bool isEnd_;
+
 
 };
