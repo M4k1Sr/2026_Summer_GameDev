@@ -31,6 +31,7 @@ public:
 	// ‰ğ•ú
 	virtual void Release(void) override;
 
+
 protected:
 
 	// Å‘å—‰º‘¬“x

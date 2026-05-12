@@ -69,9 +69,9 @@ private:
 
 	// モデルの大きさ
 	static constexpr float SCALE = 3.0f;
-
+	
 	// モデルのローカル回転
-	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
+	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 90.0f, 0.0f };
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
@@ -94,17 +94,8 @@ private:
 	// 衝突判定用カプセル球体半径
 	static constexpr float STATE_ATTACK_WAVE_TIME = 10.0f;
 
-	// 状態遷移時間
-	float stateTime_;
-
-	// 経過時間
-	float stateTimer_;
-
 	// 状態
 	STATE state_;
-
-	// 更新ステップ
-	float step_;
 
 	void ChangeState(STATE state);
 	void ChangeStateIdle(void);

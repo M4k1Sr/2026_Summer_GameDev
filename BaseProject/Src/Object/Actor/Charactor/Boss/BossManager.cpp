@@ -2,6 +2,7 @@
 #include <fstream>
 #include "../../../../Application.h"
 #include "../../../../Utility/AsoUtility.h"
+#include "../../Charactor/Player.h"
 #include "./BossBase.h"
 #include "./BossPixie.h"
 #include "./BossOrc.h"
@@ -50,6 +51,11 @@ void BossManager::Release(void)
 		delete boss;
 	}
 
+}
+
+void BossManager::SetPlayer(Player* player)
+{
+	player_ = player;
 }
 
 void BossManager::AddHitCollider(const ColliderBase* hitCollider)
@@ -136,6 +142,12 @@ BossBase* BossManager::Create(const BossBase::BossData& data)
 
 	if (boss != nullptr)
 	{
+
+		if (player_ != nullptr)
+		{
+			boss->SetPlayer(player_);
+		}
+
 		boss->Init();
 		bosses_.emplace_back(boss);
 	}

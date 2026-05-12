@@ -5,10 +5,11 @@
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
 #include "../../../../Object/Common/Transform.h"
+#include "../../../../Object/Common/AnimationController.h"
+#include "../Player.h"
 #include "../../../Collider/ColliderLine.h"
 #include "../../../Collider/ColliderCapsule.h"
 #include "../../../Collider/ColliderModel.h"
-#include "../../../../Object/Common/AnimationController.h"
 #include "../../../../Application.h"
 #include "./BossBase.h"
 #include "./BossPixie.h"
@@ -86,6 +87,10 @@ void BossPixie::InitAnimation(void)
 void BossPixie::InitPost(void)
 {
 	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»Œãˆ—
+	stateTimer_ = 0.0f;
+	stateTime_ = 0.0f;
+
+
 
 	// ‰Šú‘JˆÚó‘Ô‰Šúˆ—“o˜^
 
@@ -123,6 +128,10 @@ void BossPixie::InitPost(void)
 
 void BossPixie::UpdateProcess(void)
 {
+	if (player_ == nullptr)
+	{
+	}
+
 	// ó‘Ô•ÊXV
 	stateUpdate_();
 }
@@ -201,6 +210,8 @@ void BossPixie::ChangeStateEnd(void)
 
 void BossPixie::UpdateIdle(void)
 {
+	transform_.pos = player_->GetTransform().pos;
+
 }
 
 void BossPixie::UpdateSurprise(void)

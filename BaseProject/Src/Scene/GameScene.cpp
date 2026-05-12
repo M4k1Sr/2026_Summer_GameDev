@@ -47,6 +47,7 @@ void GameScene::Init(void)
 
 	// ボス初期化
 	bossMng_ = new BossManager();
+	bossMng_->SetPlayer(player_);
 	bossMng_->Init();
 
 	// ボス(全て)のコライダーを登録

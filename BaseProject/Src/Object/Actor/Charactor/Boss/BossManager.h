@@ -3,6 +3,7 @@
 #include "BossBase.h"
 class BossBase;
 class ColliderBase;
+class Player;
 
 class BossManager
 {
@@ -26,6 +27,9 @@ public:
 	// 解放
 	void Release(void);
 
+	// プレイヤー情報を受けとる
+	void SetPlayer(Player* player);
+
 	// オブジェクト
 	const std::vector<BossBase*>& GetBosses(void) const { return bosses_; }
 
@@ -42,6 +46,8 @@ private:
 
 	// オブジェクト
 	std::vector<BossBase*> bosses_;
+	// プレイヤー
+	Player* player_;
 
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "../CharactorBase.h"
+class Player;
 
 class BossBase : public CharactorBase
 {
@@ -28,7 +29,11 @@ public:
 	// デストラクタ
 	virtual ~BossBase(void) override;
 
+	void SetPlayer(Player* player);
+
 protected:
+
+	Player* player_;
 
 	// 状態管理
 	int stateBase_;
@@ -59,6 +64,15 @@ protected:
 
 	// 種別
 	BOSS_TYPE type_;
+
+	// 状態遷移時間
+	float stateTime_;
+
+	// 経過時間
+	float stateTimer_;
+
+	// 更新ステップ
+	float step_;
 
 	// 更新系
 	virtual void UpdateProcessPost(void) override {}
