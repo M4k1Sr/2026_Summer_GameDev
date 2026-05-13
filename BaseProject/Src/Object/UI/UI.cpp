@@ -3,8 +3,8 @@
 
 UI::UI(void)
 	:
-	maxTime_(120.0f),
-	time_(120.0f	),
+	maxTime_(10.0f),
+	time_(10.0f	),
 	angle_(0.0f),
 	oldTime_(0),
 	secondHandImg_(-1),
@@ -104,7 +104,7 @@ void UI::Clock(void)
 	// 12éûÇÇ‹ÇΩÇ¢ÇæÇ©ÅH
 	if (!isGameOver_)
 	{
-		if (prevAngle_ < TOP_ANGLE && angle_ >= TOP_ANGLE)
+		if (time_ <= 0.0f)
 		{
 			isGameOver_ = true;
 		}

@@ -25,6 +25,7 @@ public:
 		TITLE,
 		GAME,
 		DEBUG,
+		GAMEOVER,
 	};
 	
 	// インスタンスの生成
