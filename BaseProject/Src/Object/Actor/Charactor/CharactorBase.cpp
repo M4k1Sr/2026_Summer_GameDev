@@ -65,6 +65,9 @@ void CharactorBase::Draw(void)
 	// 丸影の描画
 	DrawShadow();
 
+	// 視野描画
+	DrawViewRange();
+
 }
 
 void CharactorBase::Release(void)

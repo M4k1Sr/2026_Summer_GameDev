@@ -1,5 +1,7 @@
 #include <DxLib.h>
 #include "../../../../Utility/AsoUtility.h"
+#include "../../../../Utility/MatrixUtility.h"
+#include "../../../../Common/Quaternion.h"
 #include "../../../../Manager/InputManager.h"
 #include "../../../../Manager/SceneManager.h"
 #include "../../../../Manager/ResourceManager.h"
@@ -41,7 +43,7 @@ void BossPixie::InitTransform(void)
 	// モデルの大きさ、回転、座標の初期化
 	transform_.scl = VGet(SCALE, SCALE, SCALE);
 	transform_.quaRot = Quaternion::Identity();
-	transform_.quaRotLocal = Quaternion::Euler(ROT);
+	transform_.quaRotLocal = Quaternion::Euler(ROT.x, ROT.y + DX_PI_F, ROT.z);	// 素材モデルが反対向きなので矯正する
 	transform_.Update();
 }
 
@@ -69,7 +71,7 @@ void BossPixie::InitAnimation(void)
 
 	// アニメーション追加
 	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Idle.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::SURPRISE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Surprise.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::SURPRISE), 40.0f, Application::PATH_MODEL + "Enemy/Pixie/Surprise.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::CHARGE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Charge.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Enemy/Pixie/Throw.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK_WAVE), 20.0f, Application::PATH_MODEL + "Enemy/Pixie/Attack_Wave.mv1");
@@ -90,8 +92,12 @@ void BossPixie::InitPost(void)
 	stateTimer_ = 0.0f;
 	stateTime_ = 0.0f;
 
-
-
+	// フラグ初期化
+	isUnaware_ = true;	// 未発見
+	isAlerted_ = false;	// 発見時
+	isEngaged_ = false;	// 発見後
+	isSearching_ = false;// 捜索中
+	
 	// 初期遷移状態初期処理登録
 
 	stateChanges_.emplace(static_cast<int>(STATE::IDLE),
@@ -128,6 +134,10 @@ void BossPixie::InitPost(void)
 
 void BossPixie::UpdateProcess(void)
 {
+	// 索敵・注視関数
+	Search();
+	LookPlayer();
+
 	if (player_ == nullptr)
 	{
 	}
@@ -144,6 +154,113 @@ void BossPixie::UpdateProcessPost(void)
 
 }
 
+void BossPixie::DrawViewRange(void)
+{
+	// 三角形の視野
+	float viewRad = AsoUtility::Deg2RadF(VIEW_ANGLE);
+
+	// オイラー角に変換
+	VECTOR angles_ = Quaternion::ToEuler(transform_.quaRot);
+	VECTOR localAngles_ = Quaternion::ToEuler(transform_.quaRotLocal);
+
+	// 向き角度から方向を取得
+	MATRIX mat = MGetIdent();
+	VECTOR totalAngles = VAdd(angles_, localAngles_);
+	mat = MatrixUtility::GetMatrixRotateXYZ(totalAngles);
+
+	// 前方方向
+	VECTOR forward = VTransform(AsoUtility::DIR_B, mat);
+
+	// 右方向
+	MATRIX rightMat = MMult(mat, MGetRotY(AsoUtility::Deg2RadF(VIEW_ANGLE)));
+	VECTOR right = VTransform(AsoUtility::DIR_B, rightMat);
+
+	// 左方向
+	MATRIX leftMat = MMult(mat, MGetRotY(AsoUtility::Deg2RadF(-VIEW_ANGLE)));
+	VECTOR left = VTransform(AsoUtility::DIR_B, leftMat);
+
+	// 自分の位置
+	VECTOR pos0 = transform_.pos;
+
+	// 正面の位置
+	VECTOR pos1 = VAdd(pos0, VScale(forward, VIEW_RANGE));
+
+	// 正面から半時計周り
+	VECTOR pos2 = VAdd(pos0, VScale(left, VIEW_RANGE));
+
+	// 正面から時計回り
+	VECTOR pos3 = VAdd(pos0, VScale(right, VIEW_RANGE));
+
+	//// 視野の描画
+	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
+	DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
+	DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
+	DrawLine3D(pos0, pos1, 0xffff00);
+	DrawLine3D(pos0, pos2, 0xffff00);
+	DrawLine3D(pos0, pos3, 0xffff00);
+
+}
+
+void BossPixie::Search(void)
+{
+	// プレイヤーの位置
+	VECTOR playerPos = player_->GetTransform().pos;
+	// プレイヤーまでの距離をベクトル演算
+	VECTOR toPlayer = VSub(playerPos, transform_.pos);
+	// プレイヤーまでの距離を求める
+	float distance = VSize(toPlayer);
+
+	// 今プレイヤーが見えているのか
+	bool findPlayerNow = (distance < VIEW_RANGE);
+
+	// 視野範囲
+	// 未発見状態
+	if (state_ == STATE::IDLE && findPlayerNow)
+	{
+		// ボスの視野範囲に入った
+		isAlerted_ = true;
+		// プレイヤーの所在に気づいている(二回目以降はずっとtrue)
+		isUnaware_ = true;
+	}
+
+	// 発見後状態の未発見状態
+	if (isSearching_ && findPlayerNow)
+	{
+		// ボスの視野範囲に入った
+		isAlerted_ = true;
+	}
+
+}
+
+void BossPixie::LookPlayer(void)
+{
+	////プレイヤー（相手）の座標を取得
+	//VECTOR playerPos = player_->GetTransform().pos; //プレイヤー座標
+
+	////ベクトルを求める
+	//VECTOR diff = VSub(playerPos, transform_.pos);
+	//diff.y = 0.0f;
+
+	////ベクトルを正規化(これで方向を取得する)
+	//moveDir_ = VNorm(diff);
+
+	//// オイラー角に変換
+	//VECTOR angles_ = Quaternion::ToEuler(transform_.quaRot);
+
+	////Y軸回転の計算（XZ平面上の角度を求める）
+	//angles_.y = atan2(moveDir_.x, moveDir_.z);
+
+	////モデルの方向が正の負の方向を向いているので補正する
+	//angles_.y += AsoUtility::Deg2RadF(180.0f);
+
+	////回転はY軸のみ
+	//angles_.x = angles_.z = 0.0f;
+
+	////向きを設定
+	//MV1SetRotationXYZ(transform_.modelId, angles_);
+
+}
+
 void BossPixie::ChangeState(STATE state)
 {
 	state_ = state;
@@ -156,92 +273,129 @@ void BossPixie::ChangeState(STATE state)
 
 void BossPixie::ChangeStateIdle(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::IDLE), true);
 	stateUpdate_ = std::bind(&BossPixie::UpdateIdle, this);
-
 }
 
 void BossPixie::ChangeStateSurprise(void)
 {
-	stateUpdate_ = std::bind(&BossPixie::UpdateSurprise, this);
+	isAlerted_ = false;
 
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::SURPRISE), false);
+	stateUpdate_ = std::bind(&BossPixie::UpdateSurprise, this);
 }
 
 void BossPixie::ChangeStateCharge(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::CHARGE), false);
 	stateUpdate_ = std::bind(&BossPixie::UpdateCharge, this);
-
 }
 
 void BossPixie::ChangeStateThrow(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::THROW), false);
 	stateUpdate_ = std::bind(&BossPixie::UpdateThrow, this);
-
 }
 
 void BossPixie::ChangeStateAttackWave(void)
 {
 	stateUpdate_ = std::bind(&BossPixie::UpdateAttackWave, this);
-
 }
 
 void BossPixie::ChangeStateAttackEnd(void)
 {
-	stateUpdate_ = std::bind(&BossPixie::UpdateAttackEnd, this);
+	// 捜索フラグをここでtrueにすることで、発見後状態の未発見状態になる
+	isSearching_ = true;
 
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::ATTACK_END), false);
+	stateUpdate_ = std::bind(&BossPixie::UpdateAttackEnd, this);
 }
 
 void BossPixie::ChangeStateDamage(void)
 {
 	stateUpdate_ = std::bind(&BossPixie::UpdateDamage, this);
-
 }
 
 void BossPixie::ChangeStateDown(void)
 {
 	stateUpdate_ = std::bind(&BossPixie::UpdateDown, this);
-
 }
 
 void BossPixie::ChangeStateEnd(void)
 {
 	stateUpdate_ = std::bind(&BossPixie::UpdateEnd, this);
-
 }
 
 void BossPixie::UpdateIdle(void)
 {
-	transform_.pos = player_->GetTransform().pos;
-
+	// 発見したら驚き状態に遷移
+	if (isAlerted_) {
+		ChangeState(STATE::SURPRISE);
+	}
 }
 
 void BossPixie::UpdateSurprise(void)
 {
+
+	if (animationController_->IsEnd())
+	{
+		ChangeState(STATE::CHARGE);
+	}
+	
 }
 
 void BossPixie::UpdateCharge(void)
 {
+	if (animationController_->IsEnd())
+	{
+		ChangeState(STATE::THROW);
+	}
 }
 
 void BossPixie::UpdateThrow(void)
 {
+
+	if (animationController_->IsEnd())
+	{
+		ChangeState(STATE::ATTACK_END);
+	}
+
 }
 
 void BossPixie::UpdateAttackWave(void)
 {
+	// 体力が減少してきたらここ作るよー
+	// フェーズ管理で作成するよ
 }
 
 void BossPixie::UpdateAttackEnd(void)
 {
+
+
+	if (animationController_->IsEnd())
+	{
+		ChangeState(STATE::IDLE);
+	}
+
 }
 
 void BossPixie::UpdateDamage(void)
 {
+	// ダメージはギミック作ってから
+
 }
 
 void BossPixie::UpdateDown(void)
 {
+	// ここもダメージ同様
 }
 
 void BossPixie::UpdateEnd(void)
 {
+	// 特になし？
 }

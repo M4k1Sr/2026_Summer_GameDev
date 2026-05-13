@@ -31,7 +31,6 @@ public:
 	// ‰ğ•ú
 	virtual void Release(void) override;
 
-
 protected:
 
 	// Å‘å—‰º‘¬“x
@@ -77,6 +76,15 @@ protected:
 	virtual void UpdateProcess(void) = 0;
 	virtual void UpdateProcessPost(void) = 0;
 
+	//// õ“G
+	//virtual void Search(void) = 0;
+
+	//// ƒvƒŒƒCƒ„[‚ğ’‹‚·‚é
+	//virtual void LookPlayer(void) = 0;
+
+	//‹–ì•`‰æ
+	virtual void DrawViewRange(void) = 0;
+
 	// ˆÚ“®•ûŒü‚É‰‚¶‚½’x‰„‰ñ“]
 	void DelayRotate(void);
 
@@ -93,5 +101,7 @@ protected:
 	void DrawShadow(void);
 
 private:
+
+
 
 };

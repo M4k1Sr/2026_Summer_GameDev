@@ -23,6 +23,12 @@ public:
 		VECTOR defaultPos;
 	};
 
+	// 視野角
+	static constexpr float VIEW_ANGLE = 80.0f;
+
+	// 視野の広さ
+	static constexpr float VIEW_RANGE = 800.0f;
+
 	// コンストラクタ
 	BossBase(const BossBase::BossData& data);
 
@@ -74,7 +80,23 @@ protected:
 	// 更新ステップ
 	float step_;
 
+	// ボス通知フラグ
+	bool isUnaware_;	// 未発見
+	bool isAlerted_;	// 発見時
+	bool isEngaged_;	// 発見後
+	bool isSearching_;	// 捜索フラグ
+
 	// 更新系
 	virtual void UpdateProcessPost(void) override {}
+
+	// 索敵
+	virtual void Search(void) = 0;
+
+	// プレイヤーを注視する
+	virtual void LookPlayer(void) = 0;
+
+	// 視野描画
+	virtual void DrawViewRange(void) override {}
+
 
 };

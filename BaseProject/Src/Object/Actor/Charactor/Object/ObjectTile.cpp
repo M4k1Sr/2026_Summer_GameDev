@@ -140,6 +140,10 @@ void ObjectTile::UpdateProcessPost(void)
 	ObjectBase::UpdateProcessPost();
 }
 
+void ObjectTile::DrawViewRange(void)
+{
+}
+
 void ObjectTile::ChangeState(STATE state)
 {
 

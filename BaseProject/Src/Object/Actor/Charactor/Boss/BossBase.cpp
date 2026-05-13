@@ -1,4 +1,5 @@
 #include "../../../../Utility/AsoUtility.h"
+#include "../../../../Utility/MatrixUtility.h"
 #include "../Player.h"
 #include "BossBase.h"
 
@@ -31,3 +32,5 @@ void BossBase::ChangeState(int state)
 	stateChanges_[stateBase_]();
 
 }
+
+

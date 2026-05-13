@@ -135,6 +135,10 @@ void Player::UpdateProcessPost(void)
 {
 }
 
+void Player::DrawViewRange(void)
+{
+}
+
 void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();

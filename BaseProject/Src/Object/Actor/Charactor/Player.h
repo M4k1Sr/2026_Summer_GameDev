@@ -51,6 +51,9 @@ protected:
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
 
+	// ‹–ì•`‰æ
+	virtual void DrawViewRange(void) override;
+
 private:
 
 	// ƒvƒŒƒCƒ„[
