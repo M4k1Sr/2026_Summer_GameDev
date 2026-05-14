@@ -98,5 +98,6 @@ protected:
 	// 視野描画
 	virtual void DrawViewRange(void) override {}
 
-
+	// フェーズ管理
+	virtual void Phase(void) = 0;
 };

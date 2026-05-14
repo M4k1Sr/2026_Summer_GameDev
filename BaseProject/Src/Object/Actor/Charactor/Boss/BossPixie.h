@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "BossBase.h"
 #include "../CharactorBase.h"
+class Health;
 class AnimationController;
 
 class BossPixie : public BossBase
@@ -69,6 +70,9 @@ protected:
 	void DrawViewRange(void) override;
 
 private:
+
+	// HPŠÇ—
+	Health* health_;
 
 	// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³
 	static constexpr float SCALE = 3.0f;

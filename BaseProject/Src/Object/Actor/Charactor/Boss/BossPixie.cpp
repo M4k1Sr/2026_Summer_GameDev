@@ -7,6 +7,7 @@
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
 #include "../../../../Object/Common/Transform.h"
+#include "../../../../Object/Common/Health.h"
 #include "../../../../Object/Common/AnimationController.h"
 #include "../Player.h"
 #include "../../../Collider/ColliderLine.h"
@@ -43,7 +44,7 @@ void BossPixie::InitTransform(void)
 	// モデルの大きさ、回転、座標の初期化
 	transform_.scl = VGet(SCALE, SCALE, SCALE);
 	transform_.quaRot = Quaternion::Identity();
-	transform_.quaRotLocal = Quaternion::Euler(ROT.x, ROT.y + DX_PI_F, ROT.z);	// 素材モデルが反対向きなので矯正する
+	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();
 }
 
@@ -130,6 +131,8 @@ void BossPixie::InitPost(void)
 	// 初期状態設定
 	ChangeState(STATE::IDLE);
 
+	health_ = new Health();
+	health_->Init(1000);
 }
 
 void BossPixie::UpdateProcess(void)
@@ -217,7 +220,7 @@ void BossPixie::Search(void)
 	// 未発見状態
 	if (state_ == STATE::IDLE && findPlayerNow)
 	{
-		// ボスの視野範囲に入った
+		// ボスの視野範囲に入った	
 		isAlerted_ = true;
 		// プレイヤーの所在に気づいている(二回目以降はずっとtrue)
 		isUnaware_ = true;
@@ -234,30 +237,27 @@ void BossPixie::Search(void)
 
 void BossPixie::LookPlayer(void)
 {
-	////プレイヤー（相手）の座標を取得
-	//VECTOR playerPos = player_->GetTransform().pos; //プレイヤー座標
+	//プレイヤー（相手）の座標を取得
+	VECTOR playerPos = player_->GetTransform().pos; //プレイヤー座標
 
-	////ベクトルを求める
-	//VECTOR diff = VSub(playerPos, transform_.pos);
-	//diff.y = 0.0f;
+	//ベクトルを求める
+	VECTOR diff = VSub(playerPos, transform_.pos);
+	diff.y = 0.0f;
 
-	////ベクトルを正規化(これで方向を取得する)
-	//moveDir_ = VNorm(diff);
+	//ベクトルを正規化(これで方向を取得する)
+	moveDir_ = VNorm(diff);
 
-	//// オイラー角に変換
-	//VECTOR angles_ = Quaternion::ToEuler(transform_.quaRot);
+	// オイラー角に変換
+	VECTOR angles_ = Quaternion::ToEuler(transform_.quaRotLocal);
 
-	////Y軸回転の計算（XZ平面上の角度を求める）
-	//angles_.y = atan2(moveDir_.x, moveDir_.z);
+	//Y軸回転の計算（XZ平面上の角度を求める）
+	angles_.y = atan2(moveDir_.x, moveDir_.z);
 
-	////モデルの方向が正の負の方向を向いているので補正する
-	//angles_.y += AsoUtility::Deg2RadF(180.0f);
+	//回転はY軸のみ
+	angles_.x = angles_.z = 0.0f;
 
-	////回転はY軸のみ
-	//angles_.x = angles_.z = 0.0f;
-
-	////向きを設定
-	//MV1SetRotationXYZ(transform_.modelId, angles_);
+	//向きを設定
+	MV1SetRotationXYZ(transform_.modelId, angles_);
 
 }
 
@@ -380,6 +380,7 @@ void BossPixie::UpdateAttackEnd(void)
 	if (animationController_->IsEnd())
 	{
 		ChangeState(STATE::IDLE);
+
 	}
 
 }
@@ -387,7 +388,7 @@ void BossPixie::UpdateAttackEnd(void)
 void BossPixie::UpdateDamage(void)
 {
 	// ダメージはギミック作ってから
-
+	health_->TakeDamage(100);
 }
 
 void BossPixie::UpdateDown(void)
