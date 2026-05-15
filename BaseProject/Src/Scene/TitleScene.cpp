@@ -72,15 +72,12 @@ void TitleScene::Init(void)
 void TitleScene::Update(void)
 {
 
-	if (!isEnd_)
+	// シーン遷移
+	auto const& ins = InputManager::GetInstance();
+	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
 	{
-		auto& ins = InputManager::GetInstance();
-
-		//ゲームシーンへ遷移
-		if (ins.IsTrgDown(KEY_INPUT_SPACE))
-		{
-			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
-		}
+		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
+	}
 
 		//ポーズ画面へ
 		if (ins.IsTrgDown(KEY_INPUT_ESCAPE))

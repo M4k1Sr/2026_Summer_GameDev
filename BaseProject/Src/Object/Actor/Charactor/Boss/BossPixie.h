@@ -1,37 +1,36 @@
 #pragma once
 #include <DxLib.h>
-#include "ObjectBase.h"
+#include "BossBase.h"
 #include "../CharactorBase.h"
+class Health;
 class AnimationController;
 
-class ObjectTile : public ObjectBase
+class BossPixie : public BossBase
 {
 public:
 
-	// 状態
-	enum class STATE
+	// アニメーション種別
+	enum class ANIM_TYPE
 	{
-		NONE,
-		STOP,
-		UP,
+		IDLE,
+		SURPRISE,
+		CHARGE,
+		THROW,
+		ATTACK_WAVE,
+		ATTACK_END,
+		DAMAGE,
 		DOWN,
 		END,
+		MAX,
 	};
 
+
+
 	// コンストラクタ
-	ObjectTile(const ObjectBase::ObjectData& data);
+	BossPixie(const BossBase::BossData& data);
 
 	// デストラクタ
-	~ObjectTile(void) override;
-
-	// デバッグ描画処理
-	void Draw(void) override;
-
-	// 動く床の速度取得
-	VECTOR GetVelocity(void) const { return velocity_; }
-
-	// 床の座標取得
-	VECTOR GetPos(void) const { return transform_.pos; }
+	~BossPixie(void) override;
 
 protected:
 
@@ -59,9 +58,12 @@ protected:
 
 private:
 
-	// モデルの大きさ
-	static constexpr float SCALE = 0.5f;
+	// HP管理
+	Health* health_;
 
+	// モデルの大きさ
+	static constexpr float SCALE = 3.0f;
+	
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
@@ -80,50 +82,39 @@ private:
 	// 衝突判定用カプセル球体半径
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
 
-	// タイルの上昇時間
-	static constexpr float MOVE_TIME = 4.0f;
+	// 衝突判定用カプセル球体半径
+	static constexpr float STATE_THROW_TIME = 20.0f;
 
-	// タイルの上昇範囲
-	static constexpr float MOVE_UP_TILE = 300.0f;
+	// 衝突判定用カプセル球体半径
+	static constexpr float STATE_ATTACK_WAVE_TIME = 10.0f;
 
-	// 初期位置
-	VECTOR startPos_;
-
-	// 移動する場所
-	VECTOR movePlacePos_;
-
-	// 前フレームの位置
-	VECTOR prevPos_;    
-
-	// 移動速度
-	VECTOR velocity_;  
-
-	// 移動時間
-	float moveTime_;
-
-	// 経過時間
-	float moveTimer_;
-
-	// 状態
-	STATE state_;
-
-	// 更新ステップ
-	float step_;
+	// 索敵
+	void Search(void);
+	// プレイヤーを注視する
+	void LookPlayer(void);
 
 	void ChangeState(STATE state);
-	void ChangeStateNone(void);
-	void ChangeStateStop(void);
-	void ChangeStateRight(void);
-	void ChangeStateLeft(void);
+	void ChangeStateIdle(void);
+	void ChangeStateSurprise(void);
+	void ChangeStateCharge(void);
+	void ChangeStateThrow(void);
+	void ChangeStateAttackWave(void);
+	void ChangeStateAttackEnd(void);
+	void ChangeStateDamage(void);
+	void ChangeStateDown(void);
 	void ChangeStateEnd(void);
 
-	void UpdateNone(void);
-	void UpdateStop(void);
-	void UpdateUp(void);
+	void UpdateIdle(void);
+	void UpdateSurprise(void);
+	void UpdateCharge(void);
+	void UpdateThrow(void);
+	void UpdateAttackWave(void);
+	void UpdateAttackEnd(void);
+	void UpdateDamage(void);
 	void UpdateDown(void);
 	void UpdateEnd(void);
 
-	// 床移動処理
-	void UpdateProcessFloorMove(void);
+	// フェーズ管理
+	void Phase(void);
 
 };

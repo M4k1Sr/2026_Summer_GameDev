@@ -4,6 +4,7 @@
 class Stage;
 class SkyDome;
 class Player;
+class BossManager;
 class UI;
 class ObjectManager;
 
@@ -44,8 +45,12 @@ private:
 	// プレイヤー
 	Player* player_;
 
+	// ボス
+	BossManager* bossMng_;
+
 	//UI
 	UI* ui_;
+
 	
 	// オブジェクト
 	ObjectManager* objMng_;
