@@ -21,40 +21,23 @@ IronBall::~IronBall(void)
 
 void IronBall::Update(void)
 {
-	// --- 振り子の角度計算 ---
-
-		// 1. 時間をもとにサイン波を作る (GetNowCountを使用)
-		// 1000.0f で割っている数値を変えると「振るスピード」が変わります
-	float time = GetNowCount() / 1000.0f;
-
-	// 2. 振れ幅（角度）を決める
-	// 例：45度の範囲で揺らしたい場合
-	float maxDegree = 45.0f;
-	float currentDegree = sinf(time * 2.0f) * maxDegree; // 2.0fは速さの倍率
-
-	// 3. クォータニオンをその角度で「上書き」する（Multで足し続けないのがコツ）
-	transform_.quaRot = Quaternion::Euler(AsoUtility::Deg2RadF(currentDegree), 0.0f, 0.0f);
-
-	// --- 座標の計算（前回と同じ） ---
-
-	// 支点（モデルの初期位置の 100 上）
-	VECTOR pivot = VAdd(IRON_BALL_POS, VGet(0.0f, CHAIN_END_POS, 0.0f));
-
-	// 支点から見たモデルの相対位置（100 下）
-	VECTOR offset = VGet(0.0f, -CHAIN_END_POS, 0.0f);
-
-	// 回転させたオフセットを支点に足す
-	transform_.pos = VAdd(pivot, transform_.quaRot.PosAxis(offset));
-
-	//更新
-	transform_.Update();
+	// 全てのインスタンスを更新
+	for (auto& instance : instances_) {
+		Pendulum(instance);
+		instance.transform.Update();
+	}
 }
 
 void IronBall::Draw(void)
 {
-	// モデル描画
-	MV1DrawModel(transform_.modelId);
+	float bright = 1.5f;
+	COLOR_F color = GetColorF(bright, bright, bright, 1.0f);
 
+	// 全てのインスタンスを描画
+	for (auto& instance : instances_) {
+		MV1SetDifColorScale(instance.transform.modelId, color);
+		MV1DrawModel(instance.transform.modelId);
+	}
 }
 
 void IronBall::Release(void)
@@ -63,9 +46,22 @@ void IronBall::Release(void)
 
 void IronBall::InitLoad(void)
 {
-	// モデル読み込み
-	transform_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::IRON_BALL));
+	// 指定した個数分、モデルを読み込んで初期化
+	for (int i = 0; i < INSTANCE_COUNT; ++i) {
+		InstanceData data;
+
+		// モデルの複製（メモリ節約のためDuplicateを使用）
+		data.transform.SetModel(resMng_.LoadModelDuplicate(ResourceManager::SRC::IRON_BALL));
+
+		// 座標をずらして設定
+		data.basePos = VAdd(IRON_BALL_POS, VGet(0.0f, 0.0f, -(i * INTERVAL_X)));
+		data.transform.scl = IRON_BALL_SCALE;
+
+		// タイミングを少しずつずらす（0.5秒ずつ）
+		data.timeOffset = i * 0.5f;
+
+		instances_.push_back(data);
+	}
 }
 
 void IronBall::InitTransform(void)
@@ -88,4 +84,21 @@ void IronBall::InitAnimation(void)
 
 void IronBall::InitPost(void)
 {
+}
+
+void IronBall::Pendulum(InstanceData& data)
+{
+	// 時間計算（個別のオフセットを加算）
+	float time = (GetNowCount() / 1000.0f) + data.timeOffset;
+
+	float maxDegree = 45.0f;
+	float currentDegree = sinf(time * 2.0f) * maxDegree;
+
+	// 回転の設定
+	data.transform.quaRot = Quaternion::Euler(0.0f, 0.0f, AsoUtility::Deg2RadF(currentDegree));
+
+	// 座標計算
+	VECTOR pivot = VAdd(data.basePos, VGet(0.0f, CHAIN_END_POS, 0.0f));
+	VECTOR offset = VGet(0.0f, -CHAIN_END_POS, 0.0f);
+	data.transform.pos = VAdd(pivot, data.transform.quaRot.PosAxis(offset));
 }

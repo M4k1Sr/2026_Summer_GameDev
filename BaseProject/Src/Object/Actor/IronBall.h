@@ -16,6 +16,7 @@ public:
 
 	// コンストラクタ
 	IronBall(void);
+
 	// デストラクタ
 	~IronBall(void) override;
 
@@ -45,17 +46,39 @@ protected:
 
 private:
 
-	// 鉄球の座標
-	Transform ironBall;
+	// 各個体の位置情報を管理する構造体
+	struct InstanceData {
+
+		// 初期の支点座標
+		VECTOR basePos;    
+
+		// 現在の座標・回転・モデルID
+		Transform transform;
+
+		// 揺れるタイミングをずらすためのオフセット
+		float timeOffset; 
+	};
+
+	// 複数の鉄球データ
+	std::vector<InstanceData> instances_; 
+
+	// 振り子計算（個別のデータを渡すように変更）
+	void Pendulum(InstanceData& data);
+
+	// 描画したい個数
+	static constexpr int INSTANCE_COUNT = 3;   
+
+	// 横の間隔
+	static constexpr float INTERVAL_X = 300.0f;      
 
 	// 鉄球の座標
-	static constexpr VECTOR IRON_BALL_POS = { 0.0f, 50.0f, 0.0f };
+	static constexpr VECTOR IRON_BALL_POS = { 330.0f, 275.0f, 0.0f };
 
 	// 鎖の先端の座標
-	static constexpr float CHAIN_END_POS = 40.0f;
+	static constexpr float CHAIN_END_POS = 130.0f;
 
 	//鉄球の大きさ
-	static constexpr VECTOR IRON_BALL_SCALE = { 0.2f, 0.2f, 0.2f };
+	static constexpr VECTOR IRON_BALL_SCALE = { 0.6f, 0.6f, 0.6f };
 
 };
 

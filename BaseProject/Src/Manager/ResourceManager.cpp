@@ -80,15 +80,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
 
-<<<<<<< HEAD
+
 	// 鉄球モデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/IronBall.mv1");
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
 	// タイトルPush画像
-=======
-	// 時計画像
->>>>>>> origin/譚ｾ蟯｡
+
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::OBJECT_CLOCK, res);
 
