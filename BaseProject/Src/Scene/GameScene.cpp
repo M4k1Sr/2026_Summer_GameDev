@@ -8,7 +8,6 @@
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/Charactor/Player.h"
-#include "../Object/Actor/Charactor/Boss/BossManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
@@ -20,7 +19,6 @@ GameScene::GameScene(void)
 	stage_(nullptr),
 	skyDome_(nullptr),
 	player_(nullptr),
-	bossMng_(nullptr),
 	ui_(nullptr),
 	objMng_(nullptr),
 	isPause_(false),
@@ -46,10 +44,6 @@ void GameScene::Init(void)
 	stage_ = new Stage();
 	stage_->Init();
 
-	// オブジェクト初期化
-	objMng_ = new ObjectManager();
-	objMng_->Init();
-
 	// プレイヤー初期化
 	player_ = new Player();
 	player_->Init();
@@ -72,31 +66,6 @@ void GameScene::Init(void)
 	const ColliderBase* stageCollider =
 		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
-
-	// ボス初期化
-	bossMng_ = new BossManager();
-	bossMng_->SetPlayer(player_);
-	bossMng_->Init();
-
-	// ボス(全て)のコライダーを登録
-	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
-	for (const auto& boss : bosses)
-	{
-		// ボスがモデルコライダーを持っていれば登録
-		const ColliderBase* bossCollider =
-		boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
-		if (bossCollider != nullptr)
-		{
-			player_->AddHitCollider(bossCollider);
-		}
-	}
-
-	// ステージモデルのコライダーをボスに登録
-	bossMng_->AddHitCollider(stageCollider);
-
-	// スカイドーム初期化
-	skyDome_ = new SkyDome(player_->GetTransform());
-	skyDome_->Init();
 
 	// オブジェクト(全て)のコライダーを登録
 	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
@@ -142,29 +111,27 @@ void GameScene::Update(void)
 		// ステージ更新
 		stage_->Update();
 
+		// プレイヤー更新
+		player_->Update();
+
+
+
 		// スカイドーム更新
 		skyDome_->Update();
-
+		
 		// UI更新
 		ui_->Update();
 
 		// オブジェクト更新
 		objMng_->Update();
-
-		// プレイヤー更新
-		player_->Update();
-
-		// ボス更新
-		bossMng_->Update();
+	}
 
 
-		//ゲーム終了フラグ :時間制限
-		isEnd_ = ui_->GetIsGameOver();
+	//ゲーム終了フラグ :時間制限
+	isEnd_ = ui_->GetIsGameOver();
 
-		// シーン遷移
-		auto const& ins = InputManager::GetInstance();
-		if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
-		{
+	if (isEnd_)
+	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 	}
 }
@@ -176,23 +143,16 @@ void GameScene::Draw(void)
 
 	// ステージ描画
 	stage_->Draw();
-	// オブジェクト描画
-	objMng_->Draw();
 
 
 	// プレイヤー描画
 	player_->Draw();
-	// ボス描画
-	bossMng_->Draw();
-
-
-
+	
 	// UI描画
 	ui_->Draw();
 
 	// オブジェクト描画
 	objMng_->Draw();
-
 
 	////ポーズ画面
 	IsPause();
@@ -208,7 +168,7 @@ void GameScene::Release(void)
 	// スカイドーム解放
 	skyDome_->Release();
 	delete skyDome_;
-
+	
 	// UI解放
 	ui_->Release();
 	delete ui_;
@@ -242,7 +202,7 @@ void GameScene::IsPause(void)
 
 		SetFontSize(64);
 
-		DrawBox(400, 200, 1600, 400, 0xffffff, false);
+		DrawBox(400,200,1600,400, 0xffffff, false);
 		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
 
 		DrawBox(400, 600, 1600, 800, 0xffffff, false);
@@ -295,5 +255,5 @@ void GameScene::IsPause(void)
 
 	}
 
-
+		
 }

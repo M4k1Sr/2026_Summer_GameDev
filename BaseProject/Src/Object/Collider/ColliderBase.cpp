@@ -1,4 +1,4 @@
- #include "../Common/Transform.h"
+#include "../Common/Transform.h"
 #include "ColliderBase.h"
 
 ColliderBase::ColliderBase(SHAPE shape, TAG tag, const Transform* follow)
@@ -34,13 +34,10 @@ void ColliderBase::SetFollow(Transform* follow)
 
 VECTOR ColliderBase::GetRotPos(const VECTOR& localPos) const
 {
-	//// 追従相手の回転に合わせて指定ローカル座標を回転し、
-	//// 基準座標に加えることでワールド座標へ変換
-	////VECTOR localRotPos = follow_->quaRot.PosAxis(localPos);
-	VECTOR localRotPos = Quaternion::PosAxis(follow_->quaRot, localPos);
-	VECTOR worldPos = VAdd(follow_->pos, localRotPos);
-
-	return worldPos;
+	// 追従相手の回転に合わせて指定ローカル座標を回転し、
+	// 基準座標に加えることでワールド座標へ変換
+	VECTOR localRotPos = follow_->quaRot.PosAxis(localPos);
+	return VAdd(follow_->pos, localRotPos);
 }
 
 

@@ -21,6 +21,7 @@ Stage::~Stage(void)
 
 void Stage::Update(void)
 {
+
 	transform_.Update();
 }
 

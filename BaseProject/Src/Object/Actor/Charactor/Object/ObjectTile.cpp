@@ -1,4 +1,4 @@
-	#include <DxLib.h>
+#include <DxLib.h>
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Manager/InputManager.h"
 #include "../../../../Manager/SceneManager.h"
@@ -23,29 +23,6 @@ ObjectTile::ObjectTile(const ObjectBase::ObjectData& data)
 
 ObjectTile::~ObjectTile(void)
 {
-}
-
-void ObjectTile::Draw(void)
-{
-	ObjectBase::Draw();
-#ifdef _DEBUG
-
-	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-	//// pos_ は ObjectBase のメンバ変数であると想定しています
-	//DrawFormatString(50, 100, GetColor(0, 0, 0),
-	//	"Tile Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
-
-	//DrawFormatString(70, 120, GetColor(0, 0, 0),
-	//	"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	velocity_.x, velocity_.y, velocity_.z);
-	
-	// コライダーのデバッグ描画（もしメソッドがあれば）
-	for (auto& col : ownColliders_) {
-		col.second->Draw();
-	}
-
-#endif
 }
 
 void ObjectTile::InitLoad(void)
@@ -108,10 +85,10 @@ void ObjectTile::InitPost(void)
 		std::bind(&ObjectTile::ChangeStateStop, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::UP),
-		std::bind(&ObjectTile::ChangeStateRight, this));
+		std::bind(&ObjectTile::ChangeStateUp, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::DOWN),
-		std::bind(&ObjectTile::ChangeStateLeft, this));
+		std::bind(&ObjectTile::ChangeStateDown, this));
 
 	stateChanges_.emplace(static_cast<int>(STATE::END),
 		std::bind(&ObjectTile::ChangeStateEnd, this));
@@ -119,10 +96,6 @@ void ObjectTile::InitPost(void)
 	// 初期状態設定
 	ChangeState(STATE::UP);
 
-	// 自分の transform_ のアドレスをコライダーに叩き込む
-	for (auto& col : ownColliders_) {
-		col.second->SetFollow(&this->transform_);
-	}
 }
 
 void ObjectTile::UpdateProcess(void)
@@ -131,6 +104,7 @@ void ObjectTile::UpdateProcess(void)
 	// 状態別更新
 	stateUpdate_();
 
+	
 }
 
 void ObjectTile::UpdateProcessPost(void)
@@ -138,10 +112,6 @@ void ObjectTile::UpdateProcessPost(void)
 	transform_.Update();
 
 	ObjectBase::UpdateProcessPost();
-}
-
-void ObjectTile::DrawViewRange(void)
-{
 }
 
 void ObjectTile::ChangeState(STATE state)
@@ -166,7 +136,7 @@ void ObjectTile::ChangeStateStop(void)
 
 }
 
-void ObjectTile::ChangeStateRight(void)
+void ObjectTile::ChangeStateUp(void)
 {
 	
 	// 経過時間
@@ -177,13 +147,13 @@ void ObjectTile::ChangeStateRight(void)
 	// 初期位置
 	startPos_ = transform_.pos;
 	// 移動する場所
-	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_R, MOVE_UP_TILE));
+	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_U, MOVE_UP_TILE));
 
 	stateUpdate_ = std::bind(&ObjectTile::UpdateUp, this);
 
 }
 
-void ObjectTile::ChangeStateLeft(void)
+void ObjectTile::ChangeStateDown(void)
 {
 	// 経過時間
 	moveTimer_ = 0.0f;
@@ -193,7 +163,7 @@ void ObjectTile::ChangeStateLeft(void)
 	// 初期位置
 	startPos_ = transform_.pos;
 	// 移動する場所
-	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_L, MOVE_UP_TILE));
+	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_D, MOVE_UP_TILE));
 
 	stateUpdate_ = std::bind(&ObjectTile::UpdateDown, this);
 }
@@ -238,9 +208,6 @@ void ObjectTile::UpdateEnd(void)
 
 void ObjectTile::UpdateProcessFloorMove(void)
 {
-	// 移動前の位置を保存
-	prevPos_ = transform_.pos;
-
 	// 経過時間取得(デルタタイム)
 	moveTimer_ += SceneManager::GetInstance().GetDeltaTime();
 	// 線形補間用ステップ計算
@@ -250,18 +217,11 @@ void ObjectTile::UpdateProcessFloorMove(void)
 	if (moveTimer_ > moveTime_)
 	{
 		transform_.pos = movePlacePos_;
-	}
-	else
-	{
-		// 線形補間で移動(これでオーバーせずにピタッと止まる)
-		transform_.pos = AsoUtility::Lerp(startPos_, movePlacePos_, t);
+		return;
 	}
 
+	// 線形補間で移動(これでオーバーせずにピタッと止まる)
+	transform_.pos = AsoUtility::Lerp(startPos_, movePlacePos_, t);
 	transform_.Update();
 
-	// モデルを最新行列に合わせる
-	MV1RefreshCollInfo(transform_.modelId, -1);
-
-	// 移動速度計算
-	velocity_ = VSub(transform_.pos, prevPos_);
 }

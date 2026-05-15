@@ -24,14 +24,8 @@ public:
 	// デストラクタ
 	~ObjectTile(void) override;
 
-	// デバッグ描画処理
-	void Draw(void) override;
-
 	// 動く床の速度取得
 	VECTOR GetVelocity(void) const { return velocity_; }
-
-	// 床の座標取得
-	VECTOR GetPos(void) const { return transform_.pos; }
 
 protected:
 
@@ -53,9 +47,6 @@ protected:
 	// 更新系
 	void UpdateProcess(void) override;
 	void UpdateProcessPost(void) override;
-
-	// 視野描画
-	void DrawViewRange(void) override;
 
 private:
 
@@ -113,8 +104,8 @@ private:
 	void ChangeState(STATE state);
 	void ChangeStateNone(void);
 	void ChangeStateStop(void);
-	void ChangeStateRight(void);
-	void ChangeStateLeft(void);
+	void ChangeStateUp(void);
+	void ChangeStateDown(void);
 	void ChangeStateEnd(void);
 
 	void UpdateNone(void);

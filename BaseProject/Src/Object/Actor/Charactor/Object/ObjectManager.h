@@ -37,9 +37,6 @@ public:
 
 	// オブジェクト生成
 	ObjectBase* Create(const ObjectBase::ObjectData& data);
-		
-	// プレイヤーの足元の判定用に追加
-	ObjectTile* GetTileAt(const VECTOR& pos);
 
 private:
 

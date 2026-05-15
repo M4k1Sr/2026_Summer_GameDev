@@ -86,7 +86,3 @@ void ObjectBox::UpdateProcessPost(void)
 {
 }
 
-void ObjectBox::DrawViewRange(void)
-{
-}
-

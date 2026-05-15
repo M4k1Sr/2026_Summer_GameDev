@@ -28,7 +28,7 @@ public:
 
 	// ‰ğ•ú
 	virtual void Release(void);
-	
+
 	// ‘å‚«‚³A‰ñ“]AÀ•W“™‚Ìæ“¾
 	const Transform& GetTransform(void) const;
 

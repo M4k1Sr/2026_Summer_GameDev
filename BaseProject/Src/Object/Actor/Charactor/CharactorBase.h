@@ -76,20 +76,12 @@ protected:
 	virtual void UpdateProcess(void) = 0;
 	virtual void UpdateProcessPost(void) = 0;
 
-	//// 索敵
-	//virtual void Search(void) = 0;
-
-	//// プレイヤーを注視する
-	//virtual void LookPlayer(void) = 0;
-
-	//視野描画
-	virtual void DrawViewRange(void) = 0;
-
 	// 移動方向に応じた遅延回転
 	void DelayRotate(void);
 
 	// 重力計算
 	void CalcGravityPow(void);
+
 
 	// 衝突判定
 	virtual void CollisionReserve(void) {}
@@ -102,6 +94,7 @@ protected:
 
 private:
 
-
+	// 床オブジェクト
+	ObjectTile* objTile_;
 
 };

@@ -72,14 +72,4 @@ public:
 	// 対象方向を取得
 	VECTOR GetDir(const VECTOR& dir) const;
 
-	// Updateで計算した最終的な行列を返す関数
-	MATRIX GetWorldMatrix() const {
-		MATRIX mat = MGetIdent();
-		mat = MMult(mat, matScl);
-		Quaternion q = quaRot.Mult(quaRotLocal);
-		mat = MMult(mat, q.ToMatrix());
-		mat = MMult(mat, matPos);
-		return mat;
-	}
-
 };

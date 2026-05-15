@@ -158,7 +158,7 @@ void DebugScene::PlaceDebugPoint(void)
 void DebugScene::SavePoints(void)
 {
 
-	std::ofstream ofs("Data/Csv/ObjectData.txt");
+	std::ofstream ofs("Data/Csv/PointSave.txt");
 	if (!ofs) {
 		return;
 	}

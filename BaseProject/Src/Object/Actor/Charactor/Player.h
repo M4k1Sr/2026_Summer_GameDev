@@ -1,6 +1,5 @@
 #pragma once
 #include "./CharactorBase.h"
-class ObjectManager;
 
 class Player : public CharactorBase
 {
@@ -21,14 +20,11 @@ public:
 	// デストラクタ
 	virtual ~Player(void) override;
 
-	// 描画
-	void Draw(void) override;
-
+	//// 描画
+	//void Draw(void) override;
 	// 解放
 	void Release(void) override;
 
-	// オブジェクトマネージャーのセット
-	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
 
 protected:
 
@@ -51,16 +47,11 @@ protected:
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
 
-	// 視野描画
-	virtual void DrawViewRange(void) override;
-
 private:
 
 	// プレイヤー
 	Transform player_;
 
-	// オブジェクトマネージャー
-	ObjectManager* objMng_ = nullptr;
 
 	// プレイヤー座標
 	static constexpr VECTOR PLAYER_POS = { 0.0f, 0.0f, 0.0f };
