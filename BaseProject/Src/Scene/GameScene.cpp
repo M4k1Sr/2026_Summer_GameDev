@@ -29,7 +29,7 @@ GameScene::GameScene(void)
 	sousaImg_(-1),
 	mosPosX_(0),
 	mosPosY_(0),
-	isEnd_(false),
+	isEnd_(true),
 	SceneBase()
 {
 }
@@ -139,7 +139,7 @@ void GameScene::Update(void)
 
 	if (isEnd_)
 	{
-
+		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 	}
 }
 
