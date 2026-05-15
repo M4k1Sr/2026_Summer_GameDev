@@ -15,6 +15,30 @@ public:
 		DIABLO,
 	};
 
+	// ボスのフェーズ状態
+	enum class PHASE_STEP
+	{
+		PHASE_IDLE,	// 初期
+		PHASE_ENCOUNT,// 序盤
+		PHASE_TACTICAL,// 中盤
+		PHASE_CLIMAX,// 終盤
+		PHASE_DEAD,	// 決着
+	};
+
+	// 状態
+	enum class STATE
+	{
+		IDLE,
+		SURPRISE,
+		CHARGE,
+		THROW,
+		ATTACK_WAVE,
+		ATTACK_END,
+		DAMAGE,
+		DOWN,
+		END,
+	};
+
 	// オブジェクトデータ
 	struct BossData
 	{
@@ -77,15 +101,20 @@ protected:
 	// 経過時間
 	float stateTimer_;
 
-	// 更新ステップ
-	float step_;
-
 	// ボス通知フラグ
-	bool isUnaware_;	// 未発見
-	bool isAlerted_;	// 発見時
-	bool isEngaged_;	// 発見後
-	bool isSearching_;	// 捜索フラグ
+	bool isUnaware_;	// 未発見:true	発見後:false
+	bool isAlerted_;	// 発見時:true
+	bool isEngaged_;	// 発見後:true
+	bool isSearching_;	// 捜索フラグ:true
 
+
+	// 状態
+	STATE state_;
+
+	// フェーズ状態
+	PHASE_STEP phaseStep_;
+
+	
 	// 更新系
 	virtual void UpdateProcessPost(void) override {}
 

@@ -24,26 +24,13 @@ public:
 		MAX,
 	};
 
-	// 状態
-	enum class STATE
-	{
-		IDLE,
-		SURPRISE,
-		CHARGE,
-		THROW,
-		ATTACK_WAVE,
-		ATTACK_END,
-		DAMAGE,
-		DOWN,
-		END,
-	};
+
 
 	// コンストラクタ
 	BossPixie(const BossBase::BossData& data);
 
 	// デストラクタ
 	~BossPixie(void) override;
-
 
 protected:
 
@@ -100,8 +87,6 @@ private:
 
 	// 衝突判定用カプセル球体半径
 	static constexpr float STATE_ATTACK_WAVE_TIME = 10.0f;
-	// 状態
-	STATE state_;
 
 	// 索敵
 	void Search(void);
@@ -128,5 +113,8 @@ private:
 	void UpdateDamage(void);
 	void UpdateDown(void);
 	void UpdateEnd(void);
+
+	// フェーズ管理
+	void Phase(void);
 
 };

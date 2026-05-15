@@ -131,6 +131,9 @@ void BossPixie::InitPost(void)
 	// 初期状態設定
 	ChangeState(STATE::IDLE);
 
+	// 初期フェーズ
+	phaseStep_ = (PHASE_STEP::PHASE_IDLE);
+
 	health_ = new Health();
 	health_->Init(1000);
 }
@@ -147,11 +150,18 @@ void BossPixie::UpdateProcess(void)
 
 	// 状態別更新
 	stateUpdate_();
+
+	if (CheckHitKey(KEY_INPUT_K)) {
+		health_->TakeDamage(10);
+	}
 }
 
 void BossPixie::UpdateProcessPost(void)
 {
 	transform_.Update();
+
+	// 一定量のダメージを受けたらフェーズが進む
+	Phase();
 
 	BossBase::UpdateProcessPost();
 
@@ -202,6 +212,19 @@ void BossPixie::DrawViewRange(void)
 	DrawLine3D(pos0, pos2, 0xffff00);
 	DrawLine3D(pos0, pos3, 0xffff00);
 
+	std::string phaseName = "";
+
+	// 列挙型を分かりやすい文字列に変換する
+	switch (phaseStep_)
+	{
+	case PHASE_STEP::PHASE_IDLE:     phaseName = "IDLE (未発見)"; break;
+	case PHASE_STEP::PHASE_ENCOUNT:  phaseName = "ENCOUNT (序盤)"; break;
+	case PHASE_STEP::PHASE_TACTICAL: phaseName = "TACTICAL (中盤)"; break;
+	case PHASE_STEP::PHASE_CLIMAX:   phaseName = "CLIMAX (終盤)"; break;
+	case PHASE_STEP::PHASE_DEAD:     phaseName = "DEAD (死亡)"; break;
+	default:                         phaseName = "UNKNOWN (エラー)"; break;
+	}
+	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 }
 
 void BossPixie::Search(void)
@@ -222,8 +245,8 @@ void BossPixie::Search(void)
 	{
 		// ボスの視野範囲に入った	
 		isAlerted_ = true;
-		// プレイヤーの所在に気づいている(二回目以降はずっとtrue)
-		isUnaware_ = true;
+		// プレイヤーの所在に気づいている(二回目以降はずっと気づいている状態なのでfalse)
+		isUnaware_ = false;
 	}
 
 	// 発見後状態の未発見状態
@@ -303,6 +326,11 @@ void BossPixie::ChangeStateThrow(void)
 
 void BossPixie::ChangeStateAttackWave(void)
 {
+	if (phaseStep_ == (PHASE_STEP::PHASE_TACTICAL))
+	{
+		animationController_->Play(
+			static_cast<int>(ANIM_TYPE::ATTACK_WAVE), false);
+	}
 	stateUpdate_ = std::bind(&BossPixie::UpdateAttackWave, this);
 }
 
@@ -353,13 +381,20 @@ void BossPixie::UpdateCharge(void)
 {
 	if (animationController_->IsEnd())
 	{
-		ChangeState(STATE::THROW);
+		if (phaseStep_ == (PHASE_STEP::PHASE_ENCOUNT))
+		{
+			ChangeState(STATE::THROW);
+		}
+		else if (phaseStep_ == (PHASE_STEP::PHASE_TACTICAL))
+			ChangeState(STATE::ATTACK_WAVE);
+		else {
+			ChangeState(STATE::THROW);
+		}
 	}
 }
 
 void BossPixie::UpdateThrow(void)
 {
-
 	if (animationController_->IsEnd())
 	{
 		ChangeState(STATE::ATTACK_END);
@@ -369,26 +404,26 @@ void BossPixie::UpdateThrow(void)
 
 void BossPixie::UpdateAttackWave(void)
 {
-	// 体力が減少してきたらここ作るよー
-	// フェーズ管理で作成するよ
+	if (animationController_->IsEnd())
+	{
+		ChangeState(STATE::CHARGE);
+	}
 }
 
 void BossPixie::UpdateAttackEnd(void)
 {
-
-
 	if (animationController_->IsEnd())
 	{
-		ChangeState(STATE::IDLE);
-
+		ChangeState(STATE::CHARGE);
 	}
-
 }
 
 void BossPixie::UpdateDamage(void)
 {
 	// ダメージはギミック作ってから
 	health_->TakeDamage(100);
+
+
 }
 
 void BossPixie::UpdateDown(void)
@@ -399,4 +434,31 @@ void BossPixie::UpdateDown(void)
 void BossPixie::UpdateEnd(void)
 {
 	// 特になし？
+}
+
+void BossPixie::Phase(void)
+{
+	// HP
+	int bossHp_ = health_->GetHp();
+	
+	// もし未発見フェーズはIDLE状態	
+	// 発見後未発見フェーズ以降はエンカウント以上のフェーズに進む
+	if (!isUnaware_) {
+		phaseStep_ = PHASE_STEP::PHASE_IDLE;
+	}
+	
+	// HP量に応じてフェーズが進む
+	if (bossHp_ <= 0) {
+		phaseStep_ = PHASE_STEP::PHASE_DEAD;
+	}
+	else if (bossHp_ < 400) {
+		phaseStep_ = PHASE_STEP::PHASE_CLIMAX;
+	}
+	else if (bossHp_ < 700) {
+		phaseStep_ = PHASE_STEP::PHASE_TACTICAL;
+	}
+	else if (bossHp_ < 1000) {
+		phaseStep_ = PHASE_STEP::PHASE_ENCOUNT;
+	}
+
 }
