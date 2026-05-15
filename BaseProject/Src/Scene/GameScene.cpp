@@ -9,6 +9,7 @@
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
+#include"../Ranking/Ranking.h"
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
 #include "../Application.h"
@@ -21,13 +22,15 @@ GameScene::GameScene(void)
 	player_(nullptr),
 	ui_(nullptr),
 	objMng_(nullptr),
+	rank_(nullptr),
 	isPause_(false),
 	pauseImg_(-1),
 	isSousa_(false),
 	sousaImg_(-1),
 	mosPosX_(0),
 	mosPosY_(0),
-	isEnd_(true),
+	isEnd_(false),
+	isClear_(false),
 	SceneBase()
 {
 }
@@ -59,6 +62,8 @@ void GameScene::Init(void)
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
+
+	rank_->CreateIns();
 
 
 
@@ -130,9 +135,25 @@ void GameScene::Update(void)
 	//ゲーム終了フラグ :時間制限
 	isEnd_ = ui_->GetIsGameOver();
 
+	//ゲームオーバーシーンへ遷移
 	if (isEnd_)
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
+	}
+
+//デバッグ
+	if (!isClear_)
+	{
+		//ゲームクリアフラグがtrueのとき遷移
+		if (ins.IsTrgDown(KEY_INPUT_Z))
+		{
+			isClear_ = true;
+		}
+	}
+
+	if (isClear_)
+	{
+		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
 	}
 }
 
@@ -148,11 +169,11 @@ void GameScene::Draw(void)
 	// プレイヤー描画
 	player_->Draw();
 	
-	// UI描画
-	ui_->Draw();
-
 	// オブジェクト描画
 	objMng_->Draw();
+
+	// UI描画
+	ui_->Draw();
 
 	////ポーズ画面
 	IsPause();
@@ -255,5 +276,21 @@ void GameScene::IsPause(void)
 
 	}
 
-		
+}
+
+void GameScene::Score(void)
+{
+	//クリアタイムを取得
+	clearTime_ = ui_->GetTime();
+
+	//スコア計算（マックス ー クリアタイム）×2000
+	score_ = static_cast<int>((ui_->GetMaxTime() -clearTime_ )* 2000);
+
+	//ランキングスコア追加
+	rank_->AddScore(score_);
+}
+
+int GameScene::GetScore(void)
+{
+	return score_;
 }

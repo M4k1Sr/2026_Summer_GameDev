@@ -6,6 +6,7 @@ class SkyDome;
 class Player;
 class UI;
 class ObjectManager;
+class Ranking;
 
 class GameScene : public SceneBase
 {
@@ -33,6 +34,12 @@ public:
 	//ポーズ画面
 	void IsPause(void);
 
+	//スコア関連
+	void Score(void);
+
+	//スコア受け渡し
+	int GetScore(void);
+
 private:
 
 	// ステージ
@@ -49,6 +56,9 @@ private:
 	
 	// オブジェクト
 	ObjectManager* objMng_;
+
+	//ランキング
+	Ranking* rank_;
 
 	Transform clock_;
 
@@ -81,7 +91,21 @@ private:
 
 	static constexpr int DRAWBOX_GAME_EY = 400;
 
+	//ゲーム終了判定
 	bool isEnd_;
+
+	//ゲームクリア判定
+	bool isClear_;
+
+	//スコア
+	int score_;
+
+	//クリアタイム
+	float clearTime_;
+
+	
+
+
 
 
 };

@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Scene\GameClearScene.cpp" />
+    <ClCompile Include="Src\Ranking\Ranking.cpp" />
+    <ClCompile Include="Src\Manager\Score.cpp" />
     <ClCompile Include="Src\Scene\GameOvereScene.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBox.cpp" />
@@ -56,6 +59,9 @@
     <ClCompile Include="Src\Object\UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Scene\GameClearScene.h" />
+    <ClInclude Include="Src\Ranking\Ranking.h" />
+    <ClInclude Include="Src\Manager\Score.h" />
     <ClInclude Include="Src\Scene\GameOvereScene.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBase.h" />

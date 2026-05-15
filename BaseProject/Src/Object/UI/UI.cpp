@@ -23,6 +23,9 @@ UI::~UI(void)
 void UI::Update(void)
 {
 	Clock();
+
+	//クリアタイム計算
+		clearTime_ = static_cast<int>(maxTime_ - time_);
 }
 
 void UI::Draw(void)
@@ -101,7 +104,7 @@ void UI::Clock(void)
 	//角度計算
 	angle_ = ((1.0f - rate) * DX_TWO_PI_F);
 
-	// 12時をまたいだか？
+	// 時間制限終了時の処理
 	if (!isGameOver_)
 	{
 		if (time_ <= 0.0f)
@@ -119,4 +122,14 @@ bool UI::GetIsGameOver(void) const
 
 		return isGameOver_;
 
+}
+
+int UI::GetMaxTime(void) const
+{
+	return maxTime_;
+}
+
+int UI::GetTime(void) const
+{
+	return clearTime_;
 }
