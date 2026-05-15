@@ -1,4 +1,6 @@
+#include <chrono>
 #include <DxLib.h>
+#include <EffekseerForDXLib.h>
 #include "../../Utility/AsoUtility.h"
 #include "../../Object/Common/Transform.h"
 #include "../../Object/Collider/ColliderModel.h"
@@ -27,9 +29,14 @@ void Stage::Update(void)
 
 void Stage::Draw(void)
 {
+	// --- 公式リファレンス掲載関数: MV1SetDifColorScale ---
+	// モデル全体の明るさの倍率を上げます。
+	// 第2引数(COLOR_F)の RGB を 1.0f より大きくすると明るくなります。
+	float bright = 1.5f;
+	MV1SetDifColorScale(transform_.modelId, GetColorF(bright, bright, bright, 1.0f));
+
 	// モデル描画
 	MV1DrawModel(transform_.modelId);
-
 }
 
 void Stage::Release(void)
@@ -46,7 +53,7 @@ void Stage::InitLoad(void)
 
 void Stage::InitTransform(void)
 {
-	transform_.scl = AsoUtility::VECTOR_ONE;
+	transform_.scl = MAIN_STAGE_SCALE;
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Identity();
 	transform_.pos = MAIN_STAGE_POS;

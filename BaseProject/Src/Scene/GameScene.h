@@ -4,6 +4,7 @@
 class Stage;
 class SkyDome;
 class Player;
+class IronBall;
 class UI;
 class ObjectManager;
 
@@ -44,6 +45,9 @@ private:
 	// ÉvÉåÉCÉÑÅ[
 	Player* player_;
 
+	//ìSãÖ
+	IronBall* ironBall_;
+
 	//UI
 	UI* ui_;
 	
@@ -80,6 +84,8 @@ private:
 	static constexpr int DRAWBOX_GAME_SY = 200;
 
 	static constexpr int DRAWBOX_GAME_EY = 400;
+
+	bool isEnd_;
 
 
 };
