@@ -386,7 +386,9 @@ void BossPixie::UpdateCharge(void)
 			ChangeState(STATE::THROW);
 		}
 		else if (phaseStep_ == (PHASE_STEP::PHASE_TACTICAL))
+		{
 			ChangeState(STATE::ATTACK_WAVE);
+		}
 		else {
 			ChangeState(STATE::THROW);
 		}
@@ -422,7 +424,6 @@ void BossPixie::UpdateDamage(void)
 {
 	// ダメージはギミック作ってから
 	health_->TakeDamage(100);
-
 
 }
 
