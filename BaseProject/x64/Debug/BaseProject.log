@@ -1,2 +1,29 @@
-﻿  GameScene.cpp
+﻿  Application.cpp
+  Fader.cpp
+  FpsController.cpp
+  InputManager.cpp
+  ResourceManager.cpp
+  BossManager.cpp
+  BossPixie.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Boss\BossPixie.cpp(277,19): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  CharactorBase.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(304,27): warning C4244: '=': 'double' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(307,27): warning C4244: '=': 'double' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(310,27): warning C4244: '=': 'double' から 'BYTE' への変換です。データが失われる可能性があります。
+  ObjectBox.cpp
+  ObjectManager.cpp
+  ObjectTile.cpp
+  Player.cpp
+  IronBall.cpp
+  SkyDome.cpp
+  Stage.cpp
+  GameClearScene.cpp
+  GameOvereScene.cpp
+  GameScene.cpp
+  TitleScene.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+  main.cpp
+  コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

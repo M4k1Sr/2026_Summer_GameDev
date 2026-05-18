@@ -154,11 +154,9 @@ void GameScene::Update(void)
 
 	//ゲームオーバーシーンへ遷移
 	if (isEnd_)
-
-	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
-		sceMng_.ChangeScene(SceneManager::SCENE_ID::DEBUG);
+
 	}
 }
 

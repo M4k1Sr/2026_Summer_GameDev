@@ -119,6 +119,8 @@ void TitleScene::Draw(void)
 	// スカイドーム
 	skyDome_->Draw();
 
+	
+	
 	// タイトル描画
 	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_TITLE_POS_Y, 1.0f, 0.0f, imgTitle_, true);
 	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_PUSH_POS_Y, 1.0f, 0.0f, imgPush_, true);

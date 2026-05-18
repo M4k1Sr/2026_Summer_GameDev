@@ -3,8 +3,8 @@
 
 UI::UI(void)
 	:
-	maxTime_(10.0f),
-	time_(10.0f	),
+	maxTime_(120.0f),
+	time_(120.0f	),
 	angle_(0.0f),
 	oldTime_(0),
 	secondHandImg_(-1),
