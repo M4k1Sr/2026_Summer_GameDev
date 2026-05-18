@@ -171,18 +171,24 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
+	// 揺れる鉄球描画
+	ironBall_->Draw();
+
 	// プレイヤー描画
 	player_->Draw();
 	
-	// UI描画
-	ui_->Draw();
+	// ボス描画
+	bossMng_->Draw();
 
 	// オブジェクト描画
 	objMng_->Draw();
 
+	// UI描画
+	ui_->Draw();
+
 	////ポーズ画面
 	IsPause();
-	bossMng_->Draw();
+
 }
 
 void GameScene::Release(void)

@@ -129,7 +129,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
-		//object = new ObjectTile(data);
+		object = new ObjectTile(data);
 		break;
 
 		// ëùÇ¶ÇÈñàÇ…í«â¡
