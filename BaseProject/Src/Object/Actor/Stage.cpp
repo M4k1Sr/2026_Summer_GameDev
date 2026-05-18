@@ -1,5 +1,5 @@
-#include <chrono>
 #include <DxLib.h>
+#include <chrono>
 #include <EffekseerForDXLib.h>
 #include "../../Utility/AsoUtility.h"
 #include "../../Object/Common/Transform.h"
@@ -23,20 +23,16 @@ Stage::~Stage(void)
 
 void Stage::Update(void)
 {
-
 	transform_.Update();
 }
 
 void Stage::Draw(void)
 {
-	// --- 公式リファレンス掲載関数: MV1SetDifColorScale ---
-	// モデル全体の明るさの倍率を上げます。
-	// 第2引数(COLOR_F)の RGB を 1.0f より大きくすると明るくなります。
+	// モデル描画
 	float bright = 1.5f;
 	MV1SetDifColorScale(transform_.modelId, GetColorF(bright, bright, bright, 1.0f));
-
-	// モデル描画
 	MV1DrawModel(transform_.modelId);
+
 }
 
 void Stage::Release(void)

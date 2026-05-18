@@ -9,6 +9,7 @@
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/IronBall.h"
 #include "../Object/Actor/Charactor/Player.h"
+#include "../Object/Actor/Charactor/Boss/BossManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
@@ -22,6 +23,7 @@ GameScene::GameScene(void)
 	player_(nullptr),
 	ironBall_(nullptr),
 	ui_(nullptr),
+	bossMng_(nullptr),
 	objMng_(nullptr),
 	isPause_(false),
 	pauseImg_(-1),
@@ -29,8 +31,7 @@ GameScene::GameScene(void)
 	sousaImg_(-1),
 	mosPosX_(0),
 	mosPosY_(0),
-	isEnd_(true),
-	SceneBase()
+	isEnd_(true), SceneBase()
 {
 }
 
@@ -40,38 +41,48 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-
-
 	// ステージ初期化
 	stage_ = new Stage();
 	stage_->Init();
-
-	// プレイヤー初期化
-	player_ = new Player();
-	player_->Init();
-
-	// スカイドーム初期化
-	skyDome_ = new SkyDome(player_->GetTransform());
-	skyDome_->Init();
-
-	//鉄球初期化
-	ironBall_ = new IronBall();
-	ironBall_->Init();
-
-	ui_ = new UI();
-	ui_->Init();
-
 
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
 
-
+	// プレイヤー初期化
+	player_ = new Player();
+	player_->Init();
+	player_->SetObjectManager(objMng_);
 
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
 		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
+
+	// ボス初期化
+	bossMng_ = new BossManager();
+	bossMng_->SetPlayer(player_);
+	bossMng_->Init();
+
+	// ボス(全て)のコライダーを登録
+	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
+	for (const auto& boss : bosses)
+	{
+		// ボスがモデルコライダーを持っていれば登録
+		const ColliderBase* bossCollider =
+		boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+		if (bossCollider != nullptr)
+		{
+			player_->AddHitCollider(bossCollider);
+		}
+	}
+
+	// ステージモデルのコライダーをボスに登録
+	bossMng_->AddHitCollider(stageCollider);
+
+	// スカイドーム初期化
+	skyDome_ = new SkyDome(player_->GetTransform());
+	skyDome_->Init();
 
 	// オブジェクト(全て)のコライダーを登録
 	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
@@ -89,58 +100,57 @@ void GameScene::Init(void)
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
 
+	// 鉄球モデル
+	ironBall_ = new IronBall();
+	ironBall_->Init();
+
+	// UIモデル
+	ui_ = new UI();
+	ui_->Init();
+
 	// カメラモード変更
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->SetFollow(&player_->GetTransform());
 	camera->AddHitCollider(stageCollider);
-	camera->ChangeMode(Camera::MODE::FREE);
+	camera->ChangeMode(Camera::MODE::FOLLOW);
 
 }
 
 void GameScene::Update(void)
 {
 
-	auto& ins = InputManager::GetInstance();
+	auto const& ins = InputManager::GetInstance();
 
-	//ESC押下時ポーズ画面に遷移
-	if (ins.IsTrgDown(KEY_INPUT_ESCAPE) )
+	// ESC押下時ポーズ画面に遷移
+	if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
 	{
-		isPause_ = !isPause_;  // ポーズのON/OFF切り替え
+		isPause_ = !isPause_;	// ポーズのON/OFFの切り替え
 	}
 
-	//ポーズ画面中はゲームを静止させる
+	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
-		//マウスポインタを非表示にする
+		// マウスポインタを非表示にする
 		SetMouseDispFlag(false);
-
-		// ステージ更新
 		stage_->Update();
-
-		// プレイヤー更新
-		player_->Update();
-
-		// スカイドーム更新
 		skyDome_->Update();
-
-		//鉄球更新
-		ironBall_->Update();
-
-		// UI更新
-		ui_->Update();
-
-		// オブジェクト更新
 		objMng_->Update();
+		bossMng_->Update();
+		player_->Update();
+		ironBall_->Update();
+		ui_->Update();
 	}
 
-
-	//ゲーム終了フラグ :時間制限
 	isEnd_ = ui_->GetIsGameOver();
 
 	if (isEnd_)
+
+	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
+		sceMng_.ChangeScene(SceneManager::SCENE_ID::DEBUG);
 	}
+
 }
 
 void GameScene::Draw(void)
@@ -151,21 +161,19 @@ void GameScene::Draw(void)
 	// ステージ描画
 	stage_->Draw();
 
-	// プレイヤー描画
-	//player_->Draw();
-	
-	//鉄球描画
-	ironBall_->Draw();
-
-	// UI描画
-	ui_->Draw();
-
 	// オブジェクト描画
-	//objMng_->Draw();
+	objMng_->Draw();
 
-	////ポーズ画面
+	// プレイヤー描画
+	player_->Draw();
+
+	// ボス描画
+	bossMng_->Draw();
+
+	ironBall_->Draw();
+	ui_->Draw();
 	IsPause();
-
+	bossMng_->Draw();
 }
 
 void GameScene::Release(void)
@@ -177,29 +185,28 @@ void GameScene::Release(void)
 	// スカイドーム解放
 	skyDome_->Release();
 	delete skyDome_;
-	
-	// UI解放
-	ui_->Release();
-	delete ui_;
-
-	// プレイヤー解放
-	player_->Release();
-	delete skyDome_;
-
-	//鉄球解放
-	ironBall_->Release();
-	delete ironBall_;
 
 	// オブジェクト解放
 	objMng_->Release();
 	delete objMng_;
 
-	//ポーズ画像解放
+	// プレイヤー解放
+	player_->Release();
+	delete player_;
+
+	// ボス解放
+	bossMng_->Release();
+	delete bossMng_;
+
+	ui_->Release();
+	delete ui_;
+
+	ironBall_->Release();
+	delete ironBall_;
+
 	DeleteGraph(pauseImg_);
 
-	//操作画像解放
 	DeleteGraph(sousaImg_);
-
 }
 
 void GameScene::IsPause(void)
@@ -207,7 +214,6 @@ void GameScene::IsPause(void)
 
 	if (isPause_)
 	{
-
 		// 透過背景
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
@@ -215,7 +221,7 @@ void GameScene::IsPause(void)
 
 		SetFontSize(64);
 
-		DrawBox(400,200,1600,400, 0xffffff, false);
+		DrawBox(400, 200, 1600, 400, 0xffffff, false);
 		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
 
 		DrawBox(400, 600, 1600, 800, 0xffffff, false);
@@ -224,10 +230,8 @@ void GameScene::IsPause(void)
 		//マウスポインタを表示状態にする
 		SetMouseDispFlag(TRUE);
 
-
 		//マウスポインタの座標を取得
 		GetMousePoint(&mosPosX_, &mosPosY_);
-
 
 		//この中にマウスカーソルがあるかを判定
 		bool continueGame =
@@ -237,7 +241,6 @@ void GameScene::IsPause(void)
 		bool exitGame =
 			(mosPosX_ >= DRAWBOX_SX && mosPosX_ <= DRAWBOX_EX &&
 				mosPosY_ >= DRAWBOX_GAMEEND_SY && mosPosY_ <= DRAWBOX_GAMEEND_EY);
-
 		//マウスカーソルがあるときの処理
 			//ゲームを続ける
 		if (continueGame)
@@ -260,13 +263,11 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				// Effekseerを終了する。
+				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();
 			}
 		}
-
 	}
-
-		
 }
+

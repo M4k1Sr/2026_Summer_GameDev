@@ -40,11 +40,12 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "PushSpace.png");
 	resourcesMap_.emplace(SRC::PUSH_SPACE, res);
 
-	// タイトル惑星モデル
-	/*res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
-	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);*/
+	//// タイトル惑星モデル
+	// 	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
+	//resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
 
-	// タイトル惑星モデル
+	// タイトル城モデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
 	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
 
@@ -80,21 +81,30 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
 
-
 	// 鉄球モデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/IronBall.mv1");
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
-	// タイトルPush画像
-
+	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::OBJECT_CLOCK, res);
 
-	// 秒針画像
+	// 時計針モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "second_hand.png");
 	resourcesMap_.emplace(SRC::CLOCK_HAND, res);
 
-    
+	// ボスモデル(ピクシー)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Pixie/BossPixie.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_BOSS_PIXIE, res);
+
+	// ボスモデル(オーク)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Orc/BossOrc.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_BOSS_ORC, res);
+
+	// ボスモデル(ディアブロ)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_BOSS_DIABLO, res);
+
 }
 
 void ResourceManager::Release(void)

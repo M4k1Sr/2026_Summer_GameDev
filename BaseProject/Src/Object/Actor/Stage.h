@@ -51,7 +51,7 @@ private:
 	// ステージの座標
 	static constexpr VECTOR MAIN_STAGE_POS = { 0.0f, -100.0f, 0.0f };
 
-	//ステージの大きさ
+	// ステージのスケール
 	static constexpr VECTOR MAIN_STAGE_SCALE = { 0.1f, 0.1f, 0.1f };
 
 	// 除外フレーム名称

@@ -25,6 +25,9 @@ public:
 		IRON_BALL,
 		OBJECT_CLOCK,
 		CLOCK_HAND,
+		OBJECT_BOSS_PIXIE,
+		OBJECT_BOSS_ORC,
+		OBJECT_BOSS_DIABLO,
 	};
 
 	// 明示的にインステンスを生成する
