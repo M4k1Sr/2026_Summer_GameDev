@@ -23,6 +23,12 @@ public:
 
 	bool GetIsGameOver(void) const;
 
+	//マックスタイム
+	int GetMaxTime(void) const;
+
+	//クリアタイム受け渡し
+	int GetTime(void) const;
+
 protected:
 
 	// リソースロード
@@ -99,6 +105,10 @@ private:
 	bool isGameOver_;
 
 	float prevAngle_;
+
+	//クリアタイム
+	int clearTime_;
+
 
 	
 

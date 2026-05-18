@@ -119,14 +119,8 @@ void TitleScene::Draw(void)
 	// スカイドーム
 	skyDome_->Draw();
 
-	// モデル描画
-	// 惑星モデル
-	MV1DrawModel(bigPlanet_.modelId);
-	MV1DrawModel(rollPlanet_. modelId);
-
-	// ニンゲンモデル
-	MV1DrawModel(player_.modelId);
-
+	
+	
 	// タイトル描画
 	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_TITLE_POS_Y, 1.0f, 0.0f, imgTitle_, true);
 	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_PUSH_POS_Y, 1.0f, 0.0f, imgPush_, true);

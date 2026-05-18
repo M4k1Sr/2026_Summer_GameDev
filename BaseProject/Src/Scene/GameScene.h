@@ -8,6 +8,7 @@ class SkyDome;
 class Player;
 class BossManager;
 class ObjectManager;
+class Ranking;
 
 class GameScene : public SceneBase
 {
@@ -35,6 +36,12 @@ public:
 	// ポーズ判定
 	void IsPause(void);
 
+	//スコア関連
+	void Score(void);
+
+	//スコア受け渡し
+	int GetScore(void);
+
 private:
 
 	// ステージ
@@ -52,6 +59,9 @@ private:
 	// オブジェクト
 	ObjectManager* objMng_;
 
+	//ランキング
+	Ranking* rank_;
+
 	// 鉄球
 	IronBall* ironBall_;
 	
@@ -67,12 +77,23 @@ private:
 	int sousaImg_;
 	int mosPosX_, mosPosY_;
 
-	// 
 	static constexpr int DRAWBOX_SX = 400;
 	static constexpr int DRAWBOX_EX = 1600;
 	static constexpr int DRAWBOX_GAMEEND_SY = 600;
 	static constexpr int DRAWBOX_GAMEEND_EY = 800;
 	static constexpr int DRAWBOX_GAME_SY = 200;
 	static constexpr int DRAWBOX_GAME_EY = 400;
+
+	//ゲーム終了判定
 	bool isEnd_;
+
+	//ゲームクリア判定
+	bool isClear_;
+
+	//スコア
+	int score_;
+
+	//クリアタイム
+	float clearTime_;
+
 };

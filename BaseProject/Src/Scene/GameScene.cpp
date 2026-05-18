@@ -11,6 +11,7 @@
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Boss/BossManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
+#include"../Ranking/Ranking.h"
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
 #include "../Application.h"
@@ -25,13 +26,16 @@ GameScene::GameScene(void)
 	ui_(nullptr),
 	bossMng_(nullptr),
 	objMng_(nullptr),
+	rank_(nullptr),
 	isPause_(false),
 	pauseImg_(-1),
 	isSousa_(false),
 	sousaImg_(-1),
 	mosPosX_(0),
 	mosPosY_(0),
-	isEnd_(true), SceneBase()
+	isEnd_(false),
+	isClear_(false),
+	SceneBase()
 {
 }
 
@@ -49,10 +53,15 @@ void GameScene::Init(void)
 	objMng_ = new ObjectManager();
 	objMng_->Init();
 
+
 	// プレイヤー初期化
 	player_ = new Player();
 	player_->Init();
 	player_->SetObjectManager(objMng_);
+
+
+	rank_->CreateIns();
+
 
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
@@ -143,14 +152,12 @@ void GameScene::Update(void)
 
 	isEnd_ = ui_->GetIsGameOver();
 
+	//ゲームオーバーシーンへ遷移
 	if (isEnd_)
-
-	if (ins.IsTrgDown(KEY_INPUT_RCONTROL))
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
-		sceMng_.ChangeScene(SceneManager::SCENE_ID::DEBUG);
-	}
 
+	}
 }
 
 void GameScene::Draw(void)
@@ -166,12 +173,14 @@ void GameScene::Draw(void)
 
 	// プレイヤー描画
 	player_->Draw();
-
-	// ボス描画
-	bossMng_->Draw();
-
-	ironBall_->Draw();
+	
+	// UI描画
 	ui_->Draw();
+
+	// オブジェクト描画
+	objMng_->Draw();
+
+	////ポーズ画面
 	IsPause();
 	bossMng_->Draw();
 }
@@ -270,4 +279,3 @@ void GameScene::IsPause(void)
 		}
 	}
 }
-
