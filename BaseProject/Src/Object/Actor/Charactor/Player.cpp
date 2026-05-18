@@ -8,6 +8,7 @@
 #include "../../../Manager/Resource.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../../Application.h"
@@ -21,6 +22,34 @@ Player::Player(void)
 
 Player::~Player(void)
 {
+}
+
+void Player::Draw(void)
+{
+	CharactorBase::Draw();
+#ifdef _DEBUG
+
+	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+	// pos_ は ObjectBase のメンバ変数であると想定しています
+	DrawFormatString(200, 50, GetColor(0, 0, 0),
+		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+
+	if (isJump_ == true) {
+		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
+	}
+	else {
+		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
+
+		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+		if (tile == nullptr) {
+			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+		}
+		else {
+			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
+		}
+#endif
+	}
 }
 
 void Player::Release(void)
@@ -106,6 +135,10 @@ void Player::UpdateProcessPost(void)
 {
 }
 
+void Player::DrawViewRange(void)
+{
+}
+
 void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();
@@ -129,7 +162,7 @@ void Player::ProcessMove(void)
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
 		// ダッシュキー
-		if (ins.IsNew(KEY_INPUT_RSHIFT)) { isDash = true; }
+		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
 	}
 	else
 	{
@@ -145,6 +178,16 @@ void Player::ProcessMove(void)
 			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1,
 				InputManager::JOYPAD_BTN::L_TRIGGER);
 		}
+	}
+
+	// プレイヤーの移動計算の最後（または座標を確定させる直前）
+	if (objMng_ != nullptr)
+	{
+		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+		if (tile != nullptr)
+		{
+			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
+		}		
 	}
 
 	if (!AsoUtility::EqualsVZero(dir))
@@ -190,8 +233,8 @@ void Player::ProcessMove(void)
 		if (!isJump_)
 		{
 			// IDLE状態に戻す
-			animationController_->Play(
-				static_cast<int>(ANIM_TYPE::IDLE), true);
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
 		}
 	}
 }
@@ -201,7 +244,7 @@ void Player::ProcessJump(void)
 	auto& ins = InputManager::GetInstance();
 
 	// 持続ジャンプ処理
-	bool isHitKeyNew = ins.IsNew(KEY_INPUT_BACKSLASH)
+	bool isHitKeyNew = ins.IsNew(KEY_INPUT_SPACE)
 		|| ins.IsPadBtnNew(
 			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
@@ -224,7 +267,7 @@ void Player::ProcessJump(void)
 	}
 
 	// 初期ジャンプ処理
-	bool isHitKey = ins.IsTrgDown(KEY_INPUT_BACKSLASH)
+	bool isHitKey = ins.IsTrgDown(KEY_INPUT_SPACE)
 		|| ins.IsPadBtnTrgDown(
 			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 

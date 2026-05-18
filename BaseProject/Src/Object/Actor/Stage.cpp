@@ -1,4 +1,6 @@
 #include <DxLib.h>
+#include <chrono>
+#include <EffekseerForDXLib.h>
 #include "../../Utility/AsoUtility.h"
 #include "../../Object/Common/Transform.h"
 #include "../../Object/Collider/ColliderModel.h"
@@ -21,13 +23,14 @@ Stage::~Stage(void)
 
 void Stage::Update(void)
 {
-
 	transform_.Update();
 }
 
 void Stage::Draw(void)
 {
 	// ƒ‚ƒfƒ‹•`‰æ
+	float bright = 1.5f;
+	MV1SetDifColorScale(transform_.modelId, GetColorF(bright, bright, bright, 1.0f));
 	MV1DrawModel(transform_.modelId);
 
 }
@@ -46,7 +49,7 @@ void Stage::InitLoad(void)
 
 void Stage::InitTransform(void)
 {
-	transform_.scl = AsoUtility::VECTOR_ONE;
+	transform_.scl = MAIN_STAGE_SCALE;
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Identity();
 	transform_.pos = MAIN_STAGE_POS;

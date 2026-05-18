@@ -53,7 +53,7 @@ void CharactorBase::Update(void)
 	animationController_->Update();
 
 	// 各キャラクターごとの更新後処理
-	UpdateProcessPost();
+ 	UpdateProcessPost();
 
 }
 
@@ -64,6 +64,9 @@ void CharactorBase::Draw(void)
 
 	// 丸影の描画
 	DrawShadow();
+
+	// 視野描画
+	DrawViewRange();
 
 }
 
@@ -159,7 +162,7 @@ void CharactorBase::CollisionGravity(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 
-		// ステージ以外は処理を飛ばす
+		// ステージ・ボックス以外は処理を飛ばす
 		if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
 			&& hitCol->GetTag() != ColliderBase::TAG::BOX
 			&& hitCol->GetTag() != ColliderBase::TAG::TILE) continue;
@@ -178,23 +181,10 @@ void CharactorBase::CollisionGravity(void)
 			true,
 			false);
 
-		// 
-		
-
 		// ジャンプ判定
 		if (isHit)
 		{
 			isJump_ = false;
-
-			// 動く床の上に乗っているか
-			if (hitCol->GetTag() == ColliderBase::TAG::TILE)
-			{
-				isOnTile = true;
-
-				// とりあえず固定値で速度設定
-				tileVelocity = VGet(0.0f, 0.5f, 0.0f);	// 毎フレーム0.5fフレーム上昇する床
-
-			}
 		}
 	}
 
@@ -202,17 +192,10 @@ void CharactorBase::CollisionGravity(void)
 	{
 		// ジャンプリセット
 		jumpPow_ = AsoUtility::VECTOR_ZERO;
+
 		// ジャンプの入力受付時間をリセット
 		stepJump_ = 0.0f;
-
-		// 動く床に乗っている場合は床の移動量を加算
-		if (isOnTile)
-		{
-			transform_.pos = VAdd(transform_.pos, tileVelocity);
-		}
-
 	}
-
 }
 
 void CharactorBase::CollisionCapsule(void)
@@ -234,7 +217,7 @@ void CharactorBase::CollisionCapsule(void)
 		
 		// ステージは除外
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-		
+
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 

@@ -77,7 +77,7 @@ void SceneManager::Init3D(void)
 	SetUseLighting(true);
 	
 	// ライトの設定
-	ChangeLightTypeDir({ 0.3f, -0.7f, 0.8f });
+	ChangeLightTypeDir({ 0.3f, 0.3f, 0.8f });
 
 	// フォグ設定
 	SetFogEnable(true);
@@ -120,7 +120,7 @@ void SceneManager::Update(void)
 
 void SceneManager::Draw(void)
 {
-
+	
 	// 描画先グラフィック領域の指定
 	// (３Ｄ描画で使用するカメラの設定などがリセットされる)
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -141,7 +141,7 @@ void SceneManager::Draw(void)
 	camera_->DrawDebug();
 
 	// Effekseerにより再生中のエフェクトを描画する。
- 	DrawEffekseer3D();
+	DrawEffekseer3D();
 	
 	// 暗転・明転
 	fader_->Draw();
@@ -225,8 +225,6 @@ void SceneManager::ResetDeltaTime(void)
 void SceneManager::DoChangeScene(SCENE_ID sceneId)
 {
 
-	
-
 	// リソースの解放
 	ResourceManager::GetInstance().Release();
 
@@ -253,10 +251,6 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	case SCENE_ID::DEBUG:
 		scene_ = new DebugScene();
 		break;
-	case SCENE_ID::GAMECLEAR:
-			scene_ = new GameClearScene();
-			break;
-
 	}
 
 	// 各シーンの初期化

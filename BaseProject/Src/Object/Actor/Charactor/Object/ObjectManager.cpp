@@ -26,7 +26,7 @@ void ObjectManager::Init(void)
 void ObjectManager::Update(void)
 {
 	// 更新
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->Update();
 	}
@@ -35,7 +35,7 @@ void ObjectManager::Update(void)
 void ObjectManager::Draw(void)
 {
 	// 描画
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->Draw();
 	}
@@ -45,7 +45,7 @@ void ObjectManager::Draw(void)
 void ObjectManager::Release(void)
 {
 	// 解放
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->Release();
 		delete object;
@@ -55,7 +55,7 @@ void ObjectManager::Release(void)
 
 void ObjectManager::AddHitCollider(const ColliderBase* hitCollider)
 {
-	for (auto& object : objects_)
+	for (auto& object : bosses_)
 	{
 		object->AddHitCollider(hitCollider);
 	}
@@ -126,10 +126,10 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		object = new ObjectBox(data);
+		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
-		object = new ObjectTile(data);
+		//object = new ObjectTile(data);
 		break;
 
 		// 増える毎に追加
@@ -138,9 +138,33 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	if (object != nullptr)
 	{
 		object->Init();
-		objects_.emplace_back(object);
+		bosses_.emplace_back(object);
 	}
 
 	return object;
+}
+
+ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
+{
+	for (auto& object : bosses_)
+	{
+		if (auto tile = dynamic_cast<ObjectTile*>(object))
+		{
+			VECTOR tilePos = tile->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = tilePos.x - pos.x;
+			float dz = tilePos.z - pos.z;
+			float distXZ = sqrtf(dx * dx + dz * dz);
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 50.0f)
+			{
+				return tile;
+			}
+		}
+	}
+
+	return nullptr;
 }
 

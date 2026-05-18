@@ -1,10 +1,12 @@
 #pragma once
 #include "SceneBase.h"
 #include "../Framework.h"
+class IronBall;
+class UI;
 class Stage;
 class SkyDome;
 class Player;
-class UI;
+class BossManager;
 class ObjectManager;
 class Ranking;
 
@@ -31,7 +33,7 @@ public:
 	// 解放
 	void Release(void) override;
 
-	//ポーズ画面
+	// ポーズ判定
 	void IsPause(void);
 
 	//スコア関連
@@ -50,9 +52,9 @@ private:
 
 	// プレイヤー
 	Player* player_;
-
-	//UI
-	UI* ui_;
+	
+	// ボス
+	BossManager* bossMng_;
 	
 	// オブジェクト
 	ObjectManager* objMng_;
@@ -60,35 +62,26 @@ private:
 	//ランキング
 	Ranking* rank_;
 
+	// 鉄球
+	IronBall* ironBall_;
+	
+	//UI
+	UI* ui_;
+	
+	// 時計
 	Transform clock_;
-
-	//ポーズ画面
+	
 	bool isPause_;
-
-	//ポーズ画像
 	int pauseImg_;
-
-	//操作画面判別
 	bool isSousa_;
-
-	//操作説明画像
 	int sousaImg_;
-
-
-	//マウスカーソル取得用座標
 	int mosPosX_, mosPosY_;
 
-	//ポーズ画面の選択ボックス座標
 	static constexpr int DRAWBOX_SX = 400;
-
 	static constexpr int DRAWBOX_EX = 1600;
-
 	static constexpr int DRAWBOX_GAMEEND_SY = 600;
-
 	static constexpr int DRAWBOX_GAMEEND_EY = 800;
-
 	static constexpr int DRAWBOX_GAME_SY = 200;
-
 	static constexpr int DRAWBOX_GAME_EY = 400;
 
 	//ゲーム終了判定
@@ -102,10 +95,5 @@ private:
 
 	//クリアタイム
 	float clearTime_;
-
-	
-
-
-
 
 };

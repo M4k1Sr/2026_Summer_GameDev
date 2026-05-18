@@ -27,7 +27,7 @@ public:
 	void Release(void);
 
 	// オブジェクト
-	const std::vector<ObjectBase*>& GetObjects(void) const { return objects_; }
+	const std::vector<ObjectBase*>& GetObjects(void) const { return bosses_; }
 
 	// 衝突対象となるコライダを登録
 	void AddHitCollider(const ColliderBase* hitCollider);
@@ -37,10 +37,13 @@ public:
 
 	// オブジェクト生成
 	ObjectBase* Create(const ObjectBase::ObjectData& data);
+		
+	// プレイヤーの足元の判定用に追加
+	ObjectTile* GetTileAt(const VECTOR& pos);
 
 private:
 
 	// オブジェクト
-	std::vector<ObjectBase*> objects_;
+	std::vector<ObjectBase*> bosses_;
 
 };
