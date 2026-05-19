@@ -12,6 +12,7 @@ public:
 	{
 		LINE,
 		CAPSULE,
+		SPHERE,
 		MODEL,
 		MAX,
 	};

@@ -85,9 +85,17 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/StageGimmick/IronBall.mv1");
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
+	// スイッチモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_SWITCH, res);
+
+	// スイッチカバーモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick_cover.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_COVER, res);
+
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
-	resourcesMap_.emplace(SRC::OBJECT_CLOCK, res);
+	resourcesMap_.emplace(SRC::CLOCK, res);
 
 	// 時計針モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "second_hand.png");
@@ -95,15 +103,15 @@ void ResourceManager::Init(void)
 
 	// ボスモデル(ピクシー)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Pixie/BossPixie.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_BOSS_PIXIE, res);
+	resourcesMap_.emplace(SRC::BOSS_PIXIE, res);
 
 	// ボスモデル(オーク)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Orc/BossOrc.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_BOSS_ORC, res);
+	resourcesMap_.emplace(SRC::BOSS_ORC, res);
 
 	// ボスモデル(ディアブロ)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_BOSS_DIABLO, res);
+	resourcesMap_.emplace(SRC::BOSS_DIABLO, res);
 
 }
 

@@ -5,6 +5,8 @@
 #include "./ObjectBase.h"
 #include "./ObjectBox.h"
 #include "./ObjectTile.h"
+#include "./ObjectBossGimmick.h"
+#include "./ObjectGimmickSwitch.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -26,7 +28,7 @@ void ObjectManager::Init(void)
 void ObjectManager::Update(void)
 {
 	// XV
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->Update();
 	}
@@ -35,7 +37,7 @@ void ObjectManager::Update(void)
 void ObjectManager::Draw(void)
 {
 	// •`‰æ
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->Draw();
 	}
@@ -45,7 +47,7 @@ void ObjectManager::Draw(void)
 void ObjectManager::Release(void)
 {
 	// ‰ð•ú
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->Release();
 		delete object;
@@ -55,7 +57,7 @@ void ObjectManager::Release(void)
 
 void ObjectManager::AddHitCollider(const ColliderBase* hitCollider)
 {
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->AddHitCollider(hitCollider);
 	}
@@ -131,14 +133,19 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);
 		break;
-
+	case ObjectBase::TYPE::BOSS_GIMMICK:
+		object = new ObjectBossGimmick(data);
+		break;
+	case ObjectBase::TYPE::BOSS_GIMMICK_SWITCH:
+		object = new ObjectGimmickSwitch(data);
+		break;
 		// ‘‚¦‚é–ˆ‚É’Ç‰Á
 	}
 
 	if (object != nullptr)
 	{
 		object->Init();
-		bosses_.emplace_back(object);
+		objects_.emplace_back(object);
 	}
 
 	return object;
@@ -146,7 +153,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 
 ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 {
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{

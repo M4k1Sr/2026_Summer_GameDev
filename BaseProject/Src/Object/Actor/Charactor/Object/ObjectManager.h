@@ -27,7 +27,7 @@ public:
 	void Release(void);
 
 	// オブジェクト
-	const std::vector<ObjectBase*>& GetObjects(void) const { return bosses_; }
+	const std::vector<ObjectBase*>& GetObjects(void) const { return objects_; }
 
 	// 衝突対象となるコライダを登録
 	void AddHitCollider(const ColliderBase* hitCollider);
@@ -44,6 +44,6 @@ public:
 private:
 
 	// オブジェクト
-	std::vector<ObjectBase*> bosses_;
+	std::vector<ObjectBase*> objects_;
 
 };

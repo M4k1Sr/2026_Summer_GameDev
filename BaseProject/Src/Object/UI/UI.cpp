@@ -43,7 +43,7 @@ void UI::Release(void)
 void UI::InitLoad(void)
 {
 	//éûåv
-	clockImg_ = resMng_.Load(ResourceManager::SRC::OBJECT_CLOCK).handleId_;
+	clockImg_ = resMng_.Load(ResourceManager::SRC::CLOCK).handleId_;
 	
 	// ïbêj
 	secondHandImg_ = resMng_.Load(ResourceManager::SRC::CLOCK_HAND).handleId_;
