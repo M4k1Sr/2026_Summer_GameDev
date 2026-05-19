@@ -89,10 +89,6 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_SWITCH, res);
 
-	// スイッチカバーモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick_cover.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_COVER, res);
-
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::CLOCK, res);

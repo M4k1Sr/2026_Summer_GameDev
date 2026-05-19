@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "ObjectBase.h"
+#include "ObjectBossGimmick.h"
 class ObjectBase;
 class ColliderBase;
 
@@ -37,9 +38,12 @@ public:
 
 	// オブジェクト生成
 	ObjectBase* Create(const ObjectBase::ObjectData& data);
-		
+
 	// プレイヤーの足元の判定用に追加
 	ObjectTile* GetTileAt(const VECTOR& pos);
+
+	// プレイヤーのギミック用に追加
+	ObjectBossGimmick* GetBossGimmick(const VECTOR& pos);
 
 private:
 

@@ -8,6 +8,7 @@
 #include "../../../Manager/Resource.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
@@ -16,7 +17,8 @@
 
 Player::Player(void)
 	:
-	CharactorBase()
+	CharactorBase(),
+	isGimmick_(false)
 {
 }
 
@@ -48,8 +50,22 @@ void Player::Draw(void)
 		else {
 			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
 		}
-#endif
 	}
+
+	//auto& ins = InputManager::GetInstance();
+
+	//// 持続ジャンプ処理
+	//bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
+	//	|| ins.IsPadBtnPress(
+	//		InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+	//if (isHitKeyNew == true) {
+	//	DrawFormatString(600, 240, GetColor(255, 0, 0), "PRESS");
+	//}
+	//else {
+	//	DrawFormatString(600, 240, GetColor(255, 0, 0), "NO PRESS");
+	//}
+
+#endif
 }
 
 void Player::Release(void)
@@ -109,7 +125,8 @@ void Player::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
-	
+	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
+
 	// アニメーション再生
 	animationController_->Play(
 		static_cast<int>(ANIM_TYPE::RUN), true);
@@ -118,7 +135,6 @@ void Player::InitAnimation(void)
 
 void Player::InitPost(void)
 {
-
 }
 
 void Player::UpdateProcess(void)
@@ -129,6 +145,8 @@ void Player::UpdateProcess(void)
 	// ジャンプ処理
 	ProcessJump();
 
+	// ギミック処理
+	ProcessPush();
 }
 
 void Player::UpdateProcessPost(void)
@@ -283,6 +301,44 @@ void Player::ProcessJump(void)
 			static_cast<int>(ANIM_TYPE::JUMP), false);
 	}
 
+}
+
+void Player::ProcessPush(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// プレイヤーがギミック付近にいる場合
+	if (objMng_ != nullptr)
+	{
+		ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
+		if (bossGimmick != nullptr)
+		{
+
+			// 持続ジャンプ処理
+			bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
+				|| ins.IsPadBtnPress(
+					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+
+			if (isHitKeyNew) {
+
+				// デルタタイムで秒数をカウンタする
+				gimmickCnt_ += scnMng_.GetDeltaTime();
+
+				// アニメーション再生
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::PUSH), false);
+
+				if (gimmickCnt_ > 5.0f) {
+
+					// ギミック動作オン
+					bossGimmick->SetFlag(true);
+				}
+				else {
+					bossGimmick->SetFlag(false);
+				}
+			}
+		}
+	}
 }
 
 void Player::CollisionReserve(void)

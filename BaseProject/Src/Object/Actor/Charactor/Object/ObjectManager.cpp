@@ -6,7 +6,6 @@
 #include "./ObjectBox.h"
 #include "./ObjectTile.h"
 #include "./ObjectBossGimmick.h"
-#include "./ObjectGimmickSwitch.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -136,9 +135,6 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::BOSS_GIMMICK:
 		object = new ObjectBossGimmick(data);
 		break;
-	case ObjectBase::TYPE::BOSS_GIMMICK_SWITCH:
-		object = new ObjectGimmickSwitch(data);
-		break;
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
 
@@ -173,5 +169,31 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 	}
 
 	return nullptr;
+}
+
+ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		if (auto bossGimmick = dynamic_cast<ObjectBossGimmick*>(object))
+		{
+			VECTOR bossGimmickPos = bossGimmick->GetPos();
+
+			// XZïΩñ ÇÃÇ›Ç≈ãóó£åvéZ
+			float dx = bossGimmickPos.x - pos.x;
+			float dz = bossGimmickPos.z - pos.z;
+
+			float distXZ = dx * dx + dz * dz;
+
+			// XZÇÃîÕàÕì‡Ç»ÇÁOKÇ∆Ç∑ÇÈÅiçÇÇ≥YÇÕñ≥éãÅj
+			if (distXZ < 10000.0f)
+			{
+				return bossGimmick;
+			}
+		}
+	}
+
+	return nullptr;
+
 }
 

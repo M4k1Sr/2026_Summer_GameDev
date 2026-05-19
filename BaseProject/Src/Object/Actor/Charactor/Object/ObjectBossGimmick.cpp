@@ -27,13 +27,6 @@ ObjectBossGimmick::~ObjectBossGimmick(void)
 
 void ObjectBossGimmick::Draw(void)
 {
-	//int matNum = MV1GetMaterialNum(transform_.modelId);
-	//COLOR_F color = GetColorF(1.0f, 0.0f, 0.0f, 1.0f); 
-
-	//for (int i = 0; i < matNum; i++)
-	//{
-	//	MV1SetMaterialEmiColor(transform_.modelId, i, color);
-	//}
 	
 	ObjectBase::Draw();
 #ifdef _DEBUG
@@ -54,6 +47,16 @@ void ObjectBossGimmick::Draw(void)
 	}
 
 #endif
+}
+
+bool ObjectBossGimmick::GetFlag(void) const
+{
+	return isGimmick_;
+}
+
+void ObjectBossGimmick::SetFlag(bool isGimmick)
+{
+	isGimmick_ = isGimmick;
 }
 
 void ObjectBossGimmick::InitLoad(void)

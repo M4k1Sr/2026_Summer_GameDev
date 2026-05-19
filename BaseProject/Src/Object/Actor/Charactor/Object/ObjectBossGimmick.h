@@ -17,8 +17,12 @@ public:
 	// デバッグ描画処理
 	void Draw(void) override;
 
-	// 床の座標取得
+	// ギミックの座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
+
+	// ギミック管理ゲッター・セッター
+	bool GetFlag(void) const;
+	void SetFlag(bool isGimmick);
 
 protected:
 
@@ -93,5 +97,8 @@ private:
 
 	// 更新ステップ
 	float step_;
+
+	// ギミックフラグ
+	bool isGimmick_;
 
 };
