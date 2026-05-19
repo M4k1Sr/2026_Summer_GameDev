@@ -148,12 +148,15 @@ void GameScene::Update(void)
 		player_->Update();
 		ironBall_->Update();
 		ui_->Update();
+
+		
 	}
 
 	isEnd_ = ui_->GetIsGameOver();
+	isEnd_ = player_->GetDeadFlag();
 
 	//ゲームオーバーシーンへ遷移
-	if (isEnd_)
+	if (isEnd_ )
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 
@@ -174,15 +177,21 @@ void GameScene::Draw(void)
 	// プレイヤー描画
 	player_->Draw();
 	
-	// UI描画
-	ui_->Draw();
-
+	
 	// オブジェクト描画
 	objMng_->Draw();
 
+	//ボス描画
+	bossMng_->Draw();
+
+
+	// UI描画
+	ui_->Draw();
+
+
 	////ポーズ画面
 	IsPause();
-	bossMng_->Draw();
+	
 }
 
 void GameScene::Release(void)

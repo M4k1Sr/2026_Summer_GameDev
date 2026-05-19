@@ -30,6 +30,11 @@ public:
 	// オブジェクトマネージャーのセット
 	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
 
+	//プレイヤー座標のゲッター
+	bool GetDeadFlag(void);
+
+	void playerDead(void);
+
 protected:
 
 	// リソースロード
@@ -50,6 +55,7 @@ protected:
 	// 更新系
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
+
 
 	// 視野描画
 	virtual void DrawViewRange(void) override;
@@ -117,6 +123,9 @@ private:
 
 	// 衝突判定
 	void CollisionReserve(void) override;
+
+	//プレイヤーの死亡判定
+	bool isDead_;
 
 };
 
