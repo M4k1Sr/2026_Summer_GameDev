@@ -133,8 +133,5 @@ private:
 	// Õ“Ë”»’è
 	void CollisionReserve(void) override;
 
-	//ƒvƒŒƒCƒ„[‚Ì€–S”»’è
-	bool isDead_;
-
 };
 

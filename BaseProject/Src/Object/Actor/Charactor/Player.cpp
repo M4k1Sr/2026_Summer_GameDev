@@ -18,8 +18,7 @@
 Player::Player(void)
 	:
 	CharactorBase(),
-	isGimmick_(false),
-	isDead_(false)
+	isGimmick_(false)
 {
 }
 
