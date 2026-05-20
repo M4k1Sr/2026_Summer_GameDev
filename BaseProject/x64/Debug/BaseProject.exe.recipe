@@ -2,7 +2,11 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< HEAD
       <FullPath>C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+=======
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+>>>>>>> nakanishi
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

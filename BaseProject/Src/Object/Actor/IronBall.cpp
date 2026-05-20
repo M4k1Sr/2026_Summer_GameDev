@@ -2,6 +2,7 @@
 #include "../../Utility/AsoUtility.h"
 #include "../../Object/Common/Transform.h"
 #include "../../Object/Collider/ColliderModel.h"
+#include "../../Object/Collider/ColliderSphere.h"
 #include "../../Manager/InputManager.h"
 #include "../../Manager/SceneManager.h"
 #include "../../Manager/ResourceManager.h"
@@ -17,14 +18,25 @@ IronBall::IronBall(void)
 
 IronBall::~IronBall(void)
 {
+	for (auto& instance : instances_) {
+		if (instance.colModel != nullptr) {
+			delete instance.colModel;
+			instance.colModel = nullptr;
+		}
+	}
 }
 
 void IronBall::Update(void)
 {
-	// 全てのインスタンスを更新
-	for (auto& instance : instances_) {
+	for (size_t i = 0; i < instances_.size(); ++i) {
+		auto& instance = instances_[i];
+
+		// 振り子の挙動で座標・回転を計算
 		Pendulum(instance);
 		instance.transform.Update();
+
+		// 動く3Dモデルの衝突情報を毎フレーム再構築する
+		MV1SetupCollInfo(instance.transform.modelId);
 	}
 }
 
@@ -76,6 +88,38 @@ void IronBall::InitTransform(void)
 
 void IronBall::InitCollider(void)
 {
+	for (auto& instance : instances_)
+	{
+		// DxLib側の衝突情報セットアップ（個別のモデルIDを指定）
+		MV1SetupCollInfo(instance.transform.modelId);
+
+		// 各インスタンスのtransformのアドレスを渡してコライダーを生成
+		ColliderModel* colModel =
+			new ColliderModel(ColliderBase::TAG::IRON_BALL, &instance.transform);
+
+		// 除外フレーム設定
+		for (const std::string& name : EXCLUDE_FRAME_NAMES)
+		{
+			colModel->AddExcludeFrameIds(name); // プロジェクトの仕様に合わせ単数形(AddExcludeFrameId)に修正
+		}
+
+		// 対象フレーム設定
+		for (const std::string& name : TARGET_FRAME_NAMES)
+		{
+			colModel->AddTargetFrameIds(name);
+		}
+
+		// インスタンスデータにコライダーを記録
+		instance.colModel = colModel;
+	}
+
+	// 【注意】衝突マネージャーへの登録に関する補足
+	// 基底クラスの ownColliders_ (std::map) は重複キー(COLLIDER_TYPE::MODEL)を持てない設計の場合が多いです。
+	// もし衝突マネージャーが ownColliders_ を自動参照する仕組みの場合、暫定として最初の1つのみ登録します。
+	if (!instances_.empty())
+	{
+		ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), instances_[0].colModel);
+	}
 }
 
 void IronBall::InitAnimation(void)
