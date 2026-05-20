@@ -31,6 +31,11 @@ public:
 	// オブジェクトマネージャーのセット
 	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
 
+	//プレイヤー座標のゲッター
+	bool GetDeadFlag(void);
+
+	void playerDead(void);
+
 protected:
 
 	// リソースロード
@@ -52,6 +57,7 @@ protected:
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
 
+
 	// 視野描画
 	virtual void DrawViewRange(void) override;
 
@@ -68,7 +74,8 @@ private:
 	bool isGimmick_;
 
 	// プレイヤー座標
-	static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
+	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
+	static constexpr VECTOR PLAYER_POS = { 0.0f, 0.0f, -800.0f };
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
 	// プレイヤーローカル角度

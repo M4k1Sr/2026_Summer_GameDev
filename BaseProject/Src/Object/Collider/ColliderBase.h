@@ -23,6 +23,7 @@ public:
 		STAGE,
 		PLAYER,
 		BOX,
+		IRON_BALL,
 		TILE,
 		BOSS_GIMMICK,
 		TARAI,

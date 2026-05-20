@@ -72,6 +72,23 @@ void Player::Release(void)
 {
 }
 
+
+bool Player::GetDeadFlag(void)
+{
+	return isDead_;
+}
+
+//プレイヤーの死亡判定
+void Player::playerDead(void)
+{
+	//プレイヤーのy座標が-1000.0f以下になったら死亡とする
+	if(transform_.pos.y < -1000.0f)
+	{
+		isDead_ = true;
+	}
+}
+
+
 void Player::InitLoad(void)
 {
 	// 基底クラスのリソースロード
@@ -144,6 +161,9 @@ void Player::UpdateProcess(void)
 
 	// ジャンプ処理
 	ProcessJump();
+
+	//プレイや死亡判定
+	playerDead();
 
 	// ギミック処理
 	ProcessPush();

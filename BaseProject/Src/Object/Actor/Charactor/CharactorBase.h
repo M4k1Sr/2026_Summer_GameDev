@@ -70,6 +70,9 @@ protected:
 	// ジャンプの入力受付時間
 	float stepJump_;
 
+	// 死亡フラグ
+	bool isDead_;
+
 	// リソースロード
 	virtual void InitLoad(void) override;
 

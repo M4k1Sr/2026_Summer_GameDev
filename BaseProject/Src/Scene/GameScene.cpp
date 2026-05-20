@@ -113,6 +113,18 @@ void GameScene::Init(void)
 	ironBall_ = new IronBall();
 	ironBall_->Init();
 
+	// 鉄球のコライダをプレイヤーに登録（鉄球を検出させる）
+	{
+		const auto& ironColls = ironBall_->GetOwnColliders();
+		for (const auto& kv : ironColls)
+		{
+			if (kv.second != nullptr)
+			{
+				player_->AddHitCollider(kv.second);
+			}
+		}
+	}
+
 	// UIモデル
 	ui_ = new UI();
 	ui_->Init();
@@ -148,12 +160,15 @@ void GameScene::Update(void)
 		player_->Update();
 		ironBall_->Update();
 		ui_->Update();
+
+		
 	}
 
 	isEnd_ = ui_->GetIsGameOver();
+	isEnd_ = player_->GetDeadFlag();
 
 	//ゲームオーバーシーンへ遷移
-	if (isEnd_)
+	if (isEnd_ )
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 
@@ -168,6 +183,9 @@ void GameScene::Draw(void)
 	// ステージ描画
 	stage_->Draw();
 
+	// 鉄球描画
+	ironBall_->Draw();
+
 	// オブジェクト描画
 	objMng_->Draw();
 
@@ -177,18 +195,21 @@ void GameScene::Draw(void)
 	// プレイヤー描画
 	player_->Draw();
 	
-	// ボス描画
-	bossMng_->Draw();
-
+	
 	// オブジェクト描画
 	objMng_->Draw();
+
+	//ボス描画
+	bossMng_->Draw();
+
 
 	// UI描画
 	ui_->Draw();
 
+
 	////ポーズ画面
 	IsPause();
-
+	
 }
 
 void GameScene::Release(void)
