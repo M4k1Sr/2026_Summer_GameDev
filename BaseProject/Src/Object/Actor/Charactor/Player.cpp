@@ -29,43 +29,31 @@ Player::~Player(void)
 void Player::Draw(void)
 {
 	CharactorBase::Draw();
-#ifdef _DEBUG
-
-	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-	// pos_ は ObjectBase のメンバ変数であると想定しています
-	DrawFormatString(200, 50, GetColor(0, 0, 0),
-		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-		transform_.pos.x, transform_.pos.y, transform_.pos.z);
-
-	if (isJump_ == true) {
-		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
-	}
-	else {
-		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
-
-		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-		if (tile == nullptr) {
-			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
-		}
-		else {
-			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
-		}
-	}
-
-	//auto& ins = InputManager::GetInstance();
-
-	//// 持続ジャンプ処理
-	//bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
-	//	|| ins.IsPadBtnPress(
-	//		InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
-	//if (isHitKeyNew == true) {
-	//	DrawFormatString(600, 240, GetColor(255, 0, 0), "PRESS");
-	//}
-	//else {
-	//	DrawFormatString(600, 240, GetColor(255, 0, 0), "NO PRESS");
-	//}
-
-#endif
+//#ifdef _DEBUG
+//
+//	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+//	// pos_ は ObjectBase のメンバ変数であると想定しています
+//	DrawFormatString(200, 50, GetColor(0, 0, 0),
+//		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+//		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+//
+//	if (isJump_ == true) {
+//		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
+//	}
+//	else {
+//		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
+//
+//		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+//		if (tile == nullptr) {
+//			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+//		}
+//		else {
+//			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
+//		}
+//	}
+//
+//
+//#endif
 }
 
 void Player::Release(void)

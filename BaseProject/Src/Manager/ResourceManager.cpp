@@ -109,6 +109,11 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
 	resourcesMap_.emplace(SRC::BOSS_DIABLO, res);
 
+	//ƒAƒCƒeƒ€Œ®
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");
+	resourcesMap_.emplace(SRC::KEY, res);
+
+
 }
 
 void ResourceManager::Release(void)
