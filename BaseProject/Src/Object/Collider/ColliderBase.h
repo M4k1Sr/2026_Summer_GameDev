@@ -25,7 +25,7 @@ public:
 		BOX,
 		TILE,
 		BOSS_GIMMICK,
-		BOSS_GIMMICK_SWITCH,
+		TARAI,
 		CAMERA,
 	};
 

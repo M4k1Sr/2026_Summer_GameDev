@@ -49,16 +49,6 @@ void ObjectBossGimmick::Draw(void)
 #endif
 }
 
-bool ObjectBossGimmick::GetFlag(void) const
-{
-	return isGimmick_;
-}
-
-void ObjectBossGimmick::SetFlag(bool isGimmick)
-{
-	isGimmick_ = isGimmick;
-}
-
 void ObjectBossGimmick::InitLoad(void)
 {
 	// 基底クラスのリソースロード
@@ -74,7 +64,7 @@ void ObjectBossGimmick::InitTransform(void)
 {
 
 	// モデルの大きさ、回転、座標の初期化
-	transform_.scl = VGet(SCALE, SCALE * 2, SCALE);
+	transform_.scl = VGet(SCALE, SCALE, SCALE);
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();
@@ -118,6 +108,7 @@ void ObjectBossGimmick::InitPost(void)
 
 void ObjectBossGimmick::UpdateProcess(void)
 {
+	ActiveGimmick();
 }
 
 void ObjectBossGimmick::UpdateProcessPost(void)
@@ -129,4 +120,14 @@ void ObjectBossGimmick::UpdateProcessPost(void)
 
 void ObjectBossGimmick::DrawViewRange(void)
 {
+}
+
+void ObjectBossGimmick::ActiveGimmick(void)
+{
+	if (isGimmick_) {
+		// ギミックがアクティブ状態になった場合
+		// ギミックのモデルの色が変化
+		COLOR_F color = { 50.0f, 0.0f, 0.0f, 1.0f }; // 赤色
+		MV1SetMaterialDifColor(transform_.modelId, 0, color); // 赤色に変更
+	}
 }

@@ -15,6 +15,16 @@ ObjectBase::~ObjectBase(void)
 {
 }
 
+bool ObjectBase::GetFlag(void) const
+{
+	return isGimmick_;
+}
+
+void ObjectBase::SetFlag(bool isGimmick)
+{
+	isGimmick_ = isGimmick;
+}
+
 void ObjectBase::ChangeState(int state)
 {
 

@@ -6,6 +6,7 @@
 #include "./ObjectBox.h"
 #include "./ObjectTile.h"
 #include "./ObjectBossGimmick.h"
+#include "./ObjectTarai.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -134,6 +135,9 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		break;
 	case ObjectBase::TYPE::BOSS_GIMMICK:
 		object = new ObjectBossGimmick(data);
+		break;
+	case ObjectBase::TYPE::TARAI:
+		object = new ObjectTarai(data);
 		break;
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}

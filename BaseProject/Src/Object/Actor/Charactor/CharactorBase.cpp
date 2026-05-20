@@ -167,7 +167,7 @@ void CharactorBase::CollisionGravity(void)
 			&& hitCol->GetTag() != ColliderBase::TAG::BOX
 			&& hitCol->GetTag() != ColliderBase::TAG::TILE
 			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
-/*			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK_SWITCH*/) continue;
+			&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
 
 		// 派生クラスへキャスト
 		const ColliderModel* colliderModel =
