@@ -42,7 +42,7 @@ void ResourceManager::Init(void)
 
 	//// タイトル惑星モデル
 	// 	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/PitfallPlanet/PitfallPlanet.mv1");
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
+	//res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
 	//resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
 
 	// タイトル城モデル
@@ -74,20 +74,24 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::SKY_DOME, res);
 
 	// ボックスモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Object/BoxObject.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/StageGimmick/BoxObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_BOX, res);
 
 	// 動く床モデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Object/MoveTileObject.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/StageGimmick/MoveTileObject.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_TILE, res);
 
 	// 鉄球モデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Object/IronBall.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/StageGimmick/IronBall.mv1");
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
+
+	// スイッチモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick.mv1");
+	resourcesMap_.emplace(SRC::OBJECT_SWITCH, res);
 
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
-	resourcesMap_.emplace(SRC::OBJECT_CLOCK, res);
+	resourcesMap_.emplace(SRC::CLOCK, res);
 
 	// 時計針モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "second_hand.png");
@@ -95,15 +99,15 @@ void ResourceManager::Init(void)
 
 	// ボスモデル(ピクシー)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Pixie/BossPixie.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_BOSS_PIXIE, res);
+	resourcesMap_.emplace(SRC::BOSS_PIXIE, res);
 
 	// ボスモデル(オーク)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Orc/BossOrc.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_BOSS_ORC, res);
+	resourcesMap_.emplace(SRC::BOSS_ORC, res);
 
 	// ボスモデル(ディアブロ)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
-	resourcesMap_.emplace(SRC::OBJECT_BOSS_DIABLO, res);
+	resourcesMap_.emplace(SRC::BOSS_DIABLO, res);
 
 }
 

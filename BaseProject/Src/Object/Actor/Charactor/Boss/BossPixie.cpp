@@ -34,7 +34,7 @@ void BossPixie::InitLoad(void)
 
 	// ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	transform_.SetModel(
-		resMng_.LoadModelDuplicate(ResourceManager::SRC::OBJECT_BOSS_PIXIE));
+		resMng_.LoadModelDuplicate(ResourceManager::SRC::BOSS_PIXIE));
 
 }
 

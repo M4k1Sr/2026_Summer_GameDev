@@ -47,6 +47,7 @@ void InputManager::Init(void)
 
 	InputManager::GetInstance().Add(KEY_INPUT_BACKSLASH);
 	InputManager::GetInstance().Add(KEY_INPUT_ESCAPE);
+	InputManager::GetInstance().Add(KEY_INPUT_R);
 	InputManager::GetInstance().Add(KEY_INPUT_Y);
 	InputManager::GetInstance().Add(KEY_INPUT_N);
 	InputManager::GetInstance().Add(MOUSE_INPUT_LEFT);
@@ -58,6 +59,7 @@ void InputManager::Init(void)
 	info.key = MOUSE_INPUT_LEFT;
 	info.keyOld = false;
 	info.keyNew = false;
+	info.keyPress = false;
 	info.keyTrgDown = false;
 	info.keyTrgUp = false;
 	mouseInfos_.emplace(info.key, info);
@@ -67,6 +69,7 @@ void InputManager::Init(void)
 	info.key = MOUSE_INPUT_RIGHT;
 	info.keyOld = false;
 	info.keyNew = false;
+	info.keyPress = false;
 	info.keyTrgDown = false;
 	info.keyTrgUp = false;
 	mouseInfos_.emplace(info.key, info);
@@ -81,6 +84,7 @@ void InputManager::Update(void)
 	{
 		p.second.keyOld = p.second.keyNew;
 		p.second.keyNew = CheckHitKey(p.second.key);
+		p.second.keyPress = p.second.keyNew;
 		p.second.keyTrgDown = p.second.keyNew && !p.second.keyOld;
 		p.second.keyTrgUp = !p.second.keyNew && p.second.keyOld;
 	}
@@ -92,7 +96,8 @@ void InputManager::Update(void)
 	for (auto& p : mouseInfos_)
 	{
 		p.second.keyOld = p.second.keyNew;
-		p.second.keyNew = mouseInput_ == p.second.key;
+		p.second.keyNew = (mouseInput_ & p.second.key) != 0;
+		p.second.keyPress = p.second.keyNew;
 		p.second.keyTrgDown = p.second.keyNew && !p.second.keyOld;
 		p.second.keyTrgUp = !p.second.keyNew && p.second.keyOld;
 	}
@@ -124,6 +129,7 @@ void InputManager::Add(int key)
 	info.key = key;
 	info.keyOld = false;
 	info.keyNew = false;
+	info.keyPress = false;
 	info.keyTrgDown = false;
 	info.keyTrgUp = false;
 	keyInfos_.emplace(key, info);
@@ -142,6 +148,11 @@ bool InputManager::IsNew(int key) const
 bool InputManager::IsTrgDown(int key) const
 {
 	return Find(key).keyTrgDown;
+}
+
+bool InputManager::IsPress(int key) const
+{
+	return Find(key).keyPress;
 }
 
 bool InputManager::IsTrgUp(int key) const
@@ -253,7 +264,7 @@ void InputManager::SetJPadInState(JOYPAD_NO jpNo)
 		stateNow.IsOld[i] = stateNow.IsNew[i];
 		//stateNow.IsNew[i] = stateNow.ButtonsNew[i] == 128 || stateNow.ButtonsNew[i] == 255;
 		stateNow.IsNew[i] = stateNow.ButtonsNew[i] > 0;
-
+		stateNow.IsPress[i] = stateNow.IsNew[i];
 		stateNow.IsTrgDown[i] = stateNow.IsNew[i] && !stateNow.IsOld[i];
 		stateNow.IsTrgUp[i] = !stateNow.IsNew[i] && stateNow.IsOld[i];
 
@@ -387,6 +398,11 @@ bool InputManager::IsPadBtnTrgDown(JOYPAD_NO no, JOYPAD_BTN btn) const
 bool InputManager::IsPadBtnTrgUp(JOYPAD_NO no, JOYPAD_BTN btn) const
 {
 	return padInfos_[static_cast<int>(no)].IsTrgUp[static_cast<int>(btn)];
+}
+
+bool InputManager::IsPadBtnPress(JOYPAD_NO no, JOYPAD_BTN btn) const
+{
+	return padInfos_[static_cast<int>(no)].IsPress[static_cast<int>(btn)];
 }
 
 VECTOR InputManager::GetDirectionXZAKey(int aKeyX, int aKeyY) const

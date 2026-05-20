@@ -165,7 +165,9 @@ void CharactorBase::CollisionGravity(void)
 		// ステージ・ボックス以外は処理を飛ばす
 		if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
 			&& hitCol->GetTag() != ColliderBase::TAG::BOX
-			&& hitCol->GetTag() != ColliderBase::TAG::TILE) continue;
+			&& hitCol->GetTag() != ColliderBase::TAG::TILE
+			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
+/*			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK_SWITCH*/) continue;
 
 		// 派生クラスへキャスト
 		const ColliderModel* colliderModel =
@@ -217,7 +219,7 @@ void CharactorBase::CollisionCapsule(void)
 		
 		// ステージは除外
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-
+		
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 

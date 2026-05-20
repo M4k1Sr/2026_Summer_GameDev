@@ -174,6 +174,9 @@ void GameScene::Draw(void)
 	// ƒIƒuƒWƒFƒNƒg•`‰æ
 	objMng_->Draw();
 
+	// —h‚ê‚é“S‹…•`‰æ
+	ironBall_->Draw();
+
 	// ƒvƒŒƒCƒ„[•`‰æ
 	player_->Draw();
 	

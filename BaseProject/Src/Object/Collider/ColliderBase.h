@@ -24,6 +24,8 @@ public:
 		PLAYER,
 		BOX,
 		TILE,
+		BOSS_GIMMICK,
+		BOSS_GIMMICK_SWITCH,
 		CAMERA,
 	};
 

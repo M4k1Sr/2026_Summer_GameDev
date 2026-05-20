@@ -61,6 +61,7 @@ public:
 		unsigned char ButtonsNew[static_cast<int>(JOYPAD_BTN::MAX)];
 		bool IsOld[static_cast<int>(JOYPAD_BTN::MAX)];
 		bool IsNew[static_cast<int>(JOYPAD_BTN::MAX)];
+		bool IsPress[static_cast<int>(JOYPAD_BTN::MAX)];
 		bool IsTrgDown[static_cast<int>(JOYPAD_BTN::MAX)];
 		bool IsTrgUp[static_cast<int>(JOYPAD_BTN::MAX)];
 		int AKeyLX;
@@ -96,6 +97,9 @@ public:
 	// キーの押下判定(押しっぱなしはNG)
 	bool IsTrgDown(int key) const;
 
+	// キーの押下判定(押しっぱなし状態)
+	bool IsPress(int key) const;
+
 	// キーを離した時の判定
 	bool IsTrgUp(int key) const;
 
@@ -124,6 +128,7 @@ public:
 	bool IsPadBtnNew(JOYPAD_NO no, JOYPAD_BTN btn) const;
 	bool IsPadBtnTrgDown(JOYPAD_NO no, JOYPAD_BTN btn) const;
 	bool IsPadBtnTrgUp(JOYPAD_NO no, JOYPAD_BTN btn) const;
+	bool IsPadBtnPress(JOYPAD_NO no, JOYPAD_BTN btn) const;
 
 	// アナログキーの入力値から方向(正規化済み)を取得
 	VECTOR GetDirectionXZAKey(int aKeyX, int aKeyY) const;
@@ -136,6 +141,7 @@ private:
 		int key;			// キーID
 		bool keyOld;		// 1フレーム前の押下状態
 		bool keyNew;		// 現フレームの押下状態
+		bool keyPress;		// キーが押されている状態なのか
 		bool keyTrgDown;	// 現フレームでボタンが押されたか
 		bool keyTrgUp;		// 現フレームでボタンが離されたか
 	};
@@ -146,6 +152,7 @@ private:
 		int key;			// キーID
 		bool keyOld;		// 1フレーム前の押下状態
 		bool keyNew;		// 現フレームの押下状態
+		bool keyPress;		// キーが押されている状態か
 		bool keyTrgDown;	// 現フレームでボタンが押されたか
 		bool keyTrgUp;		// 現フレームでボタンが離されたか
 	};

@@ -12,6 +12,7 @@ public:
 		RUN,
 		FAST_RUN,
 		JUMP,
+		PUSH,
 		MAX,
 	};
 
@@ -68,6 +69,10 @@ private:
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
 
+	// ギミック動作カウンタ
+	float gimmickCnt_;
+	bool isGimmick_;
+
 	// プレイヤー座標
 	static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
 	// プレイヤースケール
@@ -120,6 +125,10 @@ private:
 	//// 操作
 	void ProcessMove(void);
 	void ProcessJump(void);
+
+	// ギミック操作
+	void ProcessPush(void);
+	void ProcessCarry(void);
 
 	// 衝突判定
 	void CollisionReserve(void) override;
