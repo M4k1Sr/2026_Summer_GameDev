@@ -57,6 +57,9 @@ private:
 
 		// 揺れるタイミングをずらすためのオフセット
 		float timeOffset; 
+
+		// 個体ごとのモデルコライダー
+		class ColliderModel* colModel = nullptr;
 	};
 
 	// 複数の鉄球データ
@@ -80,5 +83,21 @@ private:
 	//鉄球の大きさ
 	static constexpr VECTOR IRON_BALL_SCALE = { 0.6f, 0.6f, 0.6f };
 
+	// コライダ関連（ヘッダに置いて問題ありません。静的定数として定義）
+	// ローカル基準で下方向のオフセット（負値）
+	static constexpr float COLLIDER_LOCAL_OFFSET_Y = -240.0f;
+	
+	// 基本半径（transform.scl.x と乗算）
+	static constexpr float BASE_COLLIDER_RADIUS = 200.0f;
+
+	// 除外フレーム名称
+	const std::vector<std::string> EXCLUDE_FRAME_NAMES = {
+	"Torus",
+	};
+
+	// 対象フレーム
+	const std::vector<std::string> TARGET_FRAME_NAMES = {
+	"Ball",
+	};
 };
 
