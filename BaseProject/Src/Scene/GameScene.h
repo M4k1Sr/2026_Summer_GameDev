@@ -9,6 +9,7 @@ class Player;
 class BossManager;
 class ObjectManager;
 class Ranking;
+class ItemManager;
 
 class GameScene : public SceneBase
 {
@@ -42,6 +43,9 @@ public:
 	//スコア受け渡し
 	int GetScore(void);
 
+	//アイテムドロップ判定
+	void ItemDrop(void);
+
 private:
 
 	// ステージ
@@ -67,6 +71,9 @@ private:
 	
 	//UI
 	UI* ui_;
+
+	//Item
+	ItemManager* itemMng_;
 	
 	// 時計
 	Transform clock_;

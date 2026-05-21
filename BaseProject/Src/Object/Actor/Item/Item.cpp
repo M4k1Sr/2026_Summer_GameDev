@@ -27,18 +27,14 @@ Item::Item(ItemManager::ITEM_TYPE type, VECTOR position)
 /// </summary>
 void Item::Init(void)
 {
-	// アイテムの種類が「鍵」の場合、リソースマネージャーからモデルを設定
-	if (type_ == ItemManager::ITEM_TYPE::KEY)
-	{
-		auto& resMng = ResourceManager::GetInstance();
+	auto& resMng = ResourceManager::GetInstance();
 
 		// 既存のResourceManagerに設定した鍵（ITEM_KEY等）のモデルIDをセット
 		// ※ResourceManager::SRC にアイテム用の列挙型を追加して合わせてください
-		transform_.SetModel(resMng.Load(ResourceManager::SRC::KEY).handleId_);
-	}
+	transform_.SetModel(resMng.Load(ResourceManager::SRC::KEY).handleId_);
 
 	// 大きさを等倍に設定
-	transform_.scl = VGet(1.0f, 1.0f, 1.0f);
+	transform_.scl = VGet(0.5f, 0.5f, 0.5f);
 
 	// 回転を初期状態（回転なし）にリセット
 	transform_.quaRot = Quaternion::Identity();
@@ -59,7 +55,6 @@ void Item::Update(void)
 	auto& scnMng = SceneManager::GetInstance();
 	float deltaTime = scnMng.GetDeltaTime();
 
-	// --- 1. ドロップ時の物理挙動（放物線）の計算 ---
 	// 重力加速度を毎フレーム下方向（マイナス）に加算していく
 	float gravity = -9.8f * deltaTime;
 	velocity_.y += gravity;
@@ -74,7 +69,6 @@ void Item::Update(void)
 		velocity_ = AsoUtility::VECTOR_ZERO; // 着地したので移動速度をゼロにする
 	}
 
-	// --- 2. アイテムの回転アニメーション演出 ---
 	// ゲームのアイテムらしく見せるため、Y軸を中心に時間経過でくるくる回す
 	angleY_ += 2.0f * deltaTime;
 	transform_.quaRot = Quaternion::Euler(VGet(0.0f, angleY_, 0.0f));

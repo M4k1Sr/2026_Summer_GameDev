@@ -82,6 +82,7 @@ void ItemManager::Destroy(void)
 void ItemManager::SpawnItem(ITEM_TYPE type, VECTOR position)
 {
      auto newItem = std::make_shared<Item>(type, position);
+	 newItem->Init();
      items_.push_back(newItem);
 }
 
