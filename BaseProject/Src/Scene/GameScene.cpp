@@ -173,6 +173,7 @@ void GameScene::Update(void)
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 
 	}
+
 }
 
 void GameScene::Draw(void)

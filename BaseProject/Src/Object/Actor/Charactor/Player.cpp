@@ -142,7 +142,7 @@ void Player::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/Push.mv1");
 
 	// アニメーション再生
 	animationController_->Play(
@@ -346,12 +346,16 @@ void Player::ProcessPush(void)
 
 				// アニメーション再生
 				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::PUSH), false);
+					static_cast<int>(ANIM_TYPE::PUSH),false);
 
 				if (gimmickCnt_ > 5.0f) {
 
 					// ギミック動作オン
 					bossGimmick->SetFlag(true);
+					gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
+
+					// ギミックオン数カウンタ
+
 				}
 				else {
 					bossGimmick->SetFlag(false);
