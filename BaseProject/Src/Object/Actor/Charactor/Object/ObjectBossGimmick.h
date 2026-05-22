@@ -44,7 +44,7 @@ protected:
 private:
 
 	// モデルの大きさ
-	static constexpr float SCALE = 1.0f;
+	static constexpr float SCALE = 0.5f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
@@ -63,12 +63,6 @@ private:
 
 	// 衝突判定用カプセル球体半径
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
-
-	// タイルの上昇時間
-	static constexpr float MOVE_TIME = 4.0f;
-
-	// タイルの上昇範囲
-	static constexpr float MOVE_UP_TILE = 300.0f;
 
 	// 初期位置
 	VECTOR startPos_;

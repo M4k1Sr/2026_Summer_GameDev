@@ -79,24 +79,18 @@ void ObjectBossGimmick::InitCollider(void)
 		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::LINE), colLine);
 
-	// 主に壁や木などの衝突で使用するカプセルコライダ
-	ColliderCapsule* colCapsule = new ColliderCapsule(
-		ColliderBase::TAG::BOSS_GIMMICK, &transform_,
-		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS,
-		COL_CAPSULE_RADIUS);
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
+	//// 主に壁や木などの衝突で使用するカプセルコライダ
+	//ColliderCapsule* colCapsule = new ColliderCapsule(
+	//	ColliderBase::TAG::BOX, &transform_,
+	//	COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS,
+	//	COL_CAPSULE_RADIUS);
+	//ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
 
-	//// 主に地面との衝突で使用する線分コライダ
-	//ColliderLine* colLine = new ColliderLine(
-	//	ColliderBase::TAG::BOSS_GIMMICK, &transform_,
-	//	COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
-	//ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::LINE), colLine);
-
-	//// モデルとの衝突で使用するモデルコライダー
-	//ColliderModel* colModel = new ColliderModel(
-	//	ColliderBase::TAG::BOSS_GIMMICK,
-	//	&transform_);
-	//ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), colModel);
+	// モデルとの衝突で使用するモデルコライダー
+	ColliderModel* colModel = new ColliderModel(
+		ColliderBase::TAG::BOSS_GIMMICK,
+		&transform_);
+	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), colModel);
 }
 
 void ObjectBossGimmick::InitAnimation(void)
@@ -113,15 +107,16 @@ void ObjectBossGimmick::InitPost(void)
 	prevPos_ = transform_.pos;
 	velocity_ = AsoUtility::VECTOR_ZERO;
 
-	// 自分の transform_ のアドレスをコライダーに叩き込む
-	for (auto& col : ownColliders_) {
-		col.second->SetFollow(&this->transform_);
-	}
+	//// 自分の transform_ のアドレスをコライダーに叩き込む
+	//for (auto& col : ownColliders_) {
+	//	col.second->SetFollow(&this->transform_);
+	//}
 }
 
 void ObjectBossGimmick::UpdateProcess(void)
 {
 	ActiveGimmick();
+	jumpPow_ = AsoUtility::VECTOR_ZERO;
 }
 
 void ObjectBossGimmick::UpdateProcessPost(void)

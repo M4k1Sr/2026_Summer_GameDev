@@ -128,7 +128,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		//object = new ObjectBox(data);
+		object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);

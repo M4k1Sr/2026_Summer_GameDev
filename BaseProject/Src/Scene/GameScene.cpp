@@ -104,6 +104,7 @@ void GameScene::Init(void)
 		{
 			player_->AddHitCollider(objectCollider);
 		}
+
 	}
 
 	// ステージモデルのコライダーをオブジェクトに登録

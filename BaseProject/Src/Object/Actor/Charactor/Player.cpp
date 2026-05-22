@@ -52,6 +52,11 @@ void Player::Draw(void)
 		}
 	}
 
+	DrawFormatString(800, 100, GetColor(0, 255, 0),
+		"gimmickCnt: %6.1f",
+		gimmickCnt_);
+
+
 	//auto& ins = InputManager::GetInstance();
 
 	//// 持続ジャンプ処理
@@ -156,6 +161,9 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
+	// ギミック処理
+	ProcessPush();
+
 	// 移動操作
 	ProcessMove();
 
@@ -165,8 +173,6 @@ void Player::UpdateProcess(void)
 	//プレイや死亡判定
 	playerDead();
 
-	// ギミック処理
-	ProcessPush();
 }
 
 void Player::UpdateProcessPost(void)
@@ -361,6 +367,10 @@ void Player::ProcessPush(void)
 					bossGimmick->SetFlag(false);
 				}
 			}
+			else {
+				gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
+			}
+			
 		}
 	}
 }
