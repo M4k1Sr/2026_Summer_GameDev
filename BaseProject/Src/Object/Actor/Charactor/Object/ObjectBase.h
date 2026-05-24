@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "../CharactorBase.h"
+class ObjectManager;
 
 class ObjectBase : public CharactorBase
 {
@@ -37,7 +38,13 @@ public:
 	virtual bool GetFlag(void) const;
 	virtual void SetFlag(bool isGimmick);
 
+	// オブジェクトマネージャのセッター
+	void SetObjectManager(ObjectManager* objMng) { objMng_ = objMng; } 
+
 protected:
+
+	// オブジェクトマネージャ
+	ObjectManager* objMng_ = nullptr;
 
 	// 状態管理
 	int stateBase_;

@@ -3,6 +3,8 @@
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
 class AnimationController;
+class ObjectManager;
+class ObjectBossGimmick;
 
 class ObjectTarai : public ObjectBase
 {
@@ -14,7 +16,6 @@ public:
 		NONE,
 		STOP,
 		DOWN,
-		RETRY,
 		END,
 	};
 
@@ -26,8 +27,7 @@ public:
 
 	// デバッグ描画処理
 	void Draw(void) override;
-
-
+	
 protected:
 
 	// リソースロード
@@ -80,6 +80,9 @@ private:
 	// タライの下降範囲
 	static constexpr float MOVE_DOWN_TARAI = 800.0f;
 
+	// タライの最高降下速度
+	static constexpr float MAX_TARAI_SPEED =  -30.0f;
+
 	// 初期位置
 	VECTOR startPos_;
 
@@ -111,13 +114,11 @@ private:
 	void ChangeStateNone(void);
 	void ChangeStateStop(void);
 	void ChangeStateDown(void);
-	void ChangeStateRetry(void);
 	void ChangeStateEnd(void);
 
 	void UpdateNone(void);
 	void UpdateStop(void);
 	void UpdateDown(void);
-	void UpdateRetry(void);
 	void UpdateEnd(void);
 
 	// タライ降下処理

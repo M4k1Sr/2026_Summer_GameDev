@@ -2,6 +2,7 @@
 #include <functional>
 #include "../CharactorBase.h"
 class Player;
+class ObjectManager;
 
 class BossBase : public CharactorBase
 {
@@ -61,9 +62,15 @@ public:
 
 	void SetPlayer(Player* player);
 
+	// オブジェクトマネージャーのセット
+	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
+
 protected:
 
 	Player* player_;
+
+	// オブジェクトマネージャー
+	ObjectManager* objMng_ = nullptr;
 
 	// 状態管理
 	int stateBase_;

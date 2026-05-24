@@ -68,27 +68,6 @@ void GameScene::Init(void)
 		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
 
-	// ボス初期化
-	bossMng_ = new BossManager();
-	bossMng_->SetPlayer(player_);
-	bossMng_->Init();
-
-	// ボス(全て)のコライダーを登録
-	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
-	for (const auto& boss : bosses)
-	{
-		// ボスがモデルコライダーを持っていれば登録
-		const ColliderBase* bossCollider =
-		boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
-		if (bossCollider != nullptr)
-		{
-			player_->AddHitCollider(bossCollider);
-		}
-	}
-
-	// ステージモデルのコライダーをボスに登録
-	bossMng_->AddHitCollider(stageCollider);
-
 	// スカイドーム初期化
 	skyDome_ = new SkyDome(player_->GetTransform());
 	skyDome_->Init();
@@ -97,6 +76,9 @@ void GameScene::Init(void)
 	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
 	for (const auto& obj : objects)
 	{
+		// オブジェクト追加
+		obj->SetObjectManager(objMng_);
+
 		// オブジェクトがモデルコライダーを持っていれば登録
 		const ColliderBase* objectCollider = 
 		obj->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
@@ -109,6 +91,29 @@ void GameScene::Init(void)
 
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
+
+	// ボス初期化
+	bossMng_ = new BossManager();
+	bossMng_->SetPlayer(player_);
+	bossMng_->Init();
+
+	// ボス(全て)のコライダーを登録
+	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
+	for (const auto& boss : bosses)
+	{
+		boss->SetObjectManager(objMng_);
+
+		// ボスがモデルコライダーを持っていれば登録
+		const ColliderBase* bossCollider =
+			boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+		if (bossCollider != nullptr)
+		{
+			player_->AddHitCollider(bossCollider);
+		}
+	}
+
+	// ステージモデルのコライダーをボスに登録
+	bossMng_->AddHitCollider(stageCollider);
 
 	// 鉄球モデル
 	ironBall_ = new IronBall();
@@ -156,9 +161,9 @@ void GameScene::Update(void)
 		SetMouseDispFlag(false);
 		stage_->Update();
 		skyDome_->Update();
-		objMng_->Update();
-		bossMng_->Update();
 		player_->Update();
+		bossMng_->Update();
+		objMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
 

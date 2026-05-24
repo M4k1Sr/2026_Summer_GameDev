@@ -36,6 +36,9 @@ public:
 
 	void playerDead(void);
 
+	// ダメージカウンタゲッター
+	int GetCurrentCnt(void) const;
+
 protected:
 
 	// リソースロード
@@ -72,6 +75,9 @@ private:
 	// ギミック動作カウンタ
 	float gimmickCnt_;
 	bool isGimmick_;
+
+	// ギミック動作数カウンタ
+	int currentCnt_;
 
 	// プレイヤー座標
 	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };

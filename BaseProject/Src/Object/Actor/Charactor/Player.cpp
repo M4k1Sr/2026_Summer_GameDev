@@ -9,6 +9,7 @@
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
@@ -19,7 +20,8 @@
 Player::Player(void)
 	:
 	CharactorBase(),
-	isGimmick_(false)
+	isGimmick_(false),
+	currentCnt_(0)
 {
 }
 
@@ -80,6 +82,11 @@ void Player::playerDead(void)
 	{
 		isDead_ = true;
 	}
+}
+
+int Player::GetCurrentCnt(void) const
+{
+	return currentCnt_;
 }
 
 
@@ -322,10 +329,29 @@ void Player::InitCollider(void)
 	{
 		auto& ins = InputManager::GetInstance();
 
+		// タイルの判定
+		// これデバッグ用です
+		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+
+		// チートキー
+		bool cheatKey = ins.IsPress(KEY_INPUT_O);
+		if (cheatKey) {
+			// タライギミック作動
+			tarai->SetFlag(true);
+		}
+
+			
 		// プレイヤーがギミック付近にいる場合
 		if (objMng_ != nullptr)
 		{
+
+			// ボスの攻撃スイッチギミック
 			ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
+
+			//// タイルの判定
+			// こっちが本物
+			//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+
 			if (bossGimmick != nullptr)
 			{
 
@@ -347,10 +373,13 @@ void Player::InitCollider(void)
 
 						// ギミック動作オン
 						bossGimmick->SetFlag(true);
+						currentCnt_++;
+						bossGimmick->SetCnt(currentCnt_);
 						gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
 
-						// ギミックオン数カウンタ
-
+						// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
+						// タライギミック作動
+						tarai->SetFlag(true);	
 					}
 					else {
 						bossGimmick->SetFlag(false);

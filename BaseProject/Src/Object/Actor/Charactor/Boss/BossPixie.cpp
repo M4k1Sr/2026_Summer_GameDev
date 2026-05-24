@@ -14,6 +14,8 @@
 #include "../../../Collider/ColliderCapsule.h"
 #include "../../../Collider/ColliderModel.h"
 #include "../../../../Application.h"
+#include "../Object/ObjectBossGimmick.h"
+#include "../Object/ObjectManager.h"
 #include "./BossBase.h"
 #include "./BossPixie.h"
 
@@ -346,11 +348,17 @@ void BossPixie::ChangeStateAttackEnd(void)
 
 void BossPixie::ChangeStateDamage(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::DAMAGE), false);
+
 	stateUpdate_ = std::bind(&BossPixie::UpdateDamage, this);
 }
 
 void BossPixie::ChangeStateDown(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::DOWN), false);
+
 	stateUpdate_ = std::bind(&BossPixie::UpdateDown, this);
 }
 
@@ -423,13 +431,21 @@ void BossPixie::UpdateAttackEnd(void)
 void BossPixie::UpdateDamage(void)
 {
 	// ダメージはギミック作ってから
-	health_->TakeDamage(100);
+	if (animationController_->IsEnd())
+	{
+		ChangeState(STATE::CHARGE);
+	}
+
+	// 死亡判定
+	if (phaseStep_ == PHASE_STEP::PHASE_DEAD) {
+		ChangeState(STATE::DOWN);
+	}
 
 }
 
 void BossPixie::UpdateDown(void)
 {
-	// ここもダメージ同様
+	
 }
 
 void BossPixie::UpdateEnd(void)
@@ -439,26 +455,34 @@ void BossPixie::UpdateEnd(void)
 
 void BossPixie::Phase(void)
 {
-	// HP
-	int bossHp_ = health_->GetHp();
-	
+
+	int damageCnt = player_->GetCurrentCnt();
+
+	// ★【追加】前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
+	if (damageCnt > lastDamageCnt_)
+	{
+		ChangeState(STATE::DAMAGE);
+	}
+	// 今の値を保存して次のフレームの比較に使う
+	lastDamageCnt_ = damageCnt;
+
+
 	// もし未発見フェーズはIDLE状態	
-	// 発見後未発見フェーズ以降はエンカウント以上のフェーズに進む
 	if (!isUnaware_) {
 		phaseStep_ = PHASE_STEP::PHASE_IDLE;
 	}
-	
+
 	// HP量に応じてフェーズが進む
-	if (bossHp_ <= 0) {
+	if (damageCnt >= 3) {
 		phaseStep_ = PHASE_STEP::PHASE_DEAD;
 	}
-	else if (bossHp_ < 400) {
+	else if (damageCnt >= 2) {
 		phaseStep_ = PHASE_STEP::PHASE_CLIMAX;
 	}
-	else if (bossHp_ < 700) {
+	else if (damageCnt >= 1) {
 		phaseStep_ = PHASE_STEP::PHASE_TACTICAL;
 	}
-	else if (bossHp_ < 1000) {
+	else if (damageCnt >= 0) {
 		phaseStep_ = PHASE_STEP::PHASE_ENCOUNT;
 	}
 

@@ -8,9 +8,11 @@
 #include "../../../Collider/ColliderLine.h"
 #include "../../../Collider/ColliderCapsule.h"
 #include "../../../Collider/ColliderModel.h"
+#include "./ObjectBossGimmick.h"
 #include "../../../../Object/Common/AnimationController.h"
 #include "../../../../Application.h"
-#include"./ObjectBase.h"
+#include "./ObjectBase.h"
+#include "./ObjectManager.h"
 #include "ObjectTarai.h"
 
 ObjectTarai::ObjectTarai(const ObjectBase::ObjectData& data)
@@ -111,9 +113,6 @@ void ObjectTarai::InitPost(void)
 	stateChanges_.emplace(static_cast<int>(STATE::DOWN),
 		std::bind(&ObjectTarai::ChangeStateDown, this));
 
-	stateChanges_.emplace(static_cast<int>(STATE::RETRY),
-		std::bind(&ObjectTarai::ChangeStateRetry, this));
-
 	stateChanges_.emplace(static_cast<int>(STATE::END),
 		std::bind(&ObjectTarai::ChangeStateEnd, this));
 
@@ -169,31 +168,15 @@ void ObjectTarai::ChangeStateNone(void)
 void ObjectTarai::ChangeStateStop(void)
 {
 	transform_.pos = INIT_POS;
-	jumpPow_ = AsoUtility::VECTOR_ZERO;
-	movePow_ = AsoUtility::VECTOR_ZERO;
-	isGimmick_ = false;	// タライフラグをOFFにする
+
 	stateUpdate_ = std::bind(&ObjectTarai::UpdateStop, this);
 
 }
 
 void ObjectTarai::ChangeStateDown(void)
 {
-	// タライフラグをONにする
-	isGimmick_ = true;
-
-	jumpPow_ = AsoUtility::VECTOR_ZERO;
-	movePow_ = AsoUtility::VECTOR_ZERO;
-
-	stateUpdate_ = std::bind(&ObjectTarai::UpdateRetry, this);
-
-}
-
-void ObjectTarai::ChangeStateRetry(void)
-{
-
-	// 初期位置に戻す
-	transform_.pos = INIT_POS;
 	stateUpdate_ = std::bind(&ObjectTarai::UpdateDown, this);
+
 }
 
 void ObjectTarai::ChangeStateEnd(void)
@@ -207,16 +190,22 @@ void ObjectTarai::UpdateNone(void)
 
 void ObjectTarai::UpdateStop(void)
 {
-
+	// ギミック作動したらDown状態に行く
+	if (isGimmick_) {
+		ChangeState(STATE::DOWN);
+	}
 }
 
 void ObjectTarai::UpdateDown(void)
 {
+	UpdateProcessTaraiFall();
 
-}
+	if (transform_.pos.y < 100.0f) {
+		isGimmick_ = false;
 
-void ObjectTarai::UpdateRetry(void)
-{
+		ChangeState(STATE::STOP);
+
+	}
 
 }
 
@@ -226,6 +215,22 @@ void ObjectTarai::UpdateEnd(void)
 
 void ObjectTarai::UpdateProcessTaraiFall(void)
 {
+	// 重力方向
+	VECTOR dirGravity = AsoUtility::DIR_D;
+
+	// 重力の強さ
+	float gravityPow = Application::GetInstance().GetGravityPow() * scnMng_.GetDeltaTime();
+
+	// 重力
+	VECTOR gravity = VScale(dirGravity, gravityPow);
+
+	jumpPow_ = VAdd(jumpPow_, gravity);
+
+	// 重力速度の制限
+	if (jumpPow_.y < MAX_TARAI_SPEED)
+	{
+		jumpPow_.y = MAX_TARAI_SPEED;
+	}
 
 }
 
@@ -234,6 +239,6 @@ void ObjectTarai::ActiveTarai(void)
 	if (isGimmick_) {
 		// フラグが立ったらタライが降ってくる
 		// タライが敵に命中したらタライはだんだん透過して消えていく
-	
+		isTarai_ = true;
 	}
 }

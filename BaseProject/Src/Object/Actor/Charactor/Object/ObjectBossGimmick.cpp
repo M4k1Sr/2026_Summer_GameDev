@@ -25,29 +25,16 @@ ObjectBossGimmick::~ObjectBossGimmick(void)
 {
 }
 
-//void ObjectBossGimmick::Draw(void)
-//{
-//	
-//	//ObjectBase::Draw();
-//#ifdef _DEBUG
-//
-//	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-//	//// pos_ は ObjectBase のメンバ変数であると想定しています
-//	//DrawFormatString(50, 100, GetColor(0, 0, 0),
-//	//	"Tile Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-//	//	transform_.pos.x,	transform_.pos.y, transform_.pos.z);
-//
-//	//DrawFormatString(70, 120, GetColor(0, 0, 0),
-//	//	"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
-//	//	velocity_.x, velocity_.y, velocity_.z);
-//
-//	//// コライダーのデバッグ描画（もしメソッドがあれば）
-//	//for (auto& col : ownColliders_) {
-//	//	col.second->Draw();
-//	//}
-//
-//#endif
-//}
+int ObjectBossGimmick::GetCnt(void) const
+{
+	return gimmickOnCnt_;
+}
+
+void ObjectBossGimmick::SetCnt(int gimmickOnCnt)
+{
+	gimmickOnCnt_ = gimmickOnCnt;
+
+}
 
 void ObjectBossGimmick::InitLoad(void)
 {
@@ -131,4 +118,7 @@ void ObjectBossGimmick::ActiveGimmick(void)
 		COLOR_F color = { 50.0f, 0.0f, 0.0f, 1.0f }; // 赤色
 		MV1SetMaterialDifColor(transform_.modelId, 0, color); // 赤色に変更
 	}
+
+
+
 }

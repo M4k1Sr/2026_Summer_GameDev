@@ -14,8 +14,9 @@ public:
 	// デストラクタ
 	~ObjectBossGimmick(void) override;
 
-	//// デバッグ描画処理
-	//void Draw(void) override;
+	// ギミック動作数ゲッターセッター
+	int GetCnt(void) const;
+	void SetCnt(int gimmickOnCnt);
 
 protected:
 
@@ -84,6 +85,9 @@ private:
 
 	// 更新ステップ
 	float step_;
+
+	// ギミック動作数カウンタ
+	int gimmickOnCnt_;
 
 	// ギミック動作
 	void ActiveGimmick(void);

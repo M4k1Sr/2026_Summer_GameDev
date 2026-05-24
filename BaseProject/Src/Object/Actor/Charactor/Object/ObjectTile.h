@@ -119,8 +119,8 @@ private:
 
 	void UpdateNone(void);
 	void UpdateStop(void);
-	void UpdateUp(void);
-	void UpdateDown(void);
+	void UpdateRight(void);
+	void UpdateLeft(void);
 	void UpdateEnd(void);
 
 	// °ˆÚ“®ˆ—

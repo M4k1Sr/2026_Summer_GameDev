@@ -128,7 +128,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		object = new ObjectBox(data);
+		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);
@@ -144,6 +144,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 
 	if (object != nullptr)
 	{
+		object->SetObjectManager(this); 
 		object->Init();
 		objects_.emplace_back(object);
 	}
@@ -151,6 +152,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	return object;
 }
 
+// タイル
 ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 {
 	for (auto& object : objects_)
@@ -175,6 +177,7 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 	return nullptr;
 }
 
+// ボスギミックスイッチ
 ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
 {
 	for (auto& object : objects_)
@@ -201,3 +204,29 @@ ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
 
 }
 
+// タライ
+ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
+		{
+			VECTOR taraiPos = tarai->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = taraiPos.x - pos.x;
+			float dz = taraiPos.z - pos.z;
+
+			float distXZ = dx * dx + dz * dz;
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 100000000.0f)
+			{
+				return tarai;
+			}
+		}
+	}
+
+	return nullptr;
+
+}
