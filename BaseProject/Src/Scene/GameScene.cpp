@@ -191,23 +191,14 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
-	// 揺れる鉄球描画
-	ironBall_->Draw();
-
 	// プレイヤー描画
 	player_->Draw();
 	
-	
-	// オブジェクト描画
-	objMng_->Draw();
-
 	//ボス描画
 	bossMng_->Draw();
 
-
 	// UI描画
 	ui_->Draw();
-
 
 	////ポーズ画面
 	IsPause();

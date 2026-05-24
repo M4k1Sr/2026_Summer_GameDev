@@ -190,7 +190,7 @@ ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
 			float distXZ = dx * dx + dz * dz;
 
 			// XZ‚Ì”ÍˆÍ“à‚È‚çOK‚Æ‚·‚éi‚‚³Y‚Í–³‹j
-			if (distXZ < 14000.0f)
+			if (distXZ < 10000.0f)
 			{
 				return bossGimmick;
 			}
