@@ -1,2 +1,5 @@
-﻿  GameScene.cpp
-  BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+﻿  CharactorBase.cpp
+D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(306,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(309,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(312,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+  BaseProject.vcxproj -> D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\x64\Debug\BaseProject.exe

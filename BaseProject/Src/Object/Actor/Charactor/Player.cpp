@@ -12,6 +12,7 @@
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
+#include "../../Collider/ColliderModel.h"
 #include "../../../Application.h"
 #include "Player.h"
 
@@ -57,18 +58,6 @@ void Player::Draw(void)
 		gimmickCnt_);
 
 
-	//auto& ins = InputManager::GetInstance();
-
-	//// 持続ジャンプ処理
-	//bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
-	//	|| ins.IsPadBtnPress(
-	//		InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
-	//if (isHitKeyNew == true) {
-	//	DrawFormatString(600, 240, GetColor(255, 0, 0), "PRESS");
-	//}
-	//else {
-	//	DrawFormatString(600, 240, GetColor(255, 0, 0), "NO PRESS");
-	//}
 
 #endif
 }
@@ -133,6 +122,11 @@ void Player::InitCollider(void)
 		COL_CAPSULE_RADIUS);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
 
+	//// モデルとの衝突で使用するモデルコライダー
+	//ColliderModel* colModel = new ColliderModel(
+	//	ColliderBase::TAG::BOX,
+	//	&transform_);
+	//ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), colModel);
 
 }
 

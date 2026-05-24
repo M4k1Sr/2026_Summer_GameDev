@@ -25,29 +25,29 @@ ObjectBossGimmick::~ObjectBossGimmick(void)
 {
 }
 
-void ObjectBossGimmick::Draw(void)
-{
-	
-	ObjectBase::Draw();
-#ifdef _DEBUG
-
-	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-	//// pos_ は ObjectBase のメンバ変数であると想定しています
-	//DrawFormatString(50, 100, GetColor(0, 0, 0),
-	//	"Tile Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
-
-	//DrawFormatString(70, 120, GetColor(0, 0, 0),
-	//	"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	velocity_.x, velocity_.y, velocity_.z);
-
-	// コライダーのデバッグ描画（もしメソッドがあれば）
-	for (auto& col : ownColliders_) {
-		col.second->Draw();
-	}
-
-#endif
-}
+//void ObjectBossGimmick::Draw(void)
+//{
+//	
+//	//ObjectBase::Draw();
+//#ifdef _DEBUG
+//
+//	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+//	//// pos_ は ObjectBase のメンバ変数であると想定しています
+//	//DrawFormatString(50, 100, GetColor(0, 0, 0),
+//	//	"Tile Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+//	//	transform_.pos.x,	transform_.pos.y, transform_.pos.z);
+//
+//	//DrawFormatString(70, 120, GetColor(0, 0, 0),
+//	//	"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
+//	//	velocity_.x, velocity_.y, velocity_.z);
+//
+//	//// コライダーのデバッグ描画（もしメソッドがあれば）
+//	//for (auto& col : ownColliders_) {
+//	//	col.second->Draw();
+//	//}
+//
+//#endif
+//}
 
 void ObjectBossGimmick::InitLoad(void)
 {
@@ -103,14 +103,14 @@ void ObjectBossGimmick::InitAnimation(void)
 void ObjectBossGimmick::InitPost(void)
 {
 
-	// 基底クラスの初期化後処理
-	prevPos_ = transform_.pos;
-	velocity_ = AsoUtility::VECTOR_ZERO;
+	//// 基底クラスの初期化後処理
+	//prevPos_ = transform_.pos;
+	//velocity_ = AsoUtility::VECTOR_ZERO;
 
-	//// 自分の transform_ のアドレスをコライダーに叩き込む
-	//for (auto& col : ownColliders_) {
-	//	col.second->SetFollow(&this->transform_);
-	//}
+	// 自分の transform_ のアドレスをコライダーに叩き込む
+	for (auto& col : ownColliders_) {
+		col.second->SetFollow(&this->transform_);
+	}
 }
 
 void ObjectBossGimmick::UpdateProcess(void)

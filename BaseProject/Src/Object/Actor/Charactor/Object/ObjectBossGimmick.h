@@ -14,8 +14,8 @@ public:
 	// デストラクタ
 	~ObjectBossGimmick(void) override;
 
-	// デバッグ描画処理
-	void Draw(void) override;
+	//// デバッグ描画処理
+	//void Draw(void) override;
 
 protected:
 

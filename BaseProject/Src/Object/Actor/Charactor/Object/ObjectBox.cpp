@@ -76,6 +76,10 @@ void ObjectBox::InitAnimation(void)
 
 void ObjectBox::InitPost(void)
 {
+	// 自分の transform_ のアドレスをコライダーに叩き込む
+	for (auto& col : ownColliders_) {
+		col.second->SetFollow(&this->transform_);
+	}
 }
 
 void ObjectBox::UpdateProcess(void)
