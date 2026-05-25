@@ -5,6 +5,7 @@
 #include "../../../Object/Collider/ColliderLine.h"
 #include "../../../Object/Collider/ColliderModel.h"
 #include "../../../Object/Collider/ColliderCapsule.h"
+#include "../../../Object/Collider/ColliderSphere.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBase.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Utility/AsoUtility.h"
@@ -216,28 +217,80 @@ void CharactorBase::CollisionCapsule(void)
 	// 登録されている衝突物を全てチェック
 	for (const auto& hitCol : hitColliders_)
 	{
-		
-		// ステージは除外
+		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+<<<<<<< HEAD
 		
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
+=======
 
-		// 派生クラスへキャスト
-		const ColliderModel* colliderModel =
-			dynamic_cast<const ColliderModel*>(hitCol);
+		// ==========================================
+		// 1. 対象の形状が「3Dモデル」の場合の処理
+		// ==========================================
+		if (hitCol->GetShape() == ColliderBase::SHAPE::MODEL)
+		{
+			// 派生クラスへキャスト
+			const ColliderModel* colliderModel =
+				dynamic_cast<const ColliderModel*>(hitCol);
+>>>>>>> nakanishi
 
-		if (colliderModel == nullptr) continue;
+			if (colliderModel == nullptr) continue;
 
-		// 指定された回数と距離で三角形の法線方向に押し戻す
-		colliderCapsule->PushBackAlongNormal(
-			colliderModel,
-			transform_,
-			CNT_TRY_COLLISION,
-			COLLISION_BACK_DIS,
-			true,
-			false
+			// 指定された回数と距離で三角形の法線方向に押し戻す
+			colliderCapsule->PushBackAlongNormal(
+				colliderModel,
+				transform_,
+				CNT_TRY_COLLISION,
+				COLLISION_BACK_DIS,
+				true,
+				false
 			);
+		}
+
+		// ==========================================
+		// 2. 対象の形状が「球体（SPHERE）」の場合の処理（すべての鉄球に適用）
+		// ==========================================
+		else if (hitCol->GetShape() == ColliderBase::SHAPE::SPHERE)
+		{
+			const ColliderSphere* colliderSphere =
+				dynamic_cast<const ColliderSphere*>(hitCol);
+
+			if (colliderSphere == nullptr) continue;
+
+			// 1. カプセルの芯（線分）と球体の中心（点）の最短距離を計算
+			float distance = Segment_Point_MinLength(
+				colliderCapsule->GetPosTop(),
+				colliderCapsule->GetPosDown(),
+				colliderSphere->GetPos()
+			);
+
+			// 2. お互いの半径の合計（衝突限界距離）を計算
+			float totalRadius = colliderCapsule->GetRadius() + colliderSphere->GetRadius();
+
+			// 3. 最短距離が半径の合計未満であれば「衝突している」と判定
+			if (distance < totalRadius)
+			{
+				// 4. 押し戻す方向ベクトルを計算（吸い付き防止のためカプセル中心を使用）
+				VECTOR pushDir = VSub(colliderCapsule->GetCenter(), colliderSphere->GetPos());
+
+				// 安全対策：万が一完全に重なってゼロベクトルになった場合
+				if (VSize(pushDir) <= 0.0001f)
+				{
+					pushDir = transform_.GetForward(); // 自身の正面方向に弾く
+				}
+				else
+				{
+					pushDir = VNorm(pushDir); // 正規化
+				}
+
+				// 5. めめり込んでいる分の長さを計算（押し戻し量）
+				float pushLength = totalRadius - distance;
+
+				// 6. 自身の座標（transform_.pos）を、球体の外側へ向けて押し戻す
+				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength));
+			}
+		}
 	}
 }
 

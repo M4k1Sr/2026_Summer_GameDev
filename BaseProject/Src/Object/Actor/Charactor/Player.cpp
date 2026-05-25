@@ -392,6 +392,7 @@ void Player::InitCollider(void)
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	void Player::CollisionReserve(void)
 	{
@@ -446,3 +447,6 @@ void Player::InitCollider(void)
 		}
 
 	}
+=======
+}
+>>>>>>> nakanishi
