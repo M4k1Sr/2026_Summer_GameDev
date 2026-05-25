@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <string>
 #include "ActorBase.h"
+class ColliderSphere;
 
 class IronBall : public ActorBase
 {
@@ -10,7 +11,7 @@ public:
 	// 衝突判定種別
 	enum class COLLIDER_TYPE
 	{
-		MODEL = 0,
+		SPHERE = 0,
 		MAX,
 	};
 
@@ -62,6 +63,10 @@ private:
 	// 複数の鉄球データ
 	std::vector<InstanceData> instances_; 
 
+	// 2個目以降の鉄球コライダーもすべて安全に保持・管理するための動的配列
+	//std::vector<class ColliderModel*> myColliders_;
+	std::vector<ColliderSphere*> myColliders_;
+
 	// 振り子計算（個別のデータを渡すように変更）
 	void Pendulum(InstanceData& data);
 
@@ -80,5 +85,21 @@ private:
 	//鉄球の大きさ
 	static constexpr VECTOR IRON_BALL_SCALE = { 0.6f, 0.6f, 0.6f };
 
+	// === 球体コライダー用のパラメータ定数 ===
+	// 鉄球の中心（ローカル座標）へのオフセット
+	static constexpr VECTOR SPHERE_LOCAL_POS = { 0.0f, -240.0f, 0.0f };
+	
+	// 球体の半径
+	static constexpr float SPHERE_RADIUS = 120.0f;
+
+	//// 除外フレーム名称
+	//const std::vector<std::string> EXCLUDE_FRAME_NAMES = {
+	//"Torus",
+	//};
+
+	//// 対象フレーム
+	//const std::vector<std::string> TARGET_FRAME_NAMES = {
+	//"Ball",
+	//};
 };
 

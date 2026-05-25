@@ -55,6 +55,9 @@ void Camera::SetBeforeDraw(void)
 	case Camera::MODE::FOLLOW:
 		SetBeforeDrawFollow();
 		break;
+	case Camera::MODE::SCROLL_FOLLOW:
+		SetBeforeDrawScrollFollow();
+		break;
 	}
 
 	// カメラの設定(位置と注視点による制御)
@@ -148,6 +151,8 @@ void Camera::ChangeMode(MODE mode)
 	case Camera::MODE::FREE:
 		break;
 	case Camera::MODE::FOLLOW:
+		break;
+	case Camera::MODE::SCROLL_FOLLOW:
 		break;
 	}
 
@@ -290,6 +295,26 @@ void Camera::SetBeforeDrawFollow(void)
 
 	// 注視点の補間
 	targetPos_ = 
+		AsoUtility::Lerp(preTarget_, targetPos_, LERP_RATE_MOVE);
+}
+
+void Camera::SetBeforeDrawScrollFollow(void)
+{
+	// カメラ操作(回転)
+	//ProcessRot(true);
+
+	// 追従対象との相対位置を同期
+	SyncFollow();
+
+	// 衝突判定
+	Collision();
+
+	// カメラ位置の補間
+	transform_.pos =
+		AsoUtility::Lerp(prePos_, transform_.pos, LERP_RATE_MOVE);
+
+	// 注視点の補間
+	targetPos_ =
 		AsoUtility::Lerp(preTarget_, targetPos_, LERP_RATE_MOVE);
 }
 

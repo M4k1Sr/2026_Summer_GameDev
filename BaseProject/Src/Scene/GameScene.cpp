@@ -115,6 +115,18 @@ void GameScene::Init(void)
 	ironBall_ = new IronBall();
 	ironBall_->Init();
 
+	// 鉄球のコライダをプレイヤーに登録（鉄球を検出させる）
+	{
+		const auto& ironColls = ironBall_->GetOwnColliders();
+		for (const auto& kv : ironColls)
+		{
+			if (kv.second != nullptr)
+			{
+				player_->AddHitCollider(kv.second);
+			}
+		}
+	}
+
 	// UIモデル
 	ui_ = new UI();
 	ui_->Init();
@@ -126,7 +138,7 @@ void GameScene::Init(void)
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->SetFollow(&player_->GetTransform());
 	camera->AddHitCollider(stageCollider);
-	camera->ChangeMode(Camera::MODE::FOLLOW);
+	camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
 
 }
 
@@ -177,6 +189,9 @@ void GameScene::Draw(void)
 
 	// ステージ描画
 	stage_->Draw();
+
+	// 鉄球描画
+	ironBall_->Draw();
 
 	// オブジェクト描画
 	objMng_->Draw();
