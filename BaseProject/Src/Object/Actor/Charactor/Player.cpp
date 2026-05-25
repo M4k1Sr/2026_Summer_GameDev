@@ -131,322 +131,318 @@ void Player::InitCollider(void)
 
 }	
 
-	void Player::InitAnimation(void)
+void Player::InitAnimation(void)
+{
+	// アニメーションコントローラー
+	animationController_ =
+		new AnimationController(transform_.modelId);
+
+	// アニメーション追加
+	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Player/Idle.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/Push.mv1");
+
+	// アニメーション再生
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::RUN), true);
+
+}
+
+void Player::InitPost(void)
+{
+}
+
+void Player::UpdateProcess(void)
+{
+
+	// 移動操作
+	ProcessMove();
+
+	// ジャンプ処理
+	ProcessJump();
+
+	//プレイや死亡判定
+	playerDead();
+
+	// ギミック処理
+	ProcessPush();
+
+}
+
+void Player::UpdateProcessPost(void)
+{
+}
+
+void Player::DrawViewRange(void)
+{
+}
+
+void Player::ProcessMove(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// 移動量
+	movePow_ = AsoUtility::VECTOR_ZERO;
+
+	// 移動方向
+	VECTOR dir = AsoUtility::VECTOR_ZERO;
+
+	// ダッシュ判定
+	bool isDash = false;
+
+	// ゲームパッドが接続されている数で処理を分ける
+	if (GetJoypadNum() == 0)
 	{
-		// アニメーションコントローラー
-		animationController_ =
-			new AnimationController(transform_.modelId);
+		// キーボード操作
+		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
+		if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
+		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
+		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
-		// アニメーション追加
-		animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Player/Idle.mv1");
-		animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
-		animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
-		animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
-		animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/Push.mv1");
-
-		// アニメーション再生
-		animationController_->Play(
-			static_cast<int>(ANIM_TYPE::RUN), true);
-
+		// ダッシュキー
+		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
 	}
-
-	void Player::InitPost(void)
+	else
 	{
-	}
+		// ゲームパッド操作
+		// 接続されているゲームパッド１の情報を取得
+		InputManager::JOYPAD_IN_STATE padState =
+			ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
+		// アナログキーの入力値から方向を取得
+		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
-	void Player::UpdateProcess(void)
-	{
-
-		// 移動操作
-		ProcessMove();
-
-		// ジャンプ処理
-		ProcessJump();
-
-		//プレイや死亡判定
-		playerDead();
-
-		// ギミック処理
-		ProcessPush();
-
-	}
-
-	void Player::UpdateProcessPost(void)
-	{
-	}
-
-	void Player::DrawViewRange(void)
-	{
-	}
-
-	void Player::ProcessMove(void)
-	{
-		auto& ins = InputManager::GetInstance();
-
-		// 移動量
-		movePow_ = AsoUtility::VECTOR_ZERO;
-
-		// 移動方向
-		VECTOR dir = AsoUtility::VECTOR_ZERO;
-
-		// ダッシュ判定
-		bool isDash = false;
-
-		// ゲームパッドが接続されている数で処理を分ける
-		if (GetJoypadNum() == 0)
+		if (isDash == false)
 		{
-			// キーボード操作
-			if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
-			if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
-			if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
-			if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
-
-			// ダッシュキー
-			if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
+			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::L_TRIGGER);
 		}
-		else
-		{
-			// ゲームパッド操作
-			// 接続されているゲームパッド１の情報を取得
-			InputManager::JOYPAD_IN_STATE padState =
-				ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
-			// アナログキーの入力値から方向を取得
-			dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
+	}
 
-			if (isDash == false)
-			{
-				isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1,
-					InputManager::JOYPAD_BTN::L_TRIGGER);
-			}
+	// プレイヤーの移動計算の最後（または座標を確定させる直前）
+	if (objMng_ != nullptr)
+	{
+		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+		if (tile != nullptr)
+		{
+			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
+		}		
+	}
+
+	if (!AsoUtility::EqualsVZero(dir))
+	{
+		// 移動スピード
+		moveSpeed_ = SPEED_MOVE;
+
+		if (isDash)
+		{
+			// ダッシュスピード
+			moveSpeed_ = SPEED_DASH;
 		}
 
-		// プレイヤーの移動計算の最後（または座標を確定させる直前）
-		if (objMng_ != nullptr)
+		// ジャンプ中はアニメーションを変えない
+		if (!isJump_)
 		{
-			ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-			if (tile != nullptr)
-			{
-				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
-			}		
-		}
-
-		if (!AsoUtility::EqualsVZero(dir))
-		{
-			// 移動スピード
-			moveSpeed_ = SPEED_MOVE;
-
+			// アニメーション
 			if (isDash)
 			{
-				// ダッシュスピード
-				moveSpeed_ = SPEED_DASH;
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::FAST_RUN), true);
 			}
-
-			// ジャンプ中はアニメーションを変えない
-			if (!isJump_)
+			else
 			{
-				// アニメーション
-				if (isDash)
-				{
-					animationController_->Play(
-						static_cast<int>(ANIM_TYPE::FAST_RUN), true);
-				}
-				else
-				{
-					animationController_->Play(
-						static_cast<int>(ANIM_TYPE::RUN), true);
-				}
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::RUN), true);
 			}
-
-			// Y軸のみのカメラ角度を取得
-			Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
-
-			// 移動方向をカメラに合わせる
-			moveDir_ = Quaternion::PosAxis(cameraRot, dir);
-
-			// 移動量を計算
-			movePow_ = VScale(moveDir_, moveSpeed_);
-
 		}
-		else
+
+		// Y軸のみのカメラ角度を取得
+		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
+
+		// 移動方向をカメラに合わせる
+		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
+
+		// 移動量を計算
+		movePow_ = VScale(moveDir_, moveSpeed_);
+
+	}
+	else
+	{
+		// ジャンプ中はアニメーションを変えない
+		if (!isJump_)
 		{
-			// ジャンプ中はアニメーションを変えない
-			if (!isJump_)
-			{
-				// IDLE状態に戻す
-					animationController_->Play(
-						static_cast<int>(ANIM_TYPE::IDLE), true);
-			}
+			// IDLE状態に戻す
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
 		}
 	}
+}
 
-	void Player::ProcessJump(void)
+void Player::ProcessJump(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// 持続ジャンプ処理
+	bool isHitKeyNew = ins.IsNew(KEY_INPUT_SPACE)
+		|| ins.IsPadBtnNew(
+			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+
+	if (isHitKeyNew)
 	{
-		auto& ins = InputManager::GetInstance();
+		// ジャンプの入力受付時間を減少
+		stepJump_ += scnMng_.GetDeltaTime();
 
-		// 持続ジャンプ処理
-		bool isHitKeyNew = ins.IsNew(KEY_INPUT_SPACE)
-			|| ins.IsPadBtnNew(
-				InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
-
-		if (isHitKeyNew)
-		{
-			// ジャンプの入力受付時間を減少
-			stepJump_ += scnMng_.GetDeltaTime();
-
-			if (stepJump_ < TIME_JUMP_INPUT)
-			{
-				// ジャンプ量の計算
-				float jumpSpeed = POW_JUMP_KEEP * scnMng_.GetDeltaTime();
-				jumpPow_ = VAdd(jumpPow_, VScale(AsoUtility::DIR_U, jumpSpeed));
-			}
-		}
-		else
-		{
-			// ボタンを離したらジャンプ力に加算しない
-			stepJump_ = TIME_JUMP_INPUT;
-		}
-
-		// 初期ジャンプ処理
-		bool isHitKey = ins.IsTrgDown(KEY_INPUT_SPACE)
-			|| ins.IsPadBtnTrgDown(
-				InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
-
-		// ジャンプ
-		if (isHitKey && !isJump_)
+		if (stepJump_ < TIME_JUMP_INPUT)
 		{
 			// ジャンプ量の計算
-			float jumpSpeed = POW_JUMP_INIT * scnMng_.GetDeltaTime();
-			jumpPow_ = VScale(AsoUtility::DIR_U, jumpSpeed);
-			isJump_ = true;
-			// アニメーション再生
-			animationController_->Play(
-				static_cast<int>(ANIM_TYPE::JUMP), false);
+			float jumpSpeed = POW_JUMP_KEEP * scnMng_.GetDeltaTime();
+			jumpPow_ = VAdd(jumpPow_, VScale(AsoUtility::DIR_U, jumpSpeed));
 		}
-
+	}
+	else
+	{
+		// ボタンを離したらジャンプ力に加算しない
+		stepJump_ = TIME_JUMP_INPUT;
 	}
 
-	void Player::ProcessPush(void)
+	// 初期ジャンプ処理
+	bool isHitKey = ins.IsTrgDown(KEY_INPUT_SPACE)
+		|| ins.IsPadBtnTrgDown(
+			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+
+	// ジャンプ
+	if (isHitKey && !isJump_)
 	{
-		auto& ins = InputManager::GetInstance();
+		// ジャンプ量の計算
+		float jumpSpeed = POW_JUMP_INIT * scnMng_.GetDeltaTime();
+		jumpPow_ = VScale(AsoUtility::DIR_U, jumpSpeed);
+		isJump_ = true;
+		// アニメーション再生
+		animationController_->Play(
+			static_cast<int>(ANIM_TYPE::JUMP), false);
+	}
 
-		// タイルの判定
-		// これデバッグ用です
-		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+}
 
-		// チートキー
-		bool cheatKey = ins.IsPress(KEY_INPUT_O);
-		if (cheatKey) {
-			// タライギミック作動
-			tarai->SetFlag(true);
-		}
+void Player::ProcessPush(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// タイルの判定
+	// これデバッグ用です
+	ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+
+	// チートキー
+	bool cheatKey = ins.IsPress(KEY_INPUT_O);
+	if (cheatKey) {
+		// タライギミック作動
+		tarai->SetFlag(true);
+	}
 
 			
-		// プレイヤーがギミック付近にいる場合
-		if (objMng_ != nullptr)
+	// プレイヤーがギミック付近にいる場合
+	if (objMng_ != nullptr)
+	{
+
+		// ボスの攻撃スイッチギミック
+		ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
+
+		//// タイルの判定
+		// こっちが本物
+		//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+
+		if (bossGimmick != nullptr)
 		{
 
-			// ボスの攻撃スイッチギミック
-			ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
+			// 持続ジャンプ処理
+			bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
+				|| ins.IsPadBtnPress(
+					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
 
-			//// タイルの判定
-			// こっちが本物
-			//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+			if (isHitKeyNew) {
 
-			if (bossGimmick != nullptr)
-			{
+				// デルタタイムで秒数をカウンタする
+				gimmickCnt_ += scnMng_.GetDeltaTime();
 
-				// 持続ジャンプ処理
-				bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
-					|| ins.IsPadBtnPress(
-						InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+				// アニメーション再生
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::PUSH),false);
 
-				if (isHitKeyNew) {
+				if (gimmickCnt_ > 5.0f) {
 
-					// デルタタイムで秒数をカウンタする
-					gimmickCnt_ += scnMng_.GetDeltaTime();
+					// ギミック動作オン
+					bossGimmick->SetFlag(true);
+					currentCnt_++;
+					bossGimmick->SetCnt(currentCnt_);
+					gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
 
-					// アニメーション再生
-					animationController_->Play(
-						static_cast<int>(ANIM_TYPE::PUSH),false);
-
-					if (gimmickCnt_ > 5.0f) {
-
-						// ギミック動作オン
-						bossGimmick->SetFlag(true);
-						currentCnt_++;
-						bossGimmick->SetCnt(currentCnt_);
-						gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
-
-						// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
-						// タライギミック作動
-						tarai->SetFlag(true);	
-					}
-					else {
-						bossGimmick->SetFlag(false);
-					}
+					// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
+					// タライギミック作動
+					tarai->SetFlag(true);	
 				}
 				else {
-					gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
+					bossGimmick->SetFlag(false);
 				}
+			}
+			else {
+				gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
+			}
 			
-			}
 		}
 	}
-<<<<<<< HEAD
-
-	void Player::CollisionReserve(void)
-	{
-		// アニメーションごとの線分調整
-		if (animationController_->GetPlayType() == static_cast<int>(ANIM_TYPE::JUMP))
-		{
-			// ジャンプ中は線分を伸ばす
-			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::LINE)) != 0)
-			{
-				ColliderLine* colLine = dynamic_cast<ColliderLine*>(
-					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::LINE)));
-				colLine->SetLocalPosStart(COL_LINE_JUMP_START_LOCAL_POS);
-				colLine->SetLocalPosEnd(COL_LINE_JUMP_END_LOCAL_POS);
-			}
-		}
-		else
-		{
-			// 通常時の線分に戻す
-			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::LINE)) != 0)
-			{
-				ColliderLine* colLine = dynamic_cast<ColliderLine*>(
-					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::LINE)));
-				colLine->SetLocalPosStart(COL_LINE_START_LOCAL_POS);
-				colLine->SetLocalPosEnd(COL_LINE_END_LOCAL_POS);
-			}
-		}
-
-
-		// アニメーションごとのカプセル調整
-		if (animationController_->GetPlayType() == static_cast<int>(ANIM_TYPE::JUMP))
-		{
-			// ジャンプ中は線分を伸ばす
-			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
-			{
-				ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
-					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
-				colCapsule->SetLocalPosTop(COL_CAPSULE_TOP_JUMP_LOCAL_POS);
-				colCapsule->SetLocalPosDown(COL_CAPSULE_DOWN_JUMP_LOCAL_POS);
-			}
-		}
-		else
-		{
-			// 通常時のカプセルに戻す
-			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
-			{
-				ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
-					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
-				colCapsule->SetLocalPosTop(COL_CAPSULE_TOP_LOCAL_POS);
-				colCapsule->SetLocalPosDown(COL_CAPSULE_DOWN_LOCAL_POS);
-				colCapsule->SetRadius(COL_CAPSULE_RADIUS);
-			}
-		}
-
-	}
-=======
 }
->>>>>>> nakanishi
+
+void Player::CollisionReserve(void)
+{
+	// アニメーションごとの線分調整
+	if (animationController_->GetPlayType() == static_cast<int>(ANIM_TYPE::JUMP))
+	{
+		// ジャンプ中は線分を伸ばす
+		if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::LINE)) != 0)
+		{
+			ColliderLine* colLine = dynamic_cast<ColliderLine*>(
+				ownColliders_.at(static_cast<int>(COLLIDER_TYPE::LINE)));
+			colLine->SetLocalPosStart(COL_LINE_JUMP_START_LOCAL_POS);
+			colLine->SetLocalPosEnd(COL_LINE_JUMP_END_LOCAL_POS);
+		}
+	}
+	else
+	{
+		// 通常時の線分に戻す
+		if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::LINE)) != 0)
+		{
+			ColliderLine* colLine = dynamic_cast<ColliderLine*>(
+				ownColliders_.at(static_cast<int>(COLLIDER_TYPE::LINE)));
+			colLine->SetLocalPosStart(COL_LINE_START_LOCAL_POS);
+			colLine->SetLocalPosEnd(COL_LINE_END_LOCAL_POS);
+		}
+	}
+
+
+	// アニメーションごとのカプセル調整
+	if (animationController_->GetPlayType() == static_cast<int>(ANIM_TYPE::JUMP))
+	{
+		// ジャンプ中は線分を伸ばす
+		if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
+		{
+			ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
+				ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
+			colCapsule->SetLocalPosTop(COL_CAPSULE_TOP_JUMP_LOCAL_POS);
+			colCapsule->SetLocalPosDown(COL_CAPSULE_DOWN_JUMP_LOCAL_POS);
+		}
+	}
+	else
+	{
+		// 通常時のカプセルに戻す
+		if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
+		{
+			ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
+				ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
+			colCapsule->SetLocalPosTop(COL_CAPSULE_TOP_LOCAL_POS);
+			colCapsule->SetLocalPosDown(COL_CAPSULE_DOWN_LOCAL_POS);
+			colCapsule->SetRadius(COL_CAPSULE_RADIUS);
+		}
+	}
+}
+
