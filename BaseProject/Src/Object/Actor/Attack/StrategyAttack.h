@@ -49,9 +49,8 @@ class Context
         void ExecuteAttack(BossBase& boss) override;
     };
 
-
-
 private:
+
     std::unique_ptr<StrategyAttack> currentAttack_; // 現在の攻撃戦略を保持するスマートポインタ
 
 };

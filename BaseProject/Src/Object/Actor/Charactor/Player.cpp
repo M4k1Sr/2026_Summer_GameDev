@@ -245,6 +245,18 @@ void Player::ProcessMove(void)
 		if (!isJump_)
 		{
 			// アニメーション
+			ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+			if (tile != nullptr)
+			{
+				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
+			}
+		}
+
+		if (!AsoUtility::EqualsVZero(dir))
+		{
+			// 移動スピード
+			moveSpeed_ = SPEED_MOVE;
+
 			if (isDash)
 			{
 				animationController_->Play(
@@ -275,6 +287,13 @@ void Player::ProcessMove(void)
 			// IDLE状態に戻す
 				animationController_->Play(
 					static_cast<int>(ANIM_TYPE::IDLE), true);
+			// ジャンプ中はアニメーションを変えない
+			if (!isJump_)
+			{
+				// IDLE状態に戻す
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
+			}
 		}
 	}
 }
@@ -445,4 +464,3 @@ void Player::CollisionReserve(void)
 		}
 	}
 }
-
