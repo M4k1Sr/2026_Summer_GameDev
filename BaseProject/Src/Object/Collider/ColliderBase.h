@@ -25,6 +25,8 @@ public:
 		BOX,
 		IRON_BALL,
 		TILE,
+		BOSS_GIMMICK,
+		TARAI,
 		CAMERA,
 	};
 

@@ -4,6 +4,7 @@
 class BossBase;
 class ColliderBase;
 class Player;
+class ObjectManager;
 
 class BossManager
 {
@@ -44,7 +45,7 @@ public:
 
 private:
 
-	// オブジェクト
+	// ボス
 	std::vector<BossBase*> bosses_;
 	// プレイヤー
 	Player* player_;

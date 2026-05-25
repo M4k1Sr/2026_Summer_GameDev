@@ -34,6 +34,10 @@ void UI::Draw(void)
 
 	DrawRotaGraph2(handPos_.x, handPos_.y, centerX_, centerY_, HAND_SCALE, angle_, secondHandImg_, TRUE);
 
+	DrawFormatString(1000, 100, GetColor(0, 255, 0),
+		"åoâﬂéûä‘:%d",
+		GetTime());
+
 }
 
 void UI::Release(void)
@@ -43,7 +47,7 @@ void UI::Release(void)
 void UI::InitLoad(void)
 {
 	//éûåv
-	clockImg_ = resMng_.Load(ResourceManager::SRC::OBJECT_CLOCK).handleId_;
+	clockImg_ = resMng_.Load(ResourceManager::SRC::CLOCK).handleId_;
 	
 	// ïbêj
 	secondHandImg_ = resMng_.Load(ResourceManager::SRC::CLOCK_HAND).handleId_;
@@ -131,5 +135,5 @@ int UI::GetMaxTime(void) const
 
 int UI::GetTime(void) const
 {
-	return clearTime_;
+	return	clearTime_;
 }

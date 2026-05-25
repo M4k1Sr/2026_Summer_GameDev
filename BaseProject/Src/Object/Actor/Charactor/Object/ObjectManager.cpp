@@ -5,6 +5,8 @@
 #include "./ObjectBase.h"
 #include "./ObjectBox.h"
 #include "./ObjectTile.h"
+#include "./ObjectBossGimmick.h"
+#include "./ObjectTarai.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -26,7 +28,7 @@ void ObjectManager::Init(void)
 void ObjectManager::Update(void)
 {
 	// 更新
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->Update();
 	}
@@ -35,7 +37,7 @@ void ObjectManager::Update(void)
 void ObjectManager::Draw(void)
 {
 	// 描画
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->Draw();
 	}
@@ -45,7 +47,7 @@ void ObjectManager::Draw(void)
 void ObjectManager::Release(void)
 {
 	// 解放
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->Release();
 		delete object;
@@ -55,7 +57,7 @@ void ObjectManager::Release(void)
 
 void ObjectManager::AddHitCollider(const ColliderBase* hitCollider)
 {
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		object->AddHitCollider(hitCollider);
 	}
@@ -129,24 +131,31 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
-		//object = new ObjectTile(data);
+		object = new ObjectTile(data);
 		break;
-
+	case ObjectBase::TYPE::BOSS_GIMMICK:
+		object = new ObjectBossGimmick(data);
+		break;
+	case ObjectBase::TYPE::TARAI:
+		object = new ObjectTarai(data);
+		break;
 		// 増える毎に追加
 	}
 
 	if (object != nullptr)
 	{
+		object->SetObjectManager(this); 
 		object->Init();
-		bosses_.emplace_back(object);
+		objects_.emplace_back(object);
 	}
 
 	return object;
 }
 
+// タイル
 ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 {
-	for (auto& object : bosses_)
+	for (auto& object : objects_)
 	{
 		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{
@@ -168,3 +177,56 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 	return nullptr;
 }
 
+// ボスギミックスイッチ
+ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		if (auto bossGimmick = dynamic_cast<ObjectBossGimmick*>(object))
+		{
+			VECTOR bossGimmickPos = bossGimmick->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = bossGimmickPos.x - pos.x;
+			float dz = bossGimmickPos.z - pos.z;
+
+			float distXZ = dx * dx + dz * dz;
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 10000.0f)
+			{
+				return bossGimmick;
+			}
+		}
+	}
+
+	return nullptr;
+
+}
+
+// タライ
+ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
+		{
+			VECTOR taraiPos = tarai->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = taraiPos.x - pos.x;
+			float dz = taraiPos.z - pos.z;
+
+			float distXZ = dx * dx + dz * dz;
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 100000000.0f)
+			{
+				return tarai;
+			}
+		}
+	}
+
+	return nullptr;
+
+}

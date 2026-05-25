@@ -12,6 +12,7 @@ public:
 		RUN,
 		FAST_RUN,
 		JUMP,
+		PUSH,
 		MAX,
 	};
 
@@ -29,6 +30,14 @@ public:
 
 	// オブジェクトマネージャーのセット
 	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
+
+	//プレイヤー座標のゲッター
+	bool GetDeadFlag(void);
+
+	void playerDead(void);
+
+	// ダメージカウンタゲッター
+	int GetCurrentCnt(void) const;
 
 protected:
 
@@ -51,6 +60,7 @@ protected:
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
 
+
 	// 視野描画
 	virtual void DrawViewRange(void) override;
 
@@ -61,6 +71,13 @@ private:
 
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
+
+	// ギミック動作カウンタ
+	float gimmickCnt_;
+	bool isGimmick_;
+
+	// ギミック動作数カウンタ
+	int currentCnt_;
 
 	// プレイヤー座標
 	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
@@ -115,6 +132,10 @@ private:
 	//// 操作
 	void ProcessMove(void);
 	void ProcessJump(void);
+
+	// ギミック操作
+	void ProcessPush(void);
+	void ProcessCarry(void);
 
 	// 衝突判定
 	void CollisionReserve(void) override;

@@ -3,8 +3,10 @@
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
 class AnimationController;
+class ObjectManager;
+class ObjectBossGimmick;
 
-class ObjectTile : public ObjectBase
+class ObjectTarai : public ObjectBase
 {
 public:
 
@@ -13,26 +15,19 @@ public:
 	{
 		NONE,
 		STOP,
-		UP,
 		DOWN,
 		END,
 	};
 
 	// コンストラクタ
-	ObjectTile(const ObjectBase::ObjectData& data);
+	ObjectTarai(const ObjectBase::ObjectData& data);
 
 	// デストラクタ
-	~ObjectTile(void) override;
+	~ObjectTarai(void) override;
 
 	// デバッグ描画処理
 	void Draw(void) override;
-
-	// 動く床の速度取得
-	VECTOR GetVelocity(void) const { return velocity_; }
-
-	// 床の座標取得
-	VECTOR GetPos(void) const { return transform_.pos; }
-
+	
 protected:
 
 	// リソースロード
@@ -79,12 +74,14 @@ private:
 
 	// 衝突判定用カプセル球体半径
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
+	
+	// タライの初期位置
+	static constexpr VECTOR INIT_POS = { 4800.0f, 800.0f, -700.0f };
+	// タライの下降範囲
+	static constexpr float MOVE_DOWN_TARAI = 800.0f;
 
-	// タイルの上昇時間
-	static constexpr float MOVE_TIME = 4.0f;
-
-	// タイルの上昇範囲
-	static constexpr float MOVE_UP_TILE = 300.0f;
+	// タライの最高降下速度
+	static constexpr float MAX_TARAI_SPEED =  -30.0f;
 
 	// 初期位置
 	VECTOR startPos_;
@@ -93,10 +90,10 @@ private:
 	VECTOR movePlacePos_;
 
 	// 前フレームの位置
-	VECTOR prevPos_;    
+	VECTOR prevPos_;
 
 	// 移動速度
-	VECTOR velocity_;  
+	VECTOR velocity_;
 
 	// 移動時間
 	float moveTime_;
@@ -104,26 +101,29 @@ private:
 	// 経過時間
 	float moveTimer_;
 
+	// 更新ステップ
+	float step_;
+
 	// 状態
 	STATE state_;
 
-	// 更新ステップ
-	float step_;
+	// タライフラグ
+	bool isTarai_;
 
 	void ChangeState(STATE state);
 	void ChangeStateNone(void);
 	void ChangeStateStop(void);
-	void ChangeStateRight(void);
-	void ChangeStateLeft(void);
+	void ChangeStateDown(void);
 	void ChangeStateEnd(void);
 
 	void UpdateNone(void);
 	void UpdateStop(void);
-	void UpdateRight(void);
-	void UpdateLeft(void);
+	void UpdateDown(void);
 	void UpdateEnd(void);
 
-	// 床移動処理
-	void UpdateProcessFloorMove(void);
+	// タライ降下処理
+	void UpdateProcessTaraiFall(void);
 
+	// タライ動作
+	void ActiveTarai(void);
 };
