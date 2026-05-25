@@ -227,7 +227,7 @@ void Player::InitCollider(void)
 			if (tile != nullptr)
 			{
 				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // ƒ^ƒCƒ‹‚É’Ç]
-			}		
+			}
 		}
 
 		if (!AsoUtility::EqualsVZero(dir))
@@ -273,8 +273,8 @@ void Player::InitCollider(void)
 			if (!isJump_)
 			{
 				// IDLEó‘Ô‚É–ß‚·
-					animationController_->Play(
-						static_cast<int>(ANIM_TYPE::IDLE), true);
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
 			}
 		}
 	}
@@ -392,9 +392,6 @@ void Player::InitCollider(void)
 			}
 		}
 	}
-<<<<<<< HEAD
-}
-=======
 
 	void Player::CollisionReserve(void)
 	{
@@ -449,4 +446,3 @@ void Player::InitCollider(void)
 		}
 
 	}
->>>>>>> origin/m4k
