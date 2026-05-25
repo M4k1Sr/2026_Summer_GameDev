@@ -81,7 +81,9 @@ private:
 
 	// プレイヤー座標
 	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
-	static constexpr VECTOR PLAYER_POS = { -800.0f, 0.0f, 700.0f };
+	//static constexpr VECTOR PLAYER_POS = { -800.0f, 0.0f, 700.0f };
+	static constexpr VECTOR PLAYER_POS = { 2000.0f, 0.0f, -750.0f };
+
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
 	// プレイヤーローカル角度
