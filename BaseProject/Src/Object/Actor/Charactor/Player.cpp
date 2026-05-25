@@ -244,7 +244,22 @@ void Player::ProcessMove(void)
 		// ジャンプ中はアニメーションを変えない
 		if (!isJump_)
 		{
+<<<<<<< HEAD
 			// アニメーション
+=======
+			ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+			if (tile != nullptr)
+			{
+				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
+			}
+		}
+
+		if (!AsoUtility::EqualsVZero(dir))
+		{
+			// 移動スピード
+			moveSpeed_ = SPEED_MOVE;
+
+>>>>>>> nakanishi
 			if (isDash)
 			{
 				animationController_->Play(
@@ -272,9 +287,19 @@ void Player::ProcessMove(void)
 		// ジャンプ中はアニメーションを変えない
 		if (!isJump_)
 		{
+<<<<<<< HEAD
 			// IDLE状態に戻す
 				animationController_->Play(
 					static_cast<int>(ANIM_TYPE::IDLE), true);
+=======
+			// ジャンプ中はアニメーションを変えない
+			if (!isJump_)
+			{
+				// IDLE状態に戻す
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
+			}
+>>>>>>> nakanishi
 		}
 	}
 }
@@ -391,6 +416,7 @@ void Player::ProcessPush(void)
 			
 		}
 	}
+<<<<<<< HEAD
 }
 
 void Player::CollisionReserve(void)
@@ -446,3 +472,59 @@ void Player::CollisionReserve(void)
 	}
 }
 
+=======
+
+	void Player::CollisionReserve(void)
+	{
+		// アニメーションごとの線分調整
+		if (animationController_->GetPlayType() == static_cast<int>(ANIM_TYPE::JUMP))
+		{
+			// ジャンプ中は線分を伸ばす
+			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::LINE)) != 0)
+			{
+				ColliderLine* colLine = dynamic_cast<ColliderLine*>(
+					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::LINE)));
+				colLine->SetLocalPosStart(COL_LINE_JUMP_START_LOCAL_POS);
+				colLine->SetLocalPosEnd(COL_LINE_JUMP_END_LOCAL_POS);
+			}
+		}
+		else
+		{
+			// 通常時の線分に戻す
+			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::LINE)) != 0)
+			{
+				ColliderLine* colLine = dynamic_cast<ColliderLine*>(
+					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::LINE)));
+				colLine->SetLocalPosStart(COL_LINE_START_LOCAL_POS);
+				colLine->SetLocalPosEnd(COL_LINE_END_LOCAL_POS);
+			}
+		}
+
+
+		// アニメーションごとのカプセル調整
+		if (animationController_->GetPlayType() == static_cast<int>(ANIM_TYPE::JUMP))
+		{
+			// ジャンプ中は線分を伸ばす
+			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
+			{
+				ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
+					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
+				colCapsule->SetLocalPosTop(COL_CAPSULE_TOP_JUMP_LOCAL_POS);
+				colCapsule->SetLocalPosDown(COL_CAPSULE_DOWN_JUMP_LOCAL_POS);
+			}
+		}
+		else
+		{
+			// 通常時のカプセルに戻す
+			if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
+			{
+				ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
+					ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
+				colCapsule->SetLocalPosTop(COL_CAPSULE_TOP_LOCAL_POS);
+				colCapsule->SetLocalPosDown(COL_CAPSULE_DOWN_LOCAL_POS);
+				colCapsule->SetRadius(COL_CAPSULE_RADIUS);
+			}
+		}
+
+	}
+>>>>>>> nakanishi
