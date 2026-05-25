@@ -336,5 +336,4 @@ void Player::CollisionReserve(void)
 			colCapsule->SetRadius(COL_CAPSULE_RADIUS);
 		}
 	}
-
 }
