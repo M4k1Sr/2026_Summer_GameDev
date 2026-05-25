@@ -14,15 +14,9 @@ public:
 	// デストラクタ
 	~ObjectBossGimmick(void) override;
 
-	// デバッグ描画処理
-	void Draw(void) override;
-
-	// ギミックの座標取得
-	VECTOR GetPos(void) const { return transform_.pos; }
-
-	// ギミック管理ゲッター・セッター
-	bool GetFlag(void) const;
-	void SetFlag(bool isGimmick);
+	// ギミック動作数ゲッターセッター
+	int GetCnt(void) const;
+	void SetCnt(int gimmickOnCnt);
 
 protected:
 
@@ -71,12 +65,6 @@ private:
 	// 衝突判定用カプセル球体半径
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
 
-	// タイルの上昇時間
-	static constexpr float MOVE_TIME = 4.0f;
-
-	// タイルの上昇範囲
-	static constexpr float MOVE_UP_TILE = 300.0f;
-
 	// 初期位置
 	VECTOR startPos_;
 
@@ -98,7 +86,9 @@ private:
 	// 更新ステップ
 	float step_;
 
-	// ギミックフラグ
-	bool isGimmick_;
+	// ギミック動作数カウンタ
+	int gimmickOnCnt_;
 
+	// ギミック動作
+	void ActiveGimmick(void);
 };

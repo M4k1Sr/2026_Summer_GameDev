@@ -34,6 +34,10 @@ void UI::Draw(void)
 
 	DrawRotaGraph2(handPos_.x, handPos_.y, centerX_, centerY_, HAND_SCALE, angle_, secondHandImg_, TRUE);
 
+	DrawFormatString(1000, 100, GetColor(0, 255, 0),
+		"Œo‰ßŽžŠÔ:%d",
+		GetTime());
+
 }
 
 void UI::Release(void)
@@ -131,5 +135,5 @@ int UI::GetMaxTime(void) const
 
 int UI::GetTime(void) const
 {
-	return clearTime_;
+	return	clearTime_;
 }

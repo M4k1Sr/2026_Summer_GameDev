@@ -25,38 +25,15 @@ ObjectBossGimmick::~ObjectBossGimmick(void)
 {
 }
 
-void ObjectBossGimmick::Draw(void)
+int ObjectBossGimmick::GetCnt(void) const
 {
-	
-	ObjectBase::Draw();
-#ifdef _DEBUG
-
-	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-	//// pos_ は ObjectBase のメンバ変数であると想定しています
-	//DrawFormatString(50, 100, GetColor(0, 0, 0),
-	//	"Tile Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
-
-	//DrawFormatString(70, 120, GetColor(0, 0, 0),
-	//	"Tile Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	velocity_.x, velocity_.y, velocity_.z);
-
-	// コライダーのデバッグ描画（もしメソッドがあれば）
-	for (auto& col : ownColliders_) {
-		col.second->Draw();
-	}
-
-#endif
+	return gimmickOnCnt_;
 }
 
-bool ObjectBossGimmick::GetFlag(void) const
+void ObjectBossGimmick::SetCnt(int gimmickOnCnt)
 {
-	return isGimmick_;
-}
+	gimmickOnCnt_ = gimmickOnCnt;
 
-void ObjectBossGimmick::SetFlag(bool isGimmick)
-{
-	isGimmick_ = isGimmick;
 }
 
 void ObjectBossGimmick::InitLoad(void)
@@ -118,6 +95,8 @@ void ObjectBossGimmick::InitPost(void)
 
 void ObjectBossGimmick::UpdateProcess(void)
 {
+	ActiveGimmick();
+	//jumpPow_ = AsoUtility::VECTOR_ZERO;
 }
 
 void ObjectBossGimmick::UpdateProcessPost(void)
@@ -129,4 +108,17 @@ void ObjectBossGimmick::UpdateProcessPost(void)
 
 void ObjectBossGimmick::DrawViewRange(void)
 {
+}
+
+void ObjectBossGimmick::ActiveGimmick(void)
+{
+	if (isGimmick_) {
+		// ギミックがアクティブ状態になった場合
+		// ギミックのモデルの色が変化
+		COLOR_F color = { 50.0f, 0.0f, 0.0f, 1.0f }; // 赤色
+		MV1SetMaterialDifColor(transform_.modelId, 0, color); // 赤色に変更
+	}
+
+
+
 }

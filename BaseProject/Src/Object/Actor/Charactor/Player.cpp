@@ -9,16 +9,19 @@
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
+#include "../../Collider/ColliderModel.h"
 #include "../../../Application.h"
 #include "Player.h"
 
 Player::Player(void)
 	:
 	CharactorBase(),
-	isGimmick_(false)
+	isGimmick_(false),
+	currentCnt_(0)
 {
 }
 
@@ -29,6 +32,7 @@ Player::~Player(void)
 void Player::Draw(void)
 {
 	CharactorBase::Draw();
+<<<<<<< HEAD
 //#ifdef _DEBUG
 //
 //	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
@@ -54,6 +58,38 @@ void Player::Draw(void)
 //
 //
 //#endif
+=======
+#ifdef _DEBUG
+
+	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+	// pos_ は ObjectBase のメンバ変数であると想定しています
+	DrawFormatString(200, 50, GetColor(0, 0, 0),
+		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+
+	if (isJump_ == true) {
+		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
+	}
+	else {
+		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
+
+		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+		if (tile == nullptr) {
+			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+		}
+		else {
+			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
+		}
+	}
+
+	DrawFormatString(800, 100, GetColor(0, 255, 0),
+		"gimmickCnt: %6.1f",
+		gimmickCnt_);
+
+
+
+#endif
+>>>>>>> main
 }
 
 void Player::Release(void)
@@ -74,6 +110,11 @@ void Player::playerDead(void)
 	{
 		isDead_ = true;
 	}
+}
+
+int Player::GetCurrentCnt(void) const
+{
+	return currentCnt_;
 }
 
 
@@ -107,17 +148,16 @@ void Player::InitCollider(void)
 	ColliderLine* colLine = new ColliderLine(
 		ColliderBase::TAG::PLAYER, &transform_,
 		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::LINE), colLine);
+		ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::LINE), colLine);
 
-	// 主に壁や木などの衝突で使用するカプセルコライダ
-	ColliderCapsule* colCapsule = new ColliderCapsule(
-		ColliderBase::TAG::PLAYER, &transform_,
-		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS,
-		COL_CAPSULE_RADIUS);
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
+		// 主に壁や木などの衝突で使用するカプセルコライダ
+		ColliderCapsule* colCapsule = new ColliderCapsule(
+			ColliderBase::TAG::PLAYER, &transform_,
+			COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS,
+			COL_CAPSULE_RADIUS);
+		ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
 
-
-}
+}	
 
 void Player::InitAnimation(void)
 {
@@ -130,7 +170,7 @@ void Player::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/Push.mv1");
 
 	// アニメーション再生
 	animationController_->Play(
@@ -144,6 +184,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
+
 	// 移動操作
 	ProcessMove();
 
@@ -155,6 +196,7 @@ void Player::UpdateProcess(void)
 
 	// ギミック処理
 	ProcessPush();
+
 }
 
 void Player::UpdateProcessPost(void)
@@ -315,10 +357,29 @@ void Player::ProcessPush(void)
 {
 	auto& ins = InputManager::GetInstance();
 
+	// タイルの判定
+	// これデバッグ用です
+	ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+
+	// チートキー
+	bool cheatKey = ins.IsPress(KEY_INPUT_O);
+	if (cheatKey) {
+		// タライギミック作動
+		tarai->SetFlag(true);
+	}
+
+			
 	// プレイヤーがギミック付近にいる場合
 	if (objMng_ != nullptr)
 	{
+
+		// ボスの攻撃スイッチギミック
 		ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
+
+		//// タイルの判定
+		// こっちが本物
+		//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+
 		if (bossGimmick != nullptr)
 		{
 
@@ -334,17 +395,28 @@ void Player::ProcessPush(void)
 
 				// アニメーション再生
 				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::PUSH), false);
+					static_cast<int>(ANIM_TYPE::PUSH),false);
 
 				if (gimmickCnt_ > 5.0f) {
 
 					// ギミック動作オン
 					bossGimmick->SetFlag(true);
+					currentCnt_++;
+					bossGimmick->SetCnt(currentCnt_);
+					gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
+
+					// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
+					// タライギミック作動
+					tarai->SetFlag(true);	
 				}
 				else {
 					bossGimmick->SetFlag(false);
 				}
 			}
+			else {
+				gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
+			}
+			
 		}
 	}
 }
@@ -401,3 +473,4 @@ void Player::CollisionReserve(void)
 		}
 	}
 }
+

@@ -26,7 +26,7 @@ public:
 		IRON_BALL,
 		TILE,
 		BOSS_GIMMICK,
-		BOSS_GIMMICK_SWITCH,
+		TARAI,
 		CAMERA,
 	};
 

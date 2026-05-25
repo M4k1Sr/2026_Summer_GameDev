@@ -85,9 +85,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/StageGimmick/IronBall.mv1");
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
-	// スイッチモデル
+	// ギミックスイッチモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_SWITCH, res);
+
+	// タライモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/Tarai.mv1");
+	resourcesMap_.emplace(SRC::TARAI, res);
 
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");

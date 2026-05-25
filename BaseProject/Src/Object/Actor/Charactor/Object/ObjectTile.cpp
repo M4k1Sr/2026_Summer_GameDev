@@ -179,7 +179,7 @@ void ObjectTile::ChangeStateRight(void)
 	// ˆÚ“®‚·‚éêŠ
 	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_R, MOVE_UP_TILE));
 
-	stateUpdate_ = std::bind(&ObjectTile::UpdateUp, this);
+	stateUpdate_ = std::bind(&ObjectTile::UpdateRight, this);
 
 }
 
@@ -195,7 +195,7 @@ void ObjectTile::ChangeStateLeft(void)
 	// ˆÚ“®‚·‚éêŠ
 	movePlacePos_ = VAdd(startPos_, VScale(AsoUtility::DIR_L, MOVE_UP_TILE));
 
-	stateUpdate_ = std::bind(&ObjectTile::UpdateDown, this);
+	stateUpdate_ = std::bind(&ObjectTile::UpdateLeft, this);
 }
 
 void ObjectTile::ChangeStateEnd(void)
@@ -211,7 +211,7 @@ void ObjectTile::UpdateStop(void)
 {
 }
 
-void ObjectTile::UpdateUp(void)
+void ObjectTile::UpdateRight(void)
 {
 
 	UpdateProcessFloorMove();
@@ -222,7 +222,7 @@ void ObjectTile::UpdateUp(void)
 
 }
 
-void ObjectTile::UpdateDown(void)
+void ObjectTile::UpdateLeft(void)
 {
 	UpdateProcessFloorMove();
 	if (moveTimer_ >= moveTime_)

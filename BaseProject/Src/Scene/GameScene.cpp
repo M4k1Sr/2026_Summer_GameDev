@@ -70,6 +70,30 @@ void GameScene::Init(void)
 		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
 
+	// スカイドーム初期化
+	skyDome_ = new SkyDome(player_->GetTransform());
+	skyDome_->Init();
+
+	// オブジェクト(全て)のコライダーを登録
+	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
+	for (const auto& obj : objects)
+	{
+		// オブジェクト追加
+		obj->SetObjectManager(objMng_);
+
+		// オブジェクトがモデルコライダーを持っていれば登録
+		const ColliderBase* objectCollider = 
+		obj->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+		if (objectCollider != nullptr)
+		{
+			player_->AddHitCollider(objectCollider);
+		}
+
+	}
+
+	// ステージモデルのコライダーをオブジェクトに登録
+	objMng_->AddHitCollider(stageCollider);
+
 	// ボス初期化
 	bossMng_ = new BossManager();
 	bossMng_->SetPlayer(player_);
@@ -79,9 +103,11 @@ void GameScene::Init(void)
 	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 	for (const auto& boss : bosses)
 	{
+		boss->SetObjectManager(objMng_);
+
 		// ボスがモデルコライダーを持っていれば登録
 		const ColliderBase* bossCollider =
-		boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+			boss->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
 		if (bossCollider != nullptr)
 		{
 			player_->AddHitCollider(bossCollider);
@@ -90,26 +116,6 @@ void GameScene::Init(void)
 
 	// ステージモデルのコライダーをボスに登録
 	bossMng_->AddHitCollider(stageCollider);
-
-	// スカイドーム初期化
-	skyDome_ = new SkyDome(player_->GetTransform());
-	skyDome_->Init();
-
-	// オブジェクト(全て)のコライダーを登録
-	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
-	for (const auto& obj : objects)
-	{
-		// オブジェクトがモデルコライダーを持っていれば登録
-		const ColliderBase* objectCollider = 
-		obj->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
-		if (objectCollider != nullptr)
-		{
-			player_->AddHitCollider(objectCollider);
-		}
-	}
-
-	// ステージモデルのコライダーをオブジェクトに登録
-	objMng_->AddHitCollider(stageCollider);
 
 	// 鉄球モデル
 	ironBall_ = new IronBall();
@@ -160,9 +166,9 @@ void GameScene::Update(void)
 		SetMouseDispFlag(false);
 		stage_->Update();
 		skyDome_->Update();
-		objMng_->Update();
-		bossMng_->Update();
 		player_->Update();
+		bossMng_->Update();
+		objMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
 		itemMng_->Update();
@@ -180,6 +186,7 @@ void GameScene::Update(void)
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 
 	}
+
 }
 
 void GameScene::Draw(void)
@@ -196,26 +203,21 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
-	// 揺れる鉄球描画
-	ironBall_->Draw();
-
 	// プレイヤー描画
 	player_->Draw();
 	
-	
-	// オブジェクト描画
-	objMng_->Draw();
-
 	//ボス描画
 	bossMng_->Draw();
-
 
 	// UI描画
 	ui_->Draw();
 
+<<<<<<< HEAD
 	//ItemManager描画
 	itemMng_->Draw();
 
+=======
+>>>>>>> main
 	////ポーズ画面
 	IsPause();
 	

@@ -1,7 +1,6 @@
 #pragma once
 #include "../ActorBase.h"
 class AnimationController;
-class ObjectTile;
 
 class CharactorBase : public ActorBase
 {

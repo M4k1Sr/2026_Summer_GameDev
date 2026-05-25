@@ -168,7 +168,7 @@ void CharactorBase::CollisionGravity(void)
 			&& hitCol->GetTag() != ColliderBase::TAG::BOX
 			&& hitCol->GetTag() != ColliderBase::TAG::TILE
 			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
-/*			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK_SWITCH*/) continue;
+			&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
 
 		// 派生クラスへキャスト
 		const ColliderModel* colliderModel =
@@ -220,11 +220,15 @@ void CharactorBase::CollisionCapsule(void)
 		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 =======
 
+=======
+		
+>>>>>>> main
 		// ==========================================
 		// 1. 対象の形状が「3Dモデル」の場合の処理
 		// ==========================================
@@ -233,7 +237,10 @@ void CharactorBase::CollisionCapsule(void)
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
+<<<<<<< HEAD
 >>>>>>> origin/nakanishi
+=======
+>>>>>>> main
 
 			if (colliderModel == nullptr) continue;
 
