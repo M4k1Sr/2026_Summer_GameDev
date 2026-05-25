@@ -61,6 +61,9 @@ private:
 	// HP管理
 	Health* health_;
 
+	// ダメージカウンタ
+	int lastDamageCnt_ = 0;
+
 	// モデルの大きさ
 	static constexpr float SCALE = 3.0f;
 	

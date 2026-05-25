@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "../CharactorBase.h"
+class ObjectManager;
 
 class ObjectBase : public CharactorBase
 {
@@ -12,7 +13,8 @@ public:
 		BOX,
 		TILE,
 		BOSS_GIMMICK,
-		BOSS_GIMMICK_SWITCH,
+		TARAI,
+		MAX,
 	};
 
 	// オブジェクトデータ
@@ -29,7 +31,20 @@ public:
 	// デストラクタ
 	virtual ~ObjectBase(void) override;
 
+	// ギミックの座標取得
+	virtual VECTOR GetPos(void) const { return transform_.pos; }
+
+	// ギミック管理ゲッター・セッター
+	virtual bool GetFlag(void) const;
+	virtual void SetFlag(bool isGimmick);
+
+	// オブジェクトマネージャのセッター
+	void SetObjectManager(ObjectManager* objMng) { objMng_ = objMng; } 
+
 protected:
+
+	// オブジェクトマネージャ
+	ObjectManager* objMng_ = nullptr;
 
 	// 状態管理
 	int stateBase_;
@@ -60,6 +75,9 @@ protected:
 
 	// 種別
 	TYPE type_;
+
+	// ギミック管理フラグ
+	bool isGimmick_;
 
 	// 更新系
 	virtual void UpdateProcessPost(void) override {}

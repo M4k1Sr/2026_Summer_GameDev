@@ -4,6 +4,9 @@
 #include "ObjectBossGimmick.h"
 class ObjectBase;
 class ColliderBase;
+class ObjectTile;
+class OjbectBossGimmick;
+class ObjectTarai;
 
 class ObjectManager
 {
@@ -45,9 +48,14 @@ public:
 	// プレイヤーのギミック用に追加
 	ObjectBossGimmick* GetBossGimmick(const VECTOR& pos);
 
+	// タライを落とす用に追加
+	ObjectTarai* GetTarai(const VECTOR& pos);
+
 private:
 
 	// オブジェクト
 	std::vector<ObjectBase*> objects_;
 
+	// タライフラグ
+	bool isTarai_;
 };
