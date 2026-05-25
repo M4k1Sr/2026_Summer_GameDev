@@ -221,6 +221,7 @@ void CharactorBase::CollisionCapsule(void)
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
@@ -228,6 +229,12 @@ void CharactorBase::CollisionCapsule(void)
 
 =======
 		
+>>>>>>> main
+=======
+		
+=======
+
+>>>>>>> nakanishi
 >>>>>>> main
 		// ==========================================
 		// 1. 対象の形状が「3Dモデル」の場合の処理
@@ -238,8 +245,16 @@ void CharactorBase::CollisionCapsule(void)
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/nakanishi
 =======
+>>>>>>> main
+=======
+=======
+		
+		// モデル以外は処理を飛ばす
+		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
+>>>>>>> nakanishi
 >>>>>>> main
 
 			if (colliderModel == nullptr) continue;
