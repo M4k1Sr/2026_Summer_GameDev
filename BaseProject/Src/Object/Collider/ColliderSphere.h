@@ -34,10 +34,12 @@ public:
 		int maxTryCnt,
 		float pushDistance) const override;
 
-protected:
 
 	// デバッグ用描画
 	void DrawDebug(int color) override;
+
+protected:
+
 
 private:
 

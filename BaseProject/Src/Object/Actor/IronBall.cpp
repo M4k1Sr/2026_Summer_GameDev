@@ -18,12 +18,18 @@ IronBall::IronBall(void)
 
 IronBall::~IronBall(void)
 {
-	for (auto& instance : instances_) {
-		if (instance.colModel != nullptr) {
-			delete instance.colModel;
-			instance.colModel = nullptr;
+	for (auto* col : myColliders_)
+	{
+		if (col != nullptr)
+		{
+			// ※ もしシステム側からコライダーを登録解除する関数（RemoveCollider 等）があれば、
+			// 削除する前にここで呼び出してください。
+			// 例: CollisionManager::GetInstance().RemoveCollider(col);
+
+			delete col;
 		}
 	}
+	myColliders_.clear();
 }
 
 void IronBall::Update(void)
@@ -31,12 +37,12 @@ void IronBall::Update(void)
 	for (size_t i = 0; i < instances_.size(); ++i) {
 		auto& instance = instances_[i];
 
-		// 振り子の挙動で座標・回転を計算
+		// 振り子運動の更新
 		Pendulum(instance);
 		instance.transform.Update();
 
-		// 動く3Dモデルの衝突情報を毎フレーム再構築する
-		MV1SetupCollInfo(instance.transform.modelId);
+		// ★ 重要：DxLibの仕様上、動く3Dモデルの衝突情報を毎フレーム最新にする
+		//MV1SetupCollInfo(instance.transform.modelId);
 	}
 }
 
@@ -50,10 +56,23 @@ void IronBall::Draw(void)
 		MV1SetDifColorScale(instance.transform.modelId, color);
 		MV1DrawModel(instance.transform.modelId);
 	}
+
+	int debugColor = GetColor(0, 255, 0);
+
+	for (auto* col : myColliders_)
+	{
+		if (col != nullptr)
+		{
+			// 各コライダーの持つデバッグ用描画関数を呼び出す
+			// 内部で DrawSphere3D が実行され、画面にコライダーが表示されます
+			col->DrawDebug(debugColor);
+		}
+	}
 }
 
 void IronBall::Release(void)
 {
+	MV1DeleteModel(transform_.modelId);
 }
 
 void IronBall::InitLoad(void)
@@ -88,37 +107,28 @@ void IronBall::InitTransform(void)
 
 void IronBall::InitCollider(void)
 {
+	// 登録用の連番インデックス
+	int index = 0;
+
+	// 複製されたすべてのインスタンスに対して、球体コライダーを個別に生成
 	for (auto& instance : instances_)
 	{
-		// DxLib側の衝突情報セットアップ（個別のモデルIDを指定）
-		MV1SetupCollInfo(instance.transform.modelId);
+		// 引数: タグ、追従する個別のTransform、ローカルオフセット座標、半径
+		ColliderSphere* colSphere = new ColliderSphere(
+			ColliderBase::TAG::IRON_BALL,
+			&instance.transform,
+			SPHERE_LOCAL_POS,
+			SPHERE_RADIUS
+		);
 
-		// 各インスタンスのtransformのアドレスを渡してコライダーを生成
-		ColliderModel* colModel =
-			new ColliderModel(ColliderBase::TAG::IRON_BALL, &instance.transform);
+		// 自作の管理用リストに保存（UpdateやDrawでの個別処理用）
+		myColliders_.push_back(colSphere);
 
-		// 除外フレーム設定
-		for (const std::string& name : EXCLUDE_FRAME_NAMES)
-		{
-			colModel->AddExcludeFrameIds(name); // プロジェクトの仕様に合わせ単数形(AddExcludeFrameId)に修正
-		}
-
-		// 対象フレーム設定
-		for (const std::string& name : TARGET_FRAME_NAMES)
-		{
-			colModel->AddTargetFrameIds(name);
-		}
-
-		// インスタンスデータにコライダーを記録
-		instance.colModel = colModel;
-	}
-
-	// 【注意】衝突マネージャーへの登録に関する補足
-	// 基底クラスの ownColliders_ (std::map) は重複キー(COLLIDER_TYPE::MODEL)を持てない設計の場合が多いです。
-	// もし衝突マネージャーが ownColliders_ を自動参照する仕組みの場合、暫定として最初の1つのみ登録します。
-	if (!instances_.empty())
-	{
-		ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), instances_[0].colModel);
+		// ★【重要】基底クラスの ownColliders_ に連番をキーにしてすべて叩き込む！
+		// これにより、外部のシステム（StageやSceneなど）が ownColliders_ の中身を
+		// 全ループで回収している場合、2個目以降のコライダーも自動的に検知・登録されます。
+		ownColliders_.emplace(index, colSphere);
+		index++;
 	}
 }
 
