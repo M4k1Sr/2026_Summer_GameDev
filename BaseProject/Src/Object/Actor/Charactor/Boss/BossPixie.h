@@ -30,7 +30,7 @@ public:
 	BossPixie(const BossBase::BossData& data);
 
 	// デストラクタ
-	~BossPixie(void) override;
+	virtual ~BossPixie();
 
 protected:
 

@@ -1,8 +1,10 @@
 #pragma once
 #include <functional>
+#include <memory>
 #include "../CharactorBase.h"
 class Player;
 class ObjectManager;
+class StrategyAttack;
 
 class BossBase : public CharactorBase
 {
@@ -64,6 +66,15 @@ public:
 
 	// オブジェクトマネージャーのセット
 	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
+
+	Player* GetPlayer() const { return player_; }
+
+	ObjectManager* GetObjectManager() const { return objMng_; }
+
+	VECTOR GetPos() const { return transform_.pos; }
+
+	// これが「ChangeAttackStrategy」の正体です！
+	void ChangeAttackStrategy(std::unique_ptr<StrategyAttack> newStrategy); 
 
 protected:
 
@@ -136,4 +147,11 @@ protected:
 
 	// フェーズ管理
 	virtual void Phase(void) = 0;
+
+private:
+
+	// 攻撃をしまっておくポケット
+	// 攻撃関数を入れておくボックスのようなもの(火の玉攻撃や斧攻撃など)
+	std::unique_ptr<StrategyAttack> currentAttack_;
+
 };
