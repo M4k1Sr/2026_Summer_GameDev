@@ -2,9 +2,10 @@
 #include <functional>
 #include <map>
 #include <DxLib.h>
+#include "../ActorBase.h"
 class AttackManager;
 
-class AttackBase
+class AttackBase : public ActorBase
 {
 public:
 
@@ -26,15 +27,23 @@ public:
 		AttackBase::TYPE type;	// 種別
 		float speed;	// 移動速度
 		float maxDistance;	// 最大移動距離(消滅しない距離)
-		int 
-
+		float scale;	// 描画倍率
 	};
 
 	// コンストラクタ
 	AttackBase(const AttackBase::ObjectData& data);
 
 	// デストラクタ
-	~AttackBase(void);
+	~AttackBase(void) override;
+
+	// 更新
+	void Update(void) override;
+
+	// 描画
+	void Draw(void) override;
+
+	// 解放
+	void Release(void) override;
 
 private:
 
@@ -53,7 +62,7 @@ private:
 	// 種別
 	TYPE type_;
 
-	// ギミック管理フラグ
-	bool isGimmick_;
+	// 攻撃管理フラグ
+	bool isAttack_;
 
 };

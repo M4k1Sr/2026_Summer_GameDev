@@ -30,7 +30,8 @@ void FireBallAttack::ExecuteAttack(BossBase& boss)
     // 引数に「発射位置」と「飛んでいく方向」を渡します
     // ※CreateFireBall の名前や引数は、今あるマネージャーの関数に合わせて書き換えてね
     //objMng->CreateFireBall(myPos, dir);
-
+    // のちにattackmanagerでクリエイト関数を呼ぶ
+    
     // 7. （おまけ）ボスに魔法を唱えるアニメーションを再生させる
     // boss.PlayAnimation(BOSS_ANIM_MAGIC);
 }

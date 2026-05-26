@@ -4,7 +4,9 @@
 #include <memory>
 #include <DxLib.h>
 class ObjectManager;
+class AttackBase;
 class BossBase;
+class ColliderBase;
 
 class AttackManager
 {
@@ -20,13 +22,25 @@ public:
 	// 描画
 	void Draw(void);
 
+	// 解放
+	void Release(void);
+
 	// 技の生成関数（ここにボスやプレイヤーから呼ばれる関数を追加していく）
 	void SpawnFireBall(const VECTOR& startPos, const VECTOR& dir);
+
+	// オブジェクト
+	const std::vector<AttackBase*>& GetAttacks(void) const { return attacks_; }
+
+	// 衝突対象となるコライダを登録
+	void AddHitCollider(const ColliderBase* hitCollider);
 
 private:
 
 	// オブジェクトマネージャ
 	ObjectManager* objMng_;
+
+	// アタックオブジェクト
+	std::vector<AttackBase*> attacks_;
 
 
 };
