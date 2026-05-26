@@ -1,9 +1,10 @@
 ﻿  StrategyAttack.cpp
   BossBase.cpp
-  BossPixie.cpp
   BossManager.cpp
-  GameScene.cpp
+  BossPixie.cpp
+  ObjectTile.cpp
   コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
 ObjectTarai.obj : warning LNK4204: 'C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\vc143.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
 ObjectBossGimmick.obj : warning LNK4204: 'C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\vc143.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
 Ranking.obj : warning LNK4204: 'C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\vc143.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
