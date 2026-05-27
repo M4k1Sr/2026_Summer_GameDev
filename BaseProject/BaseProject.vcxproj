@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Manager\ItemManager.cpp" />
+    <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTarai.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.cpp" />
     <ClCompile Include="Src\Scene\GameClearScene.cpp" />
@@ -68,6 +70,8 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Manager\ItemManager.h" />
+    <ClInclude Include="Src\Object\Actor\Item\Item.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTarai.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.h" />
     <ClInclude Include="Src\Scene\GameClearScene.h" />

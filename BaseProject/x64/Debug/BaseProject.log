@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿  CharactorBase.cpp
 C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(356,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
 C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(359,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
 C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(362,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
   BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+=======
+﻿  ResourceManager.cpp
+  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> 松岡

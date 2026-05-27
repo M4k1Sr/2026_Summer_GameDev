@@ -30,6 +30,9 @@ public:
 		BOSS_PIXIE,
 		BOSS_ORC,
 		BOSS_DIABLO,
+		KEY,         //アイテム鍵
+		CAGE,        //タイトルの檻
+		WALL,
 	};
 
 	// 明示的にインステンスを生成する
