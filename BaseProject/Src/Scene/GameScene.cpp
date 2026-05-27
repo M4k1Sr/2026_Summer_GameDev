@@ -37,6 +37,7 @@ GameScene::GameScene(void)
 	mosPosY_(0),
 	isEnd_(false),
 	isClear_(false),
+	goalImg_(-1),
 	SceneBase()
 {
 }
@@ -61,6 +62,8 @@ void GameScene::Init(void)
 	player_->Init();
 	player_->SetObjectManager(objMng_);
 
+	//画像ロード
+	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
 
 	rank_->CreateIns();
 
@@ -201,6 +204,15 @@ void GameScene::Draw(void)
 
 	// オブジェクト描画
 	objMng_->Draw();
+
+	//デバッグ用ゴール
+	DrawBillboard3D(VGet(5060.0f,-98.0f,-490.0f),
+		0.5f,                           // 中心X
+		0.5f,                           // 中心Y
+		300.0f,                         // サイズ
+		0.0f,                           // 回転
+		goalImg_,                       // 画像
+		TRUE);
 
 	// プレイヤー描画
 	player_->Draw();
