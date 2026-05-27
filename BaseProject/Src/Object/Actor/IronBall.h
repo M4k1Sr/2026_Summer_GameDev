@@ -21,11 +21,9 @@ public:
 	// デストラクタ
 	~IronBall(void) override;
 
-	// 更新
+	// 更新、描画、解放
 	void Update(void) override;
-	// 描画
 	void Draw(void) override;
-	// 解放
 	void Release(void) override;
 
 protected:
@@ -47,6 +45,28 @@ protected:
 
 private:
 
+	// 描画したい個数
+	static constexpr int INSTANCE_COUNT = 3;
+
+	// 横の間隔
+	static constexpr float INTERVAL_X = 300.0f;
+
+	// 鉄球の座標
+	static constexpr VECTOR IRON_BALL_POS = { 330.0f, 275.0f, 0.0f };
+
+	// 鎖の先端の座標
+	static constexpr float CHAIN_END_POS = 160.0f;
+
+	//鉄球の大きさ
+	static constexpr VECTOR IRON_BALL_SCALE = { 0.6f, 0.6f, 0.6f };
+
+	// === 球体コライダー用のパラメータ定数 ===
+	// 鉄球の中心（ローカル座標）へのオフセット
+	static constexpr VECTOR SPHERE_LOCAL_POS = { 0.0f, -240.0f, 0.0f };
+
+	// 球体の半径
+	static constexpr float SPHERE_RADIUS = 120.0f;
+
 	// 各個体の位置情報を管理する構造体
 	struct InstanceData {
 
@@ -60,46 +80,14 @@ private:
 		float timeOffset; 
 	};
 
+	// 振り子計算（個別のデータを渡すように変更）
+	void Pendulum(InstanceData& data);
+
 	// 複数の鉄球データ
 	std::vector<InstanceData> instances_; 
 
 	// 2個目以降の鉄球コライダーもすべて安全に保持・管理するための動的配列
-	//std::vector<class ColliderModel*> myColliders_;
 	std::vector<ColliderSphere*> myColliders_;
 
-	// 振り子計算（個別のデータを渡すように変更）
-	void Pendulum(InstanceData& data);
-
-	// 描画したい個数
-	static constexpr int INSTANCE_COUNT = 3;   
-
-	// 横の間隔
-	static constexpr float INTERVAL_X = 300.0f;      
-
-	// 鉄球の座標
-	static constexpr VECTOR IRON_BALL_POS = { 330.0f, 275.0f, 0.0f };
-
-	// 鎖の先端の座標
-	static constexpr float CHAIN_END_POS = 130.0f;
-
-	//鉄球の大きさ
-	static constexpr VECTOR IRON_BALL_SCALE = { 0.6f, 0.6f, 0.6f };
-
-	// === 球体コライダー用のパラメータ定数 ===
-	// 鉄球の中心（ローカル座標）へのオフセット
-	static constexpr VECTOR SPHERE_LOCAL_POS = { 0.0f, -240.0f, 0.0f };
-	
-	// 球体の半径
-	static constexpr float SPHERE_RADIUS = 120.0f;
-
-	//// 除外フレーム名称
-	//const std::vector<std::string> EXCLUDE_FRAME_NAMES = {
-	//"Torus",
-	//};
-
-	//// 対象フレーム
-	//const std::vector<std::string> TARGET_FRAME_NAMES = {
-	//"Ball",
-	//};
 };
 
