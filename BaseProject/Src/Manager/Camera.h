@@ -120,6 +120,9 @@ private:
 	// カメラのX座標の最大制限値
 	static constexpr float LIMIT_X_MAX = 1515.0f;
 
+	// カメラのY座標の最大制限値
+	static constexpr float LIMIT_Y_MAX = 545.0f;
+
 	// 衝突時の押し戻し試行回数
 	static constexpr int CNT_TRY_COLLISION_CAMERA = 30;
 

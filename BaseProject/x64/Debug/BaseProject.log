@@ -1,13 +1,5 @@
-﻿  Camera.cpp
-  SceneManager.cpp
-  Player.cpp
-  DebugScene.cpp
-  GameClearScene.cpp
-  GameOvereScene.cpp
-  GameScene.cpp
-  TitleScene.cpp
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(48,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-  コードを生成中...
+﻿  CharactorBase.cpp
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(356,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(359,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(362,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
   BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

@@ -55,7 +55,7 @@ private:
 	static constexpr VECTOR IRON_BALL_POS = { 330.0f, 275.0f, 0.0f };
 
 	// ½‚Ìæ’[‚ÌÀ•W
-	static constexpr float CHAIN_END_POS = 130.0f;
+	static constexpr float CHAIN_END_POS = 160.0f;
 
 	//“S‹…‚Ì‘å‚«‚³
 	static constexpr VECTOR IRON_BALL_SCALE = { 0.6f, 0.6f, 0.6f };

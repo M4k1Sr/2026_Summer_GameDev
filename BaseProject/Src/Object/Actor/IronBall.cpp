@@ -143,10 +143,10 @@ void IronBall::Pendulum(InstanceData& data)
 	float maxDegree = 45.0f;
 	float currentDegree = sinf(time * 2.0f) * maxDegree;
 
-	// 回転クォータニオンの適用（Z軸回転）
+	// 回転クォータニオンの計算と適用
 	data.transform.quaRot = Quaternion::Euler(0.0f, 0.0f, AsoUtility::Deg2RadF(currentDegree));
 
-	// 支点を中心とした円運動の座標計算
+	// 支点を中心とした位置の再計算
 	VECTOR pivot = VAdd(data.basePos, VGet(0.0f, CHAIN_END_POS, 0.0f));
 	VECTOR offset = VGet(0.0f, -CHAIN_END_POS, 0.0f);
 	data.transform.pos = VAdd(pivot, data.transform.quaRot.PosAxis(offset));

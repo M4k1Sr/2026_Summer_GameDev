@@ -218,7 +218,7 @@ void CharactorBase::CollisionCapsule(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
-		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+		//if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 
 		// ==========================================
 		// 1. 対象の形状が「3Dモデル」の場合の処理
@@ -229,8 +229,8 @@ void CharactorBase::CollisionCapsule(void)
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
 		
-		// モデル以外は処理を飛ばす
-		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
+			// モデル以外は処理を飛ばす
+			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
 			if (colliderModel == nullptr) continue;
 
@@ -285,7 +285,7 @@ void CharactorBase::CollisionCapsule(void)
 				float pushLength = totalRadius - distance;
 
 				// 6. 自身の座標（transform_.pos）を、球体の外側へ向けて押し戻す
-				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength));
+				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength * 10.0f));
 			}
 		}
 	}

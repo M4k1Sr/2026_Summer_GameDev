@@ -67,7 +67,15 @@ void Camera::SetBeforeDraw(void)
 	if (transform_.pos.x > LIMIT_X_MAX)
 	{
 		transform_.pos.x = LIMIT_X_MAX;
+
+		// カメラのY座標が制限値（LIMIT_Y_MAX）を超えないように制限する
+		if (transform_.pos.y > LIMIT_Y_MAX)
+		{
+			transform_.pos.y = LIMIT_Y_MAX;
+		}
 	}
+
+	
 
 	// カメラの設定(位置と注視点による制御)
 	SetCameraPositionAndTargetAndUpVec(
