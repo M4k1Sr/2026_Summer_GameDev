@@ -117,6 +117,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");
 	resourcesMap_.emplace(SRC::KEY, res);
 
+	//ƒ^ƒCƒgƒ‹ŸB
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Cage.mv1");
+	resourcesMap_.emplace(SRC::CAGE, res);
+
+	//•Ç
+	res = new RES(RES_T::IMG, PATH_IMG + "wall.png");
+	resourcesMap_.emplace(SRC::WALL, res);
 
 }
 

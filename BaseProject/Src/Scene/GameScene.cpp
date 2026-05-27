@@ -138,7 +138,7 @@ void GameScene::Init(void)
 	ui_->Init();
 
 	//ItemManager初期化
-	itemMng_ = new ItemManager();
+	//itemMng_ = new ItemManager();
 
 	// カメラモード変更
 	Camera* camera = SceneManager::GetInstance().GetCamera();
@@ -171,10 +171,10 @@ void GameScene::Update(void)
 		objMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
-		itemMng_->Update();
+		//itemMng_->Update();
 
 		//アイテムドロップ判定
-		ItemDrop();
+	//	ItemDrop();
 	}
 
 	isEnd_ = ui_->GetIsGameOver();
@@ -212,12 +212,9 @@ void GameScene::Draw(void)
 	// UI描画
 	ui_->Draw();
 
-<<<<<<< HEAD
-	//ItemManager描画
-	itemMng_->Draw();
+	////ItemManager描画
+	//itemMng_->Draw();
 
-=======
->>>>>>> main
 	////ポーズ画面
 	IsPause();
 	
