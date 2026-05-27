@@ -248,9 +248,13 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	case SCENE_ID::GAMEOVER:
 		scene_ = new GameOvereScene();
 		break;
+	case SCENE_ID::GAMECLEAR:
+		scene_ = new GameClearScene();
+		break;
 	case SCENE_ID::DEBUG:
 		scene_ = new DebugScene();
 		break;
+	
 	}
 
 	// ŠeƒV[ƒ“‚Ì‰Šú‰»

@@ -46,6 +46,9 @@ public:
 	//アイテムドロップ判定
 	void ItemDrop(void);
 
+	//ゲームクリア判定
+		void IsClear(void);
+
 private:
 
 	// ステージ

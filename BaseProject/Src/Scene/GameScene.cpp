@@ -137,9 +137,6 @@ void GameScene::Init(void)
 	ui_ = new UI();
 	ui_->Init();
 
-	//ItemManager初期化
-	//itemMng_ = new ItemManager();
-
 	// カメラモード変更
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->SetFollow(&player_->GetTransform());
@@ -171,12 +168,12 @@ void GameScene::Update(void)
 		objMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
-		//itemMng_->Update();
-
-		//アイテムドロップ判定
-	//	ItemDrop();
+		//ゲームクリア判定
+		IsClear();
 	}
 
+
+	//ゲームオーバー判定
 	isEnd_ = ui_->GetIsGameOver();
 	isEnd_ = player_->GetDeadFlag();
 
@@ -186,6 +183,8 @@ void GameScene::Update(void)
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 
 	}
+
+	
 
 }
 
@@ -212,9 +211,7 @@ void GameScene::Draw(void)
 	// UI描画
 	ui_->Draw();
 
-	////ItemManager描画
-	//itemMng_->Draw();
-
+	
 	////ポーズ画面
 	IsPause();
 	
@@ -322,5 +319,20 @@ void GameScene::IsPause(void)
 void GameScene::ItemDrop(void)
 {
 	//一旦プレイヤーの場所にアイテムを出す
-	itemMng_->SpawnItem(ItemManager::ITEM_TYPE::KEY, player_->GetTransform().pos);
+	//itemMng_->SpawnItem(ItemManager::ITEM_TYPE::KEY, player_->GetTransform().pos);
+
+
+}
+
+
+
+void GameScene::IsClear(void)
+{
+
+	isClear_ = player_->GetClearFlag();
+
+	if(isClear_)
+	{
+		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
+	}
 }
