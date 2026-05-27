@@ -1,7 +1,7 @@
 ﻿  ItemManager.cpp
-  Item.cpp
-  ObjectTarai.cpp
   ObjectBossGimmick.cpp
+  ObjectTarai.cpp
+  Item.cpp
   コードを生成中...
   LINK : 前回のインクリメンタル リンクで C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
 Ranking.obj : warning LNK4204: 'C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\vc143.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
