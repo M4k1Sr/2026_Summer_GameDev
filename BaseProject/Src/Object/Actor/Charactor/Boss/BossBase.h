@@ -5,6 +5,7 @@
 class Player;
 class ObjectManager;
 class StrategyAttack;
+class AttackManager;
 
 class BossBase : public CharactorBase
 {
@@ -76,12 +77,18 @@ public:
 	// これが「ChangeAttackStrategy」の正体です！
 	void ChangeAttackStrategy(std::unique_ptr<StrategyAttack> newStrategy); 
 
+	// 攻撃マネージャーのゲッター
+	AttackManager* GetAttackManager() const { return attackMng_; }
+
 protected:
 
 	Player* player_;
 
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
+
+	// 攻撃マネージャー
+	AttackManager* attackMng_ = nullptr;
 
 	// 状態管理
 	int stateBase_;

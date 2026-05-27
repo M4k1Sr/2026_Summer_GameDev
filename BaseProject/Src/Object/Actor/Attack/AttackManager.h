@@ -16,6 +16,9 @@ public:
 	AttackManager(ObjectManager* objMng);
 	~AttackManager();
 
+	// 初期化
+	void Init(void);
+
 	// 更新
 	void Update(void);
 
@@ -24,6 +27,9 @@ public:
 
 	// 解放
 	void Release(void);
+
+	// CSVからオブジェクト情報の読取を行う
+	void LoadCsvData(void);
 
 	// 技の生成関数（ここにボスやプレイヤーから呼ばれる関数を追加していく）
 	void SpawnFireBall(const VECTOR& startPos, const VECTOR& dir);

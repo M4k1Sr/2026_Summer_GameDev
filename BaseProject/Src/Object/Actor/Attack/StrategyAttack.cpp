@@ -1,16 +1,16 @@
 #include "StrategyAttack.h"
 #include "../Charactor/Boss/BossBase.h"
 #include "../Charactor/Player.h"
-#include "../Charactor/Object/ObjectManager.h"
+#include "./attackManager.h"
 
 void FireBallAttack::ExecuteAttack(BossBase& boss)
 {
     // 1. 引数の「boss」から、必要なマネージャーとプレイヤーのポインタ（住所）をもらう
-	ObjectManager* objMng = boss.GetObjectManager();
+	AttackManager* attackMng = boss.GetAttackManager();
 	Player* player = boss.GetPlayer();
 
     // 安全対策：もしどちらかが存在しなければ、エラーを防ぐために処理を中断する
-    if (objMng == nullptr || player == nullptr) return;
+    if (attackMng == nullptr || player == nullptr) return;
 
     // 2. ボス自身の今の座標（発射地点）を取得する
     VECTOR myPos = boss.GetTransform().pos;
@@ -29,11 +29,8 @@ void FireBallAttack::ExecuteAttack(BossBase& boss)
     // 6. オブジェクトマネージャーに頼んで、火の玉を画面に出してもらう！
     // 引数に「発射位置」と「飛んでいく方向」を渡します
     // ※CreateFireBall の名前や引数は、今あるマネージャーの関数に合わせて書き換えてね
-    //objMng->CreateFireBall(myPos, dir);
-    // のちにattackmanagerでクリエイト関数を呼ぶ
+    attackMng->SpawnFireBall(myPos, dir);
     
-    // 7. （おまけ）ボスに魔法を唱えるアニメーションを再生させる
-    // boss.PlayAnimation(BOSS_ANIM_MAGIC);
 }
 
 void WaveAttack::ExecuteAttack(BossBase& boss)
