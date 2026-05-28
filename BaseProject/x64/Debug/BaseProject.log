@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿  ObjectBossGimmick.cpp
   ObjectTarai.cpp
   コードを生成中...
@@ -88,3 +89,12 @@ Effekseer_vs2019_x64_d.lib(Effekseer.CompiledMaterial.obj) : warning LNK4099: PD
 ﻿  BossPixie.cpp
   BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
 >>>>>>> m4k
+=======
+﻿  BossBase.cpp
+  BossManager.cpp
+  BossPixie.cpp
+  Player.cpp
+  GameScene.cpp
+  コードを生成中...
+  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47

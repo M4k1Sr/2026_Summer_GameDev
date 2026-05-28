@@ -47,6 +47,9 @@ public:
 	//アイテムドロップ判定
 	void ItemDrop(void);
 
+	//ゲームクリア判定
+		void IsClear(void);
+
 private:
 
 	// ステージ
@@ -106,5 +109,8 @@ private:
 
 	//クリアタイム
 	float clearTime_;
+
+	//デバッグ用ゴール画像
+	int goalImg_;
 
 };

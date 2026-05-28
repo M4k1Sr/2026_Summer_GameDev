@@ -91,9 +91,9 @@ void Camera::SetBeforeDraw(void)
 
 void Camera::DrawDebug(void)
 {
-	DrawFormatString(200, 70, GetColor(0, 0, 0),
-		"camera Pos: x=%f, y=%f, z=%f",
-		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	//DrawFormatString(200, 70, GetColor(0, 0, 0),
+	//	"camera Pos: x=%f, y=%f, z=%f",
+	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
 }
 
 void Camera::Release(void)
