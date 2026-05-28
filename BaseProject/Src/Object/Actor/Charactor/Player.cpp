@@ -242,14 +242,24 @@ void Player::ProcessMove(void)
 		}
 	}
 
-	// プレイヤーの移動計算の最後（または座標を確定させる直前）
 	if (objMng_ != nullptr)
 	{
 		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
 		if (tile != nullptr)
 		{
-			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
-		}		
+			// ★タイルの上面（GetPos().y）より、プレイヤーの足元が下にあるなら
+			// もしくは、タイルの厚みを考慮して「確実に下をくぐっている」状態なら無視
+			if (transform_.pos.y < tile->GetPos().y)
+			{
+				tile = nullptr; // タイルの下をくぐっている時は追従対象から外す
+			}
+
+			// 完全にタイルの上に乗っている時だけ追従させる
+			if (tile != nullptr && VSize(movePow_) < 0.0001f)
+			{
+				transform_.pos = VAdd(transform_.pos, tile->GetVelocity());
+			}
+		}
 	}
 
 	if (!AsoUtility::EqualsVZero(dir))
