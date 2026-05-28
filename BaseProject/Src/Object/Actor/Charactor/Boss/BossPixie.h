@@ -64,6 +64,12 @@ private:
 	// ダメージカウンタ
 	int lastDamageCnt_ = 0;
 
+	// 火の玉攻撃カウンタ
+	int throwCnt_;
+
+	// 攻撃タイマー
+	float attackTimer_;
+
 	// モデルの大きさ
 	static constexpr float SCALE = 3.0f;
 	

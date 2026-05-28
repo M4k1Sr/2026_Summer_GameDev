@@ -1,4 +1,4 @@
-#include "AttackBase.h"
+ï»¿#include "AttackBase.h"
 #include "../../../Utility/AsoUtility.h"
 #include "../../../Manager/SceneManager.h"
 #include "../../../Object/Common/Transform.h"
@@ -16,15 +16,18 @@ AttackBase::AttackBase(const AttackBase::AttackParam& data, const VECTOR& startP
 	isAttack_(false),
 	isDead_(false),
 	stateChanges_(),
-	stateUpdate_(nullptr)
+	stateUpdate_(nullptr),
+	param_(data)
 {
-	// ƒ‚ƒfƒ‹‰ŠúÀ•W‚Ìİ’è
+	// ãƒ¢ãƒ‡ãƒ«åˆæœŸåº§æ¨™ã®è¨­å®š
 	transform_.pos = startPos_;
 
-	// ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹ID‚ğİ’è
-	// modelHandle_ = MV1DuplicateModel(ResourceManager‚©‚çƒ}ƒXƒ^[‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾);
+	// ãƒ¢ãƒ‡ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«IDã‚’è¨­å®š
+	// modelHandle_ = MV1DuplicateModel(ResourceManagerã‹ã‚‰ãƒã‚¹ã‚¿ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—);
 	// MV1SetScale(modelHandle_, VGet(data.scale, data.scale, data.scale));
-
+	alpha_ = 1.0f;
+	fadeTimer_ = 0.0f;
+	isFading_ = false;
 }
 
 AttackBase::~AttackBase(void)
@@ -33,16 +36,12 @@ AttackBase::~AttackBase(void)
 
 void AttackBase::Update()
 {
-	// ‹¤’Ê‚Ìˆ—
-	// w’è‚³‚ê‚½•ûŒü‚É–ˆƒtƒŒ[ƒ€ˆÚ“®
-	transform_.pos = VAdd(transform_.pos, VScale(moveDir_, speed_));
-	
-	// 2. ’e‚Ìí—Şitype_j‚É‰‚¶‚½ˆ—
-	// ’Ç‰Á
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®æ›´æ–°å‡¦ç†
+	// éšæ™‚è¿½åŠ 
 	switch (type_)
 	{
 		case TYPE::FIRE_BALL:
-			// ‰Î‚Ì‹Ê‚Ì“®‚­ˆ—
+			// ç«ã®ç‰ã®å‹•ãå‡¦ç†
 			ProcessFireBall();
 			break;
 		case TYPE::WAVE_ATTACK:
@@ -63,42 +62,74 @@ void AttackBase::Update()
 
 	}
 
-	// Á–Åˆ—
-	// ¶¬êŠ(StartPos)‚©‚çˆê’è‚Ì‹——£(maxDistance)‚ğ—£‚ê‚½‚çÁ–Å‚³‚¹‚é¨isDead : true
-	if (VSize(VSub(transform_.pos, startPos_)) > maxDistance_)
-	{
-		isDead_ = true;
+
+
+
+	// æ¶ˆæ»…å‡¦ç†
+	// ç”Ÿæˆå ´æ‰€(StartPos)ã‹ã‚‰ä¸€å®šã®è·é›¢(maxDistance)ã‚’é›¢ã‚ŒãŸã‚‰æ¶ˆæ»…ã•ã›ã‚‹â†’isDead : true
+	if (!isFading_) {
+		if (VSize(VSub(transform_.pos, startPos_)) > param_.maxDistance)
+		{
+			isFading_ = true;
+		}
+	}
+	else {
+		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
+		fadeTimer_++;
+		// ä¸é€æ˜åº¦ã‚’1.0fã‹ã‚‰0.0fã¸æ¸›ã‚‰ã™
+		alpha_ = 1.0f - (fadeTimer_ / 30.0f);
+
+		// å®Œå…¨ã«é€æ˜ã«ãªã£ãŸã‚‰ãƒãƒãƒ¼ã‚¸ãƒ£ã«é€æ˜ã«ã—ã¦ã‚‚ã‚‰ã†ãŸã‚ã«æ­»äº¡ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+		if (alpha_ <= 0.0f)
+		{
+			isDead_ = true;
+		}
 	}
 
-	// ƒ‚ƒfƒ‹§ŒäXV
+	// ãƒ¢ãƒ‡ãƒ«åˆ¶å¾¡æ›´æ–°
 	transform_.Update();
 
 }
 
 void AttackBase::Draw(void)
 {
-	// Šî’êƒNƒ‰ƒX‚Ì•`‰æˆ—
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®æç”»å‡¦ç†
 	ActorBase::Draw();
 
-	DrawSphere3D(transform_.pos, 10.0f * scale_, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
+	// æç”»ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚’ã€ŒÎ±ãƒ–ãƒ¬ãƒ³ãƒ‰ï¼ˆé€æ˜å¯¾å¿œï¼‰ã€ã«ã—ã¦ã€ç¾åœ¨ã®alpha_ã‚’é©ç”¨ã™ã‚‹
+	// DxLibã®ãƒ–ãƒ¬ãƒ³ãƒ‰å€¤ã¯ 0ã€œ255 ãªã®ã§ã€alpha_(0.0ã€œ1.0) ã« 255 ã‚’æ›ã‘ç®—ã—ã¾ã™
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(255 * alpha_));
+
+	// èµ¤ã„ãƒ‡ãƒãƒƒã‚°çƒä½“ã‚’æç”»
+	DrawSphere3D(transform_.pos, 100.0f * param_.scale, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
+
+	// é‡è¦ï¼šãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚’ãƒãƒ¼ãƒãƒ«ï¼ˆä¸é€æ˜ã«æˆ»ã—ã¦ãŠãï¼ˆä»–ã®æç”»ãŒé€ã‘ãªã„ã‚ˆã†ã«ã™ã‚‹ãŸã‚ï¼‰
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void AttackBase::Release(void)
 {
 
-	// Šî’êƒNƒ‰ƒX‰ğ•ú
+	// åŸºåº•ã‚¯ãƒ©ã‚¹è§£æ”¾
 	ActorBase::Release();
 
 }
 
 void AttackBase::InitCollider(void)
 {
-	// ŒãX’Ç‰Á—\’è
+	// å¾Œã€…è¿½åŠ äºˆå®š
+}
+
+void AttackBase::InitPost(void)
+{
+	alpha_ = 1.0f;
+	fadeTimer_ = 0.0f;
+	isFading_ = false;
 }
 
 void AttackBase::ChangeState(int state)
 {
-	// “¯‚¶ó‘Ô‚È‚ç‰½‚à‚µ‚È‚¢
+	// åŒã˜çŠ¶æ…‹ãªã‚‰ä½•ã‚‚ã—ãªã„
 	if (stateBase_ == state) return;
 
 	stateBase_ = state;
@@ -111,6 +142,9 @@ void AttackBase::ChangeState(int state)
 
 void AttackBase::ProcessFireBall(void)
 {
+	// åº§æ¨™å‡¦ç†
+	transform_.pos = VAdd(transform_.pos, VScale(moveDir_, param_.speed));
+
 }
 
 void AttackBase::ProcessWaveAttack(void)

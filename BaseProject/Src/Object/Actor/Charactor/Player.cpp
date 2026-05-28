@@ -397,14 +397,14 @@ void Player::ProcessPush(void)
 
 	// タイルの判定
 	// これデバッグ用です
-	ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+	//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
 
-	// チートキー
-	bool cheatKey = ins.IsPress(KEY_INPUT_O);
-	if (cheatKey) {
-		// タライギミック作動
-		tarai->SetFlag(true);
-	}
+	//// チートキー
+	//bool cheatKey = ins.IsPress(KEY_INPUT_O);
+	//if (cheatKey) {
+	//	// タライギミック作動
+	//	tarai->SetFlag(true);
+	//}
 
 			
 	// プレイヤーがギミック付近にいる場合
@@ -416,7 +416,7 @@ void Player::ProcessPush(void)
 
 		//// タイルの判定
 		// こっちが本物
-		//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
 
 		if (bossGimmick != nullptr)
 		{

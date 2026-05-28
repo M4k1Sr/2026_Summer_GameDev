@@ -55,7 +55,7 @@ public:
 	static constexpr float VIEW_ANGLE = 80.0f;
 
 	// 視野の広さ
-	static constexpr float VIEW_RANGE = 800.0f;
+	static constexpr float VIEW_RANGE = 1300.0f;
 
 	// コンストラクタ
 	BossBase(const BossBase::BossData& data);
@@ -77,6 +77,9 @@ public:
 	// これが「ChangeAttackStrategy」の正体です！
 	void ChangeAttackStrategy(std::unique_ptr<StrategyAttack> newStrategy); 
 
+	// 攻撃マネージャーのセット
+	void SetAttackManager(AttackManager* manager) { attackMng_ = manager; }
+
 	// 攻撃マネージャーのゲッター
 	AttackManager* GetAttackManager() const { return attackMng_; }
 
@@ -89,6 +92,10 @@ protected:
 
 	// 攻撃マネージャー
 	AttackManager* attackMng_ = nullptr;
+
+	// 攻撃をしまっておくポケット
+	// 攻撃関数を入れておくボックスのようなもの(火の玉攻撃や斧攻撃など)
+	std::unique_ptr<StrategyAttack> currentAttack_;
 
 	// 状態管理
 	int stateBase_;
@@ -132,6 +139,8 @@ protected:
 	bool isEngaged_;	// 発見後:true
 	bool isSearching_;	// 捜索フラグ:true
 
+	// 攻撃フラグ
+	bool isAttack_;
 
 	// 状態
 	STATE state_;
@@ -157,8 +166,5 @@ protected:
 
 private:
 
-	// 攻撃をしまっておくポケット
-	// 攻撃関数を入れておくボックスのようなもの(火の玉攻撃や斧攻撃など)
-	std::unique_ptr<StrategyAttack> currentAttack_;
 
 };
