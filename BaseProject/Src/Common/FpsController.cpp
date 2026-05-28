@@ -93,7 +93,7 @@ void FpsController::Draw()
     int x = Application::SCREEN_SIZE_X - textWidth - MARGIN;
     int y = MARGIN;
 
-    // ‰EŠñ‚¹•`‰æ
-    DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
+    //// ‰EŠñ‚¹•`‰æ
+    //DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
 
 }

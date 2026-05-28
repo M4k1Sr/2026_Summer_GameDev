@@ -19,9 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
     <ClCompile Include="Src\Manager\ItemManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
+=======
+    <ClCompile Include="Src\Object\Actor\Attack\AttackBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Attack\AttackManager.cpp" />
+    <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
+>>>>>>> m4k
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTarai.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.cpp" />
     <ClCompile Include="Src\Scene\GameClearScene.cpp" />
@@ -70,9 +76,15 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
     <ClInclude Include="Src\Manager\ItemManager.h" />
     <ClInclude Include="Src\Object\Actor\Item\Item.h" />
+=======
+    <ClInclude Include="Src\Object\Actor\Attack\AttackBase.h" />
+    <ClInclude Include="Src\Object\Actor\Attack\AttackManager.h" />
+    <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h" />
+>>>>>>> m4k
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTarai.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.h" />
     <ClInclude Include="Src\Scene\GameClearScene.h" />

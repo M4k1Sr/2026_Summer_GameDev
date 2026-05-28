@@ -10,6 +10,7 @@
 #include "../Object/Actor/IronBall.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Boss/BossManager.h"
+#include "../Object/Actor/Attack/AttackManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Object/UI/UI.h"
@@ -27,6 +28,7 @@ GameScene::GameScene(void)
 	ui_(nullptr),
 	bossMng_(nullptr),
 	objMng_(nullptr),
+	attackMng_(nullptr),
 	rank_(nullptr),
 	itemMng_(nullptr),
 	isPause_(false),
@@ -94,6 +96,11 @@ void GameScene::Init(void)
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
 
+
+	// 攻撃処理初期化
+	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
+	attackMng_->Init();
+
 	// ボス初期化
 	bossMng_ = new BossManager();
 	bossMng_->SetPlayer(player_);
@@ -103,7 +110,8 @@ void GameScene::Init(void)
 	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 	for (const auto& boss : bosses)
 	{
-		boss->SetObjectManager(objMng_);
+		boss->SetObjectManager(objMng_);	// オブジェクトマネージャを渡してオブジェクト生成
+		boss->SetAttackManager(attackMng_);	// 攻撃マネージャを渡して攻撃オブジェクト生成
 
 		// ボスがモデルコライダーを持っていれば登録
 		const ColliderBase* bossCollider =
@@ -169,6 +177,7 @@ void GameScene::Update(void)
 		player_->Update();
 		bossMng_->Update();
 		objMng_->Update();
+		attackMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
 		//itemMng_->Update();
@@ -209,6 +218,9 @@ void GameScene::Draw(void)
 	//ボス描画
 	bossMng_->Draw();
 
+	// 攻撃描画
+	attackMng_->Draw();
+
 	// UI描画
 	ui_->Draw();
 
@@ -241,6 +253,10 @@ void GameScene::Release(void)
 	// ボス解放
 	bossMng_->Release();
 	delete bossMng_;
+
+	// 攻撃処理解放
+	attackMng_->Release();
+	delete attackMng_;
 
 	ui_->Release();
 	delete ui_;

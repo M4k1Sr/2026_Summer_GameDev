@@ -8,6 +8,7 @@ class SkyDome;
 class Player;
 class BossManager;
 class ObjectManager;
+class AttackManager;
 class Ranking;
 class ItemManager;
 
@@ -62,6 +63,9 @@ private:
 	
 	// オブジェクト
 	ObjectManager* objMng_;
+
+	// 攻撃処
+	AttackManager* attackMng_;
 
 	//ランキング
 	Ranking* rank_;
