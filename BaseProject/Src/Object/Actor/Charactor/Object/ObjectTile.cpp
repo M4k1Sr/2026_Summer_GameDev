@@ -19,6 +19,7 @@ ObjectTile::ObjectTile(const ObjectBase::ObjectData& data)
 	prevPos_(AsoUtility::VECTOR_ZERO),
 	velocity_(AsoUtility::VECTOR_ZERO)
 {
+	transform_.pos = data.defaultPos;
 }
 
 ObjectTile::~ObjectTile(void)
