@@ -50,7 +50,7 @@ void BossManager::Release(void)
 		boss->Release();
 		delete boss;
 	}
-
+	bosses_.clear();
 }
 
 void BossManager::SetPlayer(Player* player)

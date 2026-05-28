@@ -1,4 +1,6 @@
 #include <DxLib.h>
+#include "./BossBase.h"
+#include "../../Attack/StrategyAttack.h"
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Utility/MatrixUtility.h"
 #include "../../../../Common/Quaternion.h"
@@ -7,6 +9,7 @@
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
 #include "../../../../Object/Common/Transform.h"
+#include "./BossPixie.h"
 #include "../../../../Object/Common/Health.h"
 #include "../../../../Object/Common/AnimationController.h"
 #include "../Player.h"
@@ -16,14 +19,14 @@
 #include "../../../../Application.h"
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
-#include "./BossBase.h"
-#include "./BossPixie.h"
+
 
 BossPixie::BossPixie(const BossBase::BossData& data)
 	:
 	isDead_(false),
 	BossBase(data)
 {
+	ChangeAttackStrategy(std::make_unique<FireBallAttack>());
 }
 
 BossPixie::~BossPixie(void)
@@ -102,6 +105,8 @@ void BossPixie::InitPost(void)
 	isEngaged_ = false;	// 発見後
 	isSearching_ = false;// 捜索中
 	
+	isAttack_ = false;	// 非攻撃状態
+
 	// 初期遷移状態初期処理登録
 
 	stateChanges_.emplace(static_cast<int>(STATE::IDLE),
@@ -209,11 +214,11 @@ void BossPixie::DrawViewRange(void)
 
 	//// 視野の描画
 	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
-	DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
-	DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
-	DrawLine3D(pos0, pos1, 0xffff00);
-	DrawLine3D(pos0, pos2, 0xffff00);
-	DrawLine3D(pos0, pos3, 0xffff00);
+	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
+	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
+	//DrawLine3D(pos0, pos1, 0xffff00);
+	//DrawLine3D(pos0, pos2, 0xffff00);
+	//DrawLine3D(pos0, pos3, 0xffff00);
 
 	std::string phaseName = "";
 
@@ -227,7 +232,7 @@ void BossPixie::DrawViewRange(void)
 	case PHASE_STEP::PHASE_DEAD:     phaseName = "DEAD (死亡)"; break;
 	default:                         phaseName = "UNKNOWN (エラー)"; break;
 	}
-//	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 }
 
 void BossPixie::Search(void)
@@ -324,6 +329,11 @@ void BossPixie::ChangeStateThrow(void)
 {
 	animationController_->Play(
 		static_cast<int>(ANIM_TYPE::THROW), false);
+	// 5発撃ちたい！
+	throwCnt_ = 5; 
+	// タイマーリセット
+	attackTimer_ = 0;     
+
 	stateUpdate_ = std::bind(&BossPixie::UpdateThrow, this);
 }
 
@@ -406,8 +416,28 @@ void BossPixie::UpdateCharge(void)
 
 void BossPixie::UpdateThrow(void)
 {
-	if (animationController_->IsEnd())
+	// 攻撃関数を実行
+	// 撃つ弾が残っているか
+	if (throwCnt_ > 0)
 	{
+		// カウンタ進行
+		attackTimer_++;
+		if (attackTimer_ >= 50) {
+			if (currentAttack_) {
+				currentAttack_->ExecuteAttack(*this);
+			}
+			attackTimer_ = 0; // タイマーリセット
+			throwCnt_--;	  // 残弾数を減らす
+		}
+	}
+
+
+	isAttack_ = true;
+
+	if (throwCnt_ <= 0 && animationController_->IsEnd())
+	{
+		// 非攻撃状態に戻す
+		isAttack_ = false;
 		ChangeState(STATE::ATTACK_END);
 	}
 

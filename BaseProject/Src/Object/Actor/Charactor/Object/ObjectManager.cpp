@@ -52,6 +52,7 @@ void ObjectManager::Release(void)
 		object->Release();
 		delete object;
 	}
+	objects_.clear();
 
 }
 

@@ -228,8 +228,6 @@ void CharactorBase::CollisionCapsule(void)
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
-			// モデル以外は処理を飛ばす
-			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
 			if (colliderModel == nullptr) continue;
 
