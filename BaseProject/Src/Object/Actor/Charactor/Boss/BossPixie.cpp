@@ -23,6 +23,7 @@
 
 BossPixie::BossPixie(const BossBase::BossData& data)
 	:
+	isDead_(false),
 	BossBase(data)
 {
 	ChangeAttackStrategy(std::make_unique<FireBallAttack>());
@@ -467,7 +468,9 @@ void BossPixie::UpdateDamage(void)
 	}
 
 	// Ž€–S”»’è
-	if (phaseStep_ == PHASE_STEP::PHASE_DEAD) {
+	if (phaseStep_ == PHASE_STEP::PHASE_DEAD) 
+	{
+		Dead();
 		ChangeState(STATE::DOWN);
 	}
 
@@ -516,4 +519,13 @@ void BossPixie::Phase(void)
 		phaseStep_ = PHASE_STEP::PHASE_ENCOUNT;
 	}
 
+}
+
+
+void BossPixie::Dead(void)
+{
+	if (phaseStep_ == PHASE_STEP::PHASE_DEAD)
+	{
+		isDead_ = true;
+	}
 }

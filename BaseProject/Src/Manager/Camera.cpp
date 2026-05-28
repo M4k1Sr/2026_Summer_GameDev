@@ -58,7 +58,24 @@ void Camera::SetBeforeDraw(void)
 	case Camera::MODE::SCROLL_FOLLOW:
 		SetBeforeDrawScrollFollow();
 		break;
+	case Camera::MODE::LOCK_ON:
+		SetBeforeDrawLockOn();
+		break;
 	}
+
+	// カメラのX座標が制限値（LIMIT_X_MAX）を超えないように制限する
+	if (transform_.pos.x > LIMIT_X_MAX)
+	{
+		transform_.pos.x = LIMIT_X_MAX;
+
+		// カメラのY座標が制限値（LIMIT_Y_MAX）を超えないように制限する
+		if (transform_.pos.y > LIMIT_Y_MAX)
+		{
+			transform_.pos.y = LIMIT_Y_MAX;
+		}
+	}
+
+	
 
 	// カメラの設定(位置と注視点による制御)
 	SetCameraPositionAndTargetAndUpVec(
@@ -74,6 +91,9 @@ void Camera::SetBeforeDraw(void)
 
 void Camera::DrawDebug(void)
 {
+	//DrawFormatString(200, 70, GetColor(0, 0, 0),
+	//	"camera Pos: x=%f, y=%f, z=%f",
+	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
 }
 
 void Camera::Release(void)
@@ -153,6 +173,8 @@ void Camera::ChangeMode(MODE mode)
 	case Camera::MODE::FOLLOW:
 		break;
 	case Camera::MODE::SCROLL_FOLLOW:
+		break;
+	case Camera::MODE::LOCK_ON:
 		break;
 	}
 
@@ -316,6 +338,11 @@ void Camera::SetBeforeDrawScrollFollow(void)
 	// 注視点の補間
 	targetPos_ =
 		AsoUtility::Lerp(preTarget_, targetPos_, LERP_RATE_MOVE);
+}
+
+void Camera::SetBeforeDrawLockOn(void)
+{
+	//後、実装かも
 }
 
 void Camera::Collision(void)

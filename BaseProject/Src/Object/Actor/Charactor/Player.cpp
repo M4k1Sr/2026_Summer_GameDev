@@ -21,7 +21,8 @@ Player::Player(void)
 	:
 	CharactorBase(),
 	isGimmick_(false),
-	currentCnt_(0)
+	currentCnt_(0),
+	isClear_(false)
 {
 }
 
@@ -88,6 +89,24 @@ int Player::GetCurrentCnt(void) const
 {
 	return currentCnt_;
 }
+
+void Player::IsClear(void) 
+{
+	if (transform_.pos.x > 5060 &&
+		transform_.pos.x < 5235 &&
+		transform_.pos.z > -790 &&
+		transform_.pos.z < -490)
+	{
+		isClear_ = true;
+	}
+}
+
+
+bool Player::GetClearFlag(void) const
+{
+	return isClear_;
+}
+
 
 
 void Player::InitLoad(void)
@@ -165,6 +184,9 @@ void Player::UpdateProcess(void)
 
 	//プレイや死亡判定
 	playerDead();
+
+	//プレイヤーのクリア判定
+	IsClear();
 
 	// ギミック処理
 	ProcessPush();
@@ -257,7 +279,7 @@ void Player::ProcessMove(void)
 			// 移動スピード
 			moveSpeed_ = SPEED_MOVE;
 
-			if (isDash)
+			if (isDash )
 			{
 				animationController_->Play(
 					static_cast<int>(ANIM_TYPE::FAST_RUN), true);
@@ -267,6 +289,15 @@ void Player::ProcessMove(void)
 				animationController_->Play(
 					static_cast<int>(ANIM_TYPE::RUN), true);
 			}
+
+			if(isJump_)
+			{
+				// ジャンプ中はアニメーションを変えない
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::JUMP), false);
+			}
+
+			
 		}
 
 		// Y軸のみのカメラ角度を取得
@@ -341,6 +372,7 @@ void Player::ProcessJump(void)
 		animationController_->Play(
 			static_cast<int>(ANIM_TYPE::JUMP), false);
 	}
+
 
 }
 

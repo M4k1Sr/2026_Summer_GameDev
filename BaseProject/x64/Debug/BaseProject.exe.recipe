@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+<<<<<<< HEAD
+      <FullPath>C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+=======
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+>>>>>>> 松岡
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

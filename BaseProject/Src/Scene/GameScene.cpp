@@ -16,6 +16,7 @@
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
 #include "../Application.h"
+#include"../Manager/ItemManager.h"
 #include<EffekseerForDXLib.h>
 
 GameScene::GameScene(void)
@@ -29,6 +30,7 @@ GameScene::GameScene(void)
 	objMng_(nullptr),
 	attackMng_(nullptr),
 	rank_(nullptr),
+	itemMng_(nullptr),
 	isPause_(false),
 	pauseImg_(-1),
 	isSousa_(false),
@@ -37,6 +39,7 @@ GameScene::GameScene(void)
 	mosPosY_(0),
 	isEnd_(false),
 	isClear_(false),
+	goalImg_(-1),
 	SceneBase()
 {
 }
@@ -61,6 +64,8 @@ void GameScene::Init(void)
 	player_->Init();
 	player_->SetObjectManager(objMng_);
 
+	//画像ロード
+	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
 
 	rank_->CreateIns();
 
@@ -175,10 +180,12 @@ void GameScene::Update(void)
 		attackMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
-
-		
+		//ゲームクリア判定
+		IsClear();
 	}
 
+
+	//ゲームオーバー判定
 	isEnd_ = ui_->GetIsGameOver();
 	isEnd_ = player_->GetDeadFlag();
 
@@ -186,7 +193,6 @@ void GameScene::Update(void)
 	if (isEnd_ )
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
-
 	}
 
 }
@@ -204,6 +210,17 @@ void GameScene::Draw(void)
 
 	// オブジェクト描画
 	objMng_->Draw();
+
+
+	//デバッグ用ゴール
+	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+		0.5f,                           // 中心X
+		0.5f,                           // 中心Y
+		400.0f,                         // サイズ
+		0.0f,                           // 回転
+		goalImg_,                       // 画像
+		TRUE);
+    
 
 	// プレイヤー描画
 	player_->Draw();
@@ -253,6 +270,10 @@ void GameScene::Release(void)
 
 	ironBall_->Release();
 	delete ironBall_;
+
+	// ItemManager解放
+	itemMng_->Release();
+	delete itemMng_;
 
 	DeleteGraph(pauseImg_);
 
@@ -318,5 +339,26 @@ void GameScene::IsPause(void)
 				DxLib_End();
 			}
 		}
+	}
+}
+
+void GameScene::ItemDrop(void)
+{
+	//一旦プレイヤーの場所にアイテムを出す
+	//itemMng_->SpawnItem(ItemManager::ITEM_TYPE::KEY, player_->GetTransform().pos);
+
+
+}
+
+
+
+void GameScene::IsClear(void)
+{
+
+	isClear_ = player_->GetClearFlag();
+
+	if(isClear_)
+	{
+		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
 	}
 }

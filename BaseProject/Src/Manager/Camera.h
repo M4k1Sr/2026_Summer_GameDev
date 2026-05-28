@@ -29,7 +29,7 @@ public:
 	static constexpr float VIEW_FAR = 20000.0f;
 
 	// 追従位置からカメラ位置までの相対座標
-	static constexpr VECTOR FOLLOW_CAMERA_LOCAL_POS = { 0.0f, 50.0f, -800.0f };
+	static constexpr VECTOR FOLLOW_CAMERA_LOCAL_POS = { 0.0f, 50.0f, -1200.0f };
 
 	// 追従位置から注視点までの相対座標
 	static constexpr VECTOR FOLLOW_TARGET_LOCAL_POS = { 0.0f, 0.0f, 500.0f };
@@ -46,6 +46,7 @@ public:
 		FREE,
 		FOLLOW,
 		SCROLL_FOLLOW,
+		LOCK_ON,
 	};
 
 	// 衝突判定種別
@@ -116,6 +117,12 @@ protected:
 
 private:
 
+	// カメラのX座標の最大制限値
+	static constexpr float LIMIT_X_MAX = 1515.0f;
+
+	// カメラのY座標の最大制限値
+	static constexpr float LIMIT_Y_MAX = 545.0f;
+
 	// 衝突時の押し戻し試行回数
 	static constexpr int CNT_TRY_COLLISION_CAMERA = 30;
 
@@ -173,6 +180,7 @@ private:
 	void SetBeforeDrawFree(void);
 	void SetBeforeDrawFollow(void);
 	void SetBeforeDrawScrollFollow(void);
+	void SetBeforeDrawLockOn(void);
 
 	// 衝突判定
 	void Collision(void);

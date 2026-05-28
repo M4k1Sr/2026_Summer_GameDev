@@ -51,7 +51,7 @@ void SceneManager::Init(void)
 	Init3D();
 
 	// 初期シーンの設定
-	DoChangeScene(SCENE_ID::GAME);
+	DoChangeScene(SCENE_ID::TITLE);
 
 }
 
@@ -248,9 +248,13 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	case SCENE_ID::GAMEOVER:
 		scene_ = new GameOvereScene();
 		break;
+	case SCENE_ID::GAMECLEAR:
+		scene_ = new GameClearScene();
+		break;
 	case SCENE_ID::DEBUG:
 		scene_ = new DebugScene();
 		break;
+	
 	}
 
 	// 各シーンの初期化

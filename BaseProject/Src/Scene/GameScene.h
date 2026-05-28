@@ -10,6 +10,7 @@ class BossManager;
 class ObjectManager;
 class AttackManager;
 class Ranking;
+class ItemManager;
 
 class GameScene : public SceneBase
 {
@@ -43,6 +44,12 @@ public:
 	//スコア受け渡し
 	int GetScore(void);
 
+	//アイテムドロップ判定
+	void ItemDrop(void);
+
+	//ゲームクリア判定
+		void IsClear(void);
+
 private:
 
 	// ステージ
@@ -71,6 +78,9 @@ private:
 	
 	//UI
 	UI* ui_;
+
+	//Item
+	ItemManager* itemMng_;
 	
 	// 時計
 	Transform clock_;
@@ -99,5 +109,8 @@ private:
 
 	//クリアタイム
 	float clearTime_;
+
+	//デバッグ用ゴール画像
+	int goalImg_;
 
 };
