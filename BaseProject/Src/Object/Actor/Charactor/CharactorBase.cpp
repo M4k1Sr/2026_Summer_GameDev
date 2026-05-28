@@ -218,13 +218,6 @@ void CharactorBase::CollisionCapsule(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
-<<<<<<< HEAD
-	//if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-
-=======
-		//if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
->>>>>>> origin/nakanishi
-
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 		
 		// ==========================================
@@ -235,11 +228,6 @@ void CharactorBase::CollisionCapsule(void)
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> origin/nakanishi
 			// モデル以外は処理を飛ばす
 			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
