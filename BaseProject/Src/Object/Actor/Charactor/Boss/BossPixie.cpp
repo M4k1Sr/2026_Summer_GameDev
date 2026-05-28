@@ -1,4 +1,6 @@
 #include <DxLib.h>
+#include "./BossBase.h"
+#include "../../Attack/StrategyAttack.h"
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Utility/MatrixUtility.h"
 #include "../../../../Common/Quaternion.h"
@@ -7,6 +9,7 @@
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
 #include "../../../../Object/Common/Transform.h"
+#include "./BossPixie.h"
 #include "../../../../Object/Common/Health.h"
 #include "../../../../Object/Common/AnimationController.h"
 #include "../Player.h"
@@ -16,13 +19,13 @@
 #include "../../../../Application.h"
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
-#include "./BossBase.h"
-#include "./BossPixie.h"
+
 
 BossPixie::BossPixie(const BossBase::BossData& data)
 	:
 	BossBase(data)
 {
+	ChangeAttackStrategy(std::make_unique<FireBallAttack>());
 }
 
 BossPixie::~BossPixie(void)
