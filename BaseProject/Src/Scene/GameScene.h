@@ -110,4 +110,7 @@ private:
 	//クリアタイム
 	float clearTime_;
 
+	//デバッグ用ゴール画像
+	int goalImg_;
+
 };

@@ -63,9 +63,9 @@ void DebugScene::Draw(void)
 			GetColor(255, 0, 0),
 			false);
 
-		DrawFormatString(20, y,
+	/*	DrawFormatString(20, y,
 			0x000000, "ç¿ïW(%.2f, %.2f, %.2f)",
-			point.x, point.y, point.z);
+			point.x, point.y, point.z);*/
 
 		y += 20;
 	}

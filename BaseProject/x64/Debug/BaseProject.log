@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  ItemManager.cpp
   AttackBase.cpp
   AttackManager.cpp
@@ -96,3 +97,12 @@ Effekseer_vs2019_x64_d.lib(ModelLoader.obj) : warning LNK4099: PDB 'Effekseer.pd
 Effekseer_vs2019_x64_d.lib(Effekseer.MaterialFile.obj) : warning LNK4099: PDB 'Effekseer.pdb' が 'Effekseer_vs2019_x64_d.lib(Effekseer.MaterialFile.obj)' で、または 'C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\Effekseer.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 Effekseer_vs2019_x64_d.lib(Effekseer.CompiledMaterial.obj) : warning LNK4099: PDB 'Effekseer.pdb' が 'Effekseer_vs2019_x64_d.lib(Effekseer.CompiledMaterial.obj)' で、または 'C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\Effekseer.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+=======
+﻿  BossBase.cpp
+  BossManager.cpp
+  BossPixie.cpp
+  Player.cpp
+  GameScene.cpp
+  コードを生成中...
+  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> 松岡
