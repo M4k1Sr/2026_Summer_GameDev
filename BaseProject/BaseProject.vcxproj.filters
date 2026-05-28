@@ -196,8 +196,11 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp">
 =======
+=======
+>>>>>>> nakanishi
     <ClCompile Include="Src\Manager\ItemManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -205,7 +208,13 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp">
+<<<<<<< HEAD
 >>>>>>> 松岡
+=======
+=======
+    <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp">
+>>>>>>> m4k
+>>>>>>> nakanishi
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -352,8 +361,11 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h">
 =======
+=======
+>>>>>>> nakanishi
     <ClInclude Include="Src\Manager\ItemManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -361,7 +373,13 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h">
+<<<<<<< HEAD
 >>>>>>> 松岡
+=======
+=======
+    <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h">
+>>>>>>> m4k
+>>>>>>> nakanishi
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

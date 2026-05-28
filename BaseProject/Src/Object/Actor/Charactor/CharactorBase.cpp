@@ -228,6 +228,7 @@ void CharactorBase::CollisionCapsule(void)
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
+
 			if (colliderModel == nullptr) continue;
 
 			// 指定された回数と距離で三角形の法線方向に押し戻す

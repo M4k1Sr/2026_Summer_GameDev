@@ -20,8 +20,6 @@ ObjectTile::ObjectTile(const ObjectBase::ObjectData& data)
 	velocity_(AsoUtility::VECTOR_ZERO),
 	myMoveDir_(AsoUtility::VECTOR_ZERO)
 {
-	transform_.pos = data.defaultPos;
-
 	// ★CSVの数値(moveType)によって、最初に動き出す方向を4パターンに分岐
 	if (data.moveType == 0)
 	{
@@ -43,6 +41,7 @@ ObjectTile::ObjectTile(const ObjectBase::ObjectData& data)
 		// パターン3：奥から手前へ
 		myMoveDir_ = AsoUtility::DIR_L;
 	}
+	transform_.pos = data.defaultPos;
 }
 
 ObjectTile::~ObjectTile(void)
@@ -108,9 +107,17 @@ void ObjectTile::InitLoad(void)
 void ObjectTile::InitTransform(void)
 {
 
-	// モデルの大きさ、回転、座標の初期化
-	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);
+//	// モデルの大きさ、回転、座標の初期化
+//<<<<<<< HEAD
+//	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);
+//	transform_.scl = VGet(SCALE, SCALE * 2, SCALE);
+//=======
+//<<<<<<< HEAD
 	transform_.scl = VGet(SCALE, SCALE * 2, SCALE);
+//=======
+//	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);
+//>>>>>>> m4k
+//>>>>>>> nakanishi
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();
