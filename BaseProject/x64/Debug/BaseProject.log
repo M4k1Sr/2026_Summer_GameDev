@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  BossBase.cpp
   BossManager.cpp
   BossPixie.cpp
@@ -5,3 +6,7 @@
   GameScene.cpp
   コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+=======
+﻿  GameScene.cpp
+  BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> origin/nakanishi

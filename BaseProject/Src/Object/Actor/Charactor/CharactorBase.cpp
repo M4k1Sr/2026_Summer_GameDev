@@ -218,8 +218,12 @@ void CharactorBase::CollisionCapsule(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
+<<<<<<< HEAD
 	//if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 
+=======
+		//if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+>>>>>>> origin/nakanishi
 
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 		
@@ -231,7 +235,11 @@ void CharactorBase::CollisionCapsule(void)
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/nakanishi
 			// モデル以外は処理を飛ばす
 			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
@@ -288,7 +296,7 @@ void CharactorBase::CollisionCapsule(void)
 				float pushLength = totalRadius - distance;
 
 				// 6. 自身の座標（transform_.pos）を、球体の外側へ向けて押し戻す
-				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength * 10.0f));
+				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength * 5.0f));
 			}
 		}
 	}
