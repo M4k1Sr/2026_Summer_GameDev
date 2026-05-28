@@ -215,9 +215,9 @@ void BossPixie::DrawViewRange(void)
 	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// ínñ ÇÃè≠Çµè„
 	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
 	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
-	DrawLine3D(pos0, pos1, 0xffff00);
-	DrawLine3D(pos0, pos2, 0xffff00);
-	DrawLine3D(pos0, pos3, 0xffff00);
+	//DrawLine3D(pos0, pos1, 0xffff00);
+	//DrawLine3D(pos0, pos2, 0xffff00);
+	//DrawLine3D(pos0, pos3, 0xffff00);
 
 	std::string phaseName = "";
 
@@ -231,7 +231,7 @@ void BossPixie::DrawViewRange(void)
 	case PHASE_STEP::PHASE_DEAD:     phaseName = "DEAD (éÄñS)"; break;
 	default:                         phaseName = "UNKNOWN (ÉGÉâÅ[)"; break;
 	}
-	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 }
 
 void BossPixie::Search(void)

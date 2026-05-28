@@ -36,28 +36,28 @@ void Player::Draw(void)
 
 	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
 	// pos_ は ObjectBase のメンバ変数であると想定しています
-	DrawFormatString(200, 50, GetColor(0, 0, 0),
-		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	//DrawFormatString(200, 50, GetColor(0, 0, 0),
+	//	"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
 
-	if (isJump_ == true) {
-		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
-	}
-	else {
-		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
+	//if (isJump_ == true) {
+	//	DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
+	//}
+	//else {
+	//	DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
 
-		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-		if (tile == nullptr) {
-			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
-		}
-		else {
-			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
-		}
-	}
+	//	ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+	//	if (tile == nullptr) {
+	//		DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
+	//	}
+	//	else {
+	//		DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
+	//	}
+	//}
 
-	DrawFormatString(800, 100, GetColor(0, 255, 0),
-		"gimmickCnt: %6.1f",
-		gimmickCnt_);
+	//DrawFormatString(800, 100, GetColor(0, 255, 0),
+	//	"gimmickCnt: %6.1f",
+	//	gimmickCnt_);
 
 
 
