@@ -4,6 +4,7 @@
 #include <DxLib.h>
 #include "../ActorBase.h"
 class AttackManager;
+class ObjectManager;
 class BossData;
 
 class AttackBase : public ActorBase
@@ -49,6 +50,9 @@ public:
 	// 死亡フラグ : ゲッター
 	bool IsDead(void) const { return isDead_; }
 
+	// オブジェクトマネージャのセッター
+	void SetObjectManager(ObjectManager* objMng) { objMng_ = objMng; }
+
 	// リソースロード
 	void InitLoad(void) override {};
 
@@ -62,9 +66,15 @@ public:
 	void InitAnimation(void) override {};
 
 	// 初期化後の個別処理
-	void InitPost(void) override {};
+	void InitPost(void) override;
 
 private:
+
+	// オブジェクトマネージャ
+	ObjectManager* objMng_;
+
+	// オブジェクトデータ
+	AttackParam param_;
 
 	// 状態管理
 	int stateBase_;
@@ -110,6 +120,15 @@ private:
 
 	// 死亡フラグ
 	bool isDead_;
+
+	// 消滅フェード中かどうかのフラグ
+	bool isFading_;   
+
+	// フェードが始まってからの経過時間
+	float fadeTimer_;
+
+	// 不透明度（1.0：くっきり ? 0.0：完全透明）
+	float alpha_;
 
 	// 攻撃処理関数
 	void ProcessFireBall(void);

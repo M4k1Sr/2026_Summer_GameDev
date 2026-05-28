@@ -94,6 +94,11 @@ void GameScene::Init(void)
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
 
+
+	// 攻撃処理初期化
+	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
+	attackMng_->Init();
+
 	// ボス初期化
 	bossMng_ = new BossManager();
 	bossMng_->SetPlayer(player_);
@@ -103,7 +108,8 @@ void GameScene::Init(void)
 	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 	for (const auto& boss : bosses)
 	{
-		boss->SetObjectManager(objMng_);
+		boss->SetObjectManager(objMng_);	// オブジェクトマネージャを渡してオブジェクト生成
+		boss->SetAttackManager(attackMng_);	// 攻撃マネージャを渡して攻撃オブジェクト生成
 
 		// ボスがモデルコライダーを持っていれば登録
 		const ColliderBase* bossCollider =
@@ -117,10 +123,6 @@ void GameScene::Init(void)
 	// ステージモデルのコライダーをボスに登録
 	bossMng_->AddHitCollider(stageCollider);
 
-	// 攻撃処理初期化
-	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
-	attackMng_->Init();
-	
 	// 鉄球モデル
 	ironBall_ = new IronBall();
 	ironBall_->Init();

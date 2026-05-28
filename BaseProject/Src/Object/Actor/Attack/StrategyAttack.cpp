@@ -29,7 +29,8 @@ void FireBallAttack::ExecuteAttack(BossBase& boss)
     // 6. オブジェクトマネージャーに頼んで、火の玉を画面に出してもらう！
     // 引数に「発射位置」と「飛んでいく方向」を渡します
     // ※CreateFireBall の名前や引数は、今あるマネージャーの関数に合わせて書き換えてね
-    attackMng->SpawnFireBall(myPos, dir);
+    auto param = attackMng->GetMasterData(AttackBase::TYPE::FIRE_BALL);
+    attackMng->Create(param, myPos, dir);
     
 }
 

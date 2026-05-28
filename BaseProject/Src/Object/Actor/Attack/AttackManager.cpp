@@ -28,6 +28,20 @@ void AttackManager::Update(void)
 	{
 		attack->Update();
 	}
+
+	// 死亡フラグが立っているオブジェクトのクリーンアップ処理
+	auto it = std::remove_if(attacks_.begin(), attacks_.end(), [](AttackBase* attack) {
+		if (attack->IsDead())
+		{
+			attack->Release(); // 解放処理を呼ぶ
+			delete attack;     // メモリから完全に消去
+			return true;       // リストから取り除く対象にする
+		}
+		return false;
+		});
+
+	// 実際に vector の配列サイズを縮める
+	attacks_.erase(it, attacks_.end());
 }
 
 void AttackManager::Draw(void)
@@ -50,8 +64,14 @@ void AttackManager::Release(void)
 	attacks_.clear();
 }
 
-void AttackManager::SpawnFireBall(const VECTOR& startPos, const VECTOR& dir)
+void AttackManager::Create(const AttackBase::AttackParam& data,const VECTOR& startPos, const VECTOR& dir)
 {
+	// データの取得
+	auto attack = new AttackBase(data, startPos, dir);
+
+	attack->SetObjectManager(objMng_);
+
+	attacks_.push_back(attack);
 }
 
 void AttackManager::AddHitCollider(const ColliderBase* hitCollider)
@@ -60,6 +80,11 @@ void AttackManager::AddHitCollider(const ColliderBase* hitCollider)
 	{
 		attack->AddHitCollider(hitCollider);
 	}
+}
+
+const AttackBase::AttackParam& AttackManager::GetMasterData(AttackBase::TYPE type) const
+{
+	return masterMap_.at(type);
 }
 
 void AttackManager::LoadCsvData(void)
@@ -91,6 +116,34 @@ void AttackManager::LoadCsvData(void)
 		// １行をカンマ区切りで分割
 		strSplit = AsoUtility::Split(line, ',');
 
+		AttackBase::AttackParam param;
+
+		// 構造体に合わせて読込データを格納
+		AttackBase::AttackParam data = AttackBase::AttackParam();
+
+		int idx = 0;
+
+		// ID
+		data.id = stoi(strSplit[idx++]);
+
+		// 種別
+		data.type = static_cast<AttackBase::TYPE>(stoi(strSplit[idx++]));
+
+		// 移動速度
+		data.speed = stof(strSplit[idx++]);
+
+		// 最大移動距離(消滅しない距離)
+		data.maxDistance = stof(strSplit[idx++]);
+
+		// 描画倍率
+		data.scale = stof(strSplit[idx++]);		
+
+
+		// オブジェクト保存
+		masterMap_[data.type] = data;
+
 	}
+
+	ifs.close();
 }
 
