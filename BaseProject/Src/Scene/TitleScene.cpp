@@ -53,7 +53,7 @@ void TitleScene::Init(void)
 	cage_.Update();
 
 	//タイトル壁
-	//wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
+	wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
 	
 
 	// メイン惑星
