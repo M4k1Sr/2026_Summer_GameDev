@@ -244,10 +244,14 @@ void Camera::ProcessMove(void)
 
 	if (GetJoypadNum() == 0)
 	{
-		if (ins.IsNew(KEY_INPUT_W)) { moveDir = AsoUtility::DIR_F; }
-		if (ins.IsNew(KEY_INPUT_S)) { moveDir = AsoUtility::DIR_B; }
-		if (ins.IsNew(KEY_INPUT_A)) { moveDir = AsoUtility::DIR_L; }
-		if (ins.IsNew(KEY_INPUT_D)) { moveDir = AsoUtility::DIR_R; }
+		//if (ins.IsNew(KEY_INPUT_W)) { moveDir = AsoUtility::DIR_F; }
+		//if (ins.IsNew(KEY_INPUT_S)) { moveDir = AsoUtility::DIR_B; }
+		//if (ins.IsNew(KEY_INPUT_A)) { moveDir = AsoUtility::DIR_L; }
+		//if (ins.IsNew(KEY_INPUT_D)) { moveDir = AsoUtility::DIR_R; }
+		if (ins.IsNew(KEY_INPUT_T)) { moveDir = AsoUtility::DIR_F; }
+		if (ins.IsNew(KEY_INPUT_G)) { moveDir = AsoUtility::DIR_B; }
+		if (ins.IsNew(KEY_INPUT_F)) { moveDir = AsoUtility::DIR_L; }
+		if (ins.IsNew(KEY_INPUT_H)) { moveDir = AsoUtility::DIR_R; }
 	}
 	else
 	{

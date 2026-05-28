@@ -112,6 +112,9 @@ void ObjectManager::LoadCsvData(void)
 		stof(strSplit[idx++]),
 		stof(strSplit[idx++])
 		};
+		
+		// 移動タイプ
+		data.moveType = stoi(strSplit[idx++]);
 
 		// オブジェクト生成
 		Create(data);
@@ -152,12 +155,12 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	return object;
 }
 
-// タイル
 ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 {
+
 	for (auto& object : objects_)
 	{
-		if (auto tile = dynamic_cast<ObjectTile*>(object))
+		if (auto tile = dynamic_cast<ObjectTile*>(object)) // ★ObjectTileで判定
 		{
 			VECTOR tilePos = tile->GetPos();
 
@@ -166,14 +169,12 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 			float dz = tilePos.z - pos.z;
 			float distXZ = sqrtf(dx * dx + dz * dz);
 
-			// XZの範囲内ならOKとする（高さYは無視）
 			if (distXZ < 50.0f)
 			{
 				return tile;
 			}
 		}
 	}
-
 	return nullptr;
 }
 
