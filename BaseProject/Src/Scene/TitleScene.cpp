@@ -143,7 +143,7 @@ void TitleScene::Draw(void)
 	MV1DrawModel(cage_.modelId);
 
 
-	DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
+	//DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
 
 
 	//É|Å[ÉYâÊñ 
