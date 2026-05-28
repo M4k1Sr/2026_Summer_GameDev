@@ -50,6 +50,10 @@ void AttackManager::Release(void)
 	attacks_.clear();
 }
 
+void AttackManager::SpawnFireBall(const VECTOR& startPos, const VECTOR& dir)
+{
+}
+
 void AttackManager::AddHitCollider(const ColliderBase* hitCollider)
 {
 	for (auto& attack : attacks_)
@@ -87,8 +91,6 @@ void AttackManager::LoadCsvData(void)
 		// ‚Ps‚ğƒJƒ“ƒ}‹æØ‚è‚Å•ªŠ„
 		strSplit = AsoUtility::Split(line, ',');
 
+	}
 }
 
-void AttackManager::SpawnFireBall(const VECTOR& startPos, const VECTOR& dir)
-{
-}
