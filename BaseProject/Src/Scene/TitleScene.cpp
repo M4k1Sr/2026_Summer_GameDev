@@ -53,7 +53,7 @@ void TitleScene::Init(void)
 	cage_.Update();
 
 	//タイトル壁
-	wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
+	//wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
 	
 
 	// メイン惑星
@@ -88,7 +88,7 @@ void TitleScene::Init(void)
 	// アニメーションコントローラー
 	animationController_ = 
 		new AnimationController(player_.modelId);
-	animationController_->Add(0, 20.0f,Application::PATH_MODEL + "Player/Run.mv1");
+	animationController_->Add(0, 20.0f,Application::PATH_MODEL + "Player/Sitting.mv1");
 	animationController_->Play(0, true);
 
 	// スカイドーム
@@ -132,11 +132,17 @@ void TitleScene::Update(void)
 void TitleScene::Draw(void)
 {
 	// スカイドーム
-//	skyDome_->Draw();
+	//	skyDome_->Draw();
+	
+
+	//プレイヤー
+	MV1DrawModel(player_.modelId);
+
+
 	//檻
 	MV1DrawModel(cage_.modelId);
-	
-	
+
+
 	DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
 
 

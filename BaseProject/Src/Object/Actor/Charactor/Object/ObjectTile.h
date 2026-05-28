@@ -93,10 +93,10 @@ private:
 	VECTOR movePlacePos_;
 
 	// 前フレームの位置
-	VECTOR prevPos_;    
+	VECTOR prevPos_;
 
 	// 移動速度
-	VECTOR velocity_;  
+	VECTOR velocity_;
 
 	// 移動時間
 	float moveTime_;
@@ -110,17 +110,20 @@ private:
 	// 更新ステップ
 	float step_;
 
+	//この床固有の移動方向ベクトル
+	VECTOR myMoveDir_;
+
 	void ChangeState(STATE state);
 	void ChangeStateNone(void);
 	void ChangeStateStop(void);
-	void ChangeStateRight(void);
-	void ChangeStateLeft(void);
+	void ChangeStateOutward(void);
+	void ChangeStateReturn(void);
 	void ChangeStateEnd(void);
 
 	void UpdateNone(void);
 	void UpdateStop(void);
-	void UpdateRight(void);
-	void UpdateLeft(void);
+	void UpdateOutward(void);
+	void UpdateReturn(void);
 	void UpdateEnd(void);
 
 	// 床移動処理

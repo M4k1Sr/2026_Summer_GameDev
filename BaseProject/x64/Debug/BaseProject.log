@@ -1,2 +1,8 @@
-﻿  FpsController.cpp
+﻿  StrategyAttack.cpp
+  BossBase.cpp
+  BossManager.cpp
+  BossPixie.cpp
+  Player.cpp
+  GameScene.cpp
+  コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

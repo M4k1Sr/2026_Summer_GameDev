@@ -1,6 +1,7 @@
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\AttackBase.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\AttackBase.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\AttackManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\AttackManager.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\StrategyAttack.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\StrategyAttack.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectTile.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectTile.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Manager\ItemManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ItemManager.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Item\Item.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\Item.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectTarai.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectTarai.obj
@@ -18,7 +19,6 @@ C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Boss\BossMan
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectBase.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectBase.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectBox.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectBox.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectManager.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectTile.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectTile.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Collider\ColliderSphere.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ColliderSphere.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Collider\ColliderCapsule.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ColliderCapsule.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Collider\ColliderModel.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ColliderModel.obj

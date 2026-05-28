@@ -70,11 +70,11 @@ private:
 
 
 	// ニンゲンのスケール
-	static constexpr float PLAYER_SCALE = 0.4f;
+	static constexpr float PLAYER_SCALE = 4.5f;
 	// ニンゲン座標
-	static constexpr VECTOR PLAYER_POS = { -250.0f, -32.0f, -105.0f };
+	static constexpr VECTOR PLAYER_POS = { -100.0f, -500.0f,400.0f };
 	// ニンゲンの角度
-	static constexpr VECTOR PLAYER_ANGLE = {0.0f,  -90.0f * DX_PI_F / 180.0f, 0.0f };
+	static constexpr VECTOR PLAYER_ANGLE = {0.0f,  150.0f * DX_PI_F / 180.0f, 0.0f };
 	static constexpr VECTOR PLAYER_LOCAL_ANGLE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
 	bool isPause_;
