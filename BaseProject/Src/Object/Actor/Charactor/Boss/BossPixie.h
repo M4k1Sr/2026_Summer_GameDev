@@ -32,6 +32,8 @@ public:
 	// デストラクタ
 	~BossPixie(void) override;
 
+	
+
 protected:
 
 	// リソースロード
@@ -119,5 +121,11 @@ private:
 
 	// フェーズ管理
 	void Phase(void);
+
+	
+	//死亡処理
+	void Dead(void);
+
+	bool isDead_;
 
 };

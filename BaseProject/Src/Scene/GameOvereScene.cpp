@@ -50,6 +50,11 @@ void GameOvereScene::Update(void)
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
 		}
 
+		if (ins.IsTrgDown(KEY_INPUT_0))
+		{
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
+		}
+
 		//É|Å[ÉYâÊñ Ç÷
 		if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
 		{

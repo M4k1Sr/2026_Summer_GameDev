@@ -21,6 +21,7 @@
 
 BossPixie::BossPixie(const BossBase::BossData& data)
 	:
+	isDead_(false),
 	BossBase(data)
 {
 }
@@ -226,7 +227,7 @@ void BossPixie::DrawViewRange(void)
 	case PHASE_STEP::PHASE_DEAD:     phaseName = "DEAD (éÄñS)"; break;
 	default:                         phaseName = "UNKNOWN (ÉGÉâÅ[)"; break;
 	}
-	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+//	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 }
 
 void BossPixie::Search(void)
@@ -437,7 +438,9 @@ void BossPixie::UpdateDamage(void)
 	}
 
 	// éÄñSîªíË
-	if (phaseStep_ == PHASE_STEP::PHASE_DEAD) {
+	if (phaseStep_ == PHASE_STEP::PHASE_DEAD) 
+	{
+		Dead();
 		ChangeState(STATE::DOWN);
 	}
 
@@ -486,4 +489,13 @@ void BossPixie::Phase(void)
 		phaseStep_ = PHASE_STEP::PHASE_ENCOUNT;
 	}
 
+}
+
+
+void BossPixie::Dead(void)
+{
+	if (phaseStep_ == PHASE_STEP::PHASE_DEAD)
+	{
+		isDead_ = true;
+	}
 }

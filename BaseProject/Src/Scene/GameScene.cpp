@@ -184,10 +184,7 @@ void GameScene::Update(void)
 	if (isEnd_ )
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
-
 	}
-
-	
 
 }
 
@@ -205,14 +202,16 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
+
 	//デバッグ用ゴール
-	DrawBillboard3D(VGet(5060.0f,-98.0f,-490.0f),
+	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
 		0.5f,                           // 中心X
 		0.5f,                           // 中心Y
-		300.0f,                         // サイズ
+		400.0f,                         // サイズ
 		0.0f,                           // 回転
 		goalImg_,                       // 画像
 		TRUE);
+    
 
 	// プレイヤー描画
 	player_->Draw();
@@ -223,7 +222,6 @@ void GameScene::Draw(void)
 	// UI描画
 	ui_->Draw();
 
-	
 	////ポーズ画面
 	IsPause();
 	

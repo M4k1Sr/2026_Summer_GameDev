@@ -85,8 +85,8 @@ private:
 	int currentCnt_;
 
 	// プレイヤー座標
-	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
-	static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };//{ 0.0f, 0.0f, -800.0f };
+	static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
+	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };//{ 0.0f, 0.0f, -800.0f };
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
 	// プレイヤーローカル角度
@@ -95,7 +95,7 @@ private:
 	// 移動速度(通常)
 	static constexpr float SPEED_MOVE = 5.0f;
 	// 移動速度(ダッシュ)
-	static constexpr float SPEED_DASH = 10.0f;
+	static constexpr float SPEED_DASH = 15.0f;
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
@@ -126,13 +126,13 @@ private:
 	{ 0.0f, 80.0f, 0.0f };
 
 	// ジャンプ力
-	static constexpr float POW_JUMP_INIT = 3500.0f; 
+	static constexpr float POW_JUMP_INIT = 4000.0f; 
 
 	// 持続ジャンプ力
 	static constexpr float POW_JUMP_KEEP = 600.0f;
 
 	// ジャンプ受付時間
-	static constexpr float TIME_JUMP_INPUT = 0.5f;
+	static constexpr float TIME_JUMP_INPUT = 0.3f;
 
 	//// 操作
 	void ProcessMove(void);
