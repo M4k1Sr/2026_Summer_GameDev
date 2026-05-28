@@ -10,6 +10,7 @@
 #include "../Object/Actor/IronBall.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Boss/BossManager.h"
+#include "../Object/Actor/Attack/AttackManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Object/UI/UI.h"
@@ -27,6 +28,7 @@ GameScene::GameScene(void)
 	ui_(nullptr),
 	bossMng_(nullptr),
 	objMng_(nullptr),
+	attackMng_(nullptr),
 	rank_(nullptr),
 	itemMng_(nullptr),
 	isPause_(false),
@@ -37,6 +39,7 @@ GameScene::GameScene(void)
 	mosPosY_(0),
 	isEnd_(false),
 	isClear_(false),
+	goalImg_(-1),
 	SceneBase()
 {
 }
@@ -61,6 +64,8 @@ void GameScene::Init(void)
 	player_->Init();
 	player_->SetObjectManager(objMng_);
 
+	//画像ロード
+	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
 
 	rank_->CreateIns();
 
@@ -94,6 +99,11 @@ void GameScene::Init(void)
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
 
+
+	// 攻撃処理初期化
+	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
+	attackMng_->Init();
+
 	// ボス初期化
 	bossMng_ = new BossManager();
 	bossMng_->SetPlayer(player_);
@@ -103,7 +113,8 @@ void GameScene::Init(void)
 	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 	for (const auto& boss : bosses)
 	{
-		boss->SetObjectManager(objMng_);
+		boss->SetObjectManager(objMng_);	// オブジェクトマネージャを渡してオブジェクト生成
+		boss->SetAttackManager(attackMng_);	// 攻撃マネージャを渡して攻撃オブジェクト生成
 
 		// ボスがモデルコライダーを持っていれば登録
 		const ColliderBase* bossCollider =
@@ -166,6 +177,7 @@ void GameScene::Update(void)
 		player_->Update();
 		bossMng_->Update();
 		objMng_->Update();
+		attackMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
 		//ゲームクリア判定
@@ -181,10 +193,7 @@ void GameScene::Update(void)
 	if (isEnd_ )
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
-
 	}
-
-	
 
 }
 
@@ -202,16 +211,29 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
+
+	//デバッグ用ゴール
+	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+		0.5f,                           // 中心X
+		0.5f,                           // 中心Y
+		400.0f,                         // サイズ
+		0.0f,                           // 回転
+		goalImg_,                       // 画像
+		TRUE);
+    
+
 	// プレイヤー描画
 	player_->Draw();
 	
 	//ボス描画
 	bossMng_->Draw();
 
+	// 攻撃描画
+	attackMng_->Draw();
+
 	// UI描画
 	ui_->Draw();
 
-	
 	////ポーズ画面
 	IsPause();
 	
@@ -238,6 +260,10 @@ void GameScene::Release(void)
 	// ボス解放
 	bossMng_->Release();
 	delete bossMng_;
+
+	// 攻撃処理解放
+	attackMng_->Release();
+	delete attackMng_;
 
 	ui_->Release();
 	delete ui_;

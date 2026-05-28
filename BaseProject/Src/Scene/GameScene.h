@@ -8,6 +8,7 @@ class SkyDome;
 class Player;
 class BossManager;
 class ObjectManager;
+class AttackManager;
 class Ranking;
 class ItemManager;
 
@@ -66,6 +67,9 @@ private:
 	// オブジェクト
 	ObjectManager* objMng_;
 
+	// 攻撃処
+	AttackManager* attackMng_;
+
 	//ランキング
 	Ranking* rank_;
 
@@ -105,5 +109,8 @@ private:
 
 	//クリアタイム
 	float clearTime_;
+
+	//デバッグ用ゴール画像
+	int goalImg_;
 
 };

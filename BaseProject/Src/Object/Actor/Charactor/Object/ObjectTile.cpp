@@ -19,6 +19,7 @@ ObjectTile::ObjectTile(const ObjectBase::ObjectData& data)
 	prevPos_(AsoUtility::VECTOR_ZERO),
 	velocity_(AsoUtility::VECTOR_ZERO)
 {
+	transform_.pos = data.defaultPos;
 }
 
 ObjectTile::~ObjectTile(void)
@@ -63,7 +64,7 @@ void ObjectTile::InitTransform(void)
 {
 
 	// モデルの大きさ、回転、座標の初期化
-	transform_.scl = VGet(SCALE, SCALE*2, SCALE);
+	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();

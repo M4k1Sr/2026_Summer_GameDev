@@ -30,7 +30,9 @@ public:
 	BossPixie(const BossBase::BossData& data);
 
 	// デストラクタ
-	~BossPixie(void) override;
+	virtual ~BossPixie();
+
+	
 
 protected:
 
@@ -63,6 +65,12 @@ private:
 
 	// ダメージカウンタ
 	int lastDamageCnt_ = 0;
+
+	// 火の玉攻撃カウンタ
+	int throwCnt_;
+
+	// 攻撃タイマー
+	float attackTimer_;
 
 	// モデルの大きさ
 	static constexpr float SCALE = 3.0f;
@@ -119,5 +127,11 @@ private:
 
 	// フェーズ管理
 	void Phase(void);
+
+	
+	//死亡処理
+	void Dead(void);
+
+	bool isDead_;
 
 };

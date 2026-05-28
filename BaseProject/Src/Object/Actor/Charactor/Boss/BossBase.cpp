@@ -1,7 +1,9 @@
+#include "BossBase.h"
+#include"../../Attack/StrategyAttack.h"
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Utility/MatrixUtility.h"
 #include "../Player.h"
-#include "BossBase.h"
+
 
 BossBase::BossBase(const BossBase::BossData& data)
 	:
@@ -33,4 +35,10 @@ void BossBase::ChangeState(int state)
 
 }
 
+// BossBase.cpp の一番下（ChangeState の下など）に追記
+void BossBase::ChangeAttackStrategy(std::unique_ptr<StrategyAttack> newStrategy)
+{
+	// ここなら StrategyAttack の中身が完全に見えているので、安全に移動・消去ができます！
+	currentAttack_ = std::move(newStrategy);
+}
 
