@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include<EffekseerForDXLib.h>
+#include "TitleScene.h"
 #include "../Utility/AsoUtility.h"
 #include "../Object/Common/Transform.h"
 #include "../Manager/InputManager.h"
@@ -10,7 +11,7 @@
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Application.h"
-#include "TitleScene.h"
+
 
 TitleScene::TitleScene(void)
 	:
@@ -24,6 +25,7 @@ TitleScene::TitleScene(void)
 	isEnd_(false),
 	mosPosX_(0),
 	mosPosY_(0),
+	wallImg_(-1),
 	SceneBase()
 {
 }
@@ -41,6 +43,18 @@ void TitleScene::Init(void)
 
 	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
+
+	//タイトル檻
+	cage_.SetModel(resMng_.LoadModelDuplicate(
+		ResourceManager::SRC::CAGE));
+
+	cage_.scl = { 0.7f,0.7f,0.7f };
+	cage_.pos = { 0.0f, -500.0f,400.0f };
+	cage_.Update();
+
+	//タイトル壁
+	wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
+	
 
 	// メイン惑星
 	bigPlanet_.SetModel(resMng_.LoadModelDuplicate(
@@ -74,7 +88,7 @@ void TitleScene::Init(void)
 	// アニメーションコントローラー
 	animationController_ = 
 		new AnimationController(player_.modelId);
-	animationController_->Add(0, 20.0f,Application::PATH_MODEL + "Player/Run.mv1");
+	animationController_->Add(0, 20.0f,Application::PATH_MODEL + "Player/Sitting.mv1");
 	animationController_->Play(0, true);
 
 	// スカイドーム
@@ -110,6 +124,7 @@ void TitleScene::Update(void)
 		animationController_->Update();
 
 		skyDome_->Update();
+
 	}
 
 }
@@ -117,13 +132,22 @@ void TitleScene::Update(void)
 void TitleScene::Draw(void)
 {
 	// スカイドーム
-	skyDome_->Draw();
+	//	skyDome_->Draw();
+	
 
-	
-	
-	// タイトル描画
-	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_TITLE_POS_Y, 1.0f, 0.0f, imgTitle_, true);
-	DrawRotaGraph(Application::SCREEN_SIZE_X / 2, IMG_PUSH_POS_Y, 1.0f, 0.0f, imgPush_, true);
+	//プレイヤー
+	MV1DrawModel(player_.modelId);
+
+
+	//檻
+	MV1DrawModel(cage_.modelId);
+
+
+	//DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
+
+
+	//ポーズ画面
+	IsPause();
 
 }	
 
@@ -136,4 +160,67 @@ void TitleScene::Release(void)
 	// スカイドーム解放
 	skyDome_->Release();
 	delete skyDome_;
+}
+
+
+void TitleScene::IsPause(void)
+{
+
+	if (isEnd_)
+	{
+		// 透過背景
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		SetFontSize(64);
+
+		DrawBox(400, 200, 1600, 400, 0xffffff, false);
+		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
+
+		DrawBox(400, 600, 1600, 800, 0xffffff, false);
+		DrawFormatString(670, 670, 0xffffff, "ゲームを終了しますか?");
+
+		//マウスポインタを表示状態にする
+		SetMouseDispFlag(TRUE);
+
+		//マウスポインタの座標を取得
+		GetMousePoint(&mosPosX_, &mosPosY_);
+
+		//この中にマウスカーソルがあるかを判定
+		bool continueGame =
+			(mosPosX_ >= DRAWBOX_SX && mosPosX_ <= DRAWBOX_EX &&
+				mosPosY_ >= DRAWBOX_GAME_SY && mosPosY_ <= DRAWBOX_GAME_EY);
+
+		bool exitGame =
+			(mosPosX_ >= DRAWBOX_SX && mosPosX_ <= DRAWBOX_EX &&
+				mosPosY_ >= DRAWBOX_GAMEEND_SY && mosPosY_ <= DRAWBOX_GAMEEND_EY);
+		//マウスカーソルがあるときの処理
+			//ゲームを続ける
+		if (continueGame)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			//マウスの左クリックを検知したらゲーム続行
+			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			{
+				isEnd_ = false;
+			}
+		}
+		//ゲームを終了する
+		else if (exitGame)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			//マウスの左クリックを検知したらゲーム終了
+			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			{
+				// Effekseerを終了する
+				Effkseer_End();
+				DxLib_End();
+			}
+		}
+	}
 }

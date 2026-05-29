@@ -51,7 +51,7 @@ void SceneManager::Init(void)
 	Init3D();
 
 	// 初期シーンの設定
-	DoChangeScene(SCENE_ID::GAME);
+	DoChangeScene(SCENE_ID::TITLE);
 
 }
 
@@ -137,8 +137,8 @@ void SceneManager::Draw(void)
 	// 各シーンの描画処理
 	scene_->Draw();
 
-	// カメラ描画
-	camera_->DrawDebug();
+	//// カメラ描画
+	//camera_->DrawDebug();
 
 	// Effekseerにより再生中のエフェクトを描画する。
 	DrawEffekseer3D();
@@ -248,9 +248,13 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	case SCENE_ID::GAMEOVER:
 		scene_ = new GameOvereScene();
 		break;
+	case SCENE_ID::GAMECLEAR:
+		scene_ = new GameClearScene();
+		break;
 	case SCENE_ID::DEBUG:
 		scene_ = new DebugScene();
 		break;
+	
 	}
 
 	// 各シーンの初期化

@@ -113,6 +113,22 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
 	resourcesMap_.emplace(SRC::BOSS_DIABLO, res);
 
+	//アイテム鍵
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");
+	resourcesMap_.emplace(SRC::KEY, res);
+
+	//タイトル檻
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Cage.mv1");
+	resourcesMap_.emplace(SRC::CAGE, res);
+
+	//壁
+	res = new RES(RES_T::IMG, PATH_IMG + "wall.png");
+	resourcesMap_.emplace(SRC::WALL, res);
+
+	//
+	res = new RES(RES_T::IMG, PATH_IMG + "goal.png");
+	resourcesMap_.emplace(SRC::GOAL, res);
+
 }
 
 void ResourceManager::Release(void)

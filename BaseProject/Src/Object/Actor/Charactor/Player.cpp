@@ -21,7 +21,8 @@ Player::Player(void)
 	:
 	CharactorBase(),
 	isGimmick_(false),
-	currentCnt_(0)
+	currentCnt_(0),
+	isClear_(false)
 {
 }
 
@@ -88,6 +89,24 @@ int Player::GetCurrentCnt(void) const
 {
 	return currentCnt_;
 }
+
+void Player::IsClear(void) 
+{
+	if (transform_.pos.x > 5060 &&
+		transform_.pos.x < 5235 &&
+		transform_.pos.z > -790 &&
+		transform_.pos.z < -490)
+	{
+		isClear_ = true;
+	}
+}
+
+
+bool Player::GetClearFlag(void) const
+{
+	return isClear_;
+}
+
 
 
 void Player::InitLoad(void)
@@ -165,6 +184,9 @@ void Player::UpdateProcess(void)
 
 	//プレイや死亡判定
 	playerDead();
+
+	//プレイヤーのクリア判定
+	IsClear();
 
 	// ギミック処理
 	ProcessPush();
@@ -255,11 +277,91 @@ void Player::ProcessMove(void)
 		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
 		if (tile != nullptr)
 		{
-			// 「止まっている時だけ追従」なら VSize(movePow_) < 0.0001f を残す。
-			// 「動いていても足元に合わせて滑るように追従」させたいなら条件なしで加算する。
 			if (VSize(movePow_) < 0.0001f)
 			{
 				transform_.pos = VAdd(transform_.pos, tile->GetVelocity());
+			}
+
+			// もしくは、タイルの厚みを考慮して「確実に下をくぐっている」状態なら無視
+			if (transform_.pos.y < tile->GetPos().y)
+			{
+				tile = nullptr; // タイルの下をくぐっている時は追従対象から外す
+			}
+		}
+	}
+
+	if (!AsoUtility::EqualsVZero(dir))
+	{
+		// 移動スピード
+		moveSpeed_ = SPEED_MOVE;
+
+		if (isDash)
+		{
+			// ダッシュスピード
+			moveSpeed_ = SPEED_DASH;
+		}
+
+		// ジャンプ中はアニメーションを変えない
+		if (!isJump_)
+		{
+			// アニメーション
+			ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
+			if (tile != nullptr)
+			{
+				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
+			}
+		}
+
+		if (!AsoUtility::EqualsVZero(dir))
+		{
+			// 移動スピード
+			moveSpeed_ = SPEED_MOVE;
+
+			if (isDash )
+			{
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::FAST_RUN), true);
+			}
+			else
+			{
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::RUN), true);
+			}
+
+			if(isJump_)
+			{
+				// ジャンプ中はアニメーションを変えない
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::JUMP), false);
+			}
+
+			
+		}
+
+		// Y軸のみのカメラ角度を取得
+		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
+
+		// 移動方向をカメラに合わせる
+		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
+
+		// 移動量を計算
+		movePow_ = VScale(moveDir_, moveSpeed_);
+
+	}
+	else
+	{
+		// ジャンプ中はアニメーションを変えない
+		if (!isJump_)
+		{
+			// IDLE状態に戻す
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
+			// ジャンプ中はアニメーションを変えない
+			if (!isJump_)
+			{
+				// IDLE状態に戻す
+				animationController_->Play(
+					static_cast<int>(ANIM_TYPE::IDLE), true);
 			}
 		}
 	}
@@ -425,6 +527,7 @@ void Player::ProcessJump(void)
 		animationController_->Play(
 			static_cast<int>(ANIM_TYPE::JUMP), false);
 	}
+
 
 }
 

@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
+    <ClCompile Include="Src\Manager\ItemManager.cpp" />
+    <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
@@ -37,7 +40,6 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectManager.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
     <ClCompile Include="Src\Object\Collider\ColliderSphere.cpp" />
     <ClCompile Include="Src\Object\Collider\ColliderCapsule.cpp" />
     <ClCompile Include="Src\Object\Collider\ColliderModel.cpp" />
@@ -71,6 +73,9 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
+    <ClInclude Include="Src\Manager\ItemManager.h" />
+    <ClInclude Include="Src\Object\Actor\Item\Item.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackBase.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackManager.h" />
     <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h" />
@@ -90,7 +95,6 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBase.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectManager.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
     <ClInclude Include="Src\Object\Collider\ColliderSphere.h" />
     <ClInclude Include="Src\Object\Collider\ColliderCapsule.h" />
     <ClInclude Include="Src\Object\Collider\ColliderModel.h" />
