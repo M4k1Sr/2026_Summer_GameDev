@@ -66,6 +66,11 @@ void GameScene::Init(void)
 
 	//画像ロード
 	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
+	if(goalImg_ == -1)
+	{
+		// 画像のロードに失敗した場合のエラーハンドリング
+		MessageBoxA(nullptr, "ゴール画像のロードに失敗しました。", "エラー", MB_OK | MB_ICONERROR);
+	}
 
 	rank_->CreateIns();
 

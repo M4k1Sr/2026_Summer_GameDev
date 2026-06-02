@@ -142,6 +142,9 @@ void TitleScene::Draw(void)
 	//ŸB
 	MV1DrawModel(cage_.modelId);
 
+	//ƒ^ƒCƒgƒ‹‰æ‘œ
+	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
+
 
 	//DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
 
