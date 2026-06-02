@@ -151,6 +151,22 @@ void TitleScene::Draw(void)
 
 	//DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
 
+	// 1. 大きさ「40」のフォントハンドルを作成（太さは標準、フォントタイプはDX_FONTTYPE_NORMAL）
+	int debugFontHandle = CreateFontToHandle(NULL, 40, 1, DX_FONTTYPE_NORMAL);
+
+	if (debugFontHandle != -1)
+	{
+		// 白色で表示
+		unsigned int color = GetColor(255, 255, 255);
+
+		// 2. 作成したフォントハンドル（一番最後の引数）を使って画面に描画
+		// 例として、現在のプレイヤーのY座標を表示してみます
+		DrawFormatStringToHandle(300, 50, color, debugFontHandle, "現在ゲーム内にあるバグは修正中ですので、バグについての報告はお控えください");
+		DrawFormatStringToHandle(300, 100, color, debugFontHandle, "キー操作などについては資料内にあるものをご参照ください");
+
+		// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
+		DeleteFontToHandle(debugFontHandle);
+	}
 
 	//ポーズ画面
 	IsPause();
