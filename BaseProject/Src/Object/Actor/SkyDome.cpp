@@ -81,7 +81,7 @@ void SkyDome::InitPost(void)
 	MV1SetWriteZBuffer(transform_.modelId, false);
 
 	SceneManager::SCENE_ID sceneId = scnMng_.GetSceneID();
-	if (sceneId == SceneManager::SCENE_ID::GAME)
+	if (sceneId == SceneManager::SCENE_ID::STAGE_1)
 	{
 		ChangeState(STATE::FOLLOW);
 	}

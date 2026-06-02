@@ -43,7 +43,7 @@ void GameClearScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
-			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 		}
 
 		//ポーズ画面へ

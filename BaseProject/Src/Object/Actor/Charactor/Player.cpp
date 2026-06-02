@@ -101,13 +101,10 @@ void Player::IsClear(void)
 	}
 }
 
-
 bool Player::GetClearFlag(void) const
 {
 	return isClear_;
 }
-
-
 
 void Player::InitLoad(void)
 {
@@ -366,123 +363,6 @@ void Player::ProcessMove(void)
 		}
 	}
 }
-//{
-//	auto& ins = InputManager::GetInstance();
-//
-//	// 移動量
-//	movePow_ = AsoUtility::VECTOR_ZERO;
-//
-//	// 移動方向
-//	VECTOR dir = AsoUtility::VECTOR_ZERO;
-//
-//	// ダッシュ判定
-//	bool isDash = false;
-//
-//	// ゲームパッドが接続されている数で処理を分ける
-//	if (GetJoypadNum() == 0)
-//	{
-//		// キーボード操作
-//		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
-//		if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
-//		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
-//		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
-//
-//		// ダッシュキー
-//		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
-//	}
-//	else
-//	{
-//		// ゲームパッド操作
-//		// 接続されているゲームパッド１の情報を取得
-//		InputManager::JOYPAD_IN_STATE padState =
-//			ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
-//		// アナログキーの入力値から方向を取得
-//		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
-//
-//		if (isDash == false)
-//		{
-//			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1,
-//				InputManager::JOYPAD_BTN::L_TRIGGER);
-//		}
-//	}
-//
-//	// プレイヤーの移動計算の最後（または座標を確定させる直前）
-//	if (objMng_ != nullptr)
-//	{
-//		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-//		if (tile != nullptr)
-//		{
-//			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
-//		}		
-//	}
-//
-//	if (!AsoUtility::EqualsVZero(dir))
-//	{
-//		// 移動スピード
-//		moveSpeed_ = SPEED_MOVE;
-//
-//		if (isDash)
-//		{
-//			// ダッシュスピード
-//			moveSpeed_ = SPEED_DASH;
-//		}
-//
-//		// ジャンプ中はアニメーションを変えない
-//		if (!isJump_)
-//		{
-//			// アニメーション
-//			ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-//			if (tile != nullptr)
-//			{
-//				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
-//			}
-//		}
-//
-//		if (!AsoUtility::EqualsVZero(dir))
-//		{
-//			// 移動スピード
-//			moveSpeed_ = SPEED_MOVE;
-//
-//			if (isDash)
-//			{
-//				animationController_->Play(
-//					static_cast<int>(ANIM_TYPE::FAST_RUN), true);
-//			}
-//			else
-//			{
-//				animationController_->Play(
-//					static_cast<int>(ANIM_TYPE::RUN), true);
-//			}
-//		}
-//
-//		// Y軸のみのカメラ角度を取得
-//		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
-//
-//		// 移動方向をカメラに合わせる
-//		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
-//
-//		// 移動量を計算
-//		movePow_ = VScale(moveDir_, moveSpeed_);
-//
-//	}
-//	else
-//	{
-//		// ジャンプ中はアニメーションを変えない
-//		if (!isJump_)
-//		{
-//			// IDLE状態に戻す
-//				animationController_->Play(
-//					static_cast<int>(ANIM_TYPE::IDLE), true);
-//			// ジャンプ中はアニメーションを変えない
-//			if (!isJump_)
-//			{
-//				// IDLE状態に戻す
-//				animationController_->Play(
-//					static_cast<int>(ANIM_TYPE::IDLE), true);
-//			}
-//		}
-//	}
-//}
 
 void Player::ProcessJump(void)
 {

@@ -1,2 +1,5 @@
-﻿  Player.cpp
+﻿  TitleScene.cpp
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(65,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(65,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(65,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
   BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

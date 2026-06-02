@@ -8,6 +8,7 @@
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Resource.h"
 #include "../Manager/Camera.h"
+#include "../Manager/SoundManager.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Application.h"
@@ -32,6 +33,8 @@ TitleScene::TitleScene(void)
 
 TitleScene::~TitleScene(void)
 {
+	// タイトルBGM停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::BGM_TITLE);
 }
 
 void TitleScene::Init(void)
@@ -95,6 +98,9 @@ void TitleScene::Init(void)
 	skyDome_ = new SkyDome(empty_);
 	skyDome_->Init();
 
+	// BGM再生
+	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_TITLE, true);
+
 }
 
 void TitleScene::Update(void)
@@ -106,7 +112,7 @@ void TitleScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
-			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 
 		}
 
@@ -132,7 +138,7 @@ void TitleScene::Update(void)
 void TitleScene::Draw(void)
 {
 	// スカイドーム
-	//	skyDome_->Draw();
+	// skyDome_->Draw();
 	
 
 	//プレイヤー
