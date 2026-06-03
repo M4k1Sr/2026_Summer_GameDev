@@ -8,6 +8,7 @@
 #include "../../../../Manager/SceneManager.h"
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
+#include "../../../../Manager/SoundManager.h"
 #include "../../../../Object/Common/Transform.h"
 #include "./BossPixie.h"
 #include "../../../../Object/Common/Health.h"
@@ -339,10 +340,15 @@ void BossPixie::ChangeStateThrow(void)
 
 void BossPixie::ChangeStateAttackWave(void)
 {
-	if (phaseStep_ == (PHASE_STEP::PHASE_TACTICAL))
+	if (phaseStep_ == (PHASE_STEP::PHASE_TACTICAL) || phaseStep_ == (PHASE_STEP::PHASE_CLIMAX))
 	{
 		animationController_->Play(
 			static_cast<int>(ANIM_TYPE::ATTACK_WAVE), false);
+
+		// 24発撃ちたい！
+		waveAttackCnt_ = 1;
+		// タイマーリセット
+		attackTimer_ = 0;
 	}
 	stateUpdate_ = std::bind(&BossPixie::UpdateAttackWave, this);
 }
@@ -408,8 +414,9 @@ void BossPixie::UpdateCharge(void)
 		{
 			ChangeState(STATE::ATTACK_WAVE);
 		}
-		else {
-			ChangeState(STATE::THROW);
+		else if (phaseStep_ == (PHASE_STEP::PHASE_CLIMAX))
+		{
+			ChangeState(STATE::ATTACK_WAVE);
 		}
 	}
 }
@@ -425,6 +432,7 @@ void BossPixie::UpdateThrow(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			throwCnt_--;	  // 残弾数を減らす
@@ -445,6 +453,26 @@ void BossPixie::UpdateThrow(void)
 
 void BossPixie::UpdateAttackWave(void)
 {
+	// 攻撃関数を実行
+	// 撃つ弾が残っているか
+	if (waveAttackCnt_ > 0)
+	{
+		// カウンタ進行
+		attackTimer_++;
+		if (attackTimer_ >= 50) {
+			if (currentAttack_) {
+				currentAttack_->ExecuteAttack(*this);
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+			}
+			attackTimer_ = 0; // タイマーリセット
+			waveAttackCnt_--;	  // 残弾数を減らす
+		}
+	}
+
+
+	isAttack_ = true;
+
+
 	if (animationController_->IsEnd())
 	{
 		ChangeState(STATE::CHARGE);
@@ -491,6 +519,9 @@ void BossPixie::Phase(void)
 
 	int damageCnt = player_->GetCurrentCnt();
 
+	// 処理を始める前に今のフェーズを保存
+	PHASE_STEP oldPhase = phaseStep_;
+
 	// ★【追加】前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
 	if (damageCnt > lastDamageCnt_)
 	{
@@ -519,6 +550,20 @@ void BossPixie::Phase(void)
 		phaseStep_ = PHASE_STEP::PHASE_ENCOUNT;
 	}
 
+
+	if (phaseStep_ != oldPhase)
+	{
+		if (phaseStep_ == PHASE_STEP::PHASE_TACTICAL)
+		{
+			// 中盤フェーズに入ったら、攻撃を「波攻撃」に変更する！
+			ChangeAttackStrategy(std::make_unique<WaveAttack>());
+		}
+		else if (phaseStep_ == PHASE_STEP::PHASE_ENCOUNT)
+		{
+			// 序盤は火の玉
+			ChangeAttackStrategy(std::make_unique<FireBallAttack>());
+		}
+	}
 }
 
 

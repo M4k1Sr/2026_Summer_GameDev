@@ -38,26 +38,29 @@ void SoundManager::Init(void)
     SoundResource* res;
 
     // 共通SE
-    //// // --- タイトル関係 ---
+    // COMMON = BGM系、プレイヤー系、UI系、システム系、当たり判定系
+    // BOSS = ボスが使う攻撃の音、リアクション系、ボスギミック系など
+    // 各STAGE = ステージ固有のサウンド、ギミック系など
+    
+    //// --- タイトル関係 ---
     res = new SoundResource(SOUND_ID::BGM_TITLE, PATH_SE + "BGM/Title.mp3", false);
     soundMap_[SOUND_ID::BGM_TITLE] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
+    // ジャンプSE
     res = new SoundResource(SOUND_ID::SE_JUMP, PATH_SE + "SE/Player/JumpGround.mp3", false);
     soundMap_[SOUND_ID::SE_JUMP] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
-
-
-    // タライ落下SE
-    
 
     // ステージ1用BGM
     res = new SoundResource(SOUND_ID::BGM_STAGE, PATH_SE + "BGM/Stage1.mp3", true);
     soundMap_[SOUND_ID::BGM_STAGE] = res;
     bankMap_[BANK_ID::STAGE_1]->containingSounds.push_back(res);
 
-    // ステージ2用BGM
-    
+    // BOSS1攻撃
+    res = new SoundResource(SOUND_ID::SE_ENEMY_FIRE, PATH_SE + "SE/Enemy/Fire.mp3", false);
+	soundMap_[SOUND_ID::SE_ENEMY_FIRE] = res;
+	bankMap_[BANK_ID::BOSS]->containingSounds.push_back(res);   
 
 
     // 常駐バンクのロード(プロジェクトを開いた時点で必要な音をすぐに読み込む)

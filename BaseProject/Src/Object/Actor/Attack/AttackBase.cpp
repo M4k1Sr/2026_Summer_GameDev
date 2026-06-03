@@ -45,6 +45,7 @@ void AttackBase::Update()
 			ProcessFireBall();
 			break;
 		case TYPE::WAVE_ATTACK:
+			// ウェーブ攻撃の動く処理
 			ProcessWaveAttack();
 			break;
 		case TYPE::ARROW_ATTACK:
@@ -149,6 +150,9 @@ void AttackBase::ProcessFireBall(void)
 
 void AttackBase::ProcessWaveAttack(void)
 {
+	// 座標処理
+	transform_.pos = VAdd(transform_.pos, VScale(moveDir_, param_.speed));
+
 }
 
 void AttackBase::ProcessArrowAttack(void)
