@@ -8,6 +8,7 @@
 #include "../../../../Manager/SceneManager.h"
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
+#include "../../../../Manager/SoundManager.h"
 #include "../../../../Object/Common/Transform.h"
 #include "./BossPixie.h"
 #include "../../../../Object/Common/Health.h"
@@ -233,10 +234,14 @@ void BossPixie::DrawViewRange(void)
 	default:                         phaseName = "UNKNOWN (エラー)"; break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 =======
 //	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 >>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47
+=======
+	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+>>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
 }
 
 void BossPixie::Search(void)
@@ -429,6 +434,7 @@ void BossPixie::UpdateThrow(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			throwCnt_--;	  // 残弾数を減らす

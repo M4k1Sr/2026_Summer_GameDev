@@ -32,6 +32,9 @@ void ObjectTarai::Draw(void)
 
 	ObjectBase::Draw();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
 #ifdef _DEBUG
 
 	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
@@ -50,6 +53,7 @@ void ObjectTarai::Draw(void)
 	}
 
 #endif
+<<<<<<< HEAD
 =======
 //#ifdef _DEBUG
 //
@@ -70,6 +74,8 @@ void ObjectTarai::Draw(void)
 //
 //#endif
 >>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47
+=======
+>>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
 }
 
 void ObjectTarai::InitLoad(void)

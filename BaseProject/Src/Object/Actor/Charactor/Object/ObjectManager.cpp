@@ -170,7 +170,8 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 			float dz = tilePos.z - pos.z;
 			float distXZ = sqrtf(dx * dx + dz * dz);
 
-			if (distXZ < 50.0f)
+			// XZ‚Ì”ÍˆÍ“à‚È‚çOK‚Æ‚·‚éi‚‚³Y‚Í–³Ž‹j
+			if (distXZ < 130.0f)
 			{
 				return tile;
 			}
