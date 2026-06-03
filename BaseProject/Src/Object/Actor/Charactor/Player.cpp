@@ -101,13 +101,10 @@ void Player::IsClear(void)
 	}
 }
 
-
 bool Player::GetClearFlag(void) const
 {
 	return isClear_;
 }
-
-
 
 void Player::InitLoad(void)
 {
@@ -205,51 +202,89 @@ void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();
 
-	// 移動量
+	// 移動量・方向の初期化
 	movePow_ = AsoUtility::VECTOR_ZERO;
-
-	// 移動方向
 	VECTOR dir = AsoUtility::VECTOR_ZERO;
-
-	// ダッシュ判定
 	bool isDash = false;
 
-	// ゲームパッドが接続されている数で処理を分ける
+	// ----------------------------------------------------
+	// 1. 入力処理（キーボード / パッド）
+	// ----------------------------------------------------
 	if (GetJoypadNum() == 0)
 	{
-		// キーボード操作
 		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
 		if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
 		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
-		// ダッシュキー
 		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
 	}
 	else
 	{
-		// ゲームパッド操作
-		// 接続されているゲームパッド１の情報を取得
-		InputManager::JOYPAD_IN_STATE padState =
-			ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
-		// アナログキーの入力値から方向を取得
+		InputManager::JOYPAD_IN_STATE padState = ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
 		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
 		if (isDash == false)
 		{
-			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1,
-				InputManager::JOYPAD_BTN::L_TRIGGER);
+			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 		}
 	}
 
-	// プレイヤーの移動計算の最後（または座標を確定させる直前）
+	// ----------------------------------------------------
+	// 2. 移動量の計算とアニメーション制御
+	// ----------------------------------------------------
+	if (!AsoUtility::EqualsVZero(dir))
+	{
+		// 移動スピードの決定
+		moveSpeed_ = isDash ? SPEED_DASH : SPEED_MOVE;
+
+		// アニメーションの再生（ジャンプ中でなければ）
+		if (!isJump_)
+		{
+			if (isDash)	animationController_->Play(static_cast<int>(ANIM_TYPE::FAST_RUN), true);
+			else        animationController_->Play(static_cast<int>(ANIM_TYPE::RUN), true);
+		}
+		else
+		{
+			animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+		}
+
+		// カメラの向きに合わせて移動方向を計算
+		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
+		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
+		movePow_ = VScale(moveDir_, moveSpeed_);
+	}
+	else
+	{
+		// 入力がない時は待機状態
+		if (!isJump_)
+		{
+			animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
+		}
+	}
+
+	// ----------------------------------------------------
+	// 3. 座標の確定と、動くタイルへの追従（★ここに集約！）
+	// ----------------------------------------------------
+	// ※実際の座標移動（transform_.pos = VAdd(transform_.pos, movePow_) など）が
+	//   この後に別関数（Update等）である場合は、ここでmovePow_にタイルの速度を足すか、
+	//   ここで直接座標を動かします。今回は直接座標に加算する形で一本化します。
 	if (objMng_ != nullptr)
 	{
 		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
 		if (tile != nullptr)
 		{
-			transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
-		}		
+			if (VSize(movePow_) < 0.0001f)
+			{
+				transform_.pos = VAdd(transform_.pos, tile->GetVelocity());
+			}
+
+			// もしくは、タイルの厚みを考慮して「確実に下をくぐっている」状態なら無視
+			if (transform_.pos.y < tile->GetPos().y)
+			{
+				tile = nullptr; // タイルの下をくぐっている時は追従対象から外す
+			}
+		}
 	}
 
 	if (!AsoUtility::EqualsVZero(dir))

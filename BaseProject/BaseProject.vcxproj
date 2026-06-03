@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
     <ClCompile Include="Src\Manager\ItemManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
     <ClInclude Include="Src\Manager\ItemManager.h" />
     <ClInclude Include="Src\Object\Actor\Item\Item.h" />
