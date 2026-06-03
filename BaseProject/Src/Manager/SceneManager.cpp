@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include "./SoundManager.h"
 
 SceneManager* SceneManager::instance_ = nullptr;
 
@@ -49,6 +50,9 @@ void SceneManager::Init(void)
 
 	// 3D用の設定
 	Init3D();
+
+	// サウンドロード(Bankにあるもの)
+	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 
 	// 初期シーンの設定
 	DoChangeScene(SCENE_ID::TITLE);
@@ -137,8 +141,8 @@ void SceneManager::Draw(void)
 	// 各シーンの描画処理
 	scene_->Draw();
 
-	// カメラ描画
-	camera_->DrawDebug();
+	//// カメラ描画
+	//camera_->DrawDebug();
 
 	// Effekseerにより再生中のエフェクトを描画する。
 	DrawEffekseer3D();
@@ -228,6 +232,11 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	// リソースの解放
 	ResourceManager::GetInstance().Release();
 
+	// COMMONは常駐なので、ステージ1のバンクをアンロード
+	if (sceneId_ == SCENE_ID::STAGE_1)      SoundManager::GetInstance().UnloadBank(BANK_ID::STAGE_1);
+	if (sceneId_ == SCENE_ID::STAGE_2)      SoundManager::GetInstance().UnloadBank(BANK_ID::STAGE_2);
+	if (sceneId_ == SCENE_ID::STAGE_3)      SoundManager::GetInstance().UnloadBank(BANK_ID::STAGE_3);
+
 	// シーンを変更する
 	sceneId_ = sceneId;
 
@@ -242,7 +251,8 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	case SCENE_ID::TITLE:
 		scene_ = new TitleScene();
 		break;
-	case SCENE_ID::GAME:
+	case SCENE_ID::STAGE_1:
+		SoundManager::GetInstance().LoadBank(BANK_ID::STAGE_1);
 		scene_ = new GameScene();
 		break;
 	case SCENE_ID::GAMEOVER:

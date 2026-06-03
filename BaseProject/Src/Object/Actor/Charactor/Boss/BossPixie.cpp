@@ -8,6 +8,7 @@
 #include "../../../../Manager/SceneManager.h"
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
+#include "../../../../Manager/SoundManager.h"
 #include "../../../../Object/Common/Transform.h"
 #include "./BossPixie.h"
 #include "../../../../Object/Common/Health.h"
@@ -216,9 +217,9 @@ void BossPixie::DrawViewRange(void)
 	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
 	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
 	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
-	DrawLine3D(pos0, pos1, 0xffff00);
-	DrawLine3D(pos0, pos2, 0xffff00);
-	DrawLine3D(pos0, pos3, 0xffff00);
+	//DrawLine3D(pos0, pos1, 0xffff00);
+	//DrawLine3D(pos0, pos2, 0xffff00);
+	//DrawLine3D(pos0, pos3, 0xffff00);
 
 	std::string phaseName = "";
 
@@ -232,7 +233,7 @@ void BossPixie::DrawViewRange(void)
 	case PHASE_STEP::PHASE_DEAD:     phaseName = "DEAD (死亡)"; break;
 	default:                         phaseName = "UNKNOWN (エラー)"; break;
 	}
-//	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 }
 
 void BossPixie::Search(void)
@@ -425,6 +426,7 @@ void BossPixie::UpdateThrow(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			throwCnt_--;	  // 残弾数を減らす

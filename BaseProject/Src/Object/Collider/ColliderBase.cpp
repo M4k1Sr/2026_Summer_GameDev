@@ -16,13 +16,13 @@ ColliderBase::~ColliderBase(void)
 
 void ColliderBase::Draw(void)
 {
-	int color = COLOR_INVALID;
-	if (isValid_)
-	{
-		color = COLOR_VALID;
-	}
+	//int color = COLOR_INVALID;
+	//if (isValid_)
+	//{
+	//	color = COLOR_VALID;
+	//}
 
-	DrawDebug(color);
+	//DrawDebug(color);
 }
 
 void ColliderBase::SetFollow(Transform* follow)

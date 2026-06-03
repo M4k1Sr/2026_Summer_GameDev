@@ -23,6 +23,7 @@ public:
 		int id;
 		ObjectBase::TYPE type;
 		VECTOR defaultPos;
+		int moveType;
 	};
 
 	// コンストラクタ

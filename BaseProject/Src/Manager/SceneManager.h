@@ -4,6 +4,7 @@
 class SceneBase;
 class Fader;
 class Camera;
+class SoundManager;
 
 class SceneManager
 {
@@ -23,7 +24,9 @@ public:
 	{
 		NONE,
 		TITLE,
-		GAME,
+		STAGE_1,    
+		STAGE_2,    
+		STAGE_3,    
 		DEBUG,
 		GAMEOVER,
 		GAMECLEAR,

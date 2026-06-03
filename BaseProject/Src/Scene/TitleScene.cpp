@@ -8,6 +8,7 @@
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Resource.h"
 #include "../Manager/Camera.h"
+#include "../Manager/SoundManager.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Application.h"
@@ -32,6 +33,8 @@ TitleScene::TitleScene(void)
 
 TitleScene::~TitleScene(void)
 {
+	// タイトルBGM停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::BGM_TITLE);
 }
 
 void TitleScene::Init(void)
@@ -88,12 +91,15 @@ void TitleScene::Init(void)
 	// アニメーションコントローラー
 	animationController_ = 
 		new AnimationController(player_.modelId);
-	animationController_->Add(0, 20.0f,Application::PATH_MODEL + "Player/Run.mv1");
+	animationController_->Add(0, 20.0f,Application::PATH_MODEL + "Player/Sitting.mv1");
 	animationController_->Play(0, true);
 
 	// スカイドーム
 	skyDome_ = new SkyDome(empty_);
 	skyDome_->Init();
+
+	// BGM再生
+	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_TITLE, true);
 
 }
 
@@ -106,7 +112,7 @@ void TitleScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
-			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 
 		}
 
@@ -132,13 +138,35 @@ void TitleScene::Update(void)
 void TitleScene::Draw(void)
 {
 	// スカイドーム
-//	skyDome_->Draw();
+	// skyDome_->Draw();
+	
+
+	//プレイヤー
+	MV1DrawModel(player_.modelId);
+
+
 	//檻
 	MV1DrawModel(cage_.modelId);
-	
-	
-	DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
 
+
+	//DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
+
+	// 1. 大きさ「40」のフォントハンドルを作成（太さは標準、フォントタイプはDX_FONTTYPE_NORMAL）
+	int debugFontHandle = CreateFontToHandle(NULL, 40, 1, DX_FONTTYPE_NORMAL);
+
+	if (debugFontHandle != -1)
+	{
+		// 白色で表示
+		unsigned int color = GetColor(255, 255, 255);
+
+		// 2. 作成したフォントハンドル（一番最後の引数）を使って画面に描画
+		// 例として、現在のプレイヤーのY座標を表示してみます
+		DrawFormatStringToHandle(300, 50, color, debugFontHandle, "現在ゲーム内にあるバグは修正中ですので、バグについての報告はお控えください");
+		DrawFormatStringToHandle(300, 100, color, debugFontHandle, "キー操作などについては資料内にあるものをご参照ください");
+
+		// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
+		DeleteFontToHandle(debugFontHandle);
+	}
 
 	//ポーズ画面
 	IsPause();
