@@ -31,7 +31,8 @@ enum class SOUND_ID {
     SE_JUMP,
     SE_GIMMICK_SWITCH,
     SE_GIMMICK_COLLECT,
-    SE_TARAI_DROP
+    SE_TARAI_DROP,
+    SE_ENEMY_FIRE
 };
 
 // 2. 音リソース構造体を定義

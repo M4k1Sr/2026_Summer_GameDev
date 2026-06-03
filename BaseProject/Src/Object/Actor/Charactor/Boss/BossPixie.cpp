@@ -8,6 +8,7 @@
 #include "../../../../Manager/SceneManager.h"
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../../Manager/Resource.h"
+#include "../../../../Manager/SoundManager.h"
 #include "../../../../Object/Common/Transform.h"
 #include "./BossPixie.h"
 #include "../../../../Object/Common/Health.h"
@@ -425,6 +426,7 @@ void BossPixie::UpdateThrow(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			throwCnt_--;	  // 残弾数を減らす
