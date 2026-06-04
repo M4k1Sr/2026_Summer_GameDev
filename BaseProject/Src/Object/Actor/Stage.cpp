@@ -8,6 +8,7 @@
 #include "../../Manager/SceneManager.h"
 #include "../../Manager/ResourceManager.h"
 #include "../../Manager/Resource.h"
+#include"../../Manager/SoundManager.h"
 #include "../../Application.h"
 #include "Stage.h"
 
@@ -15,10 +16,14 @@ Stage::Stage(void)
 	:
 	ActorBase()
 {
+	//サウンド
+	SoundManager::GetInstance().LoadBank(BANK_ID::STAGE_1);
 }
 
 Stage::~Stage(void)
 {
+	// サウンド停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_ENEMY_FIRE);
 }
 
 void Stage::Update(void)
@@ -87,4 +92,5 @@ void Stage::InitAnimation(void)
 
 void Stage::InitPost(void)
 {
+	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_STAGE1, true);
 }

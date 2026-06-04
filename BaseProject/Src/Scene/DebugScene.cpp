@@ -38,8 +38,7 @@ void DebugScene::Update(void)
 	// ステージ更新
 	stage_->Update();
 
-	// デパッグポイントの配置
-	PlaceDebugPoint();
+	// デパッグポイント3
 
 }
 
@@ -63,10 +62,6 @@ void DebugScene::Draw(void)
 			GetColor(255, 0, 0),
 			false);
 
-	/*	DrawFormatString(20, y,
-			0x000000, "座標(%.2f, %.2f, %.2f)",
-			point.x, point.y, point.z);*/
-
 		y += 20;
 	}
 
@@ -86,7 +81,6 @@ void DebugScene::Release(void)
 
 void DebugScene::PlaceDebugPoint(void)
 {
-
 	const auto& ins = InputManager::GetInstance();
 
 	// クリックした場所にデバッグポイントを配置
