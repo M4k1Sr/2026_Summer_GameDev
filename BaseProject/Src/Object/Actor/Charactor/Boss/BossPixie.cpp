@@ -233,15 +233,12 @@ void BossPixie::DrawViewRange(void)
 	case PHASE_STEP::PHASE_DEAD:     phaseName = "DEAD (éÄñS)"; break;
 	default:                         phaseName = "UNKNOWN (ÉGÉâÅ[)"; break;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
 	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
-=======
-//	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
->>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47
-=======
+
+	//	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+
 	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
->>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
+
 }
 
 void BossPixie::Search(void)
