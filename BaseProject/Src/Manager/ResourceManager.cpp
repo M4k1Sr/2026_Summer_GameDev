@@ -129,6 +129,7 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "goal.png");
 	resourcesMap_.emplace(SRC::GOAL, res);
 
+
 }
 
 void ResourceManager::Release(void)

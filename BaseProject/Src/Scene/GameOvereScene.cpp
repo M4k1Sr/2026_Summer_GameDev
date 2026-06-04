@@ -3,6 +3,7 @@
 #include "../Utility/AsoUtility.h"
 #include"../Manager/SceneManager.h"
 #include "../Object/Common/Transform.h"
+#include"../Manager/SoundManager.h"
 #include "../Manager/InputManager.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/ResourceManager.h"
@@ -20,19 +21,20 @@ GameOvereScene::GameOvereScene()
 	mosPosX_(0),
 	mosPosY_(0)
 {
+	//サウンド
+	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 }
 
 GameOvereScene::~GameOvereScene()
 {
+	// タイトルBGM停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
 }
 
 void GameOvereScene::Init(void)
 {
-
 	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
-
-
 
 }
 
@@ -47,11 +49,13 @@ void GameOvereScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
+			SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 		}
 
 		if (ins.IsTrgDown(KEY_INPUT_0))
 		{
+			SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		}
 
@@ -125,6 +129,7 @@ void GameOvereScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				isEnd_ = false;
 			}
 		}
@@ -137,6 +142,7 @@ void GameOvereScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する。
 				Effkseer_End();
 				DxLib_End();

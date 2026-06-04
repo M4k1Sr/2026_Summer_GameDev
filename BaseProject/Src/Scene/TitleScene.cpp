@@ -27,14 +27,21 @@ TitleScene::TitleScene(void)
 	mosPosX_(0),
 	mosPosY_(0),
 	wallImg_(-1),
+	isBgmPlay_(false),
 	SceneBase()
 {
+	//サウンド
+	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
+
 }
 
 TitleScene::~TitleScene(void)
 {
 	// タイトルBGM停止
 	SoundManager::GetInstance().StopEvent(SOUND_ID::BGM_TITLE);
+	// タイトルBGM停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CURSOR);
 }
 
 void TitleScene::Init(void)
@@ -112,6 +119,7 @@ void TitleScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
+			SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 
 		}
@@ -147,6 +155,9 @@ void TitleScene::Draw(void)
 
 	//檻
 	MV1DrawModel(cage_.modelId);
+
+	//タイトル画像
+	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
 
 
 	//DrawRotaGraph(0, 0, 1.0f, 0.0f, wallImg_, true);
@@ -221,28 +232,47 @@ void TitleScene::IsPause(void)
 			//ゲームを続ける
 		if (continueGame)
 		{
+			if(!isBgmPlay_)
+			{
+				//カーソルがあったときに音を鳴らす
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CURSOR);
+				isBgmPlay_ = true;
+			}
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				isEnd_ = false;
 			}
 		}
 		//ゲームを終了する
 		else if (exitGame)
 		{
+			if (!isBgmPlay_)
+			{
+				//カーソルがあったときに音を鳴らす
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CURSOR);
+				isBgmPlay_ = true;
+			}
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();
 			}
+		}
+		else
+		{
+			//カーソルがないときは音を鳴らさない
+			isBgmPlay_ = false;
 		}
 	}
 }

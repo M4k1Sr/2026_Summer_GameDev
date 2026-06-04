@@ -5,6 +5,7 @@
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
+#include"../Manager/SoundManager.h"
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
 #include "../Object/Actor/IronBall.h"
@@ -42,10 +43,14 @@ GameScene::GameScene(void)
 	goalImg_(-1),
 	SceneBase()
 {
+	//サウンド
+	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 }
 
 GameScene::~GameScene(void)
 {
+	// タイトルBGM停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
 }
 
 void GameScene::Init(void)
@@ -66,6 +71,11 @@ void GameScene::Init(void)
 
 	//画像ロード
 	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
+	if(goalImg_ == -1)
+	{
+		// 画像のロードに失敗した場合のエラーハンドリング
+		MessageBoxA(nullptr, "ゴール画像のロードに失敗しました。", "エラー", MB_OK | MB_ICONERROR);
+	}
 
 	rank_->CreateIns();
 
@@ -322,6 +332,7 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				isPause_ = false;
 			}
 		}
@@ -334,6 +345,7 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();
