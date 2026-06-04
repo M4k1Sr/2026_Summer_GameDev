@@ -53,8 +53,8 @@ void SoundManager::Init(void)
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
     // ステージ1用BGM
-    res = new SoundResource(SOUND_ID::BGM_STAGE, PATH_SE + "BGM/Stage1.mp3", true);
-    soundMap_[SOUND_ID::BGM_STAGE] = res;
+    res = new SoundResource(SOUND_ID::BGM_STAGE1, PATH_SE + "BGM/Stage1.mp3", false);
+    soundMap_[SOUND_ID::BGM_STAGE1] = res;
     bankMap_[BANK_ID::STAGE_1]->containingSounds.push_back(res);
 
     // BOSS1攻撃
@@ -62,6 +62,16 @@ void SoundManager::Init(void)
 	soundMap_[SOUND_ID::SE_ENEMY_FIRE] = res;
 	bankMap_[BANK_ID::BOSS]->containingSounds.push_back(res);   
 
+    // 決定音
+    res = new SoundResource(SOUND_ID::SE_CLICK, PATH_SE + "SE/System/Select.mp3", false);
+    soundMap_[SOUND_ID::SE_CLICK] = res;
+    bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
+
+    //カーソルがあった音
+    res = new SoundResource(SOUND_ID::SE_CURSOR, PATH_SE + "SE/System/Cursor.mp3", false);
+    soundMap_[SOUND_ID::SE_CURSOR] = res;
+    bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
+ 
 
     // 常駐バンクのロード(プロジェクトを開いた時点で必要な音をすぐに読み込む)
     LoadBank(BANK_ID::COMMON);
