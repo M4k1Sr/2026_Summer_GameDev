@@ -69,6 +69,9 @@ private:
 	// 火の玉攻撃カウンタ
 	int throwCnt_;
 
+	// 攻撃波攻撃カウンタ
+	int waveAttackCnt_;
+	
 	// 攻撃タイマー
 	float attackTimer_;
 
