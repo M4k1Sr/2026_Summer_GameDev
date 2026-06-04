@@ -11,6 +11,7 @@
 #include "../Manager/SoundManager.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
+#include "../Shader/Src/Manager/PostEffectManager.h"
 #include "../Application.h"
 
 
@@ -21,6 +22,7 @@ TitleScene::TitleScene(void)
 	bigPlanet_(),
 	rollPlanet_(),
 	player_(),
+	effect_(nullptr),
 	animationController_(nullptr),
 	skyDome_(nullptr),
 	isEnd_(false),
@@ -108,6 +110,10 @@ void TitleScene::Init(void)
 	// BGM再生
 	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_TITLE, true);
 
+	// ポストエフェクト
+	effect_ = new PostEffectManager();
+	effect_->Init();
+	effect_->Load();
 }
 
 void TitleScene::Update(void)
@@ -139,14 +145,16 @@ void TitleScene::Update(void)
 
 		skyDome_->Update();
 
+		effect_->Update();
+
 	}
 
 }
 
 void TitleScene::Draw(void)
 {
-	// スカイドーム
-	// skyDome_->Draw();
+	//// スカイドーム
+	//skyDome_->Draw();
 	
 
 	//プレイヤー
@@ -178,6 +186,9 @@ void TitleScene::Draw(void)
 		// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
 		DeleteFontToHandle(debugFontHandle);
 	}
+
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	//ポーズ画面
 	IsPause();

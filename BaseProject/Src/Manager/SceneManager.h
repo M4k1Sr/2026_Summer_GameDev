@@ -65,6 +65,9 @@ public:
 	// カメラの取得
 	Camera* GetCamera(void) const;
 
+	//スクリーンのゲッター
+	int GetMainScreen(void) const { return mainScreen_; }
+
 private:
 
 	// 静的インスタンス
@@ -81,6 +84,9 @@ private:
 
 	// カメラ
 	Camera* camera_;
+
+	// スクリーン
+	int mainScreen_;
 
 	// シーン遷移中判定
 	bool isSceneChanging_;
