@@ -23,7 +23,9 @@ enum class BANK_ID {
 enum class SOUND_ID {
     NONE,
     BGM_TITLE,
-    BGM_STAGE,
+    BGM_STAGE1,
+    BGM_STAGE2,
+    BGM_STAGE3,
     BGM_GAMEOVER,
     BGM_GAMECLEAR,
     SE_MOVE,
@@ -32,7 +34,9 @@ enum class SOUND_ID {
     SE_GIMMICK_SWITCH,
     SE_GIMMICK_COLLECT,
     SE_TARAI_DROP,
-    SE_ENEMY_FIRE
+    SE_ENEMY_FIRE,
+	SE_CLICK,
+    SE_CURSOR,
 };
 
 // 2. 音リソース構造体を定義

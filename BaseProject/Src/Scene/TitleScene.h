@@ -57,7 +57,7 @@ private:
 	Transform empty_;
 
 	// タイトル画像のX座標
-	static constexpr int IMG_TITLE_POS_X = 250;
+	static constexpr int IMG_TITLE_POS_X = 150;
 	// タイトル画像のY座標
 	static constexpr int IMG_TITLE_POS_Y = -100;
 	// PushSpace画像のY座標
@@ -102,5 +102,8 @@ private:
 
 	//タイトル壁
 	int wallImg_;
+
+	//音の処理
+	bool isBgmPlay_;
 
 };
