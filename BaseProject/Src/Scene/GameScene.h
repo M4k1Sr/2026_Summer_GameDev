@@ -104,9 +104,6 @@ private:
 	//ゲームクリア判定
 	bool isClear_;
 
-	//スコア
-	int score_;
-
 	//クリアタイム
 	float clearTime_;
 

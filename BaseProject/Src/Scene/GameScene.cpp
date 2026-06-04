@@ -1,3 +1,4 @@
+#pragma once
 #include <DxLib.h>
 #include <vector>
 #include "../Manager/SceneManager.h"
@@ -8,6 +9,7 @@
 #include"../Manager/SoundManager.h"
 #include "../Object/Actor/Stage.h"
 #include "../Object/Actor/SkyDome.h"
+#include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
 #include "../Object/Actor/Charactor/Player.h"
 #include "../Object/Actor/Charactor/Boss/BossManager.h"
@@ -41,6 +43,7 @@ GameScene::GameScene(void)
 	isEnd_(false),
 	isClear_(false),
 	goalImg_(-1),
+	clearTime_(0),
 	SceneBase()
 {
 	//サウンド
@@ -180,6 +183,8 @@ void GameScene::Update(void)
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
+		//クリアタイム加算
+		clearTime_++;
 		// マウスポインタを非表示にする
 		SetMouseDispFlag(false);
 		stage_->Update();
@@ -354,6 +359,17 @@ void GameScene::IsPause(void)
 	}
 }
 
+void GameScene::Score(void)
+{
+	//クリアタイムをスコアとして保存
+	//clearTime_ = 
+}
+
+int GameScene::GetScore(void)
+{
+	return clearTime_;
+}
+
 void GameScene::ItemDrop(void)
 {
 	//一旦プレイヤーの場所にアイテムを出す
@@ -362,8 +378,6 @@ void GameScene::ItemDrop(void)
 
 }
 
-
-
 void GameScene::IsClear(void)
 {
 
@@ -371,6 +385,7 @@ void GameScene::IsClear(void)
 
 	if(isClear_)
 	{
+		GameData::GetInstance().clearTime = clearTime_;
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
 	}
 }

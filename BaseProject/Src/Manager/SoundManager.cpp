@@ -61,7 +61,6 @@ void SoundManager::Init(void)
     res = new SoundResource(SOUND_ID::SE_ENEMY_FIRE, PATH_SE + "SE/Enemy/Fire.mp3", false);
 	soundMap_[SOUND_ID::SE_ENEMY_FIRE] = res;
 	bankMap_[BANK_ID::BOSS]->containingSounds.push_back(res);   
-<<<<<<< HEAD
 
     // 決定音
     res = new SoundResource(SOUND_ID::SE_CLICK, PATH_SE + "SE/System/Select.mp3", false);
@@ -72,10 +71,6 @@ void SoundManager::Init(void)
     res = new SoundResource(SOUND_ID::SE_CURSOR, PATH_SE + "SE/System/Cursor.mp3", false);
     soundMap_[SOUND_ID::SE_CURSOR] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
-    
-=======
->>>>>>> m4k
-
 
     // 常駐バンクのロード(プロジェクトを開いた時点で必要な音をすぐに読み込む)
     LoadBank(BANK_ID::COMMON);
