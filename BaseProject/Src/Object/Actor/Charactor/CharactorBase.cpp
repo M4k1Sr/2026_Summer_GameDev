@@ -220,15 +220,7 @@ void CharactorBase::CollisionCapsule(void)
 		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
->>>>>>> m4k
-=======
->>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47
-=======
->>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
 		// ==========================================
 		// 1. 対象の形状が「3Dモデル」の場合の処理
 		// ==========================================
@@ -238,17 +230,9 @@ void CharactorBase::CollisionCapsule(void)
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
 
-<<<<<<< HEAD
 			// モデル以外は処理を飛ばす
 			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
-<<<<<<< HEAD
-=======
->>>>>>> m4k
-=======
->>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47
-=======
->>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
 			if (colliderModel == nullptr) continue;
 
 			// 指定された回数と距離で三角形の法線方向に押し戻す

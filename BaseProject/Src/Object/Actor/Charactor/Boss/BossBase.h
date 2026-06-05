@@ -83,6 +83,9 @@ public:
 	// 攻撃マネージャーのゲッター
 	AttackManager* GetAttackManager() const { return attackMng_; }
 
+	// ボスが死亡しているかどうかを取得する関数を追加
+	bool GetIsDead(void) const { return phaseStep_ == PHASE_STEP::PHASE_DEAD; }
+
 protected:
 
 	Player* player_;

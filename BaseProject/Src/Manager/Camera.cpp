@@ -63,20 +63,6 @@ void Camera::SetBeforeDraw(void)
 		break;
 	}
 
-	// カメラのX座標が制限値（LIMIT_X_MAX）を超えないように制限する
-	if (transform_.pos.x > LIMIT_X_MAX)
-	{
-		transform_.pos.x = LIMIT_X_MAX;
-
-		// カメラのY座標が制限値（LIMIT_Y_MAX）を超えないように制限する
-		if (transform_.pos.y > LIMIT_Y_MAX)
-		{
-			transform_.pos.y = LIMIT_Y_MAX;
-		}
-	}
-
-	
-
 	// カメラの設定(位置と注視点による制御)
 	SetCameraPositionAndTargetAndUpVec(
 		transform_.pos,
@@ -156,6 +142,8 @@ VECTOR Camera::GetForward(void) const
 
 void Camera::ChangeMode(MODE mode)
 {
+	// ★ 追加：すでにそのモードなら何もしない
+	if (mode_ == mode) return;
 
 	// カメラの初期設定
 	SetDefault();
@@ -346,7 +334,57 @@ void Camera::SetBeforeDrawScrollFollow(void)
 
 void Camera::SetBeforeDrawLockOn(void)
 {
-	//後、実装かも
+	// プレイヤーまたはロックオン対象がいなければ処理を飛ばす（安全対策）
+	if (followTransform_ == nullptr || lockOnTargetTransform_ == nullptr)
+	{
+		// 対象がいない場合は通常の追従にフォールバック
+		SetBeforeDrawFollow();
+		return;
+	}
+
+	// 1. 各座標の取得
+	VECTOR playerPos = followTransform_->pos;
+	VECTOR bossPos = lockOnTargetTransform_->pos;
+
+	// 2. プレイヤーからボスへの方向ベクトル（水平面上）を計算
+	VECTOR dirToBoss = VSub(bossPos, playerPos);
+	dirToBoss.y = 0.0f; // 上下方向の傾きでカメラがブレないようにXZ平面にする
+	dirToBoss = VNorm(dirToBoss);
+
+	// 3. 注視点（ターゲット）の設定
+	// プレイヤーとボスの中間点を注視点にする（あるいは bossPos に直接合わせてもOKです）
+	// ここではプレイヤーの少し上、かつボス側へ少し寄った位置を注視点にしています
+	targetPos_ = VAdd(playerPos, VScale(dirToBoss, 100.0f));
+	targetPos_.y += 60.0f; // プレイヤーの胸・頭あたりの高さに調整
+
+	// 4. カメラ位置の計算
+	// プレイヤーの背後（ボスの反対側）にカメラを配置する
+	// FOLLOW_CAMERA_LOCAL_POS.z は負の値（例: -1200.0f）なので、引き算ではなく足し算で後方に飛ばします
+	// 距離は既存の定数や、ロックオン専用の適度な引いた距離（例: -800.0fなど）に調整してください
+	float camDist = -800.0f;
+	VECTOR camBackDir = VScale(dirToBoss, camDist); // ボスとは逆方向へのベクトル
+
+	// 一定の高さ（例: 200.0f）を維持しつつ、プレイヤーの後方にカメラを配置
+	VECTOR targetCamPos = VAdd(playerPos, camBackDir);
+	targetCamPos.y += 250.0f; // カメラの高さ調整
+
+	// 5. カメラ位置と注視点の補間（滑らかに動かす）
+	transform_.pos = AsoUtility::Lerp(prePos_, targetCamPos, LERP_RATE_MOVE);
+	targetPos_ = AsoUtility::Lerp(preTarget_, targetPos_, LERP_RATE_MOVE);
+
+	// 6. クォータニオン（回転）の更新
+	// カメラ位置から注視点への方向を向くクォータニオンを計算
+	// ※プロジェクト内に「方向ベクトルからクォータニオンを作る関数」があればそれを使用してください
+	// 以下は一般的な前方ベクトルから角度を抽出してクォータニオンを再構築する例です
+	VECTOR forward = VNorm(VSub(targetPos_, transform_.pos));
+	angles_.y = atan2f(forward.x, forward.z);
+	angles_.x = -atan2f(forward.y, sqrtf(forward.x * forward.x + forward.z * forward.z));
+
+	rotY_ = Quaternion::AngleAxis(angles_.y, AsoUtility::AXIS_Y);
+	transform_.quaRot = rotY_.Mult(Quaternion::AngleAxis(angles_.x, AsoUtility::AXIS_X));
+
+	// 7. 壁抜き防止用の衝突判定
+	Collision();
 }
 
 void Camera::Collision(void)

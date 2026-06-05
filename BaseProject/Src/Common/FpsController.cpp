@@ -92,18 +92,11 @@ void FpsController::Draw()
     // 右上位置を計算
     int x = Application::SCREEN_SIZE_X - textWidth - MARGIN;
     int y = MARGIN;
-<<<<<<< HEAD
-
-<<<<<<< HEAD
     //// 右寄せ描画
     //DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
-=======
     // 右寄せ描画
  //   DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
->>>>>>> 5058b032279c409eabf00936443c2f5a982e1e47
-=======
     //// 右寄せ描画
     //DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
->>>>>>> 2b92b11575589e68dd52372e61d8ac9978c2a650
 
 }
