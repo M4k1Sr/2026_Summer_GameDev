@@ -203,7 +203,7 @@ void GameScene::Update(void)
 		const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 
 		BossBase* nearestBoss = nullptr;
-		float minDistanceSq = 1500.0f * 1500.0f; // ロックオンを開始する距離の2乗（好みに合わせて調整してください）
+		float minDistanceSq = 2500.0f * 2500.0f; // ロックオンを開始する距離の2乗（好みに合わせて調整してください）
 
 		VECTOR playerPos = player_->GetTransform().pos;
 

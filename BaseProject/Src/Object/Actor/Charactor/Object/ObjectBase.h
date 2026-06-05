@@ -78,7 +78,7 @@ protected:
 	TYPE type_;
 
 	// ギミック管理フラグ
-	bool isGimmick_;
+	bool isGimmick_; 
 
 	// 更新系
 	virtual void UpdateProcessPost(void) override {}

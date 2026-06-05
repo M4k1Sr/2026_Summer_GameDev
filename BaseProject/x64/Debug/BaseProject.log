@@ -1,21 +1,4 @@
-<<<<<<< HEAD
-﻿  Camera.cpp
-  SceneManager.cpp
-  Player.cpp
-  DebugScene.cpp
-  GameClearScene.cpp
-  GameOvereScene.cpp
-  GameScene.cpp
-  TitleScene.cpp
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(72,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(72,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(72,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-  コードを生成中...
-Effekseer_vs2019_x64_d.lib(ProceduralModelGenerator.obj) : warning LNK4099: PDB 'Effekseer.pdb' が 'Effekseer_vs2019_x64_d.lib(ProceduralModelGenerator.obj)' で、または 'C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\Effekseer.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-EffekseerRendererDX9_vs2019_x64_d.lib(EffekseerRendererDX9.Renderer.obj) : warning LNK4099: PDB 'EffekseerRendererDX9.pdb' が 'EffekseerRendererDX9_vs2019_x64_d.lib(EffekseerRendererDX9.Renderer.obj)' で、または 'C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\EffekseerRendererDX9.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-EffekseerRendererDX11_vs2019_x64_d.lib(EffekseerRendererDX11.Renderer.obj) : warning LNK4099: PDB 'EffekseerRendererDX11.pdb' が 'EffekseerRendererDX11_vs2019_x64_d.lib(EffekseerRendererDX11.Renderer.obj)' で、または 'C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\EffekseerRendererDX11.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+﻿  GameScene.cpp
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(414,9): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(432,39): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
   BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
-=======
-﻿  GameClearScene.cpp
-  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
->>>>>>> origin/松岡
