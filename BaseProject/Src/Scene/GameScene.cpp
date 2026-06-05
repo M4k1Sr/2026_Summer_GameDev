@@ -195,7 +195,51 @@ void GameScene::Update(void)
 		attackMng_->Update();
 		ironBall_->Update();
 		ui_->Update();
-		//ゲームクリア判定
+
+		// ===========================================================
+		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
+		// ===========================================================
+		Camera* camera = SceneManager::GetInstance().GetCamera();
+		const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
+
+		BossBase* nearestBoss = nullptr;
+		float minDistanceSq = 2500.0f * 2500.0f; // ロックオンを開始する距離の2乗（好みに合わせて調整してください）
+
+		VECTOR playerPos = player_->GetTransform().pos;
+
+		// 出現しているすべてのボスをチェック
+		for (auto* boss : bosses)
+		{
+			if (boss == nullptr) continue;
+
+			// ★ ボスが既に死亡している場合はロックオンしない（スキップする）
+			if (boss->GetIsDead()) continue;
+
+			// プレイヤーとボスの距離の2乗を計算
+			float distSq = VSquareSize(VSub(boss->GetTransform().pos, playerPos));
+
+			// 一番近いボスを記憶
+			if (distSq < minDistanceSq)
+			{
+				minDistanceSq = distSq;
+				nearestBoss = boss;
+			}
+		}
+
+		// 条件を満たす「生きているボス」が近くにいればロックオン状態にする
+		if (nearestBoss != nullptr)
+		{
+			camera->SetLockOnTarget(&nearestBoss->GetTransform());
+			camera->ChangeMode(Camera::MODE::LOCK_ON);
+		}
+		else
+		{
+			// 周囲にボスがいない、またはロックオンしていたボスが死んだら元のカメラに戻す
+			camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+		}
+		// ===========================================================
+		
+		// ゲームクリア判定
 		IsClear();
 	}
 

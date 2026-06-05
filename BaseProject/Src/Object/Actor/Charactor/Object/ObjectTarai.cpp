@@ -49,6 +49,24 @@ void ObjectTarai::Draw(void)
 	}
 
 #endif
+//#ifdef _DEBUG
+//
+//	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+//	// pos_ は ObjectBase のメンバ変数であると想定しています
+//	DrawFormatString(400, 100, GetColor(0, 0, 0),
+//		"Tarai Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+//		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+//
+//	DrawFormatString(400, 120, GetColor(0, 0, 0),
+//		"Tarai Velocity: x=%6.1f, y=%6.1f, z=%6.1f",
+//		velocity_.x, velocity_.y, velocity_.z);
+//
+//	// コライダーのデバッグ描画（もしメソッドがあれば）
+//	for (auto& col : ownColliders_) {
+//		col.second->Draw();
+//	}
+//
+//#endif
 }
 
 void ObjectTarai::InitLoad(void)

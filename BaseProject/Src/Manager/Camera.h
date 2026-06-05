@@ -98,6 +98,9 @@ public:
 	// 追従対象の設定
 	void SetFollow(const Transform* follow);
 
+	// ロックオン対象（ボスなど）を設定する関数を追加
+	void SetLockOnTarget(const Transform* target) { lockOnTargetTransform_ = target; }
+
 protected:
 
 	// リソースロード
@@ -135,6 +138,9 @@ private:
 	// カメラの補間移動率
 	static constexpr float LERP_RATE_MOVE = 0.5f;
 	
+	// ロックオン対象のTransformを保持する変数を追加
+	const Transform* lockOnTargetTransform_ = nullptr;
+
 	// カメラの更新前位置
 	VECTOR prePos_;
 

@@ -94,5 +94,9 @@ void FpsController::Draw()
     int y = MARGIN;
     //// ‰EŠñ‚¹•`‰æ
     //DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
+    // ‰EŠñ‚¹•`‰æ
+ //   DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
+    //// ‰EŠñ‚¹•`‰æ
+    //DrawFormatString(x, y, COLOR, TEXT_FORMAT.c_str(), fps_);
 
 }

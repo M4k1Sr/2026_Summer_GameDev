@@ -220,6 +220,7 @@ void CharactorBase::CollisionCapsule(void)
 		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
 		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 		
+		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
 		// ==========================================
 		// 1. 対象の形状が「3Dモデル」の場合の処理
 		// ==========================================
@@ -228,6 +229,9 @@ void CharactorBase::CollisionCapsule(void)
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);
+
+			// モデル以外は処理を飛ばす
+			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
 			if (colliderModel == nullptr) continue;
 

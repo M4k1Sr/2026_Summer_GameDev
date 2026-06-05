@@ -234,6 +234,11 @@ void BossPixie::DrawViewRange(void)
 	default:                         phaseName = "UNKNOWN (ÉGÉâÅ[)"; break;
 	}
 	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+
+	//	DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+
+	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
+
 }
 
 void BossPixie::Search(void)

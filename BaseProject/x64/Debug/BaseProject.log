@@ -1,2 +1,4 @@
-﻿  GameClearScene.cpp
-  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+﻿  GameScene.cpp
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(414,9): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(432,39): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
