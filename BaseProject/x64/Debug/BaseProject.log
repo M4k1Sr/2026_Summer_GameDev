@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Camera.cpp
   SceneManager.cpp
   Player.cpp
@@ -14,3 +15,7 @@ Effekseer_vs2019_x64_d.lib(ProceduralModelGenerator.obj) : warning LNK4099: PDB 
 EffekseerRendererDX9_vs2019_x64_d.lib(EffekseerRendererDX9.Renderer.obj) : warning LNK4099: PDB 'EffekseerRendererDX9.pdb' が 'EffekseerRendererDX9_vs2019_x64_d.lib(EffekseerRendererDX9.Renderer.obj)' で、または 'C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\EffekseerRendererDX9.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 EffekseerRendererDX11_vs2019_x64_d.lib(EffekseerRendererDX11.Renderer.obj) : warning LNK4099: PDB 'EffekseerRendererDX11.pdb' が 'EffekseerRendererDX11_vs2019_x64_d.lib(EffekseerRendererDX11.Renderer.obj)' で、または 'C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\EffekseerRendererDX11.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+=======
+﻿  GameClearScene.cpp
+  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> origin/松岡

@@ -37,6 +37,7 @@ enum class SOUND_ID {
     SE_ENEMY_FIRE,
 	SE_CLICK,
     SE_CURSOR,
+
 };
 
 // 2. 音リソース構造体を定義

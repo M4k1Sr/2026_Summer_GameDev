@@ -8,6 +8,8 @@
 #include"../Manager/SoundManager.h"
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Resource.h"
+#include"../Ranking/Ranking.h"
+#include "../Ranking/GameData.h"
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
@@ -33,9 +35,16 @@ GameClearScene::~GameClearScene(void)
 
 void GameClearScene::Init(void)
 {
-	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
 
+	Ranking::GetIns().Load();
+
+	Ranking::GetIns().AddScore(GameData::GetInstance().clearTime);
+
+	Ranking::GetIns().Save();
+
+	// Saveでclearされるので再読み込み
+	Ranking::GetIns().Load();
 }
 
 void GameClearScene::Update(void)
@@ -59,13 +68,62 @@ void GameClearScene::Update(void)
 	}
 
 }
-
 void GameClearScene::Draw(void)
 {
-	//仮　ゲームクリア
-	DrawFormatString(700, 500, 0xffffff, "ゲームクリア!");
 
-	//ポーズ画面
+	SetFontSize(64);
+	
+	// クリアタイム取得
+	int frame = GameData::GetInstance().clearTime;
+
+	int minute = frame / 3600;
+	int second = (frame / 60) % 60;
+	int framePart = frame % 60;
+
+	// タイトル
+	DrawFormatString(700, 100, 0xffffff, "ゲームクリア!");
+
+	// クリアタイム表示
+	DrawFormatString(
+		650,
+		160,
+		0xffffff,
+		"TIME %02d:%02d:%02d",
+		minute,
+		second,
+		framePart
+	);
+
+	// ランキングタイトル
+	DrawFormatString(100, 50, 0xffff00, "RANKING");
+
+	// ランキング取得
+	const auto& ranking = Ranking::GetIns().GetRankingList();
+
+	for (int i = 0; i < (int)ranking.size() && i < 10; i++)
+	{
+		if (ranking[i].score == -1)
+		{
+			continue;
+		}
+
+		int rankMinute = ranking[i].score / 3600;
+		int rankSecond = (ranking[i].score / 60) % 60;
+		int rankFrame = ranking[i].score % 60;
+
+		DrawFormatString(
+			100,
+			100 + i * 40,
+			0xffffff,
+			"%2d位  %02d:%02d:%02d",
+			i + 1,
+			rankMinute,
+			rankSecond,
+			rankFrame
+		);
+	}
+
+	// ポーズ画面
 	IsPause();
 }
 
@@ -141,3 +199,5 @@ void GameClearScene::IsPause(void)
 
 	}
 }
+
+

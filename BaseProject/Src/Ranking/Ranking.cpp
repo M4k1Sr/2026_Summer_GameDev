@@ -127,7 +127,8 @@ void Ranking::AddScore(int score)
 	for (size_t i = 0; i < rankingList.size(); i++) {
 
 		// 未設定を発見した場合、シンプルにそこに挿入して終了する
-		if (rankingList[i].score == -1) {
+		if (rankingList[i].score == -1) 
+		{
 			// スコアを挿入する
 			rankingList[i].score = score;
 
@@ -139,7 +140,7 @@ void Ranking::AddScore(int score)
 		}
 
 		// 新規スコアが現在のスコアより大きい場合
-		if (score > rankingList[i].score) {
+		if (score < rankingList[i].score) {
 			// 現在スコアを一時変数に保持しておく
 			RankingData work;
 			work = rankingList[i];
