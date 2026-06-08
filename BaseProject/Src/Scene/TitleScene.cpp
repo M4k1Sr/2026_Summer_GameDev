@@ -32,9 +32,6 @@ TitleScene::TitleScene(void)
 	isBgmPlay_(false),
 	SceneBase()
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
-
 }
 
 TitleScene::~TitleScene(void)
@@ -164,6 +161,9 @@ void TitleScene::Draw(void)
 	//檻
 	MV1DrawModel(cage_.modelId);
 
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
+
 	//タイトル画像
 	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
 
@@ -186,9 +186,6 @@ void TitleScene::Draw(void)
 		// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
 		DeleteFontToHandle(debugFontHandle);
 	}
-
-	// ポストエフェクト描画
-	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	//ポーズ画面
 	IsPause();

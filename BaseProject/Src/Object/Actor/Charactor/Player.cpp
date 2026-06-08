@@ -5,7 +5,8 @@
 #include "../../../Manager/InputManager.h"
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
-#include "../../../Manager/Resource.h"
+#include "../../../Manager/Resource.h"7
+#include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
@@ -28,6 +29,9 @@ Player::Player(void)
 
 Player::~Player(void)
 {
+	// ジャンプ音停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_JUMP);
+
 }
 
 void Player::Draw(void)
@@ -157,7 +161,7 @@ void Player::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Player/Idle.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, Application::PATH_MODEL + "Player/JumpRising.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 40.0f, Application::PATH_MODEL + "Player/Jump.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/Push.mv1");
 
 	// アニメーション再生
@@ -202,7 +206,7 @@ void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();
 
-	// 移動量・方向の初期化
+	// 移動量・方向・ダッシュフラグの初期化
 	movePow_ = AsoUtility::VECTOR_ZERO;
 	VECTOR dir = AsoUtility::VECTOR_ZERO;
 	bool isDash = false;
@@ -224,190 +228,130 @@ void Player::ProcessMove(void)
 		InputManager::JOYPAD_IN_STATE padState = ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
 		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
-		if (isDash == false)
-		{
-			isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
-		}
+		isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 	}
 
 	// ----------------------------------------------------
-	// 2. 移動量の計算とアニメーション制御
+	// 2. 移動量・ベクトルの計算（入力がある場合）
 	// ----------------------------------------------------
-	if (!AsoUtility::EqualsVZero(dir))
+	bool hasInput = !AsoUtility::EqualsVZero(dir);
+
+	if (hasInput)
 	{
 		// 移動スピードの決定
 		moveSpeed_ = isDash ? SPEED_DASH : SPEED_MOVE;
 
-		// アニメーションの再生（ジャンプ中でなければ）
-		if (!isJump_)
-		{
-			if (isDash)	animationController_->Play(static_cast<int>(ANIM_TYPE::FAST_RUN), true);
-			else        animationController_->Play(static_cast<int>(ANIM_TYPE::RUN), true);
-		}
-		else
-		{
-			animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
-		}
-
-		// カメラの向きに合わせて移動方向を計算
+		// カメラのY軸回転に合わせて移動方向を計算
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
 		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
 		movePow_ = VScale(moveDir_, moveSpeed_);
 	}
-	else
-	{
-		// 入力がない時は待機状態
-		if (!isJump_)
-		{
-			animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
-		}
-	}
 
 	// ----------------------------------------------------
-	// 3. 座標の確定と、動くタイルへの追従（★ここに集約！）
+	// 3. 動くタイルへの追従と座標の更新
 	// ----------------------------------------------------
-	// ※実際の座標移動（transform_.pos = VAdd(transform_.pos, movePow_) など）が
-	//   この後に別関数（Update等）である場合は、ここでmovePow_にタイルの速度を足すか、
-	//   ここで直接座標を動かします。今回は直接座標に加算する形で一本化します。
-	if (objMng_ != nullptr)
+	
+	// まず自身の移動量（movePow_）分、座標を進める
+	transform_.pos = VAdd(transform_.pos, movePow_);
+	transform_.pos = VAdd(transform_.pos, VScale(jumpPow_, scnMng_.GetDeltaTime())); // ジャンプ力も反映
+
+	// ★修正ポイント：【ジャンプ中（空中）ではない時だけ】タイルに追従する
+	if (!isJump_ && objMng_ != nullptr)
 	{
 		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
 		if (tile != nullptr)
 		{
-			if (VSize(movePow_) < 0.0001f)
+			// タイルの上にしっかり乗っている場合のみ追従
+			if (transform_.pos.y >= tile->GetPos().y)
 			{
+				// タイルの速度分、座標を追従させる
 				transform_.pos = VAdd(transform_.pos, tile->GetVelocity());
-			}
-
-			// もしくは、タイルの厚みを考慮して「確実に下をくぐっている」状態なら無視
-			if (transform_.pos.y < tile->GetPos().y)
-			{
-				tile = nullptr; // タイルの下をくぐっている時は追従対象から外す
 			}
 		}
 	}
 
-	if (!AsoUtility::EqualsVZero(dir))
+	// ----------------------------------------------------
+	// 4. アニメーション制御
+	// ----------------------------------------------------
+	if (isJump_)
 	{
-		// 移動スピード
-		moveSpeed_ = SPEED_MOVE;
-
-		if (isDash)
+		if (currentAnimType_ != static_cast<int>(ANIM_TYPE::JUMP))
 		{
-			// ダッシュスピード
-			moveSpeed_ = SPEED_DASH;
+			animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+			currentAnimType_ = static_cast<int>(ANIM_TYPE::JUMP);
 		}
-
-		// ジャンプ中はアニメーションを変えない
-		if (!isJump_)
-		{
-			// アニメーション
-			ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-			if (tile != nullptr)
-			{
-				transform_.pos = VAdd(transform_.pos, tile->GetVelocity()); // タイルに追従
-			}
-		}
-
-		if (!AsoUtility::EqualsVZero(dir))
-		{
-			// 移動スピード
-			moveSpeed_ = SPEED_MOVE;
-
-			if (isDash )
-			{
-				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::FAST_RUN), true);
-			}
-			else
-			{
-				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::RUN), true);
-			}
-
-			if(isJump_)
-			{
-				// ジャンプ中はアニメーションを変えない
-				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::JUMP), false);
-			}
-
-			
-		}
-
-		// Y軸のみのカメラ角度を取得
-		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
-
-		// 移動方向をカメラに合わせる
-		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
-
-		// 移動量を計算
-		movePow_ = VScale(moveDir_, moveSpeed_);
-
 	}
 	else
 	{
-		// ジャンプ中はアニメーションを変えない
-		if (!isJump_)
+		int nextAnimType = hasInput ? (isDash ? static_cast<int>(ANIM_TYPE::FAST_RUN) : static_cast<int>(ANIM_TYPE::RUN))
+			: static_cast<int>(ANIM_TYPE::IDLE);
+
+		// 前回と違うアニメーションの時だけ Play を呼ぶ
+		if (currentAnimType_ != nextAnimType)
 		{
-			// IDLE状態に戻す
-				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::IDLE), true);
-			// ジャンプ中はアニメーションを変えない
-			if (!isJump_)
-			{
-				// IDLE状態に戻す
-				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::IDLE), true);
-			}
+			animationController_->Play(nextAnimType, true);
+			currentAnimType_ = nextAnimType;
 		}
 	}
 }
 
 void Player::ProcessJump(void)
 {
+
 	auto& ins = InputManager::GetInstance();
+	float deltaTime = scnMng_.GetDeltaTime();
 
-	// 持続ジャンプ処理
-	bool isHitKeyNew = ins.IsNew(KEY_INPUT_SPACE)
-		|| ins.IsPadBtnNew(
-			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+	// ----------------------------------------------------
+	// 1. 入力状態の取得
+	// ----------------------------------------------------
+	// 押した瞬間 (Trigger Down)
+	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE) ||
+		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
-	if (isHitKeyNew)
+	// 押しっぱなしの継続状態 (Press / New ※InputManagerの仕様に合わせて継続判定の関数にしてください)
+	bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE) ||
+		ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+
+	// ----------------------------------------------------
+	// 2. 初期ジャンプ処理（押した瞬間）
+	// ----------------------------------------------------
+	if (isJumpTrg && !isJump_)
 	{
-		// ジャンプの入力受付時間を減少
-		stepJump_ += scnMng_.GetDeltaTime();
+		SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_JUMP);
 
-		if (stepJump_ < TIME_JUMP_INPUT)
+		// 接地状態から跳ね上がる瞬間の初速を与える
+		jumpPow_ = VScale(AsoUtility::DIR_U, POW_JUMP_INIT);
+
+		isJump_ = true;
+		stepJump_ = 0.0f; // タイマーリセット
+
+		// アニメーション再生
+		animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+
+	}
+
+	// ----------------------------------------------------
+	// 3. 持続ジャンプ処理（空中での制御）
+	// ----------------------------------------------------
+	if (isJump_)
+	{
+		if (isJumpStay && stepJump_ < TIME_JUMP_INPUT)
 		{
-			// ジャンプ量の計算
-			float jumpSpeed = POW_JUMP_KEEP * scnMng_.GetDeltaTime();
+			// 時間を進める
+			stepJump_ += deltaTime;
+
+			// ボタンを押し続けている間は、ふわっと浮き上がる持続上昇力を加算
+			float jumpSpeed = POW_JUMP_KEEP * deltaTime;
 			jumpPow_ = VAdd(jumpPow_, VScale(AsoUtility::DIR_U, jumpSpeed));
 		}
-	}
-	else
-	{
-		// ボタンを離したらジャンプ力に加算しない
-		stepJump_ = TIME_JUMP_INPUT;
-	}
+		else
+		{
+			// ボタンを離す、または受付時間を過ぎたら持続タイマーを最大にして加算を打ち切る
+			stepJump_ = TIME_JUMP_INPUT;
+		}
 
-	// 初期ジャンプ処理
-	bool isHitKey = ins.IsTrgDown(KEY_INPUT_SPACE)
-		|| ins.IsPadBtnTrgDown(
-			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
-	// ジャンプ
-	if (isHitKey && !isJump_)
-	{
-		// ジャンプ量の計算
-		float jumpSpeed = POW_JUMP_INIT * scnMng_.GetDeltaTime();
-		jumpPow_ = VScale(AsoUtility::DIR_U, jumpSpeed);
-		isJump_ = true;
-		// アニメーション再生
-		animationController_->Play(
-			static_cast<int>(ANIM_TYPE::JUMP), false);
 	}
-
 
 }
 

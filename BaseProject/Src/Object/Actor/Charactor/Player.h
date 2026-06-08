@@ -95,9 +95,10 @@ private:
 	static constexpr VECTOR PLAYER_LOCAL_ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
 	// 移動速度(通常)
-	static constexpr float SPEED_MOVE = 5.0f;
+	static constexpr float SPEED_MOVE = 4.0f;
+
 	// 移動速度(ダッシュ)
-	static constexpr float SPEED_DASH = 15.0f;
+	static constexpr float SPEED_DASH = 7.0f;
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
@@ -128,13 +129,13 @@ private:
 	{ 0.0f, 80.0f, 0.0f };
 
 	// ジャンプ力
-	static constexpr float POW_JUMP_INIT = 4000.0f; 
+	static constexpr float POW_JUMP_INIT = 25.0f; 
 
 	// 持続ジャンプ力
 	static constexpr float POW_JUMP_KEEP = 600.0f;
 
 	// ジャンプ受付時間
-	static constexpr float TIME_JUMP_INPUT = 0.3f;
+	static constexpr float TIME_JUMP_INPUT = 0.2f;
 
 	//// 操作
 	void ProcessMove(void);

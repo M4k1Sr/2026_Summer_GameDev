@@ -62,6 +62,17 @@ private:
 
 	// アニメーションをループするかしないか
 	bool isLoop_;
+	
+	// 古いアニメのアタッチ番号
+	int blendAttachNo_ = -1;
+
+	// ブレンド率(0.0?1.0)
+	float blendRate_ = 0.0f;   
+
+	// ブレンド用の古いアニメーション情報
+	Animation blendAnim_;
+
+	bool isBlending_ = false;
 
 	// アニメーション追加の共通処理
 	void Add(int type, float speed, Animation& animation);
