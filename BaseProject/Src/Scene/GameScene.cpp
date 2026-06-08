@@ -7,7 +7,8 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
-#include "../Object/Actor/Stage.h"
+#include "../Object/Actor/StageBase.h"
+#include "../Object/Actor/Stage1.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -44,6 +45,8 @@ GameScene::GameScene(void)
 	isClear_(false),
 	goalImg_(-1),
 	clearTime_(0),
+	currentStageNum_(1),
+	stageState_(StageState::STAGE_1),
 	SceneBase()
 {
 	//サウンド
@@ -59,7 +62,7 @@ GameScene::~GameScene(void)
 void GameScene::Init(void)
 {
 	// ステージ初期化
-	stage_ = new Stage();
+	stage_ = new Stage1();
 	stage_->Init();
 
 	// オブジェクト初期化
@@ -82,10 +85,9 @@ void GameScene::Init(void)
 
 	rank_->CreateIns();
 
-
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
-		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
+		stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
 
 	// スカイドーム初期化
@@ -185,16 +187,32 @@ void GameScene::Update(void)
 	{
 		//クリアタイム加算
 		clearTime_++;
+
 		// マウスポインタを非表示にする
 		SetMouseDispFlag(false);
-		stage_->Update();
+
+		//全ステージで共通して動かすもの
 		skyDome_->Update();
 		player_->Update();
-		bossMng_->Update();
-		objMng_->Update();
-		attackMng_->Update();
-		ironBall_->Update();
 		ui_->Update();
+
+		// ステージ状態によって更新する処理を切り替える
+		switch (stageState_)
+		{
+		case StageState::STAGE_1:
+			stage_->Update();      // ステージ1の地形
+			bossMng_->Update();    // ステージ1のボス
+			objMng_->Update();     // ステージ1の障害物
+			attackMng_->Update();  // ステージ1の攻撃処理
+			ironBall_->Update();   // ステージ1の鉄球
+			break;
+
+		//case StageState::STAGE_2:
+		//	stage_->Update();      // ステージ2の地形
+		//	// ★もしステージ2にボスや障害物を出さない、または別の敵を出す場合はここに書く
+		//	// 例: stage2EnemyMng_->Update();
+		//	break;
+		}
 
 		// ===========================================================
 		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
@@ -263,35 +281,28 @@ void GameScene::Draw(void)
 	// スカイドーム描画
 	skyDome_->Draw();
 
-	// ステージ描画
-	stage_->Draw();
+// ★ステージ状態によって描画するものを切り替える
+	switch (stageState_)
+	{
+	case StageState::STAGE_1:
+		stage_->Draw();
+		ironBall_->Draw();
+		objMng_->Draw();
+		bossMng_->Draw();
+		attackMng_->Draw();
+		// デバッグ用ゴール（ステージ1のみに表示する場合）
+		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
+		break;
 
-	// 鉄球描画
-	ironBall_->Draw();
-
-	// オブジェクト描画
-	objMng_->Draw();
-
-
-	//デバッグ用ゴール
-	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-		0.5f,                           // 中心X
-		0.5f,                           // 中心Y
-		400.0f,                         // サイズ
-		0.0f,                           // 回転
-		goalImg_,                       // 画像
-		TRUE);
-    
+	//case StageState::STAGE_2:
+	//	stage_->Draw(); // ステージ2の地形を描画
+	//	// ★ステージ2固有のオブジェクトがあればここに描画処理を書く
+	//	break;
+	}
 
 	// プレイヤー描画
 	player_->Draw();
 	
-	//ボス描画
-	bossMng_->Draw();
-
-	// 攻撃描画
-	attackMng_->Draw();
-
 	// UI描画
 	ui_->Draw();
 
@@ -431,7 +442,43 @@ void GameScene::IsClear(void)
 
 	if(isClear_)
 	{
-		GameData::GetInstance().clearTime = clearTime_;
-		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
+		// ★現在のステージ状態によって次の進路を決める
+		switch (stageState_)
+		{
+		case StageState::STAGE_1:
+			// 1. 古いステージ1を削除
+			stage_->Release();
+			delete stage_;
+
+			// 2. 新しいステージ2を生成して初期化
+			//stage_ = new Stage2();
+			//stage_->Init();
+
+			// 3. プレイヤーの位置をリセット（SetPosition関数を追加したと仮定）
+			//player_->SetPosition(VGet(0.0f, 0.0f, 0.0f));
+
+			// 4. 新しいステージのコライダーを登録し直す
+			{
+				const ColliderBase* newStageCollider =
+					stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
+
+				player_->AddHitCollider(newStageCollider);
+				objMng_->AddHitCollider(newStageCollider);
+				bossMng_->AddHitCollider(newStageCollider);
+
+				Camera* camera = SceneManager::GetInstance().GetCamera();
+				camera->AddHitCollider(newStageCollider);
+			}
+
+			// 5. 状態を「ステージ2」へ遷移させる
+			stageState_ = StageState::STAGE_2;
+			break;
+
+		//case StageState::STAGE_2:
+		//	// --- ステージ2もクリアしたら本当のゲームクリアへ ---
+		//	GameData::GetInstance().clearTime = clearTime_;
+		//	sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
+		//	break;
+		}
 	}
 }

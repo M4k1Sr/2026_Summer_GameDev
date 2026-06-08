@@ -3,7 +3,7 @@
 #include "../Framework.h"
 class IronBall;
 class UI;
-class Stage;
+class StageBase;
 class SkyDome;
 class Player;
 class BossManager;
@@ -52,8 +52,19 @@ public:
 
 private:
 
+	// ★ステージの状態を表す列挙型を追加
+	enum class StageState
+	{
+		STAGE_1,
+		STAGE_2,
+		// 今後増やしたいときは STAGE_3 などをここに追加する
+	};
+
+	// 現在のステージ状態
+	StageState stageState_;
+
 	// ステージ
-	Stage* stage_;
+	StageBase* stage_;
 
 	// スカイドーム
 	SkyDome* skyDome_;
@@ -90,6 +101,7 @@ private:
 	bool isSousa_;
 	int sousaImg_;
 	int mosPosX_, mosPosY_;
+	int currentStageNum_;
 
 	static constexpr int DRAWBOX_SX = 400;
 	static constexpr int DRAWBOX_EX = 1600;

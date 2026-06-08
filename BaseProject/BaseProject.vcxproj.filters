@@ -55,6 +55,8 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
+    <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
@@ -112,5 +114,7 @@
     <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
+    <ClInclude Include="Src\Object\Actor\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage1.h" />
   </ItemGroup>
 </Project>

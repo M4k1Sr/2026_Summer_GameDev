@@ -73,6 +73,8 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+    <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -130,6 +132,8 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
+    <ClInclude Include="Src\Object\Actor\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage1.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
