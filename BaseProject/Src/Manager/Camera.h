@@ -46,7 +46,8 @@ public:
 		FREE,
 		FOLLOW,
 		SCROLL_FOLLOW,
-		LOCK_ON,
+		LOCK_ON, 
+		BOSS_FRONT,
 	};
 
 	// è’ìÀîªíËéÌï 
@@ -187,6 +188,7 @@ private:
 	void SetBeforeDrawFollow(void);
 	void SetBeforeDrawScrollFollow(void);
 	void SetBeforeDrawLockOn(void);
+	void SetBeforeDrawBossFront(void);
 
 	// è’ìÀîªíË
 	void Collision(void);

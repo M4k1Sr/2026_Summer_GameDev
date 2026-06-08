@@ -51,6 +51,9 @@ public:
 	// タライを落とす用に追加
 	ObjectTarai* GetTarai(const VECTOR& pos);
 
+	// タライが落下中か
+	bool IsTaraiFalling(void);
+
 private:
 
 	// オブジェクト

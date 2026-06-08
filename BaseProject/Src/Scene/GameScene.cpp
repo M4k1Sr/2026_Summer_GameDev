@@ -200,42 +200,44 @@ void GameScene::Update(void)
 		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
 		// ===========================================================
 		Camera* camera = SceneManager::GetInstance().GetCamera();
-		const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 
-		BossBase* nearestBoss = nullptr;
-		float minDistanceSq = 2500.0f * 2500.0f; // ロックオンを開始する距離の2乗（好みに合わせて調整してください）
-
-		VECTOR playerPos = player_->GetTransform().pos;
-
-		// 出現しているすべてのボスをチェック
-		for (auto* boss : bosses)
+		// ★1. まず最優先で「タライが落ちてきているか」をチェック
+		if (objMng_->IsTaraiFalling() && bossMng_->GetBosses().size() > 0 && bossMng_->GetBosses().front() != nullptr)
 		{
-			if (boss == nullptr) continue;
-
-			// ★ ボスが既に死亡している場合はロックオンしない（スキップする）
-			if (boss->GetIsDead()) continue;
-
-			// プレイヤーとボスの距離の2乗を計算
-			float distSq = VSquareSize(VSub(boss->GetTransform().pos, playerPos));
-
-			// 一番近いボスを記憶
-			if (distSq < minDistanceSq)
-			{
-				minDistanceSq = distSq;
-				nearestBoss = boss;
-			}
-		}
-
-		// 条件を満たす「生きているボス」が近くにいればロックオン状態にする
-		if (nearestBoss != nullptr)
-		{
-			camera->SetLockOnTarget(&nearestBoss->GetTransform());
-			camera->ChangeMode(Camera::MODE::LOCK_ON);
+			// 最初のボス、または一番近いボスをターゲットに設定
+			BossBase* boss = bossMng_->GetBosses().front();
+			camera->SetLockOnTarget(&boss->GetTransform());
+			camera->ChangeMode(Camera::MODE::BOSS_FRONT);
 		}
 		else
 		{
-			// 周囲にボスがいない、またはロックオンしていたボスが死んだら元のカメラに戻す
-			camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+			// ★2. タライが落ちていない場合は、これまでのロックオン判定を行う
+			const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
+			BossBase* nearestBoss = nullptr;
+			float minDistanceSq = 2500.0f * 2500.0f;
+			VECTOR playerPos = player_->GetTransform().pos;
+
+			for (auto* boss : bosses)
+			{
+				if (boss == nullptr) continue;
+				if (boss->GetIsDead()) continue;
+				float distSq = VSquareSize(VSub(boss->GetTransform().pos, playerPos));
+				if (distSq < minDistanceSq)
+				{
+					minDistanceSq = distSq;
+					nearestBoss = boss;
+				}
+			}
+
+			if (nearestBoss != nullptr)
+			{
+				camera->SetLockOnTarget(&nearestBoss->GetTransform());
+				camera->ChangeMode(Camera::MODE::LOCK_ON);
+			}
+			else
+			{
+				camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+			}
 		}
 		// ===========================================================
 		

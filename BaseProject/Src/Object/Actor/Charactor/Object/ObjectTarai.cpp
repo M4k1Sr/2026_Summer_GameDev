@@ -69,6 +69,11 @@ void ObjectTarai::Draw(void)
 //#endif
 }
 
+bool ObjectTarai::IsCameraFocusing(void) const
+{
+	return isGimmick_ || (bossFrontDelayTimer_ > 0);
+}
+
 void ObjectTarai::InitLoad(void)
 {
 	// 基底クラスのリソースロード
@@ -208,6 +213,12 @@ void ObjectTarai::UpdateNone(void)
 
 void ObjectTarai::UpdateStop(void)
 {
+	// タイマーが動いている場合はカウントを減らす
+	if (bossFrontDelayTimer_ > 0)
+	{
+		bossFrontDelayTimer_--;
+	}
+
 	// ギミック作動したらDown状態に行く
 	if (isGimmick_) {
 		ChangeState(STATE::DOWN);
@@ -220,6 +231,9 @@ void ObjectTarai::UpdateDown(void)
 
 	if (transform_.pos.y < 100.0f) {
 		isGimmick_ = false;
+
+		// 地面に着いた瞬間に、カメラを維持したいフレーム数をセット
+		bossFrontDelayTimer_ = CAMERA_KEEP_FRAME;
 
 		ChangeState(STATE::STOP);
 

@@ -233,3 +233,19 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 	return nullptr;
 
 }
+
+bool ObjectManager::IsTaraiFalling(void)
+{
+	for (auto& object : objects_)
+	{
+		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
+		{
+			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
+			if (tarai->IsCameraFocusing())
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}

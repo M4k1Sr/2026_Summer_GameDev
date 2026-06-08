@@ -28,6 +28,9 @@ public:
 	// デバッグ描画処理
 	void Draw(void) override;
 	
+	// タライが動作中、または落下後の余韻時間中であれば true を返す
+	bool IsCameraFocusing(void) const;
+
 protected:
 
 	// リソースロード
@@ -109,6 +112,12 @@ private:
 
 	// タライフラグ
 	bool isTarai_;
+
+	// カメラ演出を維持するタイマー
+	int bossFrontDelayTimer_ = 0; 
+
+	// カメラ演出を維持したいフレーム数（60 = 約1秒間）
+	static constexpr int CAMERA_KEEP_FRAME = 120;
 
 	void ChangeState(STATE state);
 	void ChangeStateNone(void);

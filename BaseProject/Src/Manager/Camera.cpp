@@ -60,6 +60,9 @@ void Camera::SetBeforeDraw(void)
 		break;
 	case Camera::MODE::LOCK_ON:
 		SetBeforeDrawLockOn();
+		break; 
+	case Camera::MODE::BOSS_FRONT:
+		SetBeforeDrawBossFront();
 		break;
 	}
 
@@ -163,6 +166,8 @@ void Camera::ChangeMode(MODE mode)
 	case Camera::MODE::SCROLL_FOLLOW:
 		break;
 	case Camera::MODE::LOCK_ON:
+		break;
+	case Camera::MODE::BOSS_FRONT:
 		break;
 	}
 
@@ -385,6 +390,41 @@ void Camera::SetBeforeDrawLockOn(void)
 
 	// 7. 壁抜き防止用の衝突判定
 	Collision();
+}
+
+void Camera::SetBeforeDrawBossFront(void)
+{
+	if (lockOnTargetTransform_ == nullptr)
+	{
+		SetBeforeDrawFollow();
+		return;
+	}
+
+	// 1. ボスの位置と回転（向き）を取得
+	VECTOR bossPos = lockOnTargetTransform_->pos;
+
+	// ボスの持っているクォータニオンから前方向（ローカルZ軸）を取得
+	VECTOR bossForward = lockOnTargetTransform_->quaRot.GetForward();
+
+	// Y軸の傾きを無視して水平方向の前方に補正したい場合は以下（必要に応じて）
+	bossForward.y = 0.0f;
+	bossForward = VNorm(bossForward);
+
+	// 2. カメラの位置を決定（ボスの正面から少し離れて、やや見下ろす高さに設定）
+	float distance = 1200.0f; // ボスからカメラまでの距離（好みに合わせて調整）
+	float height = 250.0f;   // カメラの高さ（好みに合わせて調整）
+
+	// ボスの位置から、ボスの前方向へ進んだ位置に高さを加える
+	transform_.pos = VAdd(bossPos, VScale(bossForward, distance));
+	transform_.pos.y += height;
+
+	// 3. 注視点をボス（あるいはボスの少し高めの位置）に設定
+	targetPos_ = bossPos;
+	targetPos_.y += 50.0f; // ボスの中心あたりを映すように少し上にずらす
+
+	// 4. カメラのクォータニオンを更新（注視点への向きを計算）
+	VECTOR lookDir = VNorm(VSub(targetPos_, transform_.pos));
+	transform_.quaRot = Quaternion::LookRotation(lookDir, AsoUtility::AXIS_Y);
 }
 
 void Camera::Collision(void)
