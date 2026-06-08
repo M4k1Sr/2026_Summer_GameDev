@@ -48,7 +48,7 @@ void SoundManager::Init(void)
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
     // ƒWƒƒƒ“ƒvSE
-    res = new SoundResource(SOUND_ID::SE_JUMP, PATH_SE + "SE/Player/JumpGround.mp3", false);
+    res = new SoundResource(SOUND_ID::SE_JUMP, PATH_SE + "SE/Player/JumpVoice2.wav", false);
     soundMap_[SOUND_ID::SE_JUMP] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 

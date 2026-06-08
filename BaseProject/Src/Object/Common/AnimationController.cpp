@@ -36,74 +36,69 @@ void AnimationController::AddInFbx(int type, float speed, int animIndex)
 void AnimationController::Play(int type, bool isLoop)
 {
 
-	if (playType_ == type)
-	{
-		// 同じアニメーションだったら再生を継続する
-		return;
+	if (playType_ == type) return;
+
+	// 既存のブレンドが残ってたら古いのを先にDetach
+	if (isBlending_) {
+		MV1DetachAnim(modelId_, blendAttachNo_);
+		isBlending_ = false;
 	}
 
-	if (playType_ != -1)
-	{
-		// モデルからアニメーションを外す
-		MV1DetachAnim(modelId_, playAnim_.attachNo);
+	if (playType_ != -1) {
+		blendAnim_ = playAnim_; // ← 古いアニメ情報を丸ごと保存
+		blendAttachNo_ = playAnim_.attachNo;
+		isBlending_ = true;
+		blendRate_ = 0.0f;
 	}
 
-	// アニメーション種別を変更
 	playType_ = type;
 	playAnim_ = animations_[type];
-
-	// 初期化
 	playAnim_.step = 0.0f;
 
-	// モデルにアニメーションを付ける
 	if (playAnim_.model == -1)
-	{
-		// モデルと同じファイルからアニメーションをアタッチする
 		playAnim_.attachNo = MV1AttachAnim(modelId_, playAnim_.animIndex);
-	}
 	else
-	{
-		// 別のモデルファイルからアニメーションをアタッチする
-		// DxModelViewerを確認すること(大体0か1)
-		int animIdx = 0;
-		playAnim_.attachNo = MV1AttachAnim(modelId_, animIdx, playAnim_.model);
-	}
+		playAnim_.attachNo = MV1AttachAnim(modelId_, 0, playAnim_.model);
 
-	// アニメーション総時間の取得
 	playAnim_.totalTime = MV1GetAttachAnimTotalTime(modelId_, playAnim_.attachNo);
-
-	// アニメーションループ
 	isLoop_ = isLoop;
 
 }
 
 void AnimationController::Update(void)
 {
-
-	// 経過時間の取得
 	float deltaTime = SceneManager::GetInstance().GetDeltaTime();
 
-	// 再生
-	playAnim_.step += (deltaTime * playAnim_.speed);
-
-	// アニメーションが終了したら
-	if (playAnim_.step > playAnim_.totalTime)
-	{
-		if (isLoop_)
-		{
-			// ループ再生
-			playAnim_.step = 0.0f;
-		}
-		else
-		{
-			// ループしない
-			playAnim_.step = playAnim_.totalTime;
-		}
-	}
-
-	// アニメーション設定
+	// 新アニメを進める
+	playAnim_.step += deltaTime * playAnim_.speed;
 	MV1SetAttachAnimTime(modelId_, playAnim_.attachNo, playAnim_.step);
 
+	if (isBlending_) {
+		// 古いアニメも独自に進める（止めてもOK、好み次第）
+		blendAnim_.step += deltaTime * blendAnim_.speed;
+		MV1SetAttachAnimTime(modelId_, blendAttachNo_, blendAnim_.step);
+
+		// ブレンド率を進める（0.2秒でブレンド完了）
+		blendRate_ += deltaTime / 0.2f;
+		blendRate_ = min(blendRate_, 1.0f);
+
+		MV1SetAttachAnimBlendRate(modelId_, playAnim_.attachNo, blendRate_);
+		MV1SetAttachAnimBlendRate(modelId_, blendAttachNo_, 1.0f - blendRate_);
+
+		if (blendRate_ >= 1.0f) {
+			MV1DetachAnim(modelId_, blendAttachNo_);
+			blendAttachNo_ = -1;
+			isBlending_ = false;
+		}
+	}
+	else {
+		MV1SetAttachAnimBlendRate(modelId_, playAnim_.attachNo, 1.0f);
+	}
+
+	// ループ処理
+	if (isLoop_ && playAnim_.step >= playAnim_.totalTime) {
+		playAnim_.step = 0.0f;
+	}
 }
 
 void AnimationController::Release(void)

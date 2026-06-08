@@ -3,6 +3,7 @@
 #include "../Object/Common/Transform.h"
 class AnimationController;
 class SkyDome;
+class PostEffectManager;
 
 class TitleScene : public SceneBase
 {
@@ -55,6 +56,9 @@ private:
 
 	// スカイドーム用の空Transform
 	Transform empty_;
+
+	// ポストエフェクト
+	PostEffectManager* effect_;
 
 	// タイトル画像のX座標
 	static constexpr int IMG_TITLE_POS_X = 150;

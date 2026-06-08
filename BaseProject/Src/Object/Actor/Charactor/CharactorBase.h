@@ -34,7 +34,7 @@ public:
 protected:
 
 	// 最大落下速度
-	static constexpr float MAX_FALL_SPEED = -30.0f;
+	static constexpr float MAX_FALL_SPEED = -10.0f;
 
 	// 衝突時の押し戻し試行回数
 	static constexpr int CNT_TRY_COLLISION = 20;
@@ -44,6 +44,9 @@ protected:
 
 	// アニメーション処理
 	AnimationController* animationController_;
+
+	// 現在のアニメーション種別
+	int currentAnimType_;
 
 	// 移動方向
 	VECTOR moveDir_;

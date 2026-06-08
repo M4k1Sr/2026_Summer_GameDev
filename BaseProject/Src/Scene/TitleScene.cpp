@@ -11,6 +11,7 @@
 #include "../Manager/SoundManager.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
+#include "../Shader/Src/Manager/PostEffectManager.h"
 #include "../Application.h"
 
 
@@ -21,6 +22,7 @@ TitleScene::TitleScene(void)
 	bigPlanet_(),
 	rollPlanet_(),
 	player_(),
+	effect_(nullptr),
 	animationController_(nullptr),
 	skyDome_(nullptr),
 	isEnd_(false),
@@ -30,9 +32,6 @@ TitleScene::TitleScene(void)
 	isBgmPlay_(false),
 	SceneBase()
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
-
 }
 
 TitleScene::~TitleScene(void)
@@ -108,6 +107,10 @@ void TitleScene::Init(void)
 	// BGM再生
 	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_TITLE, true);
 
+	// ポストエフェクト
+	effect_ = new PostEffectManager();
+	effect_->Init();
+	effect_->Load();
 }
 
 void TitleScene::Update(void)
@@ -139,14 +142,16 @@ void TitleScene::Update(void)
 
 		skyDome_->Update();
 
+		effect_->Update();
+
 	}
 
 }
 
 void TitleScene::Draw(void)
 {
-	// スカイドーム
-	// skyDome_->Draw();
+	//// スカイドーム
+	//skyDome_->Draw();
 	
 
 	//プレイヤー
@@ -155,6 +160,9 @@ void TitleScene::Draw(void)
 
 	//檻
 	MV1DrawModel(cage_.modelId);
+
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	//タイトル画像
 	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
