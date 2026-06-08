@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 ﻿  ObjectManager.cpp
   ObjectTarai.cpp
   Player.cpp
   コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+=======
+﻿  TitleScene.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(72,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(72,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(72,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+  BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> 松岡
