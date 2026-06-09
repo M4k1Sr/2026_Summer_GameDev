@@ -70,12 +70,6 @@
     <ClCompile Include="Src\Scene\GameScene.cpp" />
     <ClCompile Include="Src\Scene\SceneBase.cpp" />
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
-    <ClCompile Include="Src\Shader\Src\BlurShader.cpp" />
-    <ClCompile Include="Src\Shader\Src\Manager\PostEffectManager.cpp" />
-    <ClCompile Include="Src\Shader\Src\MonoShader.cpp" />
-    <ClCompile Include="Src\Shader\Src\MosaicShader.cpp" />
-    <ClCompile Include="Src\Shader\Src\PostEffectBase.cpp" />
-    <ClCompile Include="Src\Shader\Src\ScanLineShader.cpp" />
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
@@ -133,42 +127,9 @@
     <ClInclude Include="Src\Scene\GameScene.h" />
     <ClInclude Include="Src\Scene\SceneBase.h" />
     <ClInclude Include="Src\Scene\TitleScene.h" />
-    <ClInclude Include="Src\Shader\Src\BlurShader.h" />
-    <ClInclude Include="Src\Shader\Src\Manager\PostEffectManager.h" />
-    <ClInclude Include="Src\Shader\Src\MonoShader.h" />
-    <ClInclude Include="Src\Shader\Src\MosaicShader.h" />
-    <ClInclude Include="Src\Shader\Src\PostEffectBase.h" />
-    <ClInclude Include="Src\Shader\Src\ScanLineShader.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Src\Shader\PostEffect\Blur.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Src\Shader\PostEffect\Monotone.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Src\Shader\PostEffect\Mosaic.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Src\Shader\PostEffect\ScanLineShader.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Src\Shader\Common\Pixel\PixelShader2DHeader.hlsli" />
-    <None Include="Src\Shader\Common\Pixel\PixelShader3DHeader.hlsli" />
-    <None Include="Src\Shader\Common\VertexToPixelHeader.hlsli" />
-    <None Include="Src\Shader\Common\Vertex\CommonShader3DHeader.hlsli" />
-    <None Include="Src\Shader\Common\Vertex\VertexInput.hlsli" />
-    <None Include="Src\Shader\Common\Vertex\VertexInputType.hlsli" />
-    <None Include="Src\Shader\Common\Vertex\VertexShader3DHeader.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
