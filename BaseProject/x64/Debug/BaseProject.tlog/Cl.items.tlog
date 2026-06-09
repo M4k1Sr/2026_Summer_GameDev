@@ -1,3 +1,4 @@
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\DrawableManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\DrawableManager.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Ranking\GameData.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\GameData.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Manager\SoundManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\SoundManager.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectTile.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectTile.obj
@@ -8,6 +9,12 @@ C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\AttackManager.c
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\StrategyAttack.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\StrategyAttack.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectTarai.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectTarai.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectBossGimmick.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ObjectBossGimmick.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BlurShader.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\PostEffectManager.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\MonoShader.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\MosaicShader.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\PostEffectBase.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ScanLineShader.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\GameClearScene.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\GameClearScene.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Ranking\Ranking.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\Ranking.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Manager\Score.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\Score.obj
@@ -49,12 +56,8 @@ C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\GameOvereScene.cpp;C:\Users\2
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\GameScene.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\SceneBase.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\SceneBase.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\TitleScene.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Shader\Src\BlurShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BlurShader.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Shader\Src\Manager\PostEffectManager.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\PostEffectManager.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Shader\Src\MonoShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\MonoShader.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Shader\Src\MosaicShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\MosaicShader.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Shader\Src\PostEffectBase.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\PostEffectBase.obj
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Shader\Src\ScanLineShader.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\ScanLineShader.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Utility\AsoUtility.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\AsoUtility.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Utility\MatrixUtility.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\MatrixUtility.obj
 C:\Users\2416014\Desktop\AGS\BaseProject\Src\Object\Actor\Stage.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\Stage.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\UiRenderer\UiBase.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\UiBase.obj
+C:\Users\2416014\Desktop\AGS\BaseProject\Src\Renderer\UiRenderer\StaminaUi.cpp;C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\StaminaUi.obj

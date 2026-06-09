@@ -6,7 +6,6 @@
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Manager/Resource.h"
-#include"../../../Effect/EffectManager.h"
 #include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
@@ -28,7 +27,6 @@ Player::Player(void)
 	isGimmick_(false),
 	currentCnt_(0),
 	isClear_(false),
-	isIronBallHit_(false),
 	stamina_(100.0f),
 	maxStamina_(100.0f)
 {

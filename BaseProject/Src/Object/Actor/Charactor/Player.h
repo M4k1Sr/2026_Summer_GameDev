@@ -1,6 +1,7 @@
 #pragma once
 #include "./CharactorBase.h"
 class ObjectManager;
+class DrawableManager;
 
 class Player : public CharactorBase
 {
@@ -77,6 +78,9 @@ private:
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
 
+	// UI
+	DrawableManager* drawableMgr_;
+
 	// ギミック動作カウンタ
 	float gimmickCnt_;
 	bool isGimmick_;
@@ -138,6 +142,13 @@ private:
 
 	// ジャンプ受付時間
 	static constexpr float TIME_JUMP_INPUT = 0.2f;
+
+	// ダッシュスタミナ
+	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
+
+	// ダッシュスタミナ
+	float stamina_;
+	float maxStamina_;	// 最大スタミナ
 
 	//// 操作
 	void ProcessMove(void);
