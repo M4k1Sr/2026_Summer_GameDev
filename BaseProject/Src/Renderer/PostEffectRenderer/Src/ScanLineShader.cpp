@@ -1,29 +1,33 @@
-#include "BlurShader.h"
-#include "../../Application.h"
+#include "ScanLineShader.h"
+#include "../../../Application.h"
+#include "../../../Manager/SceneManager.h"
 
-BlurShader::BlurShader(void)
+ScanLineShader::ScanLineShader(void)
 {
-	shader_.order = PostEffectOrder::Blur;
+	shader_.order = PostEffectOrder::ColorOrder;
+	time_ = 0.0f;
 }
 
-void BlurShader::Load(void)
+void ScanLineShader::Load(void)
 {
-
 	// ポストエフェクト用スクリーン
 	shader_.postEffectScreen_ = MakeScreen(
 		Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, true);
 
 	// ピクセルシェーダのロード
-	shader_.shaderHandle_ = LoadPixelShader((Application::PATH_SHADER + "Blur.cso").c_str());
+	shader_.shaderHandle_ = LoadPixelShader((Application::PATH_SHADER + "ScanLineShader.cso").c_str());
 
 	// ピクセルシェーダー用の定数バッファを作成
 	shader_.ShaderConstBuf_ = CreateShaderConstantBuffer(sizeof(FLOAT4) * 1);
 }
 
-void BlurShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WORD* indexes)
+void ScanLineShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WORD* indexes)
 {
-	// ポストエフェクト(ブラー)
-	//-----------------------------------------
+	// ポストエフェクト(走査線)
+	//----------------------------------------
+
+	time_ += SceneManager::GetInstance().GetDeltaTime();
+
 	SetDrawScreen(shader_.postEffectScreen_);
 	ClearDrawScreen();
 
@@ -34,12 +38,12 @@ void BlurShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WO
 	//テクスチャの設定
 	SetUseTextureToShader(0, currentScreen);
 
-	// ブラー用の定数バッファを更新
-	FLOAT4* blurBufPtr = (FLOAT4*)GetBufferShaderConstantBuffer(shader_.ShaderConstBuf_);
-	blurBufPtr->x = 0.0f;
-	blurBufPtr->y = 4.0f;
-	blurBufPtr->z = 0.0f;
-	blurBufPtr->w = 0.0f;
+	// 走査線用の定数バッファを更新
+	FLOAT4* scanlineBufPtr = (FLOAT4*)GetBufferShaderConstantBuffer(shader_.ShaderConstBuf_);
+	scanlineBufPtr->x = time_;
+	scanlineBufPtr->y = 200.0f;
+	scanlineBufPtr->z = 6.0f;
+	scanlineBufPtr->w = 0.2f;
 
 	UpdateShaderConstantBuffer(shader_.ShaderConstBuf_);
 	SetShaderConstantBuffer(shader_.ShaderConstBuf_, DX_SHADERTYPE_PIXEL, CONSTANT_BUF_SLOT_BEGIN_PS);
@@ -52,7 +56,7 @@ void BlurShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WO
 	MV1SetUseOrigShader(false);
 }
 
-void BlurShader::Release(void)
+void ScanLineShader::Release(void)
 {
 	DeleteShaderConstantBuffer(shader_.ShaderConstBuf_);
 	DeleteGraph(shader_.postEffectScreen_);

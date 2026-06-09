@@ -18,7 +18,7 @@ struct Shader
 
 	// シェーダ
 	int shaderHandle_;
-
+	
 	// 定数バッファハンドル
 	int ShaderConstBuf_;
 

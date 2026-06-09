@@ -6,7 +6,10 @@
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Manager/Resource.h"
+<<<<<<< HEAD
 #include"../../../Effect/EffectManager.h"
+=======
+>>>>>>> main
 #include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
@@ -33,6 +36,10 @@ Player::~Player(void)
 {
 	// ジャンプ音停止
 	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_JUMP);
+	// 駆け足音停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
+	// ダッシュ音停止
+	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
 
 }
 
@@ -91,8 +98,6 @@ void Player::Draw(void)
 	//DrawFormatString(800, 100, GetColor(0, 255, 0),
 	//	"gimmickCnt: %6.1f",
 	//	gimmickCnt_);
-
-
 
 #endif
 
@@ -218,14 +223,14 @@ void Player::InitAnimation(void)
 
 	// アニメーション追加
 	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Player/Idle.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Player/Run.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 30.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 35.0f, Application::PATH_MODEL + "Player/Run.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 35.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 40.0f, Application::PATH_MODEL + "Player/Jump.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 60.0f, Application::PATH_MODEL + "Player/Push.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 50.0f, Application::PATH_MODEL + "Player/Push.mv1");
 
 	// アニメーション再生
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::RUN), true);
+		static_cast<int>(ANIM_TYPE::IDLE), true);
 
 }
 
@@ -326,6 +331,50 @@ void Player::ProcessMove(void)
 				// タイルの速度分、座標を追従させる
 				transform_.pos = VAdd(transform_.pos, tile->GetVelocity());
 			}
+		}
+	}
+
+	if (hasInput && !isJump_)
+	{
+		if (isDash)
+		{
+			// ダッシュに切り替わった瞬間に歩き音を止める
+			if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
+			{
+				SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
+			}
+
+			// ダッシュ音が鳴っていなければ再生
+			if (!SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_DASH))
+			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_DASH);
+			}
+		}
+		else
+		{
+			// 歩きに切り替わった瞬間にダッシュ音を止める
+			if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_DASH))
+			{
+				SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
+			}
+
+			// 歩き音が鳴っていなければ再生
+			if (!SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
+			{
+				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_MOVE);
+			}
+		}
+	}
+	else
+	{
+		// 停止時は両方確実に止める
+		if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
+		{
+			SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
+		}
+		if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_DASH))
+		{
+			SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
 		}
 	}
 
@@ -456,7 +505,7 @@ void Player::ProcessPush(void)
 
 				// アニメーション再生
 				animationController_->Play(
-					static_cast<int>(ANIM_TYPE::PUSH),false);
+					static_cast<int>(ANIM_TYPE::PUSH));
 
 				if (gimmickCnt_ > 5.0f) {
 

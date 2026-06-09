@@ -3,11 +3,11 @@
 #include "../MonoShader.h"
 #include "../MosaicShader.h"
 #include "../ScanLineShader.h"
-#include "../../../Manager/SceneManager.h"
+#include "../../../../Manager/SceneManager.h"
 #include "../PostEffectBase.h"
 #include <algorithm>
-#include "../../../Common/Vector2.h"
-#include "../../../Application.h"
+#include "../../../../Common/Vector2.h"
+#include "../../../../Application.h"
 
 PostEffectManager::PostEffectManager(void)
 {

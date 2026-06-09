@@ -1,27 +1,28 @@
-#include "MonoShader.h"
-#include "../../Application.h"
+#include "BlurShader.h"
+#include "../../../Application.h"
 
-MonoShader::MonoShader(void)
+BlurShader::BlurShader(void)
 {
-	shader_.order = PostEffectOrder::ColorOrder;
+	shader_.order = PostEffectOrder::Blur;
 }
 
-void MonoShader::Load(void)
+void BlurShader::Load(void)
 {
+
 	// ポストエフェクト用スクリーン
 	shader_.postEffectScreen_ = MakeScreen(
 		Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, true);
 
 	// ピクセルシェーダのロード
-	shader_.shaderHandle_ = LoadPixelShader((Application::PATH_SHADER + "Monotone.cso").c_str());
+	shader_.shaderHandle_ = LoadPixelShader((Application::PATH_SHADER + "Blur.cso").c_str());
 
 	// ピクセルシェーダー用の定数バッファを作成
 	shader_.ShaderConstBuf_ = CreateShaderConstantBuffer(sizeof(FLOAT4) * 1);
 }
 
-void MonoShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WORD* indexes)
+void BlurShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WORD* indexes)
 {
-	// ポストエフェクト(モノトーン)
+	// ポストエフェクト(ブラー)
 	//-----------------------------------------
 	SetDrawScreen(shader_.postEffectScreen_);
 	ClearDrawScreen();
@@ -51,7 +52,7 @@ void MonoShader::Draw(int currentScreen, const VERTEX2DSHADER* vertexs, const WO
 	MV1SetUseOrigShader(false);
 }
 
-void MonoShader::Release(void)
+void BlurShader::Release(void)
 {
 	DeleteShaderConstantBuffer(shader_.ShaderConstBuf_);
 	DeleteGraph(shader_.postEffectScreen_);
