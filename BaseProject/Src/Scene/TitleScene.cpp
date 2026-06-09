@@ -11,7 +11,7 @@
 #include "../Manager/SoundManager.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
-#include "../Shader/Src/Manager/PostEffectManager.h"
+#include "../Renderer/PostEffectRenderer/Src/Manager/PostEffectManager.h"
 #include "../Application.h"
 
 

@@ -282,15 +282,14 @@ void GameScene::Draw(void)
 		goalImg_,                       // ‰æ‘œ
 		TRUE);
     
-
-	// ƒvƒŒƒCƒ„[•`‰æ
-	player_->Draw();
-	
 	//ƒ{ƒX•`‰æ
 	bossMng_->Draw();
 
 	// UŒ‚•`‰æ
 	attackMng_->Draw();
+
+	// ƒvƒŒƒCƒ„[•`‰æ
+	player_->Draw();
 
 	// UI•`‰æ
 	ui_->Draw();
