@@ -5,7 +5,7 @@
 #include "../../../Manager/InputManager.h"
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
-#include "../../../Manager/Resource.h"7
+#include "../../../Manager/Resource.h"
 #include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
