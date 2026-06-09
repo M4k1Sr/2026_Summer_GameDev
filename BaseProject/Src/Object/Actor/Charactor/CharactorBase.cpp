@@ -275,12 +275,12 @@ void CharactorBase::CollisionCapsule(void)
 				{
 					isIronBallHit_ = true;
 
-					int effectHandle =
-						ResourceManager::GetInstance().GetEffect(EFFECT_ID::IRONBALL_HIT);
+					//int effectHandle =
+					//	ResourceManager::GetInstance().GetEffect(EFFECT_ID::IRONBALL_HIT);
 
-					EffectManager::GetInstance().Play(
-						effectHandle,
-						transform_.pos);
+					//EffectManager::GetInstance().Play(
+					//	effectHandle,
+					//	transform_.pos);
 				}
 			
 
