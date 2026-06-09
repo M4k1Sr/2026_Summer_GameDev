@@ -52,6 +52,16 @@ void SoundManager::Init(void)
     soundMap_[SOUND_ID::SE_JUMP] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
+    // 駆け足SE
+    res = new SoundResource(SOUND_ID::SE_MOVE, PATH_SE + "SE/Player/Move.mp3", false);
+    soundMap_[SOUND_ID::SE_MOVE] = res;
+    bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
+
+    // ダッシュSE
+    res = new SoundResource(SOUND_ID::SE_DASH, PATH_SE + "SE/Player/Dash.mp3", false);
+    soundMap_[SOUND_ID::SE_DASH] = res;
+    bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
+
     // ステージ1用BGM
     res = new SoundResource(SOUND_ID::BGM_STAGE1, PATH_SE + "BGM/Stage1.mp3", false);
     soundMap_[SOUND_ID::BGM_STAGE1] = res;
@@ -141,6 +151,21 @@ void SoundManager::StopEvent(SOUND_ID soundId)
     if (sPair == soundMap_.end() || sPair->second->handleId_ == -1) return;
 
     StopSoundMem(sPair->second->handleId_);
+}
+
+bool SoundManager::IsPlaying(SOUND_ID soundId)
+{
+    auto sPair = soundMap_.find(soundId);
+    if (sPair == soundMap_.end() || sPair->second->handleId_ == -1) return false;
+
+    int handle = sPair->second->handleId_;
+
+    // CheckSoundMem で現在再生中か確認できる
+    if (CheckSoundMem(handle) == 1)
+    {
+        return true;
+    }
+    return false;
 }
 
 void SoundManager::Destroy(void)
