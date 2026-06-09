@@ -153,5 +153,8 @@ private:
 	//ゲームクリア判定用のフラグ
 	bool isClear_;
 
+	//鉄球との衝突判定
+	bool isIronBallHit_;
+
 };
 

@@ -133,7 +133,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/damage.efkefc");
 	resourcesMap_.emplace(SRC::DAMAGE, res);
 
-
+	//タイマーエフェクト
+	/*res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/timer.efkefc");
+	resourcesMap_.emplace(SRC::TIMER, res);*/
 }
 
 void ResourceManager::Release(void)

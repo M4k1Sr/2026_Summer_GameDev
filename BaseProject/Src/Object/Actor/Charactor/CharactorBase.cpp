@@ -3,6 +3,7 @@
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Collider/ColliderLine.h"
+#include"../../../Effect/EffectManager.h"
 #include "../../../Object/Collider/ColliderModel.h"
 #include "../../../Object/Collider/ColliderCapsule.h"
 #include "../../../Object/Collider/ColliderSphere.h"
@@ -19,6 +20,7 @@ CharactorBase::CharactorBase(void)
 	moveSpeed_(0.0f),
 	movePow_(AsoUtility::VECTOR_ZERO),
 	isJump_(false),
+	isIronBallHit_(false),
 	ActorBase()
 {
 }
@@ -269,6 +271,19 @@ void CharactorBase::CollisionCapsule(void)
 			// 3. 最短距離が半径の合計未満であれば「衝突している」と判定
 			if (distance < totalRadius)
 			{
+				if (!isIronBallHit_)
+				{
+					isIronBallHit_ = true;
+
+					int effectHandle =
+						ResourceManager::GetInstance().GetEffect(EFFECT_ID::IRONBALL_HIT);
+
+					EffectManager::GetInstance().Play(
+						effectHandle,
+						transform_.pos);
+				}
+			
+
 				// 4. 押し戻す方向ベクトルを計算（吸い付き防止のためカプセル中心を使用）
 				VECTOR pushDir = VSub(colliderCapsule->GetCenter(), colliderSphere->GetPos());
 
@@ -287,6 +302,11 @@ void CharactorBase::CollisionCapsule(void)
 
 				// 6. 自身の座標（transform_.pos）を、球体の外側へ向けて押し戻す
 				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength * 5.0f));
+			}
+			else
+			{
+				//エフェクト判定
+				isIronBallHit_ = false;
 			}
 		}
 	}

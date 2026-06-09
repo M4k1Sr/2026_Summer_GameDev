@@ -5,7 +5,8 @@
 #include "../../../Manager/InputManager.h"
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
-#include "../../../Manager/Resource.h"7
+#include "../../../Manager/Resource.h"
+#include"../../../Effect/EffectManager.h"
 #include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
@@ -23,7 +24,8 @@ Player::Player(void)
 	CharactorBase(),
 	isGimmick_(false),
 	currentCnt_(0),
-	isClear_(false)
+	isClear_(false),
+	isIronBallHit_(false)
 {
 }
 
