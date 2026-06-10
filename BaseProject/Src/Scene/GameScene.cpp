@@ -9,6 +9,7 @@
 #include"../Manager/SoundManager.h"
 #include "../Object/Actor/StageBase.h"
 #include "../Object/Actor/Stage1.h"
+#include "../Object/Actor/Stage2.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -61,10 +62,7 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-	// ステージ初期化
-	stage_ = new Stage1();
-	stage_->Init();
-
+	
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
@@ -74,6 +72,20 @@ void GameScene::Init(void)
 	player_ = new Player();
 	player_->Init();
 	player_->SetObjectManager(objMng_);
+
+	//ステージの状態ごとの初期化
+	switch (stageState_)
+	{
+	case StageState::STAGE_1:
+		stage_ = new Stage1();
+		stage_->Init();
+		break;
+
+	case StageState::STAGE_2:
+		stage_ = new Stage2();
+		stage_->Init();
+		break;
+	}
 
 	//画像ロード
 	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
@@ -207,11 +219,9 @@ void GameScene::Update(void)
 			ironBall_->Update();   // ステージ1の鉄球
 			break;
 
-		//case StageState::STAGE_2:
-		//	stage_->Update();      // ステージ2の地形
-		//	// ★もしステージ2にボスや障害物を出さない、または別の敵を出す場合はここに書く
-		//	// 例: stage2EnemyMng_->Update();
-		//	break;
+		case StageState::STAGE_2:
+			stage_->Update(); 
+			break;
 		}
 
 		// ===========================================================
@@ -294,10 +304,9 @@ void GameScene::Draw(void)
 		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 
-	//case StageState::STAGE_2:
-	//	stage_->Draw(); // ステージ2の地形を描画
-	//	// ★ステージ2固有のオブジェクトがあればここに描画処理を書く
-	//	break;
+	case StageState::STAGE_2:
+		stage_->Draw(); // ステージ2の地形を描画
+		break;
 	}
 
 	// プレイヤー描画
@@ -438,47 +447,30 @@ void GameScene::ItemDrop(void)
 void GameScene::IsClear(void)
 {
 
-	isClear_ = player_->GetClearFlag();
-
-	if(isClear_)
+	// 現在のステージ状態によって次の進路を決める
+	switch (stageState_)
 	{
-		// ★現在のステージ状態によって次の進路を決める
-		switch (stageState_)
+	case StageState::STAGE_1:
+		isClear_ = player_->GetClearFlag();
+		if (isClear_)
 		{
-		case StageState::STAGE_1:
-			// 1. 古いステージ1を削除
-			stage_->Release();
-			delete stage_;
+			isClear_ = false;
 
-			// 2. 新しいステージ2を生成して初期化
-			//stage_ = new Stage2();
-			//stage_->Init();
+			// クリアタイムをスコア（GameData）に保存
+			GameData::GetInstance().clearTime = clearTime_;
 
-			// 3. プレイヤーの位置をリセット（SetPosition関数を追加したと仮定）
-			//player_->SetPosition(VGet(0.0f, 0.0f, 0.0f));
+			//プレイヤーの位置変更
+			VECTOR stage2StartPos = VGet(-800.0f, 0.0f, 700.0f);//仮
+			player_->SetPosition(stage2StartPos);
 
-			// 4. 新しいステージのコライダーを登録し直す
-			{
-				const ColliderBase* newStageCollider =
-					stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
-
-				player_->AddHitCollider(newStageCollider);
-				objMng_->AddHitCollider(newStageCollider);
-				bossMng_->AddHitCollider(newStageCollider);
-
-				Camera* camera = SceneManager::GetInstance().GetCamera();
-				camera->AddHitCollider(newStageCollider);
-			}
-
-			// 5. 状態を「ステージ2」へ遷移させる
+			// ステージ2へ遷移
 			stageState_ = StageState::STAGE_2;
-			break;
-
-		//case StageState::STAGE_2:
-		//	// --- ステージ2もクリアしたら本当のゲームクリアへ ---
-		//	GameData::GetInstance().clearTime = clearTime_;
-		//	sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
-		//	break;
 		}
+		break;
+
+	case StageState::STAGE_2:
+
+		break;
 	}
+
 }
