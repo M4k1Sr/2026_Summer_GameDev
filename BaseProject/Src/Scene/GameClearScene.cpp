@@ -76,12 +76,13 @@ void GameClearScene::Draw(void)
 	// クリアタイム取得
 	int frame = GameData::GetInstance().clearTime;
 
+	//クリアタイムを分、秒、フレームに変換
 	int minute = frame / 3600;
 	int second = (frame / 60) % 60;
 	int framePart = frame % 60;
 
 	// タイトル
-	DrawFormatString(700, 100, 0xffffff, "ゲームクリア!");
+	DrawFormatString(700, 100, 0xffffff, "GAME CLEAR!");
 
 	// クリアタイム表示
 	DrawFormatString(
@@ -113,7 +114,7 @@ void GameClearScene::Draw(void)
 
 		DrawFormatString(
 			100,
-			100 + i * 40,
+			100 + i * 60,
 			0xffffff,
 			"%2d位  %02d:%02d:%02d",
 			i + 1,

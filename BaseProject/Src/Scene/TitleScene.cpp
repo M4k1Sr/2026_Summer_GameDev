@@ -11,6 +11,7 @@
 #include "../Manager/SoundManager.h"
 #include "../Object/Common/AnimationController.h"
 #include "../Object/Actor/SkyDome.h"
+#include "../Renderer/PostEffectRenderer/Src/Manager/PostEffectManager.h"
 #include "../Application.h"
 
 
@@ -21,6 +22,7 @@ TitleScene::TitleScene(void)
 	bigPlanet_(),
 	rollPlanet_(),
 	player_(),
+	effect_(nullptr),
 	animationController_(nullptr),
 	skyDome_(nullptr),
 	isEnd_(false),
@@ -30,9 +32,6 @@ TitleScene::TitleScene(void)
 	isBgmPlay_(false),
 	SceneBase()
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
-
 }
 
 TitleScene::~TitleScene(void)
@@ -108,6 +107,10 @@ void TitleScene::Init(void)
 	// BGM再生
 	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_TITLE, true);
 
+	// ポストエフェクト
+	effect_ = new PostEffectManager();
+	effect_->Init();
+	effect_->Load();
 }
 
 void TitleScene::Update(void)
@@ -139,14 +142,16 @@ void TitleScene::Update(void)
 
 		skyDome_->Update();
 
+		effect_->Update();
+
 	}
 
 }
 
 void TitleScene::Draw(void)
 {
-	// スカイドーム
-	// skyDome_->Draw();
+	//// スカイドーム
+	//skyDome_->Draw();
 	
 
 	//プレイヤー
@@ -155,6 +160,9 @@ void TitleScene::Draw(void)
 
 	//檻
 	MV1DrawModel(cage_.modelId);
+
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	//タイトル画像
 	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
@@ -165,19 +173,19 @@ void TitleScene::Draw(void)
 	// 1. 大きさ「40」のフォントハンドルを作成（太さは標準、フォントタイプはDX_FONTTYPE_NORMAL）
 	int debugFontHandle = CreateFontToHandle(NULL, 40, 1, DX_FONTTYPE_NORMAL);
 
-	if (debugFontHandle != -1)
-	{
-		// 白色で表示
-		unsigned int color = GetColor(255, 255, 255);
+	//if (debugFontHandle != -1)
+	//{
+	//	// 白色で表示
+	//	unsigned int color = GetColor(255, 255, 255);
 
-		// 2. 作成したフォントハンドル（一番最後の引数）を使って画面に描画
-		// 例として、現在のプレイヤーのY座標を表示してみます
-		DrawFormatStringToHandle(300, 50, color, debugFontHandle, "現在ゲーム内にあるバグは修正中ですので、バグについての報告はお控えください");
-		DrawFormatStringToHandle(300, 100, color, debugFontHandle, "キー操作などについては資料内にあるものをご参照ください");
+	//	// 2. 作成したフォントハンドル（一番最後の引数）を使って画面に描画
+	//	// 例として、現在のプレイヤーのY座標を表示してみます
+	//	DrawFormatStringToHandle(300, 50, color, debugFontHandle, "現在ゲーム内にあるバグは修正中ですので、バグについての報告はお控えください");
+	//	DrawFormatStringToHandle(300, 100, color, debugFontHandle, "キー操作などについては資料内にあるものをご参照ください");
 
-		// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
-		DeleteFontToHandle(debugFontHandle);
-	}
+	//	// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
+	//	DeleteFontToHandle(debugFontHandle);
+	//}
 
 	//ポーズ画面
 	IsPause();

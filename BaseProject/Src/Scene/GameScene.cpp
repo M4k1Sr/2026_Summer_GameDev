@@ -304,6 +304,7 @@ void GameScene::Draw(void)
 		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 
+<<<<<<< HEAD
 	case StageState::STAGE_2:
 		stage_->Draw(); // ステージ2の地形を描画
 		break;
@@ -312,6 +313,33 @@ void GameScene::Draw(void)
 	// プレイヤー描画
 	player_->Draw();
 	
+=======
+	// 鉄球描画
+	ironBall_->Draw();
+
+	// オブジェクト描画
+	objMng_->Draw();
+
+
+	//デバッグ用ゴール
+	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+		0.5f,                           // 中心X
+		0.5f,                           // 中心Y
+		400.0f,                         // サイズ
+		0.0f,                           // 回転
+		goalImg_,                       // 画像
+		TRUE);
+    
+	//ボス描画
+	bossMng_->Draw();
+
+	// 攻撃描画
+	attackMng_->Draw();
+
+	// プレイヤー描画
+	player_->Draw();
+
+>>>>>>> m4k
 	// UI描画
 	ui_->Draw();
 

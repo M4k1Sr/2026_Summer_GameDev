@@ -29,6 +29,7 @@ enum class SOUND_ID {
     BGM_GAMEOVER,
     BGM_GAMECLEAR,
     SE_MOVE,
+    SE_DASH,
     SE_COLLISION,
     SE_JUMP,
     SE_GIMMICK_SWITCH,
@@ -37,7 +38,6 @@ enum class SOUND_ID {
     SE_ENEMY_FIRE,
 	SE_CLICK,
     SE_CURSOR,
-
 };
 
 // 2. 音リソース構造体を定義
@@ -84,4 +84,5 @@ public:
     void PlayEvent(SOUND_ID soundId, bool loop = false);
     void Play3DEvent(SOUND_ID soundId, SoundVector3 position, float radius = 500.0f);
     void StopEvent(SOUND_ID soundId);
+    bool IsPlaying(SOUND_ID soundId);
 };

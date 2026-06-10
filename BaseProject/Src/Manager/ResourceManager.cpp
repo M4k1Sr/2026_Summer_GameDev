@@ -70,7 +70,7 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::SUB_STAGE, res);
 
 	// スカイドームモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "SkyDome/SkyDome.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "SkyDome/Skydome.mv1");
 	resourcesMap_.emplace(SRC::SKY_DOME, res);
 
 	// ボックスモデル

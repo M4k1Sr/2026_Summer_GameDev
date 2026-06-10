@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="Src\Ranking\GameData.cpp" />
+    <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
     <ClCompile Include="Src\Manager\ItemManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
@@ -53,13 +55,27 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
+=======
+    <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
+    <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
+>>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Ranking\GameData.h" />
+    <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
     <ClInclude Include="Src\Manager\ItemManager.h" />
     <ClInclude Include="Src\Object\Actor\Item\Item.h" />
@@ -113,10 +129,37 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
+<<<<<<< HEAD
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
+=======
+    <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
+    <ClInclude Include="Src\Renderer\DrawableManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader3DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\CommonShader3DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexInput.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexInputType.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexShader3DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\VertexToPixelHeader.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Blur.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Monotone.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Mosaic.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\ScanLineShader.hlsl" />
+>>>>>>> m4k
   </ItemGroup>
 </Project>

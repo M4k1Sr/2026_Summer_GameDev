@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
@@ -29,6 +30,12 @@
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTarai.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
     <ClCompile Include="Src\Scene\GameClearScene.cpp" />
     <ClCompile Include="Src\Ranking\Ranking.cpp" />
     <ClCompile Include="Src\Manager\Score.cpp" />
@@ -73,11 +80,17 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
+=======
+    <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
+>>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Renderer\DrawableManager.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
@@ -88,6 +101,12 @@
     <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTarai.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
     <ClInclude Include="Src\Scene\GameClearScene.h" />
     <ClInclude Include="Src\Ranking\Ranking.h" />
     <ClInclude Include="Src\Manager\Score.h" />
@@ -133,9 +152,49 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
+<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
+=======
+    <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader3DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\VertexToPixelHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\CommonShader3DHeader.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexInput.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexInputType.hlsli" />
+    <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexShader3DHeader.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Blur.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Monotone.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Data/Shader/)%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Mosaic.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\ScanLineShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+>>>>>>> m4k
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -234,6 +293,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\DxLib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -263,15 +323,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(DXLIB_DIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(DXLIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
