@@ -6,6 +6,10 @@
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Manager/Resource.h"
+<<<<<<< HEAD
+#include"../../../Effect/EffectManager.h"
+=======
+>>>>>>> main
 #include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
@@ -15,24 +19,17 @@
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../Collider/ColliderModel.h"
-#include "../../../Renderer/DrawableManager.h"
-#include "../../../Renderer/UiRenderer/StaminaUi.h"
 #include "../../../Application.h"
 #include "Player.h"
 
 Player::Player(void)
 	:
 	CharactorBase(),
-	drawableMgr_(new DrawableManager()),
 	isGimmick_(false),
 	currentCnt_(0),
 	isClear_(false),
-	isIronBallHit_(false),
-	stamina_(100.0f),
-	maxStamina_(100.0f)
+	isIronBallHit_(false)
 {
-	// スタミナUi
-	drawableMgr_->Add(new StaminaUi(&stamina_, &maxStamina_));
 }
 
 Player::~Player(void)
@@ -43,13 +40,12 @@ Player::~Player(void)
 	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
 	// ダッシュ音停止
 	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
+
 }
 
 void Player::Draw(void)
 {
 	CharactorBase::Draw();
-
-	drawableMgr_->Draw();
 
 //#ifdef _DEBUG
 //
@@ -342,9 +338,6 @@ void Player::ProcessMove(void)
 	{
 		if (isDash)
 		{
-			// ダッシュはスタミナ減少
-			stamina_ -= STAMINA_DASH_DECREASE * scnMng_.GetDeltaTime();
-
 			// ダッシュに切り替わった瞬間に歩き音を止める
 			if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
 			{

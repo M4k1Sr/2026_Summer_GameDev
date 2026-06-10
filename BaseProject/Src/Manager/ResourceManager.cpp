@@ -125,11 +125,17 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "wall.png");
 	resourcesMap_.emplace(SRC::WALL, res);
 
-	//
+	//ゴールデバッグ用
 	res = new RES(RES_T::IMG, PATH_IMG + "goal.png");
 	resourcesMap_.emplace(SRC::GOAL, res);
 
+	//ダメージエフェクト
+	res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/damage.efkefc");
+	resourcesMap_.emplace(SRC::DAMAGE, res);
 
+	//タイマーエフェクト
+	/*res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/timer.efkefc");
+	resourcesMap_.emplace(SRC::TIMER, res);*/
 }
 
 void ResourceManager::Release(void)

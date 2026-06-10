@@ -8,6 +8,7 @@
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
 #include "../Object/Actor/Stage.h"
+#include"../Renderer/EffectRenderer/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -65,6 +66,9 @@ void GameScene::Init(void)
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
+
+	//エフェクト初期化
+	//EffectManager::GetInstance().Init();
 
 
 	// プレイヤー初期化
@@ -173,7 +177,7 @@ void GameScene::Update(void)
 {
 
 	auto const& ins = InputManager::GetInstance();
-
+	
 	// ESC押下時ポーズ画面に遷移
 	if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
 	{
@@ -183,6 +187,9 @@ void GameScene::Update(void)
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
+		//エフェクト
+	//	EffectManager::GetInstance().Update();
+
 		//クリアタイム加算
 		clearTime_++;
 		// マウスポインタを非表示にする

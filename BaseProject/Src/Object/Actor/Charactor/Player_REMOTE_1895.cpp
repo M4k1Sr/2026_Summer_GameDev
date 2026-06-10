@@ -27,7 +27,6 @@ Player::Player(void)
 	isGimmick_(false),
 	currentCnt_(0),
 	isClear_(false),
-	isIronBallHit_(false),
 	stamina_(100.0f),
 	maxStamina_(100.0f)
 {

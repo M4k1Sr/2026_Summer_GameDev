@@ -2,6 +2,7 @@
 #include <EffekseerForDXLib.h>
 #include "Manager/InputManager.h"
 #include "Manager/ResourceManager.h"
+#include "Renderer/EffectRenderer/EffectManager.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SoundManager.h"
 #include "Common/FpsController.h"
@@ -34,7 +35,7 @@ void Application::Init(void)
 {
 
 	// アプリケーションの初期設定
-	SetWindowText("2416014_小牧勝利");
+	SetWindowText("まきプロ");
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, 32);
@@ -77,6 +78,9 @@ void Application::Init(void)
 	
 	// シーン管理初期化
 	SceneManager::CreateInstance();
+	
+	//エフェクト管理初期化
+	//EffectManager::CreateInstance();
 
 }
 
@@ -86,6 +90,8 @@ void Application::Run(void)
 	InputManager& inputManager = InputManager::GetInstance();
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	SoundManager& soundManager = SoundManager::GetInstance();
+	/*EffectManager::CreateInstance();
+	EffectManager::GetInstance().Init();*/
 
 	// ゲームループ
 	while (ProcessMessage() == 0 )
@@ -95,7 +101,8 @@ void Application::Run(void)
 		sceneManager.Update();
 
 		sceneManager.Draw();
-
+		/*EffectManager::GetInstance().Update();
+		EffectManager::GetInstance().Draw();*/
 #ifdef _DEBUG
 
 		// 平均FPS描画
@@ -121,7 +128,7 @@ void Application::Destroy(void)
 
 	SoundManager::GetInstance().Destroy();
 	ResourceManager::GetInstance().Destroy();
-	InputManager::GetInstance().Destroy();
+	//EffectManager::GetInstance().Destroy();
 
 	// Effekseerを終了する。
 	Effkseer_End();

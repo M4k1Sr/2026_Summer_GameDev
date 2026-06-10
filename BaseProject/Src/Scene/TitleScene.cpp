@@ -150,19 +150,15 @@ void TitleScene::Update(void)
 
 void TitleScene::Draw(void)
 {
-	//// スカイドーム
-	//skyDome_->Draw();
-	
 
 	//プレイヤー
 	MV1DrawModel(player_.modelId);
-
 
 	//檻
 	MV1DrawModel(cage_.modelId);
 
 	// ポストエフェクト描画
-	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
+	//effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	//タイトル画像
 	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
@@ -172,20 +168,6 @@ void TitleScene::Draw(void)
 
 	// 1. 大きさ「40」のフォントハンドルを作成（太さは標準、フォントタイプはDX_FONTTYPE_NORMAL）
 	int debugFontHandle = CreateFontToHandle(NULL, 40, 1, DX_FONTTYPE_NORMAL);
-
-	//if (debugFontHandle != -1)
-	//{
-	//	// 白色で表示
-	//	unsigned int color = GetColor(255, 255, 255);
-
-	//	// 2. 作成したフォントハンドル（一番最後の引数）を使って画面に描画
-	//	// 例として、現在のプレイヤーのY座標を表示してみます
-	//	DrawFormatStringToHandle(300, 50, color, debugFontHandle, "現在ゲーム内にあるバグは修正中ですので、バグについての報告はお控えください");
-	//	DrawFormatStringToHandle(300, 100, color, debugFontHandle, "キー操作などについては資料内にあるものをご参照ください");
-
-	//	// 3. 使い終わったらメモリ解放のためにフォントハンドルを削除
-	//	DeleteFontToHandle(debugFontHandle);
-	//}
 
 	//ポーズ画面
 	IsPause();

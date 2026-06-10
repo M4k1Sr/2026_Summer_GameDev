@@ -6,6 +6,10 @@
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Manager/Resource.h"
+<<<<<<< HEAD
+#include"../../../Effect/EffectManager.h"
+=======
+>>>>>>> main
 #include "../../../Manager/SoundManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
@@ -27,9 +31,12 @@ Player::Player(void)
 	isGimmick_(false),
 	currentCnt_(0),
 	isClear_(false),
-	isIronBallHit_(false),
+<<<<<<< HEAD
+	isIronBallHit_(false)
+=======
 	stamina_(100.0f),
 	maxStamina_(100.0f)
+>>>>>>> m4k
 {
 	// スタミナUi
 	drawableMgr_->Add(new StaminaUi(&stamina_, &maxStamina_));
