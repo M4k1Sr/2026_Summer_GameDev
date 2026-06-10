@@ -244,6 +244,8 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
+	// プレイヤーUI系更新
+	drawableMgr_->Update();
 
 	// 移動操作
 	ProcessMove();

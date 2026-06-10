@@ -1,5 +1,4 @@
-﻿  TitleScene.cpp
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(71,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(71,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416014\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(71,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+﻿  Player.cpp
+  StaminaUi.cpp
+  コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
