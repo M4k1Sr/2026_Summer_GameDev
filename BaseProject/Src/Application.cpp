@@ -2,9 +2,9 @@
 #include <EffekseerForDXLib.h>
 #include "Manager/InputManager.h"
 #include "Manager/ResourceManager.h"
+#include "Renderer/EffectRenderer/EffectManager.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SoundManager.h"
-#include "Effect/EffectManager.h"
 #include "Common/FpsController.h"
 #include "Application.h"
 
@@ -80,7 +80,7 @@ void Application::Init(void)
 	SceneManager::CreateInstance();
 	
 	//エフェクト管理初期化
-	EffectManager::CreateInstance();
+	//EffectManager::CreateInstance();
 
 }
 
@@ -90,7 +90,8 @@ void Application::Run(void)
 	InputManager& inputManager = InputManager::GetInstance();
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	SoundManager& soundManager = SoundManager::GetInstance();
-
+	/*EffectManager::CreateInstance();
+	EffectManager::GetInstance().Init();*/
 
 	// ゲームループ
 	while (ProcessMessage() == 0 )
@@ -100,7 +101,8 @@ void Application::Run(void)
 		sceneManager.Update();
 
 		sceneManager.Draw();
-
+		/*EffectManager::GetInstance().Update();
+		EffectManager::GetInstance().Draw();*/
 #ifdef _DEBUG
 
 		// 平均FPS描画
@@ -126,7 +128,7 @@ void Application::Destroy(void)
 
 	SoundManager::GetInstance().Destroy();
 	ResourceManager::GetInstance().Destroy();
-	EffectManager::GetInstance().Destroy();
+	//EffectManager::GetInstance().Destroy();
 
 	// Effekseerを終了する。
 	Effkseer_End();

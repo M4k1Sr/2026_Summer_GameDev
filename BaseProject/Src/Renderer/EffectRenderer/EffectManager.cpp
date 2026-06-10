@@ -55,4 +55,12 @@ void EffectManager::Update()
                 return effect->IsEnd();
             }),
         effects_.end());
+
+    UpdateEffekseer3D();
+}
+
+void EffectManager::Draw()
+{
+    // Effekseer‚Ì•`‰æ‚ğÀs
+    DrawEffekseer3D();
 }

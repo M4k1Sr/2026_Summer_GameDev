@@ -8,6 +8,7 @@
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
 #include "../Object/Actor/Stage.h"
+#include"../Renderer/EffectRenderer/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -18,7 +19,6 @@
 #include"../Ranking/Ranking.h"
 #include"../Object/UI/UI.h"
 #include "GameScene.h"
-#include"../Effect/EffectManager.h"
 #include "../Application.h"
 #include"../Manager/ItemManager.h"
 #include<EffekseerForDXLib.h>
@@ -68,7 +68,7 @@ void GameScene::Init(void)
 	objMng_->Init();
 
 	//エフェクト初期化
-	EffectManager::GetInstance().Init();
+	//EffectManager::GetInstance().Init();
 
 
 	// プレイヤー初期化
@@ -188,7 +188,7 @@ void GameScene::Update(void)
 	if (!isPause_)
 	{
 		//エフェクト
-		EffectManager::GetInstance().Update();
+	//	EffectManager::GetInstance().Update();
 
 		//クリアタイム加算
 		clearTime_++;

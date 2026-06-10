@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Effect\EffectManager.cpp" />
-    <ClCompile Include="Src\Effect\EffectBase.cpp" />
     <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
@@ -86,8 +84,6 @@
     <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Effect\EffectManager.h" />
-    <ClInclude Include="Src\Effect\EffectBase.h" />
     <ClInclude Include="Src\Renderer\DrawableManager.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
