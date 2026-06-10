@@ -17,13 +17,14 @@
 #include "../../Collider/ColliderModel.h"
 #include "../../../Renderer/DrawableManager.h"
 #include "../../../Renderer/UiRenderer/StaminaUi.h"
+#include "../../../Renderer/UiRenderer/SweatUi.h"
 #include "../../../Application.h"
 #include "Player.h"
 
 Player::Player(void)
 	:
 	CharactorBase(),
-	drawableMgr_(new DrawableManager()),
+	drawableMng_(new DrawableManager()),
 	isGimmick_(false),
 	currentCnt_(0),
 	isClear_(false),
@@ -31,8 +32,6 @@ Player::Player(void)
 	stamina_(100.0f),
 	maxStamina_(100.0f)
 {
-	// スタミナUi
-	drawableMgr_->Add(new StaminaUi(&stamina_, &maxStamina_));
 }
 
 Player::~Player(void)
@@ -49,7 +48,7 @@ void Player::Draw(void)
 {
 	CharactorBase::Draw();
 
-	drawableMgr_->Draw();
+	drawableMng_->Draw();
 
 //#ifdef _DEBUG
 //
@@ -240,12 +239,13 @@ void Player::InitAnimation(void)
 
 void Player::InitPost(void)
 {
+	InitUi();
 }
 
 void Player::UpdateProcess(void)
 {
 	// プレイヤーUI系更新
-	drawableMgr_->Update();
+	drawableMng_->Update();
 
 	// 移動操作
 	ProcessMove();
@@ -270,6 +270,15 @@ void Player::UpdateProcessPost(void)
 
 void Player::DrawViewRange(void)
 {
+}
+
+void Player::InitUi(void)
+{
+	// スタミナUi
+	drawableMng_->AddUiBase(new StaminaUi(&stamina_, &maxStamina_));
+	// 汗Ui
+	drawableMng_->AddUiBillboardBase(new SweatUi(transform_.pos));
+
 }
 
 void Player::ProcessMove(void)

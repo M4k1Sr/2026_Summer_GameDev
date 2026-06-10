@@ -5,11 +5,10 @@
 StaminaUi::StaminaUi(float* stamina, float* maxStamina)
     : stamina_(stamina)
     , maxStamina_(maxStamina)
-    , cx_(900.0f)
-    , cy_(500.0f)
+    , UiBase(Vector2(870.0f,500.0f))
     , radius_(30.0f)
     , blinkTimer_(0.0f)
-{
+{   
     drawOrder_ = 10;
 }
 
@@ -23,7 +22,7 @@ void StaminaUi::Update()
 
     if (ratio <= BLINK_THRESHOLD)
     {
-        blinkTimer_ += 0.1f * BLINK_SPEED;
+        blinkTimer_ += 1.0f * BLINK_SPEED;
     }
     else
     {
@@ -34,6 +33,8 @@ void StaminaUi::Update()
 void StaminaUi::Draw()
 {
     unsigned int color;
+    float cx = uiBase_->pos_.x;
+    float cy = uiBase_->pos_.y;
 
     float ratio = *stamina_ / *maxStamina_;
     if (ratio <= BLINK_THRESHOLD)
@@ -54,11 +55,11 @@ void StaminaUi::Draw()
     int totalSteps = (int)(STEPS * ratio);
 
     // ”wŒi‚Ì‰~
-    DrawCircle((int)cx_, (int)cy_, (int)radius_,
+    DrawCircle((int)cx, (int)cy, (int)radius_,
         GetColor(50, 50, 50), TRUE);
 
     // ƒfƒoƒbƒO•\Ž¦
-    DrawFormatString(0, 0, GetColor(255, 255, 255),
+    DrawFormatString(0, 0, GetColor(0, 0, 255),
         "stamina:%.1f max:%.1f ratio:%.2f blink:%.2f",
         *stamina_, *maxStamina_, ratio, blinkTimer_);
 
@@ -69,15 +70,15 @@ void StaminaUi::Draw()
         float a2 = angleStep * (i + 1) - DX_PI_F / 2.0f;
 
         DrawTriangle(
-            (int)cx_, (int)cy_,
-            (int)(cx_ + cosf(a1) * radius_),
-            (int)(cy_ + sinf(a1) * radius_),
-            (int)(cx_ + cosf(a2) * radius_),
-            (int)(cy_ + sinf(a2) * radius_),
+            (int)cx, (int)cy,
+            (int)(cx + cosf(a1) * radius_),
+            (int)(cy + sinf(a1) * radius_),
+            (int)(cx + cosf(a2) * radius_),
+            (int)(cy + sinf(a2) * radius_),
             GetColor(0, 255, 100), TRUE);
     }
 
     // ŠO˜g‚Ì‰~
-    DrawCircle((int)cx_, (int)cy_, (int)radius_,
+    DrawCircle((int)cx, (int)cy, (int)radius_,
         GetColor(255, 255, 255), FALSE);
 }

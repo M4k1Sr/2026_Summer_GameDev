@@ -11,6 +11,8 @@ public:
     void Draw() override;
 
 private:
+
+    // スタミナ計算
     float* stamina_;
     float* maxStamina_;
 
@@ -23,7 +25,7 @@ private:
     float blinkTimer_;     
 
     // 30%以下で点滅
-    static constexpr float BLINK_THRESHOLD = 0.3f; 
+    static constexpr float BLINK_THRESHOLD = 0.8f; 
     // 点滅速度
     static constexpr float BLINK_SPEED = 3.0f;   
 

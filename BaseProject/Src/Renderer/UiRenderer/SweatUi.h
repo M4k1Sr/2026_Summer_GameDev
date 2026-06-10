@@ -1,31 +1,18 @@
 #pragma once
-#include "UiBase.h"
+#include "UiBillboardBase.h"
 
-class SweatUi : public UiBase
+class SweatUi : public UiBillboardBase
 {
 public:
-    SweatUi(float* sweat, float* maxSweat);
+
+    SweatUi(VECTOR pos);
     ~SweatUi();
     void Update() override;
     void Draw() override;
 
 private:
 
-    
+    int drawUiH_;
+    VECTOR pos_;
 
-    // 表示位置・サイズ
-    float cx_;
-    float cy_;
-    float radius_;
-
-    // 点滅タイマー
-    float blinkTimer_;
-
-    // 30%以下で点滅
-    static constexpr float BLINK_THRESHOLD = 0.3f;
-    // 点滅速度
-    static constexpr float BLINK_SPEED = 3.0f;
-
-    // 分割数
-    static constexpr int STEPS = 48;
 };

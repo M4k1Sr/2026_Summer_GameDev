@@ -133,6 +133,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/damage.efkefc");
 	resourcesMap_.emplace(SRC::DAMAGE, res);
 
+	//ゴールデバッグ用
+	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
+	resourcesMap_.emplace(SRC::SWEAT, res);
+
 	//タイマーエフェクト
 	/*res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/timer.efkefc");
 	resourcesMap_.emplace(SRC::TIMER, res);*/
