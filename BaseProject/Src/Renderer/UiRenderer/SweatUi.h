@@ -12,7 +12,4 @@ public:
 
 private:
 
-    int drawUiH_;
-    VECTOR pos_;
-
 };

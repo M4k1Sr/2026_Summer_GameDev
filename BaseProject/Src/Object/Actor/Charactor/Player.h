@@ -88,6 +88,13 @@ private:
 	// ギミック動作数カウンタ
 	int currentCnt_;
 
+	// ダッシュスタミナ
+	float stamina_;
+	float maxStamina_;	// 最大スタミナ
+
+	// 汗UIの座標
+	VECTOR sweatPos_;
+
 	// プレイヤー座標
 	//static constexpr VECTOR PLAYER_POS = { -800.0f, 0.0f, 700.0f };	// スタート位置
 	static constexpr VECTOR PLAYER_POS = { 2000.0f, 0.0f, -750.0f };	// ボススタート位置
@@ -144,10 +151,6 @@ private:
 
 	// ダッシュスタミナ
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
-
-	// ダッシュスタミナ
-	float stamina_;
-	float maxStamina_;	// 最大スタミナ
 
 	// Ui初期化
 	void InitUi(void);

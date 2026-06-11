@@ -1,14 +1,9 @@
 #include "UiBillboardBase.h"
 
-UiBillboardBase::UiBillboardBase()
+UiBillboardBase::UiBillboardBase(VECTOR pos)
     : drawOrder_(0)
+    , pos_(pos)
 {
-}
-
-UiBillboardBase::UiBillboardBase(const DrawBillboardUi& uiData)
-{
-    uiBillboard_ = new DrawBillboardUi(uiData);
-    *uiBillboard_ = uiData;
 }
 
 UiBillboardBase::~UiBillboardBase()

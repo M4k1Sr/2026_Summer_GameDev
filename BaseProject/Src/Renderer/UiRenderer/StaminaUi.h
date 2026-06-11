@@ -4,7 +4,7 @@
 class StaminaUi : public UiBase
 {
 public:
-    StaminaUi(float* stamina, float* maxStamina);
+    StaminaUi(float* stamina, float* maxStamina,Vector2 pos);
     ~StaminaUi();
 
     void Update() override;

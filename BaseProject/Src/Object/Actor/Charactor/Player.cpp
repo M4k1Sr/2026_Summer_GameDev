@@ -32,6 +32,7 @@ Player::Player(void)
 	stamina_(100.0f),
 	maxStamina_(100.0f)
 {
+	sweatPos_ = transform_.pos;
 }
 
 Player::~Player(void)
@@ -275,9 +276,9 @@ void Player::DrawViewRange(void)
 void Player::InitUi(void)
 {
 	// スタミナUi
-	drawableMng_->AddUiBase(new StaminaUi(&stamina_, &maxStamina_));
-	// 汗Ui
-	drawableMng_->AddUiBillboardBase(new SweatUi(transform_.pos));
+	drawableMng_->AddUiBase(new StaminaUi(&stamina_, &maxStamina_, Vector2(850, 500)));
+	// 汗Ui	
+	drawableMng_->AddUiBillboardBase(new SweatUi(sweatPos_));
 
 }
 

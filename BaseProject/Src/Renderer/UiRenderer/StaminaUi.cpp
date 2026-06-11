@@ -2,10 +2,10 @@
 #include <cmath>
 #include "StaminaUi.h"
 
-StaminaUi::StaminaUi(float* stamina, float* maxStamina)
+StaminaUi::StaminaUi(float* stamina, float* maxStamina, Vector2 pos)
     : stamina_(stamina)
     , maxStamina_(maxStamina)
-    , UiBase(Vector2(870.0f,500.0f))
+    , UiBase(pos)
     , radius_(30.0f)
     , blinkTimer_(0.0f)
 {   
@@ -32,9 +32,10 @@ void StaminaUi::Update()
 
 void StaminaUi::Draw()
 {
+
     unsigned int color;
-    float cx = uiBase_->pos_.x;
-    float cy = uiBase_->pos_.y;
+    float cx = pos_.x;
+    float cy = pos_.y;
 
     float ratio = *stamina_ / *maxStamina_;
     if (ratio <= BLINK_THRESHOLD)
