@@ -3,7 +3,6 @@
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Collider/ColliderLine.h"
-#include"../../../Effect/EffectManager.h"
 #include "../../../Object/Collider/ColliderModel.h"
 #include "../../../Object/Collider/ColliderCapsule.h"
 #include "../../../Object/Collider/ColliderSphere.h"

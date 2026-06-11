@@ -82,6 +82,8 @@
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\SweatUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UiBillboardBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Renderer\DrawableManager.h" />
@@ -148,6 +150,8 @@
     <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\SweatUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UiBillboardBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

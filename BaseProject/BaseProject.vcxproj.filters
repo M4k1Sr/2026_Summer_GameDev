@@ -64,6 +64,8 @@
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
     <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\SweatUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UiBillboardBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -130,6 +132,8 @@
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
     <ClInclude Include="Src\Renderer\DrawableManager.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\SweatUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UiBillboardBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

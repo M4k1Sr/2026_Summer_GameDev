@@ -158,7 +158,7 @@ void TitleScene::Draw(void)
 	MV1DrawModel(cage_.modelId);
 
 	// ポストエフェクト描画
-	//effect_->Draw(SceneManager::GetInstance().GetMainScreen());
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	//タイトル画像
 	DrawGraph(IMG_TITLE_POS_X, IMG_TITLE_POS_Y, imgTitle_, true);
