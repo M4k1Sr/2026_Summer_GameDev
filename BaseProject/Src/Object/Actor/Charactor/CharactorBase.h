@@ -1,6 +1,7 @@
 #pragma once
 #include "../ActorBase.h"
 class AnimationController;
+class DrawableManager;
 
 class CharactorBase : public ActorBase
 {
@@ -106,9 +107,12 @@ protected:
 	// ŠÛ‰e•`‰æ
 	void DrawShadow(void);
 
+protected:
+
+	DrawableManager* drawableMng_;
+
 private:
 
 	bool isIronBallHit_;
-
 
 };

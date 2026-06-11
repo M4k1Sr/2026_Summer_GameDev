@@ -3,12 +3,15 @@
 #include <algorithm>
 #include "../Renderer/UiRenderer/UiBase.h"
 #include "../Renderer/UiRenderer/UiBillboardBase.h"
+#include"../Renderer/EffectRenderer/EffectBase.h"
 
 class DrawableManager
 {
 public:
     DrawableManager();
     ~DrawableManager();
+
+    void PlayEffect(int effectHandle, VECTOR pos);
 
     void AddUiBase(UiBase* ui);
     void AddUiBillboardBase(UiBillboardBase* uiBillboard);
@@ -21,4 +24,5 @@ private:
 
     std::vector<UiBillboardBase*> uiBillboardList_;
 
+    std::vector< std::unique_ptr<EffectBase> > effects_;
 };

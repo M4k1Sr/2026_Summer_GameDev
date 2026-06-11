@@ -3,6 +3,7 @@
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Collider/ColliderLine.h"
+#include"../../../Renderer/DrawableManager.h"
 #include "../../../Object/Collider/ColliderModel.h"
 #include "../../../Object/Collider/ColliderCapsule.h"
 #include "../../../Object/Collider/ColliderSphere.h"
@@ -20,8 +21,10 @@ CharactorBase::CharactorBase(void)
 	movePow_(AsoUtility::VECTOR_ZERO),
 	isJump_(false),
 	isIronBallHit_(false),
+	drawableMng_(new DrawableManager()),
 	ActorBase()
 {
+
 }
 
 CharactorBase::~CharactorBase(void)
@@ -69,6 +72,9 @@ void CharactorBase::Draw(void)
 
 	// 視野描画
 	DrawViewRange();
+
+	//エフェクトの描画
+	drawableMng_->Draw();
 
 }
 
@@ -274,12 +280,13 @@ void CharactorBase::CollisionCapsule(void)
 				{
 					isIronBallHit_ = true;
 
-					//int effectHandle =
-					//	ResourceManager::GetInstance().GetEffect(EFFECT_ID::IRONBALL_HIT);
+					int effectHandle =
+						ResourceManager::GetInstance().Load(ResourceManager::SRC::DAMAGE).handleId_;
 
-					//EffectManager::GetInstance().Play(
-					//	effectHandle,
-					//	transform_.pos);
+					//エフェクトを再生
+					drawableMng_->PlayEffect(effectHandle, transform_.pos);
+					
+						
 				}
 			
 

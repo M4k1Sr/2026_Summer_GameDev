@@ -9,6 +9,11 @@ DrawableManager::~DrawableManager()
     Release();
 }
 
+void DrawableManager::PlayEffect(int effectHandle, VECTOR pos)
+{
+    effects_.push_back(std::make_unique<EffectBase>(effectHandle, pos));
+}
+
 void DrawableManager::AddUiBase(UiBase* ui)
 {
     // UIのソート
@@ -18,7 +23,6 @@ void DrawableManager::AddUiBase(UiBase* ui)
         {
             return a->drawOrder_ < b->drawOrder_;
         });
-
 }
 
 void DrawableManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
@@ -44,10 +48,29 @@ void DrawableManager::Update()
     {
         uiBillboard->Update();
     }
+
+    //エフェクト
+     for (auto& effect : effects_) 
+     { 
+         effect->Update(); 
+     }
+
+     //エラーが起きたエフェクトを削除
+     effects_.erase(std::remove_if(effects_.begin(), effects_.end(), [](const std::unique_ptr<EffectBase>& effect)
+         {
+             return effect->IsEnd(); 
+         })
+         , effects_.end());
+     //エフェクトを更新
+     UpdateEffekseer3D();
 }
 
 void DrawableManager::Draw()
 {
+
+    //エフェクト描画
+	DrawEffekseer3D();
+
     for (auto* ui : uiList_)
     {
         ui->Draw();
