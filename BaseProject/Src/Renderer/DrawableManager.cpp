@@ -63,7 +63,7 @@ void DrawableManager::Update()
          , effects_.end());
      //エフェクトを更新
      UpdateEffekseer3D();
-}
+    }
 
 void DrawableManager::Draw()
 {

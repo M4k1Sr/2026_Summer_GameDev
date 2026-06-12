@@ -115,4 +115,8 @@ private:
 
 	bool isIronBallHit_;
 
+	bool isHit_;
+
+	Transform effect_;
+
 };

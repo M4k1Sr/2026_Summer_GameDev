@@ -22,6 +22,7 @@ CharactorBase::CharactorBase(void)
 	isJump_(false),
 	isIronBallHit_(false),
 	drawableMng_(new DrawableManager()),
+	isHit_(false),
 	ActorBase()
 {
 
@@ -59,6 +60,8 @@ void CharactorBase::Update(void)
 
 	// 各キャラクターごとの更新後処理
  	UpdateProcessPost();
+
+	drawableMng_->Update();
 
 }
 
@@ -276,17 +279,11 @@ void CharactorBase::CollisionCapsule(void)
 			// 3. 最短距離が半径の合計未満であれば「衝突している」と判定
 			if (distance < totalRadius)
 			{
-				if (!isIronBallHit_)
+				if (!isIronBallHit_) 
 				{
-					isIronBallHit_ = true;
-
-					int effectHandle =
-						ResourceManager::GetInstance().Load(ResourceManager::SRC::DAMAGE).handleId_;
-
-					//エフェクトを再生
-					drawableMng_->PlayEffect(effectHandle, transform_.pos);
-					
-						
+					isIronBallHit_ = true; int effectHandle = ResourceManager::GetInstance().Load(ResourceManager::SRC::DAMAGE).handleId_;
+					//エフェクトを再生 
+					drawableMng_->PlayEffect(effectHandle, transform_.pos); 
 				}
 			
 
