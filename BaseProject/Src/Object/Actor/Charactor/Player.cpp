@@ -33,6 +33,7 @@ Player::Player(void)
 	maxStamina_(100.0f)
 {
 	sweatPos_ = transform_.pos;
+	int img_ = resMng_.Load(ResourceManager::SRC::SWEAT).handleId_;
 }
 
 Player::~Player(void)
