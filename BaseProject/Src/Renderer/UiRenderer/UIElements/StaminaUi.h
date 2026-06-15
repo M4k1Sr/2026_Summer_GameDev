@@ -1,5 +1,5 @@
 #pragma once
-#include "./Base/UiBase.h"
+#include "../Base/UiBase.h"
 
 class StaminaUi : public UiBase
 {

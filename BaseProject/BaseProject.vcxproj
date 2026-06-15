@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock.cpp" />
     <ClCompile Include="Src\Object\UI\UI.cpp" />
@@ -88,6 +90,8 @@
     <ClCompile Include="Src\Renderer\UiRenderer\Manager\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\UIElements\Clock.h" />
     <ClInclude Include="Src\Manager\DIContainer.h" />

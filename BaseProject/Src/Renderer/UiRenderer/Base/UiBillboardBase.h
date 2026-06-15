@@ -14,7 +14,7 @@ public:
     int drawOrder_;
 
 protected:
-
+    
     int drawUiH_;   // UiBillboard画像モデル
     VECTOR pos_;    // 座標
     VECTOR scl_;    // スケール

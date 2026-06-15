@@ -1,6 +1,10 @@
 #pragma once
 #include <unordered_map>
 #include <typeindex>
+#include "./SoundManager.h"
+#include "./ResourceManager.h"
+#include "../Renderer/EffectRenderer/Manager/EffectManager.h"
+#include "../Renderer/UiRenderer/Manager/UIManager.h"
 
 enum class Lifecycle { Transient, Singleton };
 

@@ -2,7 +2,7 @@
 #include <EffekseerForDXLib.h>
 #include "Manager/InputManager.h"
 #include "Manager/ResourceManager.h"
-#include "Renderer/EffectRenderer/EffectManager.h"
+#include "Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SoundManager.h"
 #include "Common/FpsController.h"

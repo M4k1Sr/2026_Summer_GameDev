@@ -1,5 +1,5 @@
 #pragma once
-#include "./Base/UiBillboardBase.h"
+#include "../Base/UiBillboardBase.h"
 
 class SweatUi : public UiBillboardBase
 {

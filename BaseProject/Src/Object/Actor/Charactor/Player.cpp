@@ -15,8 +15,8 @@
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../Collider/ColliderModel.h"
-#include "../../../Renderer/UiRenderer/StaminaUi.h"
-#include "../../../Renderer/UiRenderer/SweatUi.h"
+#include "../../../Renderer/UiRenderer/UIElements/StaminaUi.h"
+#include "../../../Renderer/UiRenderer/UIElements/SweatUi.h"
 #include "../../../Application.h"
 #include "Player.h"
 

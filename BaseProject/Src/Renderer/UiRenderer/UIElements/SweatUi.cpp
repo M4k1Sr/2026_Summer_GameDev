@@ -1,7 +1,7 @@
 #include <DxLib.h>
 #include <cmath>
 #include "SweatUi.h"
-#include "../../Manager/ResourceManager.h"
+#include "../../../Manager/ResourceManager.h"
 
 SweatUi::SweatUi(VECTOR pos)
         : UiBillboardBase(pos)

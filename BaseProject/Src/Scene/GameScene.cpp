@@ -8,7 +8,7 @@
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
 #include "../Object/Actor/Stage.h"
-#include"../Renderer/EffectRenderer/EffectManager.h"
+#include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -61,11 +61,11 @@ void GameScene::Init(void)
 {
 	// DIコンテナに各種マネージャを登録
 	container_.Register<SoundManager>(Lifecycle::Singleton);	// サウンドマネージャはシングルトンで管理
-	container_.Register<UiManager>(Lifecycle::Singleton);		// UIマネージャはシングルトンで管理
+	//container_.Register<UiManager>(Lifecycle::Singleton);		// UIマネージャはシングルトンで管理
 	container_.Register<EffectManager>(Lifecycle::Singleton);	// エフェクトマネージャはシングルトンで管理
 
 	soundMng_ = container_.Resolve<SoundManager>();
-	uiMng_ = container_.Resolve<UiManager>();
+	//uiMng_ = container_.Resolve<UiManager>();
 	effectMng_ = container_.Resolve<EffectManager>();
 
 	// ステージ初期化

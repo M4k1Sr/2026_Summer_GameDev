@@ -54,19 +54,22 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
-    <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\SweatUi.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UiBillboardBase.cpp" />
-    <ClCompile Include="Src\Manager\DIContainer.cpp" />
     <ClCompile Include="Src\Object\UI\UI.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\SweatUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Manager\UIManager.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -123,19 +126,23 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
-    <ClInclude Include="Src\Renderer\DrawableManager.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\SweatUi.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UiBillboardBase.h" />
     <ClInclude Include="Src\Manager\DIContainer.h" />
     <ClInclude Include="Src\Object\UI\UI.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\Clock.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\SweatUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Manager\UIManager.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
