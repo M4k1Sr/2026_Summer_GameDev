@@ -77,6 +77,7 @@ void GameOvereScene::Draw(void)
 
 	//タイトルへ戻る
 	DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
+
 	//ポーズ画面
 	IsPause();
 }

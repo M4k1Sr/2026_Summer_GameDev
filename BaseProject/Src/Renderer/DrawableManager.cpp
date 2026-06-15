@@ -9,9 +9,9 @@ DrawableManager::~DrawableManager()
     Release();
 }
 
-void DrawableManager::PlayEffect(int effectHandle, VECTOR pos)
+void DrawableManager::PlayEffect(int effectHandle, VECTOR pos, VECTOR scale)
 {
-    effects_.push_back(std::make_unique<EffectBase>(effectHandle, pos));
+    effects_.push_back(std::make_unique<EffectBase>(effectHandle, pos, scale));
 }
 
 void DrawableManager::AddUiBase(UiBase* ui)
@@ -69,7 +69,7 @@ void DrawableManager::Draw()
 {
 
     //エフェクト描画
-	DrawEffekseer3D();
+    DrawEffekseer3D();
 
     for (auto* ui : uiList_)
     {

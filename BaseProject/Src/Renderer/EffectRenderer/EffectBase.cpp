@@ -2,7 +2,7 @@
 
 EffectBase::EffectBase(
     int effectHandle,
-    VECTOR pos)
+    VECTOR pos, VECTOR scale)
 {
     effectHandle_ = effectHandle;
 

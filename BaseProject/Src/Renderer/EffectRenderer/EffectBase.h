@@ -9,7 +9,8 @@ public:
     EffectBase
     (
         int effectHandle,
-        VECTOR pos
+        VECTOR pos,
+		VECTOR scale
     );
 
     virtual ~EffectBase() = default;

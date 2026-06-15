@@ -8,9 +8,9 @@ C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\StrategyAttack.
   BossManager.cpp
   BossPixie.cpp
   CharactorBase.cpp
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(380,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(383,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(386,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(479,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(482,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\CharactorBase.cpp(485,27): warning C4244: '=': 'float' から 'BYTE' への変換です。データが失われる可能性があります。
   ObjectBase.cpp
   ObjectBossGimmick.cpp
   ObjectBox.cpp

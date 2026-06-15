@@ -11,7 +11,7 @@ public:
     DrawableManager();
     ~DrawableManager();
 
-    void PlayEffect(int effectHandle, VECTOR pos);
+    void PlayEffect(int effectHandle, VECTOR pos,VECTOR scale);
 
     void AddUiBase(UiBase* ui);
     void AddUiBillboardBase(UiBillboardBase* uiBillboard);
