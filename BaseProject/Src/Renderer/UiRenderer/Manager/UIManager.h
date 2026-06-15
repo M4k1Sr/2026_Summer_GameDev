@@ -1,15 +1,14 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include "../Renderer/UiRenderer/UiBase.h"
-#include "../Renderer/UiRenderer/UiBillboardBase.h"
+#include "../Base/UiBase.h"
+#include "../Base/UiBillboardBase.h"
 
-class DrawableManager
+class UIManager
 {
 public:
-    DrawableManager();
-    ~DrawableManager();
-
+    UIManager();
+    ~UIManager();
     void AddUiBase(UiBase* ui);
     void AddUiBillboardBase(UiBillboardBase* uiBillboard);
     void Update();

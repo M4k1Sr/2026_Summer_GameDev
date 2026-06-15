@@ -1,15 +1,15 @@
-#include "DrawableManager.h"
+#include "UIManager.h"
 
-DrawableManager::DrawableManager()
+UIManager::UIManager()
 {
 }
 
-DrawableManager::~DrawableManager()
+UIManager::~UIManager()
 {
     Release();
 }
 
-void DrawableManager::AddUiBase(UiBase* ui)
+void UIManager::AddUiBase(UiBase* ui)
 {
     // UIのソート
     uiList_.push_back(ui);
@@ -21,7 +21,7 @@ void DrawableManager::AddUiBase(UiBase* ui)
 
 }
 
-void DrawableManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
+void UIManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
 {
     // UIビルボードのソート
     uiBillboardList_.push_back(uiBillboard);
@@ -33,7 +33,7 @@ void DrawableManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
 
 }
 
-void DrawableManager::Update()
+void UIManager::Update()
 {
     for (auto* ui : uiList_)
     {
@@ -46,7 +46,7 @@ void DrawableManager::Update()
     }
 }
 
-void DrawableManager::Draw()
+void UIManager::Draw()
 {
     for (auto* ui : uiList_)
     {
@@ -58,10 +58,10 @@ void DrawableManager::Draw()
         uiBillboard->Draw();
     }
 
-    
+
 }
 
-void DrawableManager::Release()
+void UIManager::Release()
 {
     for (auto* ui : uiList_)
     {

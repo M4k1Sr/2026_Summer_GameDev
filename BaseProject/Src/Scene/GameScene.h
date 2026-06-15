@@ -57,7 +57,7 @@ public:
 private:
 
 	// DIコンテナ
-	DIContainer diContainer_;
+	DIContainer container_;
 
 	// エフェクトマネージャ
 	EffectManager* effectMng_;
