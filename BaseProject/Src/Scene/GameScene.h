@@ -57,15 +57,25 @@ private:
 	{
 		STAGE_1,
 		STAGE_2,
-		// 今後増やしたいときは STAGE_3 などをここに追加する
+	};
+
+	// フェードの状態を表す列挙型
+	enum class FadeState
+	{
+		NONE,       // フェードしていない（通常時）
+		FADE_OUT,   // 暗転中
+		FADE_IN     // 明転中
 	};
 
 	// 現在のステージ状態
 	StageState stageState_;
 
+	//フェード管理用の変数
+	FadeState fadeState_ = FadeState::NONE;
+
 	// ステージ
 	StageBase* stage_;
-
+	
 	// スカイドーム
 	SkyDome* skyDome_;
 
@@ -102,6 +112,8 @@ private:
 	int sousaImg_;
 	int mosPosX_, mosPosY_;
 	int currentStageNum_;
+	int fadeAlpha_;                  
+	int fadeSpeed_;
 
 	static constexpr int DRAWBOX_SX = 400;
 	static constexpr int DRAWBOX_EX = 1600;
@@ -122,4 +134,8 @@ private:
 	//デバッグ用ゴール画像
 	int goalImg_;
 
+	// フェード処理用のプライベート関数群
+	void StartFade(FadeState state, int speed = 5); // フェード開始トリガー
+	bool UpdateFade(void);                          // フェードの更新（完了したらtrueを返す）
+	void DrawFade(void) const;
 };

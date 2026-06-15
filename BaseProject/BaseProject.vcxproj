@@ -80,14 +80,11 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
-=======
     <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
->>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Renderer\DrawableManager.h" />
@@ -152,11 +149,9 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
-<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
-=======
     <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
   </ItemGroup>
@@ -194,7 +189,6 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
->>>>>>> m4k
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
