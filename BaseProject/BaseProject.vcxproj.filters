@@ -46,7 +46,6 @@
     <ClCompile Include="Src\Manager\SceneManager.cpp" />
     <ClCompile Include="Src\Object\Common\AnimationController.cpp" />
     <ClCompile Include="Src\Object\Common\Transform.cpp" />
-    <ClCompile Include="Src\Object\UI\UI.cpp" />
     <ClCompile Include="Src\Scene\DebugScene.cpp" />
     <ClCompile Include="Src\Scene\GameOvereScene.cpp" />
     <ClCompile Include="Src\Scene\GameScene.cpp" />
@@ -66,6 +65,8 @@
     <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\SweatUi.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\UiBillboardBase.cpp" />
+    <ClCompile Include="Src\Manager\DIContainer.cpp" />
+    <ClCompile Include="Src\Object\UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -114,7 +115,6 @@
     <ClInclude Include="Src\Manager\SceneManager.h" />
     <ClInclude Include="Src\Object\Common\AnimationController.h" />
     <ClInclude Include="Src\Object\Common\Transform.h" />
-    <ClInclude Include="Src\Object\UI\UI.h" />
     <ClInclude Include="Src\Scene\DebugScene.h" />
     <ClInclude Include="Src\Scene\GameOvereScene.h" />
     <ClInclude Include="Src\Scene\GameScene.h" />
@@ -134,6 +134,8 @@
     <ClInclude Include="Src\Renderer\DrawableManager.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\SweatUi.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\UiBillboardBase.h" />
+    <ClInclude Include="Src\Manager\DIContainer.h" />
+    <ClInclude Include="Src\Object\UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+#include "../Manager/DIContainer.h"
 #include "../Framework.h"
 class IronBall;
 class UI;
@@ -11,6 +12,9 @@ class ObjectManager;
 class AttackManager;
 class Ranking;
 class ItemManager;
+class SoundManager;
+class UiManager;
+class EffectManager;
 
 class GameScene : public SceneBase
 {
@@ -51,6 +55,17 @@ public:
 		void IsClear(void);
 
 private:
+
+	// DIコンテナ
+	DIContainer diContainer_;
+
+	// エフェクトマネージャ
+	EffectManager* effectMng_;
+	// サウンドマネージャ
+	SoundManager* soundMng_;
+
+	// UIマネージャ
+	UiManager* uiMng_;
 
 	// ステージ
 	Stage* stage_;
