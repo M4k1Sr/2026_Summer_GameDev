@@ -38,6 +38,7 @@ public:
 		TIMER, //タイマーエフェクト
 		SWEAT,
 		IRONBALL_HIT,	// 鉄球エフェクト
+		PIXIE_FIRE,		// ピクシー炎攻撃
 	};
 
 	// 明示的にインステンスを生成する
