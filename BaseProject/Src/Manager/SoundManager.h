@@ -62,15 +62,15 @@ struct SoundBank {
 class SoundManager
 {
 private:
-    static SoundManager* instance_;
+    //static SoundManager* instance_;
 
     std::unordered_map<BANK_ID, SoundBank*> bankMap_;
     std::unordered_map<SOUND_ID, SoundResource*> soundMap_;
     std::unordered_set<BANK_ID> loadedBanks_;
 
 public:
-    static void CreateInstance(void);
-    static SoundManager& GetInstance(void);
+    //static void CreateInstance(void);
+    //static SoundManager& GetInstance(void);
 
 
     SoundManager(void);

@@ -16,15 +16,15 @@ BossBase::BossBase(const BossBase::BossData& data)
 	// 初期座標の設定
 	transform_.pos = data.defaultPos;
 	
-	// サウンド読み込み
-	SoundManager::GetInstance().LoadBank(BANK_ID::BOSS);
+	//// サウンド読み込み
+	//SoundManager::GetInstance().LoadBank(BANK_ID::BOSS);
 
 }
 
 BossBase::~BossBase(void)
 {
-	// サウンド停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_ENEMY_FIRE);
+	//// サウンド停止
+	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_ENEMY_FIRE);
 }
 
 void BossBase::SetPlayer(Player* player)
