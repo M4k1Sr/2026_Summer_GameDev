@@ -9,16 +9,7 @@ UIManager::~UIManager()
     Release();
 }
 
-<<<<<<< HEAD:BaseProject/Src/Renderer/DrawableManager.cpp
-void DrawableManager::PlayEffect(int effectHandle, VECTOR pos, VECTOR scale)
-{
-    effects_.push_back(std::make_unique<EffectBase>(effectHandle, pos, scale));
-}
-
-void DrawableManager::AddUiBase(UiBase* ui)
-=======
 void UIManager::AddUiBase(UiBase* ui)
->>>>>>> m4k:BaseProject/Src/Renderer/UiRenderer/Manager/UIManager.cpp
 {
     // UI‚Ìƒ\[ƒg
     uiList_.push_back(ui);
