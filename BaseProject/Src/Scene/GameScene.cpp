@@ -52,6 +52,7 @@ GameScene::GameScene(void)
 
 GameScene::~GameScene(void)
 {
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_STAGE1);
 	Release();
 }
 
@@ -333,9 +334,9 @@ void GameScene::Release(void)
 	ironBall_->Release();
 	delete ironBall_;
 
-	// ItemManager‰ð•ú
-	itemMng_->Release();
-	delete itemMng_;
+	//// ItemManager‰ð•ú
+	//itemMng_->Release();
+	//delete itemMng_;
 
 	DeleteGraph(pauseImg_);
 
