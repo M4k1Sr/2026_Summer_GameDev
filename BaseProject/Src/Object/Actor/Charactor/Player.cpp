@@ -17,6 +17,8 @@
 #include "../../Collider/ColliderModel.h"
 #include "../../../Renderer/UiRenderer/UIElements/StaminaUi.h"
 #include "../../../Renderer/UiRenderer/UIElements/SweatUi.h"
+#include "../../../Renderer/UiRenderer/Manager/UIManager.h"
+#include "../../../Renderer/UiRenderer/Base/UiBase.h"
 #include "../../../Application.h"
 #include "Player.h"
 #include "../../../Manager/ServiceLocator.h"
@@ -37,17 +39,13 @@ Player::Player(void)
 
 Player::~Player(void)
 {
-	//// ƒWƒƒƒ“ƒv‰¹’âŽ~
-	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_JUMP);
-	//// ‹ì‚¯‘«‰¹’âŽ~
-	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
-	//// ƒ_ƒbƒVƒ…‰¹’âŽ~
-	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
 }
 
 void Player::Draw(void)
 {
 	CharactorBase::Draw();
+
+	ServiceLocator::GetUi().Draw();
 
 //#ifdef _DEBUG
 //
@@ -278,6 +276,7 @@ void Player::DrawViewRange(void)
 
 void Player::InitUi(void)
 {
+	ServiceLocator::GetUi().AddUiBase(new StaminaUi(&stamina_,&maxStamina_,Vector2(850,500)));
 }
 
 void Player::ProcessMove(void)
