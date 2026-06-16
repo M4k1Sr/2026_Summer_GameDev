@@ -89,7 +89,5 @@ private:
 	// 2個目以降の鉄球コライダーもすべて安全に保持・管理するための動的配列
 	std::vector<ColliderSphere*> myColliders_;
 
-	
-
 };
 

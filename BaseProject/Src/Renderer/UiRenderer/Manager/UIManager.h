@@ -21,4 +21,4 @@ private:
 
     std::vector<UiBillboardBase*> uiBillboardList_;
 
- };
+};

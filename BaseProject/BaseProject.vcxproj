@@ -35,7 +35,6 @@
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTarai.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossGimmick.cpp" />
-    <ClCompile Include="Src\Renderer\EffectRenderer\EffectBase.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />

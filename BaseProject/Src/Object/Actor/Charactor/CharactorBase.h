@@ -1,7 +1,6 @@
 #pragma once
 #include "../ActorBase.h"
 class AnimationController;
-class DrawableManager;
 
 class CharactorBase : public ActorBase
 {
@@ -43,9 +42,6 @@ protected:
 	// 衝突時の押し戻し量
 	static constexpr float COLLISION_BACK_DIS = 1.0f;
 
-	//エフェクトの大きさ
-	static constexpr VECTOR EFFECT_SCALE = { 50.0f, 50.0f, 50.0f };
-
 	// アニメーション処理
 	AnimationController* animationController_;
 
@@ -86,10 +82,10 @@ protected:
 	virtual void UpdateProcess(void) = 0;
 	virtual void UpdateProcessPost(void) = 0;
 
-	// 索敵
+	//// 索敵
 	//virtual void Search(void) = 0;
 
-	// プレイヤーを注視する
+	//// プレイヤーを注視する
 	//virtual void LookPlayer(void) = 0;
 
 	//視野描画
@@ -110,20 +106,9 @@ protected:
 	// 丸影描画
 	void DrawShadow(void);
 
-protected:
-
-	DrawableManager* drawableMng_;
-
-	int damageEffectHandle_;
-
 private:
 
 	bool isIronBallHit_;
 
-	bool isHit_;
-
-	bool preHit_;
-
-	Transform effect_;
 
 };

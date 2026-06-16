@@ -130,7 +130,7 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::GOAL, res);
 
 	//ダメージエフェクト
-	res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Gimmick/damage.efkefc");
+	res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/damage.efkefc");
 	resourcesMap_.emplace(SRC::DAMAGE, res);
 
 	//ゴールデバッグ用
@@ -140,8 +140,6 @@ void ResourceManager::Init(void)
 	//タイマーエフェクト
 	/*res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/timer.efkefc");
 	resourcesMap_.emplace(SRC::TIMER, res);*/
-
-
 }
 
 void ResourceManager::Release(void)

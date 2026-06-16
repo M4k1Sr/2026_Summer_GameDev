@@ -3,7 +3,6 @@
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Collider/ColliderLine.h"
-#include"../../../Renderer/DrawableManager.h"
 #include "../../../Object/Collider/ColliderModel.h"
 #include "../../../Object/Collider/ColliderCapsule.h"
 #include "../../../Object/Collider/ColliderSphere.h"
@@ -21,12 +20,8 @@ CharactorBase::CharactorBase(void)
 	movePow_(AsoUtility::VECTOR_ZERO),
 	isJump_(false),
 	isIronBallHit_(false),
-	drawableMng_(new DrawableManager()),
-	isHit_(false),
-	preHit_(false),
 	ActorBase()
 {
-
 }
 
 CharactorBase::~CharactorBase(void)
@@ -62,8 +57,6 @@ void CharactorBase::Update(void)
 	// 各キャラクターごとの更新後処理
  	UpdateProcessPost();
 
-	drawableMng_->Update();
-
 }
 
 void CharactorBase::Draw(void)
@@ -76,9 +69,6 @@ void CharactorBase::Draw(void)
 
 	// 視野描画
 	DrawViewRange();
-
-	//エフェクトの描画
-	drawableMng_->Draw();
 
 }
 
@@ -211,207 +201,114 @@ void CharactorBase::CollisionGravity(void)
 		stepJump_ = 0.0f;
 	}
 }
-//
-//void CharactorBase::CollisionCapsule(void)
-//{
-//	// カプセルコライダ
-//	int capsuleType = static_cast<int>(COLLIDER_TYPE::CAPSULE);
-//
-//	// カプセルコライダが無ければ処理を抜ける
-//	if (ownColliders_.count(capsuleType) == 0) return;
-//
-//	// カプセルコライダ情報
-//	ColliderCapsule* colliderCapsule =
-//		dynamic_cast<ColliderCapsule*>(ownColliders_.at(capsuleType));
-//	if (colliderCapsule == nullptr) return;
-//
-//	// 登録されている衝突物を全てチェック
-//	for (const auto& hitCol : hitColliders_)
-//	{
-//		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
-//		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-//		
-//		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-//		// ==========================================
-//		// 1. 対象の形状が「3Dモデル」の場合の処理
-//		// ==========================================
-//		if (hitCol->GetShape() == ColliderBase::SHAPE::MODEL)
-//		{
-//			// 派生クラスへキャスト
-//			const ColliderModel* colliderModel =
-//				dynamic_cast<const ColliderModel*>(hitCol);
-//
-//			// モデル以外は処理を飛ばす
-//			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
-//
-//			if (colliderModel == nullptr) continue;
-//
-//			// 指定された回数と距離で三角形の法線方向に押し戻す
-//			colliderCapsule->PushBackAlongNormal(
-//				colliderModel,
-//				transform_,
-//				CNT_TRY_COLLISION,
-//				COLLISION_BACK_DIS,
-//				true,
-//				false
-//			);
-//		}
-//
-//		// ==========================================
-//		// 2. 対象の形状が「球体（SPHERE）」の場合の処理（すべての鉄球に適用）
-//		// ==========================================
-//		else if (hitCol->GetShape() == ColliderBase::SHAPE::SPHERE)
-//		{
-//			const ColliderSphere* colliderSphere =
-//				dynamic_cast<const ColliderSphere*>(hitCol);
-//
-//			if (colliderSphere == nullptr) continue;
-//
-//			// 1. カプセルの芯（線分）と球体の中心（点）の最短距離を計算
-//			float distance = Segment_Point_MinLength(
-//				colliderCapsule->GetPosTop(),
-//				colliderCapsule->GetPosDown(),
-//				colliderSphere->GetPos()
-//			);
-//
-//			// 2. お互いの半径の合計（衝突限界距離）を計算
-//			float totalRadius = colliderCapsule->GetRadius() + colliderSphere->GetRadius();
-//
-//			// 3. 最短距離が半径の合計未満であれば「衝突している」と判定
-//			if (distance < totalRadius)
-//			{
-//				if (!isIronBallHit_) 
-//				{
-//					isIronBallHit_ = true; int effectHandle = ResourceManager::GetInstance().Load(ResourceManager::SRC::DAMAGE).handleId_;
-//					//エフェクトを再生 
-//					drawableMng_->PlayEffect(effectHandle, transform_.pos, EFFECT_SCALE);
-//				}
-//			
-//
-//				// 4. 押し戻す方向ベクトルを計算（吸い付き防止のためカプセル中心を使用）
-//				VECTOR pushDir = VSub(colliderCapsule->GetCenter(), colliderSphere->GetPos());
-//
-//				// 安全対策：万が一完全に重なってゼロベクトルになった場合
-//				if (VSize(pushDir) <= 0.0001f)
-//				{
-//					pushDir = transform_.GetForward(); // 自身の正面方向に弾く
-//				}
-//				else
-//				{
-//					pushDir = VNorm(pushDir); // 正規化
-//				}
-//
-//				// 5. めめり込んでいる分の長さを計算（押し戻し量）
-//				float pushLength = totalRadius - distance;
-//
-//				// 6. 自身の座標（transform_.pos）を、球体の外側へ向けて押し戻す
-//				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength * 5.0f));
-//			}
-//			else
-//			{
-//				//エフェクト判定
-//				isIronBallHit_ = false;
-//			}
-//		}
-//	}
-//}
 
 void CharactorBase::CollisionCapsule(void)
 {
+	// カプセルコライダ
 	int capsuleType = static_cast<int>(COLLIDER_TYPE::CAPSULE);
 
+	// カプセルコライダが無ければ処理を抜ける
 	if (ownColliders_.count(capsuleType) == 0) return;
 
+	// カプセルコライダ情報
 	ColliderCapsule* colliderCapsule =
 		dynamic_cast<ColliderCapsule*>(ownColliders_.at(capsuleType));
-
 	if (colliderCapsule == nullptr) return;
 
-	// 今フレーム鉄球に当たったか
-	bool hitIronBall = false;
-
+	// 登録されている衝突物を全てチェック
 	for (const auto& hitCol : hitColliders_)
 	{
-		if (hitCol->GetTag() == ColliderBase::TAG::STAGE)
+		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
+		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+		
+		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+		// ==========================================
+		// 1. 対象の形状が「3Dモデル」の場合の処理
+		// ==========================================
+		if (hitCol->GetShape() == ColliderBase::SHAPE::MODEL)
 		{
-			continue;
+			// 派生クラスへキャスト
+			const ColliderModel* colliderModel =
+				dynamic_cast<const ColliderModel*>(hitCol);
+
+			// モデル以外は処理を飛ばす
+			if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
+
+			if (colliderModel == nullptr) continue;
+
+			// 指定された回数と距離で三角形の法線方向に押し戻す
+			colliderCapsule->PushBackAlongNormal(
+				colliderModel,
+				transform_,
+				CNT_TRY_COLLISION,
+				COLLISION_BACK_DIS,
+				true,
+				false
+			);
 		}
 
-		//-----------------------------------
-		// 球コライダ
-		//-----------------------------------
-		if (hitCol->GetShape() == ColliderBase::SHAPE::SPHERE)
+		// ==========================================
+		// 2. 対象の形状が「球体（SPHERE）」の場合の処理（すべての鉄球に適用）
+		// ==========================================
+		else if (hitCol->GetShape() == ColliderBase::SHAPE::SPHERE)
 		{
 			const ColliderSphere* colliderSphere =
 				dynamic_cast<const ColliderSphere*>(hitCol);
 
-			if (colliderSphere == nullptr)
-			{
-				continue;
-			}
+			if (colliderSphere == nullptr) continue;
 
-			float distance =
-				Segment_Point_MinLength(
-					colliderCapsule->GetPosTop(),
-					colliderCapsule->GetPosDown(),
-					colliderSphere->GetPos());
+			// 1. カプセルの芯（線分）と球体の中心（点）の最短距離を計算
+			float distance = Segment_Point_MinLength(
+				colliderCapsule->GetPosTop(),
+				colliderCapsule->GetPosDown(),
+				colliderSphere->GetPos()
+			);
 
-			float totalRadius =
-				colliderCapsule->GetRadius()
-				+ colliderSphere->GetRadius();
+			// 2. お互いの半径の合計（衝突限界距離）を計算
+			float totalRadius = colliderCapsule->GetRadius() + colliderSphere->GetRadius();
 
+			// 3. 最短距離が半径の合計未満であれば「衝突している」と判定
 			if (distance < totalRadius)
 			{
-				// 今フレーム当たってる
-				hitIronBall = true;
-
-				// 衝突開始時だけ
 				if (!isIronBallHit_)
 				{
-					int effectHandle =
-						ResourceManager::GetInstance()
-						.Load(ResourceManager::SRC::DAMAGE)
-						.handleId_;
+					isIronBallHit_ = true;
 
-					drawableMng_->PlayEffect(
-						effectHandle,
-						transform_.pos,
-						EFFECT_SCALE);
+					//int effectHandle =
+					//	ResourceManager::GetInstance().GetEffect(EFFECT_ID::IRONBALL_HIT);
+
+					//EffectManager::GetInstance().Play(
+					//	effectHandle,
+					//	transform_.pos);
 				}
+			
 
-				//--------------------------------
-				// 押し戻し
-				//--------------------------------
+				// 4. 押し戻す方向ベクトルを計算（吸い付き防止のためカプセル中心を使用）
+				VECTOR pushDir = VSub(colliderCapsule->GetCenter(), colliderSphere->GetPos());
 
-				VECTOR pushDir =
-					VSub(
-						colliderCapsule->GetCenter(),
-						colliderSphere->GetPos());
-
+				// 安全対策：万が一完全に重なってゼロベクトルになった場合
 				if (VSize(pushDir) <= 0.0001f)
 				{
-					pushDir = transform_.GetForward();
+					pushDir = transform_.GetForward(); // 自身の正面方向に弾く
 				}
 				else
 				{
-					pushDir = VNorm(pushDir);
+					pushDir = VNorm(pushDir); // 正規化
 				}
 
-				float pushLength =
-					totalRadius - distance;
+				// 5. めめり込んでいる分の長さを計算（押し戻し量）
+				float pushLength = totalRadius - distance;
 
-				transform_.pos =
-					VAdd(
-						transform_.pos,
-						VScale(
-							pushDir,
-							pushLength * 5.0f));
+				// 6. 自身の座標（transform_.pos）を、球体の外側へ向けて押し戻す
+				transform_.pos = VAdd(transform_.pos, VScale(pushDir, pushLength * 5.0f));
+			}
+			else
+			{
+				//エフェクト判定
+				isIronBallHit_ = false;
 			}
 		}
 	}
-
-	// 最後に更新
-	isIronBallHit_ = hitIronBall;
 }
 
 void CharactorBase::DrawShadow(void)

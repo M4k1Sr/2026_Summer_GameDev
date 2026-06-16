@@ -2,12 +2,8 @@
 
 EffectBase::EffectBase(
     int effectHandle,
-<<<<<<< HEAD
-    VECTOR pos, VECTOR scale)
-=======
     VECTOR pos,
     bool isLoop)
->>>>>>> main
 {
     effectHandle_ = effectHandle;
     isLoop_ = isLoop;
@@ -21,7 +17,6 @@ EffectBase::EffectBase(
         pos.x,
         pos.y,
         pos.z);
-
 
     isEnd_ = false;
 }

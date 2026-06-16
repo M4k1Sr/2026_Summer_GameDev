@@ -10,11 +10,7 @@ public:
     (
         int effectHandle,
         VECTOR pos,
-<<<<<<< HEAD
-		VECTOR scale
-=======
         bool isLoop = false
->>>>>>> main
     );
 
     virtual ~EffectBase() = default;

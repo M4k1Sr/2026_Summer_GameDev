@@ -3,8 +3,8 @@
 #include "StaminaUi.h"
 
 StaminaUi::StaminaUi(float* stamina, float* maxStamina, Vector2 pos)
-    : stamina_(stamina)
-    , maxStamina_(maxStamina)
+    : stamina_()
+    , maxStamina_()
     , UiBase(pos)
     , radius_(30.0f)
     , blinkTimer_(0.0f)

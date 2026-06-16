@@ -17,6 +17,8 @@
 #include "../../Collider/ColliderModel.h"
 #include "../../../Renderer/UiRenderer/UIElements/StaminaUi.h"
 #include "../../../Renderer/UiRenderer/UIElements/SweatUi.h"
+#include "../../../Renderer/UiRenderer/Manager/UIManager.h"
+#include "../../../Renderer/UiRenderer/Base/UiBase.h"
 #include "../../../Application.h"
 #include "Player.h"
 #include "../../../Manager/ServiceLocator.h"
@@ -37,12 +39,6 @@ Player::Player(void)
 
 Player::~Player(void)
 {
-	//// ジャンプ音停止
-	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_JUMP);
-	//// 駆け足音停止
-	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
-	//// ダッシュ音停止
-	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
 }
 
 void Player::Draw(void)
@@ -278,6 +274,7 @@ void Player::DrawViewRange(void)
 
 void Player::InitUi(void)
 {
+	//ServiceLocator::GetUi().AddUiBase(new StaminaUi(stamina_,maxStamina_,Vector2()));
 }
 
 void Player::ProcessMove(void)
@@ -430,12 +427,12 @@ void Player::ProcessJump(void)
 	// 1. 入力状態の取得
 	// ----------------------------------------------------
 	// 押した瞬間 (Trigger Down)
-	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE) ||
-		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE)
+		|| ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
 	// 押しっぱなしの継続状態 (Press / New ※InputManagerの仕様に合わせて継続判定の関数にしてください)
-	bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE) ||
-		ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+		bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE)
+	|| ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
 	// ----------------------------------------------------
 	// 2. 初期ジャンプ処理（押した瞬間）
