@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock.cpp" />
+    <ClCompile Include="Src\Object\UI\UI.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
@@ -72,7 +76,6 @@
     <ClCompile Include="Src\Manager\SceneManager.cpp" />
     <ClCompile Include="Src\Object\Common\AnimationController.cpp" />
     <ClCompile Include="Src\Object\Common\Transform.cpp" />
-    <ClCompile Include="Src\Object\UI\UI.cpp" />
     <ClCompile Include="Src\Scene\DebugScene.cpp" />
     <ClCompile Include="Src\Scene\GameOvereScene.cpp" />
     <ClCompile Include="Src\Scene\GameScene.cpp" />
@@ -81,13 +84,19 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\SweatUi.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UiBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\SweatUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Manager\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Renderer\DrawableManager.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\Clock.h" />
+    <ClInclude Include="Src\Manager\DIContainer.h" />
+    <ClInclude Include="Src\Object\UI\UI.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
@@ -141,7 +150,6 @@
     <ClInclude Include="Src\Manager\SceneManager.h" />
     <ClInclude Include="Src\Object\Common\AnimationController.h" />
     <ClInclude Include="Src\Object\Common\Transform.h" />
-    <ClInclude Include="Src\Object\UI\UI.h" />
     <ClInclude Include="Src\Scene\DebugScene.h" />
     <ClInclude Include="Src\Scene\GameOvereScene.h" />
     <ClInclude Include="Src\Scene\GameScene.h" />
@@ -150,10 +158,11 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\SweatUi.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UiBillboardBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\SweatUi.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Manager\UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

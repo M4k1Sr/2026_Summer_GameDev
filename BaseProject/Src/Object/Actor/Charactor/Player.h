@@ -1,7 +1,6 @@
 #pragma once
 #include "./CharactorBase.h"
 class ObjectManager;
-class DrawableManager;
 
 class Player : public CharactorBase
 {
@@ -77,9 +76,6 @@ private:
 
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
-
-	// UI
-	DrawableManager* drawableMng_;
 
 	// ギミック動作カウンタ
 	float gimmickCnt_;

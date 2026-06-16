@@ -68,12 +68,13 @@ private:
     std::unordered_map<SOUND_ID, SoundResource*> soundMap_;
     std::unordered_set<BANK_ID> loadedBanks_;
 
-    SoundManager(void);
-    ~SoundManager(void) {}
-
 public:
     static void CreateInstance(void);
     static SoundManager& GetInstance(void);
+
+
+    SoundManager(void);
+    ~SoundManager(void) {}
 
     void Init(void);
     void Destroy(void);

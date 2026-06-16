@@ -1,6 +1,6 @@
 #pragma once
 #include <DxLib.h>
-#include "../../Common/Vector2.h"
+#include "../../../Common/Vector2.h"
 
 class UiBase {
 public:

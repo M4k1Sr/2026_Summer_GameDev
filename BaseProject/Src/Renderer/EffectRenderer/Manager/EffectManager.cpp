@@ -1,6 +1,5 @@
 #include "EffectManager.h"
-#include "EffectBase.h"
-
+#include "../Base/EffectBase.h"
 #include <algorithm>
 
 EffectManager* EffectManager::instance_ = nullptr;
@@ -33,26 +32,23 @@ void EffectManager::Play(
     int effectHandle,
     VECTOR pos)
 {
-    effects_.push_back(
-        std::make_unique<EffectBase>(
-            effectHandle,
-            pos));
+    effects_.emplace_back(effectHandle, pos);
 }
 
 void EffectManager::Update()
 {
     for (auto& effect : effects_)
     {
-        effect->Update();
+        effect.Update();
     }
 
     effects_.erase(
         std::remove_if(
             effects_.begin(),
             effects_.end(),
-            [](const std::unique_ptr<EffectBase>& effect)
+            [](const EffectBase& effect)
             {
-                return effect->IsEnd();
+                return effect.IsEnd();
             }),
         effects_.end());
 

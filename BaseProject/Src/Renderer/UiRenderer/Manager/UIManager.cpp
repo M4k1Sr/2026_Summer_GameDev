@@ -1,20 +1,24 @@
-#include "DrawableManager.h"
+#include "UIManager.h"
 
-DrawableManager::DrawableManager()
+UIManager::UIManager()
 {
 }
 
-DrawableManager::~DrawableManager()
+UIManager::~UIManager()
 {
     Release();
 }
 
+<<<<<<< HEAD:BaseProject/Src/Renderer/DrawableManager.cpp
 void DrawableManager::PlayEffect(int effectHandle, VECTOR pos, VECTOR scale)
 {
     effects_.push_back(std::make_unique<EffectBase>(effectHandle, pos, scale));
 }
 
 void DrawableManager::AddUiBase(UiBase* ui)
+=======
+void UIManager::AddUiBase(UiBase* ui)
+>>>>>>> m4k:BaseProject/Src/Renderer/UiRenderer/Manager/UIManager.cpp
 {
     // UIのソート
     uiList_.push_back(ui);
@@ -25,7 +29,7 @@ void DrawableManager::AddUiBase(UiBase* ui)
         });
 }
 
-void DrawableManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
+void UIManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
 {
     // UIビルボードのソート
     uiBillboardList_.push_back(uiBillboard);
@@ -37,7 +41,7 @@ void DrawableManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
 
 }
 
-void DrawableManager::Update()
+void UIManager::Update()
 {
     for (auto* ui : uiList_)
     {
@@ -65,7 +69,7 @@ void DrawableManager::Update()
      UpdateEffekseer3D();
     }
 
-void DrawableManager::Draw()
+void UIManager::Draw()
 {
 
     //エフェクト描画
@@ -81,10 +85,10 @@ void DrawableManager::Draw()
         uiBillboard->Draw();
     }
 
-    
+
 }
 
-void DrawableManager::Release()
+void UIManager::Release()
 {
     for (auto* ui : uiList_)
     {
