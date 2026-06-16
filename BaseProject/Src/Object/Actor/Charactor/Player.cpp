@@ -19,6 +19,7 @@
 #include "../../../Renderer/UiRenderer/UIElements/SweatUi.h"
 #include "../../../Application.h"
 #include "Player.h"
+#include "../../../Manager/ServiceLocator.h"
 
 Player::Player(void)
 	:
@@ -36,12 +37,12 @@ Player::Player(void)
 
 Player::~Player(void)
 {
-	// ジャンプ音停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_JUMP);
-	// 駆け足音停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
-	// ダッシュ音停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
+	//// ジャンプ音停止
+	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_JUMP);
+	//// 駆け足音停止
+	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
+	//// ダッシュ音停止
+	//SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
 }
 
 void Player::Draw(void)
@@ -136,6 +137,13 @@ void Player::Draw(void)
 
 void Player::Release(void)
 {
+	// ジャンプ音停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_JUMP);
+	// 駆け足音停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_MOVE);
+	// ダッシュ音停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_DASH);
+
 }
 
 
@@ -348,42 +356,42 @@ void Player::ProcessMove(void)
 			stamina_ -= STAMINA_DASH_DECREASE * scnMng_.GetDeltaTime();
 
 			// ダッシュに切り替わった瞬間に歩き音を止める
-			if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
+			if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
 			{
-				SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
+				ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_MOVE);
 			}
 
 			// ダッシュ音が鳴っていなければ再生
-			if (!SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_DASH))
+			if (!ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_DASH))
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_DASH);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_DASH);
 			}
 		}
 		else
 		{
 			// 歩きに切り替わった瞬間にダッシュ音を止める
-			if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_DASH))
+			if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_DASH))
 			{
-				SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
+				ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_DASH);
 			}
 
 			// 歩き音が鳴っていなければ再生
-			if (!SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
+			if (!ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_MOVE);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_MOVE);
 			}
 		}
 	}
 	else
 	{
 		// 停止時は両方確実に止める
-		if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_MOVE))
+		if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
 		{
-			SoundManager::GetInstance().StopEvent(SOUND_ID::SE_MOVE);
+			ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_MOVE);
 		}
-		if (SoundManager::GetInstance().IsPlaying(SOUND_ID::SE_DASH))
+		if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_DASH))
 		{
-			SoundManager::GetInstance().StopEvent(SOUND_ID::SE_DASH);
+			ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_DASH);
 		}
 	}
 
@@ -434,7 +442,7 @@ void Player::ProcessJump(void)
 	// ----------------------------------------------------
 	if (isJumpTrg && !isJump_)
 	{
-		SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_JUMP);
+		ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_JUMP);
 
 		// 接地状態から跳ね上がる瞬間の初速を与える
 		jumpPow_ = VScale(AsoUtility::DIR_U, POW_JUMP_INIT);

@@ -1,6 +1,5 @@
 #pragma once
 #include "SceneBase.h"
-#include "../Manager/DIContainer.h"
 #include "../Framework.h"
 class IronBall;
 class UI;
@@ -56,11 +55,9 @@ public:
 
 private:
 
-	// DIコンテナ
-	DIContainer container_;
-
 	// エフェクトマネージャ
 	EffectManager* effectMng_;
+
 	// サウンドマネージャ
 	SoundManager* soundMng_;
 

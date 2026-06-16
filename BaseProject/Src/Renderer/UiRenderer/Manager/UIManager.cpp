@@ -9,16 +9,7 @@ UIManager::~UIManager()
     Release();
 }
 
-<<<<<<< HEAD:BaseProject/Src/Renderer/DrawableManager.cpp
-void DrawableManager::PlayEffect(int effectHandle, VECTOR pos, VECTOR scale)
-{
-    effects_.push_back(std::make_unique<EffectBase>(effectHandle, pos, scale));
-}
-
-void DrawableManager::AddUiBase(UiBase* ui)
-=======
 void UIManager::AddUiBase(UiBase* ui)
->>>>>>> m4k:BaseProject/Src/Renderer/UiRenderer/Manager/UIManager.cpp
 {
     // UIのソート
     uiList_.push_back(ui);
@@ -27,6 +18,7 @@ void UIManager::AddUiBase(UiBase* ui)
         {
             return a->drawOrder_ < b->drawOrder_;
         });
+
 }
 
 void UIManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
@@ -52,29 +44,10 @@ void UIManager::Update()
     {
         uiBillboard->Update();
     }
-
-    //エフェクト
-     for (auto& effect : effects_) 
-     { 
-         effect->Update(); 
-     }
-
-     //エラーが起きたエフェクトを削除
-     effects_.erase(std::remove_if(effects_.begin(), effects_.end(), [](const std::unique_ptr<EffectBase>& effect)
-         {
-             return effect->IsEnd(); 
-         })
-         , effects_.end());
-     //エフェクトを更新
-     UpdateEffekseer3D();
-    }
+}
 
 void UIManager::Draw()
 {
-
-    //エフェクト描画
-    DrawEffekseer3D();
-
     for (auto* ui : uiList_)
     {
         ui->Draw();

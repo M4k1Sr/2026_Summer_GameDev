@@ -13,6 +13,7 @@
 #include "../Object/Actor/SkyDome.h"
 #include "../Renderer/PostEffectRenderer/Src/Manager/PostEffectManager.h"
 #include "../Application.h"
+#include "../Manager/ServiceLocator.h"
 
 
 TitleScene::TitleScene(void)
@@ -36,11 +37,7 @@ TitleScene::TitleScene(void)
 
 TitleScene::~TitleScene(void)
 {
-	// タイトルBGM停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::BGM_TITLE);
-	// タイトルBGM停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CURSOR);
+	Release();
 }
 
 void TitleScene::Init(void)
@@ -105,7 +102,7 @@ void TitleScene::Init(void)
 	skyDome_->Init();
 
 	// BGM再生
-	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_TITLE, true);
+	ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_TITLE);
 
 	// ポストエフェクト
 	effect_ = new PostEffectManager();
@@ -122,7 +119,10 @@ void TitleScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
-			SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			// クリック音
+			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
+
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 
 		}
@@ -183,6 +183,12 @@ void TitleScene::Release(void)
 	// スカイドーム解放
 	skyDome_->Release();
 	delete skyDome_;
+
+	// BGM停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_TITLE);
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CURSOR);
+
 }
 
 
@@ -225,7 +231,8 @@ void TitleScene::IsPause(void)
 			if(!isBgmPlay_)
 			{
 				//カーソルがあったときに音を鳴らす
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CURSOR);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CURSOR);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CURSOR);
 				isBgmPlay_ = true;
 			}
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
@@ -234,7 +241,8 @@ void TitleScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isEnd_ = false;
 			}
 		}
@@ -244,7 +252,8 @@ void TitleScene::IsPause(void)
 			if (!isBgmPlay_)
 			{
 				//カーソルがあったときに音を鳴らす
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CURSOR);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CURSOR);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CURSOR);
 				isBgmPlay_ = true;
 			}
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
@@ -253,7 +262,8 @@ void TitleScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();

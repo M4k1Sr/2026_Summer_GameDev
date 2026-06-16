@@ -20,6 +20,7 @@
 #include "../../../../Application.h"
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
+#include "../../../../Manager/ServiceLocator.h"
 
 
 BossPixie::BossPixie(const BossBase::BossData& data)
@@ -386,6 +387,9 @@ void BossPixie::ChangeStateDown(void)
 
 void BossPixie::ChangeStateEnd(void)
 {
+	// サウンド停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_ENEMY_FIRE);
+
 	stateUpdate_ = std::bind(&BossPixie::UpdateEnd, this);
 }
 
@@ -437,7 +441,7 @@ void BossPixie::UpdateThrow(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			throwCnt_--;	  // 残弾数を減らす
@@ -467,7 +471,8 @@ void BossPixie::UpdateAttackWave(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			waveAttackCnt_--;	  // 残弾数を減らす

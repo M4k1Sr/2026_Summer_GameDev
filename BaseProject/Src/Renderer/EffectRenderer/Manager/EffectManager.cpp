@@ -2,61 +2,45 @@
 #include "../Base/EffectBase.h"
 #include <algorithm>
 
-EffectManager* EffectManager::instance_ = nullptr;
-
-void EffectManager::CreateInstance()
+EffectManager::EffectManager()
 {
-    if (instance_ == nullptr)
-    {
-        instance_ = new EffectManager();
-    }
 }
 
-void EffectManager::Destroy()
+EffectManager::~EffectManager()
 {
-    delete instance_;
-    instance_ = nullptr;
+	effects_.clear();
 }
 
-EffectManager& EffectManager::GetInstance()
+void EffectManager::Play()
 {
-    return *instance_;
-}
+    auto itr = std::remove_if(effects_.begin(), effects_.end(),
+        [](EffectBase* t) {
 
-void EffectManager::Init()
-{
-    effects_.clear();
-}
-
-void EffectManager::Play(
-    int effectHandle,
-    VECTOR pos)
-{
-    effects_.emplace_back(effectHandle, pos);
-}
-
-void EffectManager::Update()
-{
-    for (auto& effect : effects_)
-    {
-        effect.Update();
-    }
-
-    effects_.erase(
-        std::remove_if(
-            effects_.begin(),
-            effects_.end(),
-            [](const EffectBase& effect)
-            {
-                return effect.IsEnd();
-            }),
-        effects_.end());
+            bool flag = t->Update();
+            if (flag) delete t;
+            return flag;
+        }
+    );
+    effects_.erase(itr, effects_.end());
 
     UpdateEffekseer3D();
 }
 
 void EffectManager::Draw()
 {
-    // Effekseer‚Ì•`‰æ‚ğÀs
     DrawEffekseer3D();
 }
+void EffectManager::Add(EffectBase* effect)
+{
+	effects_.emplace_back(effect);
+}
+
+void EffectManager::Clear()
+{
+	for (const auto& i : effects_) {
+		delete i;
+	}
+	effects_.clear();
+}
+
+

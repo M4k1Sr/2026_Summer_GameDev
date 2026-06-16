@@ -8,6 +8,9 @@
 #include "./BossOrc.h"
 #include "./BossDiablo.h"
 #include "./BossManager.h"
+#include "../../../../Manager/SoundManager.h"
+#include "../../../../Manager/ServiceLocator.h"
+
 BossManager::BossManager(void)
 {
 }
@@ -18,6 +21,8 @@ BossManager::~BossManager(void)
 
 void BossManager::Init(void)
 {
+	ServiceLocator::GetSound().LoadBank(BANK_ID::BOSS);
+
 	// オブジェクトデータ読み込み
 	LoadCsvData();
 
@@ -51,6 +56,10 @@ void BossManager::Release(void)
 		delete boss;
 	}
 	bosses_.clear();
+
+	// ボスサウンド削除
+	ServiceLocator::GetSound().UnloadBank(BANK_ID::BOSS);
+
 }
 
 void BossManager::SetPlayer(Player* player)

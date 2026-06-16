@@ -7,26 +7,23 @@ class EffectManager
 {
 public:
 
-    static void CreateInstance();
-    static void Destroy();
-    static EffectManager& GetInstance();
+    //static void CreateInstance();
+    //static void Destroy();
+    //static EffectManager& GetInstance();
 
-    EffectManager() = default;
-    ~EffectManager() = default;
+    EffectManager();
+    ~EffectManager();
+    
+    void Play();
 
-    void Init();
-    void Update();
     void Draw();
 
-    void Play(
-        int effectHandle,
-        VECTOR pos);
+    void Add(EffectBase* effect);
 
+    void Clear();
 
 private:
 
-    static EffectManager* instance_;
-
-    std::vector<EffectBase> effects_;
+    std::vector<EffectBase*> effects_;
 
 };
