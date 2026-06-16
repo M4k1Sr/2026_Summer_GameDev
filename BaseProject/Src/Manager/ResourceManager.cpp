@@ -129,9 +129,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "goal.png");
 	resourcesMap_.emplace(SRC::GOAL, res);
 
-	//ダメージエフェクト
-	res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/damage.efkefc");
-	resourcesMap_.emplace(SRC::DAMAGE, res);
+	// 鉄球ヒットエフェクト
+	res = new RES(RES_T::EFFECT, PATH_EFF + "Gimmick/IronBall_Hit.efkefc");
+	resourcesMap_.emplace(SRC::IRONBALL_HIT, res);
 
 	//ゴールデバッグ用
 	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");

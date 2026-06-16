@@ -11,6 +11,10 @@
 #include "../../../Utility/AsoUtility.h"
 #include "../../../Application.h"
 #include "CharactorBase.h"
+#include "../../../Renderer/EffectRenderer/Manager/EffectManager.h"
+#include "../../../Renderer/EffectRenderer/Base/EffectBase.h"
+#include "../../../Manager/SoundManager.h"
+#include "../../../Manager/ServiceLocator.h"
 
 CharactorBase::CharactorBase(void)
 	:
@@ -274,12 +278,11 @@ void CharactorBase::CollisionCapsule(void)
 				{
 					isIronBallHit_ = true;
 
-					//int effectHandle =
-					//	ResourceManager::GetInstance().GetEffect(EFFECT_ID::IRONBALL_HIT);
+					VECTOR effectPos = { transform_.pos.x,transform_.pos.y + 50,transform_.pos.z };
+					int effectHandle = resMng_.Load
+						(ResourceManager::SRC::IRONBALL_HIT).handleId_;
 
-					//EffectManager::GetInstance().Play(
-					//	effectHandle,
-					//	transform_.pos);
+					ServiceLocator::GetEffect().Add(new EffectBase(effectHandle, effectPos,30.0f));
 				}
 			
 
