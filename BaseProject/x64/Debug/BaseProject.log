@@ -41,6 +41,22 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.3520
 \Src\Renderer\EffectRenderer\EffectBase.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Renderer\EffectRenderer\EffectBase.cpp':No such file or directory
   (ソース ファイル '/Src/Renderer/EffectRenderer/EffectBase.cpp' をコンパイルしています)
   
-  GameClearScene.cpp
+  SceneManager.cpp
+  GameScene.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(431,9): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(449,39): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(2093,68): error C2036: 'EffectBase *': サイズが不明です。
+  (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(2093,68):
+      テンプレートインスタンス化コンテキスト (最初に最も古いもの) は
+          C:\Users\2416036\Desktop\AGS\BaseProject\Src\Renderer\EffectRenderer\Manager\EffectManager.h(30,29):
+          コンパイル対象の クラス テンプレート インスタンス化 'std::vector<EffectBase,std::allocator<EffectBase>>' のリファレンスを確認してください
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(2081,23):
+          クラス テンプレート メンバー関数 'void std::vector<EffectBase,std::allocator<EffectBase>>::_Tidy(void) noexcept' のコンパイル中
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(830,14):
+              'std::vector<EffectBase,std::allocator<EffectBase>>::~vector' の 'std::vector<EffectBase,std::allocator<EffectBase>>::_Tidy' への最初の参照を参照してください
+              C:\Users\2416036\Desktop\AGS\BaseProject\Src\Renderer\EffectRenderer\Manager\EffectManager.h(14,5):
+              'EffectManager::EffectManager' の 'std::vector<EffectBase,std::allocator<EffectBase>>::~vector' への最初の参照を参照してください
+  
   UIManager.cpp
   コードを生成中...

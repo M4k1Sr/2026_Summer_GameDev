@@ -3,7 +3,6 @@
 #include <algorithm>
 #include "../Base/UiBase.h"
 #include "../Base/UiBillboardBase.h"
-#include "../../EffectRenderer/Base/EffectBase.h"
 
 class UIManager
 {
@@ -22,5 +21,4 @@ private:
 
     std::vector<UiBillboardBase*> uiBillboardList_;
 
-    std::vector< std::unique_ptr<EffectBase> > effects_;
-};
+ };
