@@ -7,6 +7,7 @@
 class UIManager
 {
 public:
+
     UIManager();
     ~UIManager();
     void AddUiBase(UiBase* ui);

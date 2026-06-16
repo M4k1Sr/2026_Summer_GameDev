@@ -5,7 +5,6 @@
 #include "../Object/Common/Transform.h"
 #include"../Manager/SoundManager.h"
 #include "../Manager/InputManager.h"
-#include "../Manager/SceneManager.h"
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Resource.h"
 #include "../Manager/Camera.h"
@@ -14,6 +13,7 @@
 #include "../Application.h"
 #include "TitleScene.h"
 #include<EffekseerForDXLib.h>
+#include "../Manager/ServiceLocator.h"
 
 GameOvereScene::GameOvereScene()
 	:
@@ -21,20 +21,20 @@ GameOvereScene::GameOvereScene()
 	mosPosX_(0),
 	mosPosY_(0)
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 }
 
 GameOvereScene::~GameOvereScene()
 {
-	// タイトルBGM停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
+	Release();
 }
 
 void GameOvereScene::Init(void)
 {
 	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
+
+	// BGM再生
+	ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_GAMEOVER, true);
 
 }
 
@@ -49,13 +49,16 @@ void GameOvereScene::Update(void)
 		//ゲームシーンへ遷移
 		if (ins.IsTrgDown(KEY_INPUT_SPACE))
 		{
-			SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 		}
 
 		if (ins.IsTrgDown(KEY_INPUT_0))
 		{
-			SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
+
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		}
 
@@ -83,6 +86,9 @@ void GameOvereScene::Draw(void)
 
 void GameOvereScene::Release(void)
 {
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_GAMEOVER);
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
+
 }
 
 void GameOvereScene::IsPause(void)
@@ -129,7 +135,8 @@ void GameOvereScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isEnd_ = false;
 			}
 		}
@@ -142,7 +149,9 @@ void GameOvereScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
+
 				// Effekseerを終了する。
 				Effkseer_End();
 				DxLib_End();

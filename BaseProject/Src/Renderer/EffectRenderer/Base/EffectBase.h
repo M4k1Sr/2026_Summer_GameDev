@@ -9,14 +9,17 @@ public:
     EffectBase
     (
         int effectHandle,
-        VECTOR pos
+        VECTOR pos,
+        bool isLoop = false
     );
 
     virtual ~EffectBase() = default;
 
-    virtual void Update();
+    virtual bool Update();
 
     bool IsEnd() const;
+
+    void SetPosition(VECTOR pos);
 
 private:
 
@@ -24,4 +27,7 @@ private:
     int playHandle_;
 
     bool isEnd_;
+
+    // ループ再生フラグ
+    bool isLoop_;
 };

@@ -22,6 +22,7 @@
 #include "../Application.h"
 #include"../Manager/ItemManager.h"
 #include<EffekseerForDXLib.h>
+#include "../Manager/ServiceLocator.h"
 
 GameScene::GameScene(void)
 	:
@@ -47,26 +48,15 @@ GameScene::GameScene(void)
 	clearTime_(0),
 	SceneBase()
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 }
 
 GameScene::~GameScene(void)
 {
-	// タイトルBGM停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
+	Release();
 }
 
 void GameScene::Init(void)
 {
-	// DIコンテナに各種マネージャを登録
-	container_.Register<SoundManager>(Lifecycle::Singleton);	// サウンドマネージャはシングルトンで管理
-	//container_.Register<UiManager>(Lifecycle::Singleton);		// UIマネージャはシングルトンで管理
-	container_.Register<EffectManager>(Lifecycle::Singleton);	// エフェクトマネージャはシングルトンで管理
-
-	soundMng_ = container_.Resolve<SoundManager>();
-	//uiMng_ = container_.Resolve<UiManager>();
-	effectMng_ = container_.Resolve<EffectManager>();
 
 	// ステージ初期化
 	stage_ = new Stage();
@@ -75,10 +65,6 @@ void GameScene::Init(void)
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
-
-	//エフェクト初期化
-	//EffectManager::GetInstance().Init();
-
 
 	// プレイヤー初期化
 	player_ = new Player();
@@ -398,7 +384,8 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isPause_ = false;
 			}
 		}
@@ -411,7 +398,8 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();
