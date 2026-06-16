@@ -52,7 +52,6 @@ GameScene::GameScene(void)
 
 GameScene::~GameScene(void)
 {
-	Release();
 }
 
 void GameScene::Init(void)
