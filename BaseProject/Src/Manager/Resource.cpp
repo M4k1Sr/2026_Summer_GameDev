@@ -71,8 +71,8 @@ void Resource::Load(void)
 		handleId_ = MV1LoadModel(path_.c_str());
 		break;
 
-	case Resource::TYPE::EFFEKSEER:
-
+	case Resource::TYPE::EFFECT:
+		// エフェクト
 		handleId_ = LoadEffekseerEffect(path_.c_str());
 		break;
 
@@ -111,7 +111,7 @@ void Resource::Release(void)
 	}
 		break;
 
-	case Resource::TYPE::EFFEKSEER:
+	case Resource::TYPE::EFFECT:
 
 		DeleteEffekseerEffect(handleId_);
 		break;
