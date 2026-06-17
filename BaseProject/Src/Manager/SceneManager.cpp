@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "./SoundManager.h"
+#include "../Manager/ServiceLocator.h"
 
 SceneManager* SceneManager::instance_ = nullptr;
 
@@ -56,8 +57,10 @@ void SceneManager::Init(void)
 	// 3D用の設定
 	Init3D();
 
-	// サウンドロード(Bankにあるもの)
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
+	//// サウンドロード(Bankにあるもの)
+	//SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
+
+	ServiceLocator::GetSound().LoadBank(BANK_ID::COMMON);
 
 	// 初期シーンの設定
 	DoChangeScene(SCENE_ID::TITLE);
@@ -243,9 +246,9 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	ResourceManager::GetInstance().Release();
 
 	// COMMONは常駐なので、ステージ1のバンクをアンロード
-	if (sceneId_ == SCENE_ID::STAGE_1)      SoundManager::GetInstance().UnloadBank(BANK_ID::STAGE_1);
-	if (sceneId_ == SCENE_ID::STAGE_2)      SoundManager::GetInstance().UnloadBank(BANK_ID::STAGE_2);
-	if (sceneId_ == SCENE_ID::STAGE_3)      SoundManager::GetInstance().UnloadBank(BANK_ID::STAGE_3);
+	if (sceneId_ == SCENE_ID::STAGE_1)      ServiceLocator::GetSound().UnloadBank(BANK_ID::STAGE_1);
+	if (sceneId_ == SCENE_ID::STAGE_2)      ServiceLocator::GetSound().UnloadBank(BANK_ID::STAGE_2);
+	if (sceneId_ == SCENE_ID::STAGE_3)      ServiceLocator::GetSound().UnloadBank(BANK_ID::STAGE_3);
 
 	// シーンを変更する
 	sceneId_ = sceneId;
@@ -262,7 +265,7 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 		scene_ = new TitleScene();
 		break;
 	case SCENE_ID::STAGE_1:
-		SoundManager::GetInstance().LoadBank(BANK_ID::STAGE_1);
+		ServiceLocator::GetSound().LoadBank(BANK_ID::STAGE_1);
 		scene_ = new GameScene();
 		break;
 	case SCENE_ID::GAMEOVER:

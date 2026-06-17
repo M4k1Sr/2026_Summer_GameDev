@@ -108,6 +108,7 @@ protected:
 
 private:
 
+	bool isIronBallHit_;
 
 
 };

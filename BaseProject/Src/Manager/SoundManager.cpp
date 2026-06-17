@@ -1,22 +1,22 @@
 #include <DxLib.h>
 #include "SoundManager.h"
 #include "../Application.h"
-SoundManager* SoundManager::instance_ = nullptr;
-
-void SoundManager::CreateInstance(void)
-{
-    if (instance_ == nullptr)
-    {
-        instance_ = new SoundManager();
-    }
-    instance_->Init();
-}
-
-SoundManager& SoundManager::GetInstance(void)
-{
-    return *instance_;
-}
-
+//SoundManager* SoundManager::instance_ = nullptr;
+//
+//void SoundManager::CreateInstance(void)
+//{
+//    if (instance_ == nullptr)
+//    {
+//        instance_ = new SoundManager();
+//    }
+//    instance_->Init();
+//}
+//
+//SoundManager& SoundManager::GetInstance(void)
+//{
+//    return *instance_;
+//}
+//
 // コンストラクタ
 SoundManager::SoundManager(void)
 {
@@ -42,9 +42,15 @@ void SoundManager::Init(void)
     // BOSS = ボスが使う攻撃の音、リアクション系、ボスギミック系など
     // 各STAGE = ステージ固有のサウンド、ギミック系など
     
-    //// --- タイトル関係 ---
+    //// --- シーンBGM関係 ---
     res = new SoundResource(SOUND_ID::BGM_TITLE, PATH_SE + "BGM/Title.mp3", false);
     soundMap_[SOUND_ID::BGM_TITLE] = res;
+    bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
+    res = new SoundResource(SOUND_ID::BGM_GAMECLEAR, PATH_SE + "BGM/Title.mp3", false);
+    soundMap_[SOUND_ID::BGM_GAMECLEAR] = res;
+    bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
+    res = new SoundResource(SOUND_ID::BGM_GAMEOVER, PATH_SE + "BGM/Title.mp3", false);
+    soundMap_[SOUND_ID::BGM_GAMEOVER] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
     // ジャンプSE
@@ -182,6 +188,4 @@ void SoundManager::Destroy(void)
         delete pair.second;
     }
     soundMap_.clear();
-
-    delete instance_;
 }

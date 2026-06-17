@@ -4,7 +4,6 @@
 #include"../Manager/SceneManager.h"
 #include "../Object/Common/Transform.h"
 #include "../Manager/InputManager.h"
-#include "../Manager/SceneManager.h"
 #include"../Manager/SoundManager.h"
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Resource.h"
@@ -16,6 +15,7 @@
 #include "../Application.h"
 #include "TitleScene.h"
 #include<EffekseerForDXLib.h>
+#include "../Manager/ServiceLocator.h"
 
 GameClearScene::GameClearScene(void)
 	:
@@ -23,14 +23,11 @@ GameClearScene::GameClearScene(void)
 	mosPosX_(0),
 	mosPosY_(0)
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 }
 
 GameClearScene::~GameClearScene(void)
 {
-	// タイトルBGM停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
+	Release();
 }
 
 void GameClearScene::Init(void)
@@ -45,6 +42,10 @@ void GameClearScene::Init(void)
 
 	// Saveでclearされるので再読み込み
 	Ranking::GetIns().Load();
+
+	// BGM再生
+	ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_GAMECLEAR, true);
+
 }
 
 void GameClearScene::Update(void)
@@ -130,6 +131,10 @@ void GameClearScene::Draw(void)
 
 void GameClearScene::Release(void)
 {
+	// BGM停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_GAMECLEAR);
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
+
 }
 
 void GameClearScene::IsPause(void)
@@ -177,7 +182,9 @@ void GameClearScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK, true);
+
 				isEnd_ = false;
 			}
 		}
@@ -190,7 +197,9 @@ void GameClearScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK, true);
+
 				// Effekseerを終了する。
 				Effkseer_End();
 				DxLib_End();

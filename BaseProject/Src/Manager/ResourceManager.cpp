@@ -125,9 +125,25 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "wall.png");
 	resourcesMap_.emplace(SRC::WALL, res);
 
-	//
+	//ゴールデバッグ用
 	res = new RES(RES_T::IMG, PATH_IMG + "goal.png");
 	resourcesMap_.emplace(SRC::GOAL, res);
+
+	// 鉄球ヒットエフェクト
+	res = new RES(RES_T::EFFECT, PATH_EFF + "Gimmick/IronBall_Hit.efkefc");
+	resourcesMap_.emplace(SRC::IRONBALL_HIT, res);
+
+	// ピクシー炎エフェクト
+	res = new RES(RES_T::EFFECT, PATH_EFF + "Enemy/Pixie_Ball.efkefc");
+	resourcesMap_.emplace(SRC::PIXIE_FIRE, res);
+
+	// ピクシー炎エフェクト
+	res = new RES(RES_T::EFFECT, PATH_EFF + "Enemy/Pixie_Fire.efkefc");
+	resourcesMap_.emplace(SRC::PIXIE_WAVE, res);
+
+	//ゴールデバッグ用
+	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
+	resourcesMap_.emplace(SRC::SWEAT, res);
 
 
 }

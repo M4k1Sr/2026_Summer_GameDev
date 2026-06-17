@@ -1,7 +1,6 @@
 #pragma once
 #include "./CharactorBase.h"
 class ObjectManager;
-class DrawableManager;
 
 class Player : public CharactorBase
 {
@@ -81,9 +80,6 @@ private:
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
 
-	// UI
-	DrawableManager* drawableMgr_;
-
 	// ギミック動作カウンタ
 	float gimmickCnt_;
 	bool isGimmick_;
@@ -91,12 +87,17 @@ private:
 	// ギミック動作数カウンタ
 	int currentCnt_;
 
+	// ダッシュスタミナ
+	float stamina_;
+	float maxStamina_;	// 最大スタミナ
+
+	// 汗UIの座標
+	VECTOR sweatPos_;
+
 	// プレイヤー座標
-	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
 	//static constexpr VECTOR PLAYER_POS = { -800.0f, 0.0f, 700.0f };	// スタート位置
-	static constexpr VECTOR PLAYER_POS = { 2000.0f, 0.0f, -750.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 1000.0f, 0.0f, 880.0f };
-	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };//{ 0.0f, 0.0f, -800.0f };
+	static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
+	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
@@ -149,9 +150,8 @@ private:
 	// ダッシュスタミナ
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
 
-	// ダッシュスタミナ
-	float stamina_;
-	float maxStamina_;	// 最大スタミナ
+	// Ui初期化
+	void InitUi(void);
 
 	//// 操作
 	void ProcessMove(void);
@@ -166,6 +166,9 @@ private:
 
 	//ゲームクリア判定用のフラグ
 	bool isClear_;
+
+	//鉄球との衝突判定
+	bool isIronBallHit_;
 
 };
 

@@ -11,19 +11,16 @@
 #include"../../Manager/SoundManager.h"
 #include "../../Application.h"
 #include "Stage.h"
+#include "../../Manager/ServiceLocator.h"
 
 Stage::Stage(void)
 	:
 	ActorBase()
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::STAGE_1);
 }
 
 Stage::~Stage(void)
 {
-	// サウンド停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_ENEMY_FIRE);
 }
 
 void Stage::Update(void)
@@ -42,6 +39,8 @@ void Stage::Draw(void)
 
 void Stage::Release(void)
 {
+	//// サウンド停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_STAGE1);
 }
 
 void Stage::InitLoad(void)
@@ -92,5 +91,7 @@ void Stage::InitAnimation(void)
 
 void Stage::InitPost(void)
 {
-	SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_STAGE1, true);
+	//SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_STAGE1, true);
+	ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_STAGE1, true);
+
 }

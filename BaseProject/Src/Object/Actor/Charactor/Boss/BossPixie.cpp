@@ -20,6 +20,7 @@
 #include "../../../../Application.h"
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
+#include "../../../../Manager/ServiceLocator.h"
 
 
 BossPixie::BossPixie(const BossBase::BossData& data)
@@ -149,9 +150,12 @@ void BossPixie::InitPost(void)
 
 void BossPixie::UpdateProcess(void)
 {
-	// 索敵・注視関数
-	Search();
-	LookPlayer();
+	if (!isDead_)
+	{
+		// 索敵・注視関数
+		Search();
+		LookPlayer();
+	}
 
 	if (player_ == nullptr)
 	{
@@ -214,7 +218,7 @@ void BossPixie::DrawViewRange(void)
 	VECTOR pos3 = VAdd(pos0, VScale(right, VIEW_RANGE));
 
 	//// 視野の描画
-	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
+	//pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
 	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
 	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
 	//DrawLine3D(pos0, pos1, 0xffff00);
@@ -386,6 +390,9 @@ void BossPixie::ChangeStateDown(void)
 
 void BossPixie::ChangeStateEnd(void)
 {
+	// サウンド停止
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_ENEMY_FIRE);
+
 	stateUpdate_ = std::bind(&BossPixie::UpdateEnd, this);
 }
 
@@ -437,7 +444,7 @@ void BossPixie::UpdateThrow(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			throwCnt_--;	  // 残弾数を減らす
@@ -467,7 +474,8 @@ void BossPixie::UpdateAttackWave(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
 			waveAttackCnt_--;	  // 残弾数を減らす
@@ -480,7 +488,7 @@ void BossPixie::UpdateAttackWave(void)
 
 	if (animationController_->IsEnd())
 	{
-		ChangeState(STATE::CHARGE);
+		ChangeState(STATE::ATTACK_END);
 	}
 }
 
@@ -511,12 +519,10 @@ void BossPixie::UpdateDamage(void)
 
 void BossPixie::UpdateDown(void)
 {
-	
 }
 
 void BossPixie::UpdateEnd(void)
 {
-	// 特になし？
 }
 
 void BossPixie::Phase(void)

@@ -7,9 +7,14 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
+<<<<<<< HEAD
 #include "../Object/Actor/StageBase.h"
 #include "../Object/Actor/Stage1.h"
 #include "../Object/Actor/Stage2.h"
+=======
+#include "../Object/Actor/Stage.h"
+#include"../Renderer/EffectRenderer/Manager/EffectManager.h"
+>>>>>>> m4k
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -23,6 +28,7 @@
 #include "../Application.h"
 #include"../Manager/ItemManager.h"
 #include<EffekseerForDXLib.h>
+#include "../Manager/ServiceLocator.h"
 
 GameScene::GameScene(void)
 	:
@@ -53,23 +59,28 @@ GameScene::GameScene(void)
 	stageState_(StageState::STAGE_1),
 	SceneBase()
 {
-	//サウンド
-	SoundManager::GetInstance().LoadBank(BANK_ID::COMMON);
 }
 
 GameScene::~GameScene(void)
 {
-	// タイトルBGM停止
-	SoundManager::GetInstance().StopEvent(SOUND_ID::SE_CLICK);
+	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_STAGE1);
+	Release();
 }
 
 void GameScene::Init(void)
 {
+<<<<<<< HEAD
 	
+=======
+
+	// ステージ初期化
+	stage_ = new Stage();
+	stage_->Init();
+
+>>>>>>> m4k
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
-
 
 	// プレイヤー初期化
 	player_ = new Player();
@@ -190,7 +201,7 @@ void GameScene::Update(void)
 {
 
 	auto const& ins = InputManager::GetInstance();
-
+	
 	// ESC押下時ポーズ画面に遷移
 	if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
 	{
@@ -200,6 +211,7 @@ void GameScene::Update(void)
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
+<<<<<<< HEAD
 		// ★ 1. まずフェードの更新を行う
 		bool isFadeFinished = UpdateFade();
 
@@ -251,6 +263,12 @@ void GameScene::Update(void)
 		}
 
 		// --- ここから下は通常時（FadeState::NONE）のみ実行される ---
+=======
+		//エフェクト
+	//	EffectManager::GetInstance().Update();
+
+		//クリアタイム加算
+>>>>>>> m4k
 		clearTime_++;
 		SetMouseDispFlag(false);
 
@@ -400,9 +418,9 @@ void GameScene::Release(void)
 	ironBall_->Release();
 	delete ironBall_;
 
-	// ItemManager解放
-	itemMng_->Release();
-	delete itemMng_;
+	//// ItemManager解放
+	//itemMng_->Release();
+	//delete itemMng_;
 
 	DeleteGraph(pauseImg_);
 
@@ -451,7 +469,8 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム続行
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isPause_ = false;
 			}
 		}
@@ -464,7 +483,8 @@ void GameScene::IsPause(void)
 			//マウスの左クリックを検知したらゲーム終了
 			if (GetMouseInput() & MOUSE_INPUT_LEFT)
 			{
-				SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+				ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();

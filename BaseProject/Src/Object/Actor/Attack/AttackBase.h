@@ -130,11 +130,27 @@ private:
 	// 不透明度（1.0：くっきり ? 0.0：完全透明）
 	float alpha_;
 
+	// 攻撃エフェクトID
+	int fireEffectId_;
+	int waveEffectId_;
+	int arrowEffectId_;
+	int chargeAttackEffectId_;
+	int axeThrowEffectId_;
+
+
 	// 攻撃処理関数
 	void ProcessFireBall(void);
 	void ProcessWaveAttack(void);
 	void ProcessArrowAttack(void);
 	void ProcessChargeAttack(void);
 	void ProcessAxeThrowAttack(void);
+
+	// 攻撃更新関数
+	void UpdateFireBall(void);
+	void UpdateWaveAttack(void);
+	void UpdateArrowAttack(void);
+	void UpdateChargeAttack(void);
+	void UpdateAxeThrowAttack(void);
+
 
 };
