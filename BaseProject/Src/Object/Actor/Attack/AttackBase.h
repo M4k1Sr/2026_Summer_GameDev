@@ -130,9 +130,6 @@ private:
 	// 不透明度（1.0：くっきり ? 0.0：完全透明）
 	float alpha_;
 
-	// 攻撃エフェクトID
-	int fireEffectId_;
-
 	// 攻撃処理関数
 	void ProcessFireBall(void);
 	void ProcessWaveAttack(void);

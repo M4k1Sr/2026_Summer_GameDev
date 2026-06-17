@@ -1,6 +1,5 @@
 #pragma once
-#include <DxLib.h>
-#include <map>
+#include<DxLib.h>
 #include <vector>
 class EffectBase;
 
@@ -14,17 +13,17 @@ public:
 
     EffectManager();
     ~EffectManager();
-
+    
     void Play();
 
-    int Add(EffectBase* effect);
-    EffectBase* GetEffect(int id);
-    void Remove(int id);
+    void Draw();
+
+    void Add(EffectBase* effect);
 
     void Clear();
 
 private:
 
-    std::map<int, EffectBase*> effects_;
-    int nextId_ = 0;
+    std::vector<EffectBase*> effects_;
+
 };

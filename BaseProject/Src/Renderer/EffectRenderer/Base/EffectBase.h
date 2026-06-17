@@ -10,7 +10,6 @@ public:
     (
         int effectHandle,
         VECTOR pos,
-        float scale,
         bool isLoop = false
     );
 

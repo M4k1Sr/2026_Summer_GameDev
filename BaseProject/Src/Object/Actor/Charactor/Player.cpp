@@ -45,8 +45,6 @@ void Player::Draw(void)
 {
 	CharactorBase::Draw();
 
-	ServiceLocator::GetUi().Draw();
-
 //#ifdef _DEBUG
 //
 //	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
@@ -276,11 +274,7 @@ void Player::DrawViewRange(void)
 
 void Player::InitUi(void)
 {
-<<<<<<< HEAD
 	//ServiceLocator::GetUi().AddUiBase(new StaminaUi(stamina_,maxStamina_,Vector2()));
-=======
-	ServiceLocator::GetUi().AddUiBase(new StaminaUi(&stamina_,&maxStamina_,Vector2(850,500)));
->>>>>>> m4k
 }
 
 void Player::ProcessMove(void)

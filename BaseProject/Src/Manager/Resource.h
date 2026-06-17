@@ -14,7 +14,7 @@ public:
 		IMG, /*"単体画像"*/
 		IMGS,/* "複数画像(LoadDivGraph)"*/
 		MODEL, /*"モデル"*/
-		EFFECT /*"エフェクト(EFFEKSEER)"*/
+		EFFEKSEER /*"エフェクト(EFFEKSEER)"*/
 	};
 
 	// コンストラクタ

@@ -55,7 +55,7 @@ public:
 	static constexpr float VIEW_ANGLE = 80.0f;
 
 	// 視野の広さ
-	static constexpr float VIEW_RANGE = 2500.0f;
+	static constexpr float VIEW_RANGE = 1300.0f;
 
 	// コンストラクタ
 	BossBase(const BossBase::BossData& data);
