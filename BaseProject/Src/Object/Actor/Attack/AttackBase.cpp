@@ -32,7 +32,7 @@ AttackBase::AttackBase(const AttackBase::AttackParam& data, const VECTOR& startP
 	alpha_ = 1.0f;
 	fadeTimer_ = 0.0f;
 	isFading_ = false;
-	scale_ = 30.0f;
+	scale_ = 20.0f;
 	fireEffectId_ = -1;
 }
 
@@ -45,24 +45,6 @@ AttackBase::~AttackBase(void)
 
 void AttackBase::Update()
 {
-	// 基底クラスの更新処理
-	if (fireEffectId_ == -1) {
-		// まだ生成していない場合
-		int effectHandle = resMng_.Load(ResourceManager::SRC::PIXIE_FIRE).handleId_;
-
-		// ここで Add してIDを受け取る
-		fireEffectId_ = ServiceLocator::GetEffect().Add(new EffectBase(effectHandle, transform_.pos, scale_, true));
-	}
-	else {
-		// 生成済みなら、位置だけ更新する
-		auto* effect = ServiceLocator::GetEffect().GetEffect(fireEffectId_);
-		if (effect != nullptr) {
-			effect->SetPosition(transform_.pos);
-		}
-		else {
-			fireEffectId_ = -1; // 消えていたらリセット
-		}
-	}
 
 	// 随時追加
 	switch (type_)
@@ -189,11 +171,6 @@ void AttackBase::ProcessFireBall(void)
 {
 	// 座標処理
 	transform_.pos = VAdd(transform_.pos, VScale(moveDir_, param_.speed));
-	//int effectHandle = resMng_.Load
-	//(ResourceManager::SRC::PIXIE_FIRE).handleId_;
-	
-	//// エフェクト
-	//ServiceLocator::GetEffect().Add(new EffectBase(effectHandle, transform_.pos, 30.0f));
 }
 
 void AttackBase::ProcessWaveAttack(void)
@@ -212,5 +189,62 @@ void AttackBase::ProcessChargeAttack(void)
 }
 
 void AttackBase::ProcessAxeThrowAttack(void)
+{
+}
+
+void AttackBase::UpdateFireBall(void)
+{
+	// 更新処理
+	if (fireEffectId_ == -1) {
+		// まだ生成していない場合
+		int effectHandle = resMng_.Load(ResourceManager::SRC::PIXIE_FIRE).handleId_;
+
+		// ここで Add してIDを受け取る
+		fireEffectId_ = ServiceLocator::GetEffect().Add(new EffectBase(effectHandle, transform_.pos, scale_, false));
+	}
+	else {
+		// 生成済みなら、位置だけ更新する
+		auto* effect = ServiceLocator::GetEffect().GetEffect(fireEffectId_);
+		if (effect != nullptr) {
+			effect->SetPosition(transform_.pos);
+		}
+		else {
+			fireEffectId_ = -1; // 消えていたらリセット
+		}
+	}
+
+}
+
+void AttackBase::UpdateWaveAttack(void)
+{
+	// 更新処理
+	if (waveEffectId_ == -1) {
+		// まだ生成していない場合
+		int effectHandle = resMng_.Load(ResourceManager::SRC::PIXIE_FIRE).handleId_;
+
+		// ここで Add してIDを受け取る
+		waveEffectId_ = ServiceLocator::GetEffect().Add(new EffectBase(effectHandle, transform_.pos, scale_, false));
+	}
+	else {
+		// 生成済みなら、位置だけ更新する
+		auto* effect = ServiceLocator::GetEffect().GetEffect(waveEffectId_);
+		if (effect != nullptr) {
+			effect->SetPosition(transform_.pos);
+		}
+		else {
+			waveEffectId_ = -1; // 消えていたらリセット
+		}
+	}
+}
+
+void AttackBase::UpdateArrowAttack(void)
+{
+}
+
+void AttackBase::UpdateChargeAttack(void)
+{
+}
+
+void AttackBase::UpdateAxeThrowAttack(void)
 {
 }

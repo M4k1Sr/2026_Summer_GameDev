@@ -13,7 +13,7 @@ EffectManager::~EffectManager()
 
 void EffectManager::Play()
 {
-    for (auto itr = effects_.begin(); itr != effects_.end(); ) {
+     for (auto itr = effects_.begin(); itr != effects_.end(); ) {
         if (itr->second->Update()) {
             delete itr->second;           
             itr = effects_.erase(itr);    

@@ -132,6 +132,11 @@ private:
 
 	// 攻撃エフェクトID
 	int fireEffectId_;
+	int waveEffectId_;
+	int arrowEffectId_;
+	int chargeAttackEffectId_;
+	int axeThrowEffectId_;
+
 
 	// 攻撃処理関数
 	void ProcessFireBall(void);
@@ -139,5 +144,13 @@ private:
 	void ProcessArrowAttack(void);
 	void ProcessChargeAttack(void);
 	void ProcessAxeThrowAttack(void);
+
+	// 攻撃更新関数
+	void UpdateFireBall(void);
+	void UpdateWaveAttack(void);
+	void UpdateArrowAttack(void);
+	void UpdateChargeAttack(void);
+	void UpdateAxeThrowAttack(void);
+
 
 };
