@@ -111,6 +111,9 @@ void Application::Run(void)
 	while (ProcessMessage() == 0 )
 	{
 
+		// — ‰æ–Ê‚ğƒNƒŠƒA
+		ClearDrawScreen();
+
 		inputManager.Update();
 		sceneManager.Update();
 		ServiceLocator::GetEffect().Play();
