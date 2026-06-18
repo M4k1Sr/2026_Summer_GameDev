@@ -316,6 +316,9 @@ void GameScene::Release(void)
 	objMng_->Release();
 	delete objMng_;
 
+	ui_->Release();
+	delete ui_;
+
 	// ƒvƒŒƒCƒ„[‰ð•ú
 	player_->Release();
 	delete player_;
@@ -328,8 +331,7 @@ void GameScene::Release(void)
 	attackMng_->Release();
 	delete attackMng_;
 
-	ui_->Release();
-	delete ui_;
+	
 
 	ironBall_->Release();
 	delete ironBall_;

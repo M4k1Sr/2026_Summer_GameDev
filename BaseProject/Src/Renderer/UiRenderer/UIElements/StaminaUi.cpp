@@ -33,6 +33,11 @@ void StaminaUi::Update()
 void StaminaUi::Draw()
 {
 
+    if (!stamina_ || !maxStamina_)
+    {
+        return;
+    }
+
     unsigned int color;
     float cx = pos_.x;
     float cy = pos_.y;

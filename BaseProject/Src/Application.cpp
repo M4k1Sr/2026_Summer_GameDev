@@ -117,7 +117,7 @@ void Application::Run(void)
 		ServiceLocator::GetUi().Update();
 
 		sceneManager.Draw();
-		ServiceLocator::GetUi().Draw();
+		//ServiceLocator::GetUi().Draw();
 		/*EffectManager::GetInstance().Update();
 		EffectManager::GetInstance().Draw();*/
 #ifdef _DEBUG
