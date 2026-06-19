@@ -366,6 +366,8 @@ void GameScene::IsPause(void)
 		DrawBox(400, 600, 1600, 800, 0xffffff, false);
 		DrawFormatString(670, 670, 0xffffff, "タイトルに戻りますか?");
 
+		GetMousePoint(&mosPosX_, &mosPosY_);
+
 		//マウスポインタを表示状態にする
 		SetMouseDispFlag(TRUE);
 
@@ -417,8 +419,7 @@ void GameScene::IsPause(void)
 		//マウスポインタの座標を取得
 		GetMousePoint(&mosPosX_, &mosPosY_);
 
-		//マウスポインタの座標を取得
-		GetMousePoint(&mosPosX_, &mosPosY_);
+		
 
 		//この中にマウスカーソルがあるかを判定
 		bool continueGame =
