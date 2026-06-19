@@ -298,7 +298,7 @@ void Player::ProcessMove(void)
 		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
-		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
+		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash = true; }
 	}
 	else
 	{
