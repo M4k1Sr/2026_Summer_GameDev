@@ -133,13 +133,19 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::EFFECT, PATH_EFF + "Gimmick/IronBall_Hit.efkefc");
 	resourcesMap_.emplace(SRC::IRONBALL_HIT, res);
 
+	// ピクシー炎エフェクト
+	res = new RES(RES_T::EFFECT, PATH_EFF + "Enemy/Pixie_Ball.efkefc");
+	resourcesMap_.emplace(SRC::PIXIE_FIRE, res);
+
+	// ピクシー炎エフェクト
+	res = new RES(RES_T::EFFECT, PATH_EFF + "Enemy/Pixie_Fire.efkefc");
+	resourcesMap_.emplace(SRC::PIXIE_WAVE, res);
+
 	//ゴールデバッグ用
 	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
 	resourcesMap_.emplace(SRC::SWEAT, res);
 
-	//タイマーエフェクト
-	/*res = new RES(RES_T::EFFEKSEER, PATH_EFF + "Player/timer.efkefc");
-	resourcesMap_.emplace(SRC::TIMER, res);*/
+
 }
 
 void ResourceManager::Release(void)

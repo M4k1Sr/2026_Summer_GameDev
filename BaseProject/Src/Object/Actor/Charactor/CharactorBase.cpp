@@ -284,7 +284,6 @@ void CharactorBase::CollisionCapsule(void)
 
 					ServiceLocator::GetEffect().Add(new EffectBase(effectHandle, effectPos,30.0f));
 				}
-			
 
 				// 4. 押し戻す方向ベクトルを計算（吸い付き防止のためカプセル中心を使用）
 				VECTOR pushDir = VSub(colliderCapsule->GetCenter(), colliderSphere->GetPos());

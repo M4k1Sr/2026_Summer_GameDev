@@ -1,4 +1,4 @@
-#include "EffectManager.h"
+#include "./EffectManager.h"
 #include "../Base/EffectBase.h"
 #include <algorithm>
 
@@ -8,39 +8,51 @@ EffectManager::EffectManager()
 
 EffectManager::~EffectManager()
 {
-	effects_.clear();
+    Clear();
 }
 
 void EffectManager::Play()
 {
-    auto itr = std::remove_if(effects_.begin(), effects_.end(),
-        [](EffectBase* t) {
-
-            bool flag = t->Update();
-            if (flag) delete t;
-            return flag;
+     for (auto itr = effects_.begin(); itr != effects_.end(); ) {
+        if (itr->second->Update()) {
+            delete itr->second;           
+            itr = effects_.erase(itr);    
         }
-    );
-    effects_.erase(itr, effects_.end());
-
-    UpdateEffekseer3D();
+        else {
+            ++itr;           
+        }
+    }
 }
 
-void EffectManager::Draw()
+int EffectManager::Add(EffectBase* effect)
 {
-    DrawEffekseer3D();
+    int id = nextId_++;
+    effects_[id] = effect;
+    return id;
 }
-void EffectManager::Add(EffectBase* effect)
+
+EffectBase* EffectManager::GetEffect(int id)
 {
-	effects_.emplace_back(effect);
+    auto itr = effects_.find(id);
+    if (itr == effects_.end()) return nullptr;
+    return itr->second;
+}
+
+void EffectManager::Remove(int id)
+{
+    auto itr = effects_.find(id);
+    if (itr != effects_.end()) {
+        delete itr->second; // ƒƒ‚ƒŠ‰ğ•ú
+        effects_.erase(itr); // ƒ}ƒbƒv‚©‚çæ‚èœ‚­
+    }
 }
 
 void EffectManager::Clear()
 {
-	for (const auto& i : effects_) {
-		delete i;
-	}
-	effects_.clear();
+    for (auto& [id, effect] : effects_) {
+        delete effect;
+    }
+    effects_.clear();
 }
 
 
