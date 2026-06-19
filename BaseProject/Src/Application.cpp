@@ -111,13 +111,16 @@ void Application::Run(void)
 	while (ProcessMessage() == 0 )
 	{
 
+		// — ‰æ–Ê‚ðƒNƒŠƒA
+		ClearDrawScreen();
+
 		inputManager.Update();
 		sceneManager.Update();
 		ServiceLocator::GetEffect().Play();
 		ServiceLocator::GetUi().Update();
 
 		sceneManager.Draw();
-		ServiceLocator::GetUi().Draw();
+		//ServiceLocator::GetUi().Draw();
 		/*EffectManager::GetInstance().Update();
 		EffectManager::GetInstance().Draw();*/
 #ifdef _DEBUG

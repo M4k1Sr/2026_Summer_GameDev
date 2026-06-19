@@ -10,6 +10,13 @@ class TitleScene : public SceneBase
 
 public:
 
+	// ポーズ選択肢
+	enum class PauseSelect 
+	{ 
+		CONTINUE,
+		EXIT
+	};
+
 	// コンストラクタ
 	TitleScene(void);
 
@@ -109,5 +116,8 @@ private:
 
 	//音の処理
 	bool isBgmPlay_;
+
+	//ポーズ選択肢
+	PauseSelect pauseSelect_;
 
 };

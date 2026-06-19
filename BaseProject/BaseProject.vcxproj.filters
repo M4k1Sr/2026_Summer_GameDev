@@ -159,5 +159,6 @@
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Monotone.hlsl" />
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Mosaic.hlsl" />
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\ScanLineShader.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Noise.hlsl" />
   </ItemGroup>
 </Project>
