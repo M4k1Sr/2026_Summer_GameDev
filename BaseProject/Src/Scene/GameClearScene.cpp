@@ -56,7 +56,10 @@ void GameClearScene::Update(void)
 		auto& ins = InputManager::GetInstance();
 
 		//ÉQÅ[ÉÄÉVÅ[ÉìÇ÷ëJà⁄
-		if (ins.IsTrgDown(KEY_INPUT_SPACE))
+		if (ins.IsTrgDown(KEY_INPUT_SPACE)||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::DOWN))
 		{
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 		}
@@ -68,6 +71,18 @@ void GameClearScene::Update(void)
 				InputManager::JOYPAD_BTN::START))
 		{
 			isEnd_ = true;
+		}
+
+
+		if (ins.IsTrgDown(KEY_INPUT_0) ||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::RIGHT))
+		{
+			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
+
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		}
 	}
 
@@ -256,7 +271,7 @@ void GameClearScene::IsPause(void)
 				Effkseer_End();
 				DxLib_End();
 			}
-		}
+		} 
 
 	}
 

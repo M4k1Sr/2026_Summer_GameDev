@@ -47,14 +47,20 @@ void GameOvereScene::Update(void)
 		auto& ins = InputManager::GetInstance();
 
 		//ÉQÅ[ÉÄÉVÅ[ÉìÇ÷ëJà⁄
-		if (ins.IsTrgDown(KEY_INPUT_SPACE))
+		if (ins.IsTrgDown(KEY_INPUT_SPACE)||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::DOWN))
 		{
 			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 		}
 
-		if (ins.IsTrgDown(KEY_INPUT_0))
+		if (ins.IsTrgDown(KEY_INPUT_0) ||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::RIGHT) )
 		{
 			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
