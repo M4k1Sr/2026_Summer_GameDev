@@ -1,28 +1,28 @@
 #include <DxLib.h>
 #include <cmath>
-#include "SweatUi.h"
+#include "SweatUI.h"
 #include "../../../Manager/ResourceManager.h"
 
-SweatUi::SweatUi(VECTOR pos)
-        : UiBillboardBase(pos)
+SweatUI::SweatUI(VECTOR pos)
+        : UIBillboardBase(pos)
 {
     drawOrder_ = 10;
-    drawUiH_ = ResourceManager::GetInstance().Load(ResourceManager::SRC::SWEAT).handleId_;
+    drawUIH_ = ResourceManager::GetInstance().Load(ResourceManager::SRC::SWEAT).handleId_;
 
 }
 
-SweatUi::~SweatUi()
+SweatUI::~SweatUI()
 {
 }
 
-void SweatUi::Update()
+void SweatUI::Update()
 {
 }
 
-void SweatUi::Draw()
+void SweatUI::Draw()
 {
-    //DrawBillboard3D(pos_, 1.0f, 0.5f, 10.0f, 0.0f, drawUiH_, true);
-    DrawGraph3D(pos_.x, pos_.y, pos_.z, drawUiH_, true);
+    //DrawBillboard3D(pos_, 1.0f, 0.5f, 10.0f, 0.0f, drawUIH_, true);
+    DrawGraph3D(pos_.x, pos_.y, pos_.z, drawUIH_, true);
 
-	//DrawGraph((int)pos_.x, (int)pos_.y, drawUiH_, true);
+	//DrawGraph((int)pos_.x, (int)pos_.y, drawUIH_, true);
 }

@@ -1,11 +1,11 @@
 #pragma once
-#include "../Base/UiBase.h"
+#include "../Base/UIBase.h"
 
-class StaminaUi : public UiBase
+class StaminaUI : public UIBase
 {
 public:
-    StaminaUi(float* stamina, float* maxStamina,Vector2 pos);
-    ~StaminaUi();
+    StaminaUI(float* stamina, float* maxStamina,Vector2 pos);
+    ~StaminaUI();
 
     void Update() override;
     void Draw() override;

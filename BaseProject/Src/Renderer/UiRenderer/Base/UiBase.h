@@ -2,17 +2,17 @@
 #include <DxLib.h>
 #include "../../../Common/Vector2.h"
 
-class UiBase {
+class UIBase {
 public:
-    UiBase(Vector2 pos);
-    virtual ~UiBase();
+    UIBase(Vector2 pos);
+    virtual ~UIBase ();
     virtual void Update() = 0;
     virtual void Draw() = 0;
     int drawOrder_;
 
 protected:
 
-    int drawUiH_;   // Ui画像モデル
+    int drawUIH_;   // UI画像モデル
     Vector2 pos_;    // 座標
     Vector2 scl_;    // スケール
     Vector2 rot_;    // 角度

@@ -2,16 +2,16 @@
 #include "ServiceLocator.h"
 #include "SoundManager.h"
 #include "../Renderer/EffectRenderer/Manager/EffectManager.h"
-#include "../Renderer/UiRenderer/Manager/UIManager.h"
+#include "../Renderer/UIRenderer/Manager/UIManager.h"
 
 // ê√ìIÉÅÉìÉoÇÃé¿ëÃ
 SoundManager* ServiceLocator::sound_ = nullptr;
 EffectManager* ServiceLocator::effect_ = nullptr;
-UIManager* ServiceLocator::ui_ = nullptr;
+UIManager* ServiceLocator::UI_ = nullptr;
 
 void ServiceLocator::Provide(SoundManager* sound) { sound_ = sound; }
 void ServiceLocator::Provide(EffectManager* effect) { effect_ = effect; }
-void ServiceLocator::Provide(UIManager* ui) { ui_ = ui; }
+void ServiceLocator::Provide(UIManager* UI) { UI_ = UI; }
 
 SoundManager& ServiceLocator::GetSound()
 {
@@ -25,8 +25,8 @@ EffectManager& ServiceLocator::GetEffect()
     return *effect_;
 }
 
-UIManager& ServiceLocator::GetUi()
+UIManager& ServiceLocator::GetUI()
 {
-    assert(ui_ != nullptr && "UiManager is not provided!");
-    return *ui_;
+    assert(UI_ != nullptr && "UIManager is not provided!");
+    return *UI_;
 }

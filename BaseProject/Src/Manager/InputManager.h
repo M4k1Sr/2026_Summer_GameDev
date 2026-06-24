@@ -51,6 +51,7 @@ public:
 		DOWN,
 		R_TRIGGER,
 		L_TRIGGER,
+		START,
 		MAX
 	};
 

@@ -3,6 +3,7 @@
 EffectBase::EffectBase(
     int effectHandle,
     VECTOR pos,
+    float scale,
     bool isLoop)
 {
     effectHandle_ = effectHandle;
@@ -12,11 +13,14 @@ EffectBase::EffectBase(
         PlayEffekseer3DEffect(
             effectHandle_);
 
+    SetScalePlayingEffekseer3DEffect(playHandle_, scale, scale, scale);
+
     SetPosPlayingEffekseer3DEffect(
         playHandle_,
         pos.x,
         pos.y,
         pos.z);
+
 
     isEnd_ = false;
 }

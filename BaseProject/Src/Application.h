@@ -65,7 +65,7 @@ private:
 	// サービスマネージャ
 	SoundManager* soundMng_;	// サウンド
 	EffectManager* effectMng_;	// エフェクト
-	UIManager* uiMng_;			// UI
+	UIManager* UIMng_;			// UI
 
 	// 静的インスタンス
 	static Application* instance_;

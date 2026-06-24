@@ -150,9 +150,12 @@ void BossPixie::InitPost(void)
 
 void BossPixie::UpdateProcess(void)
 {
-	// çıìGÅEíçéãä÷êî
-	Search();
-	LookPlayer();
+	if (!isDead_)
+	{
+		// çıìGÅEíçéãä÷êî
+		Search();
+		LookPlayer();
+	}
 
 	if (player_ == nullptr)
 	{
@@ -215,7 +218,7 @@ void BossPixie::DrawViewRange(void)
 	VECTOR pos3 = VAdd(pos0, VScale(right, VIEW_RANGE));
 
 	//// éãñÏÇÃï`âÊ
-	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// ínñ ÇÃè≠Çµè„
+	//pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// ínñ ÇÃè≠Çµè„
 	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
 	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
 	//DrawLine3D(pos0, pos1, 0xffff00);
@@ -485,7 +488,7 @@ void BossPixie::UpdateAttackWave(void)
 
 	if (animationController_->IsEnd())
 	{
-		ChangeState(STATE::CHARGE);
+		ChangeState(STATE::ATTACK_END);
 	}
 }
 
@@ -516,12 +519,10 @@ void BossPixie::UpdateDamage(void)
 
 void BossPixie::UpdateDown(void)
 {
-	
 }
 
 void BossPixie::UpdateEnd(void)
 {
-	// ì¡Ç…Ç»ÇµÅH
 }
 
 void BossPixie::Phase(void)

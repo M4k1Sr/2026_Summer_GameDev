@@ -37,6 +37,9 @@ public:
 		DAMAGE,//ダメージエフェクト
 		TIMER, //タイマーエフェクト
 		SWEAT,
+		IRONBALL_HIT,	// 鉄球エフェクト
+		PIXIE_FIRE,		// ピクシー炎攻撃
+		PIXIE_WAVE,		// ピクシー波状攻撃
 	};
 
 	// 明示的にインステンスを生成する
@@ -59,6 +62,7 @@ public:
 
 	// リソースの複製ロード(モデル用)
 	int LoadModelDuplicate(SRC src);
+
 
 private:
 

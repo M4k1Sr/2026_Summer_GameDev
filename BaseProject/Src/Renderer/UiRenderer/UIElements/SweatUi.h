@@ -1,12 +1,12 @@
 #pragma once
-#include "../Base/UiBillboardBase.h"
+#include "../Base/UIBillboardBase.h"
 
-class SweatUi : public UiBillboardBase
+class SweatUI : public UIBillboardBase
 {
 public:
 
-    SweatUi(VECTOR pos);
-    ~SweatUi();
+    SweatUI(VECTOR pos);
+    ~SweatUI();
     void Update() override;
     void Draw() override;
 

@@ -2,7 +2,7 @@
 #include "SceneBase.h"
 #include "../Framework.h"
 class IronBall;
-class UI;
+class Clock;
 class Stage;
 class SkyDome;
 class Player;
@@ -12,7 +12,7 @@ class AttackManager;
 class Ranking;
 class ItemManager;
 class SoundManager;
-class UiManager;
+class UIManager;
 class EffectManager;
 
 class GameScene : public SceneBase
@@ -62,7 +62,7 @@ private:
 	SoundManager* soundMng_;
 
 	// UIマネージャ
-	UiManager* uiMng_;
+	UIManager* UIMng_;
 
 	// ステージ
 	Stage* stage_;
@@ -88,8 +88,8 @@ private:
 	// 鉄球
 	IronBall* ironBall_;
 	
-	//UI
-	UI* ui_;
+	//時計のUI
+	Clock* clockUI_;
 
 	//Item
 	ItemManager* itemMng_;

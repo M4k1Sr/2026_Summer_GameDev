@@ -1,12 +1,12 @@
 #pragma once
 #include <DxLib.h>
 
-class UiBillboardBase
+class UIBillboardBase
 {
 public:
 
-    UiBillboardBase(VECTOR pos);
-    virtual ~UiBillboardBase();
+    UIBillboardBase(VECTOR pos);
+    virtual ~UIBillboardBase();
 
     virtual void Update() = 0;
     virtual void Draw() = 0;
@@ -15,7 +15,7 @@ public:
 
 protected:
     
-    int drawUiH_;   // UiBillboard画像モデル
+    int drawUIH_;   // UIBillboard画像モデル
     VECTOR pos_;    // 座標
     VECTOR scl_;    // スケール
     VECTOR rot_;    // 角度

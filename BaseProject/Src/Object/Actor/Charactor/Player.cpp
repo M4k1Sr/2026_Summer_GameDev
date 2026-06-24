@@ -15,10 +15,10 @@
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../Collider/ColliderModel.h"
-#include "../../../Renderer/UiRenderer/UIElements/StaminaUi.h"
-#include "../../../Renderer/UiRenderer/UIElements/SweatUi.h"
-#include "../../../Renderer/UiRenderer/Manager/UIManager.h"
-#include "../../../Renderer/UiRenderer/Base/UiBase.h"
+#include "../../../Renderer/UIRenderer/UIElements/StaminaUI.h"
+#include "../../../Renderer/UIRenderer/UIElements/SweatUI.h"
+#include "../../../Renderer/UIRenderer/Manager/UIManager.h"
+#include "../../../Renderer/UIRenderer/Base/UIBase.h"
 #include "../../../Application.h"
 #include "Player.h"
 #include "../../../Manager/ServiceLocator.h"
@@ -44,6 +44,8 @@ Player::~Player(void)
 void Player::Draw(void)
 {
 	CharactorBase::Draw();
+
+	ServiceLocator::GetUI().Draw();
 
 //#ifdef _DEBUG
 //
@@ -72,11 +74,11 @@ void Player::Draw(void)
 //#endif
 #ifdef _DEBUG
 
-	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-	// pos_ は ObjectBase のメンバ変数であると想定しています
-	DrawFormatString(200, 50, GetColor(0, 0, 0),
-		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
+	//// pos_ は ObjectBase のメンバ変数であると想定しています
+	//DrawFormatString(200, 50, GetColor(0, 0, 0),
+	//	"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
+	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
 
 	//if (isJump_ == true) {
 	//	DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
@@ -241,7 +243,7 @@ void Player::InitAnimation(void)
 
 void Player::InitPost(void)
 {
-	InitUi();
+	InitUI();
 }
 
 void Player::UpdateProcess(void)
@@ -272,9 +274,9 @@ void Player::DrawViewRange(void)
 {
 }
 
-void Player::InitUi(void)
+void Player::InitUI(void)
 {
-	//ServiceLocator::GetUi().AddUiBase(new StaminaUi(stamina_,maxStamina_,Vector2()));
+	ServiceLocator::GetUI().AddUIBase(new StaminaUI(&stamina_,&maxStamina_,Vector2(850,500)));
 }
 
 void Player::ProcessMove(void)
@@ -296,7 +298,7 @@ void Player::ProcessMove(void)
 		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
-		if (ins.IsNew(KEY_INPUT_LSHIFT)) { isDash = true; }
+		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash = true; }
 	}
 	else
 	{
@@ -427,12 +429,12 @@ void Player::ProcessJump(void)
 	// 1. 入力状態の取得
 	// ----------------------------------------------------
 	// 押した瞬間 (Trigger Down)
-	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE)
-		|| ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE) ||
+		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
 	// 押しっぱなしの継続状態 (Press / New ※InputManagerの仕様に合わせて継続判定の関数にしてください)
-		bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE)
-	|| ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+	bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE) ||
+		ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
 	// ----------------------------------------------------
 	// 2. 初期ジャンプ処理（押した瞬間）
