@@ -266,8 +266,8 @@ void GameScene::Update(void)
 
 void GameScene::Draw(void)
 {
-	// スカイドーム描画
-	skyDome_->Draw();
+	//// スカイドーム描画
+	//skyDome_->Draw();
 
 	// ステージ描画
 	stage_->Draw();

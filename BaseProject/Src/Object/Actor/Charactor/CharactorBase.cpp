@@ -43,8 +43,10 @@ void CharactorBase::Update(void)
 	// 移動方向に応じた遅延回転
 	DelayRotate();
 
-	// 重力による移動量
-	CalcGravityPow();
+	if (isGravity_) {
+		// 重力による移動量
+		CalcGravityPow();
+	}
 
 	// 衝突判定前準備
 	CollisionReserve();

@@ -7,6 +7,7 @@
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Manager/Resource.h"
 #include "../../../Manager/SoundManager.h"
+#include "../Charactor/CharactorBase.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
@@ -228,6 +229,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
+	isGravity_ = true;
 
 	// à⁄ìÆëÄçÏ
 	ProcessMove();
