@@ -318,8 +318,6 @@ void GameScene::Release(void)
 	objMng_->Release();
 	delete objMng_;
 
-	ui_->Release();
-	delete ui_;
 
 	// ƒvƒŒƒCƒ„[‰ð•ú
 	player_->Release();

@@ -48,73 +48,6 @@ void Player::Draw(void)
 	CharactorBase::Draw();
 
 	ServiceLocator::GetUI().Draw();
-
-#ifdef _DEBUG
-
-<<<<<<< HEAD
-=======
-	DrawFormatString(200, 50, GetColor(0, 0, 0),
-		"stamina = %6.1f,maxStamina_ = %6.1f",
-		stamina_, maxStamina_);
-
->>>>>>> m4k
-	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-	//// pos_ は ObjectBase のメンバ変数であると想定しています
-	//DrawFormatString(200, 50, GetColor(0, 0, 0),
-	//	"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
-
-	//if (isJump_ == true) {
-	//	DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
-	//}
-	//else {
-	//	DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
-
-	//	ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-	//	if (tile == nullptr) {
-	//		DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
-	//	}
-	//	else {
-	//		DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
-	//	}
-	//}
-
-	//DrawFormatString(800, 100, GetColor(0, 255, 0),
-	//	"gimmickCnt: %6.1f",
-	//	gimmickCnt_);
-
-#endif
-
-//#ifdef _DEBUG
-//
-//	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-//	// pos_ は ObjectBase のメンバ変数であると想定しています
-//	DrawFormatString(200, 50, GetColor(0, 0, 0),
-//		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-//		transform_.pos.x, transform_.pos.y, transform_.pos.z);
-//
-//	if (isJump_ == true) {
-//		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
-//	}
-//	else {
-//		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
-//
-//		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-//		if (tile == nullptr) {
-//			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
-//		}
-//		else {
-//			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
-//		}
-//	}
-//
-//	DrawFormatString(800, 100, GetColor(0, 255, 0),
-//		"gimmickCnt: %6.1f",
-//		gimmickCnt_);
-//
-//
-//
-//#endif
 }
 
 void Player::Release(void)
@@ -289,11 +222,8 @@ void Player::ProcessMove(void)
 		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
-<<<<<<< HEAD
-		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash = true; }
-=======
+
 		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash_ = true; }
->>>>>>> m4k
 	}
 	else
 	{

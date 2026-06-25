@@ -120,11 +120,7 @@ void Application::Run(void)
 		ServiceLocator::GetUI().Update();
 
 		sceneManager.Draw();
-<<<<<<< HEAD
-		//ServiceLocator::GetUI().Draw();
-=======
-		//ServiceLocator::GetUi().Draw();
->>>>>>> m4k
+
 		/*EffectManager::GetInstance().Update();
 		EffectManager::GetInstance().Draw();*/
 #ifdef _DEBUG

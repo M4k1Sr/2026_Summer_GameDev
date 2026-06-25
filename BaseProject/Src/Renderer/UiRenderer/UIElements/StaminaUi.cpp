@@ -64,14 +64,6 @@ void StaminaUI::Draw()
     DrawCircle((int)cx, (int)cy, (int)radius_,
         GetColor(50, 50, 50), TRUE);
 
-<<<<<<< HEAD
-   
-=======
-    //// デバッグ表示
-    //DrawFormatString(0, 0, GetColor(0, 0, 255),
-    //    "stamina:%.1f max:%.1f ratio:%.2f blink:%.2f",
-    //    *stamina_, *maxStamina_, ratio, blinkTimer_);
->>>>>>> m4k
 
     // スタミナゲージ
     for (int i = 0; i < totalSteps; i++)
