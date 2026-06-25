@@ -69,6 +69,9 @@ protected:
 	// 視野描画
 	virtual void DrawViewRange(void) override;
 
+protected:
+	
+
 private:
 
 	// プレイヤー
@@ -87,6 +90,9 @@ private:
 	// ダッシュスタミナ
 	float stamina_;
 	float maxStamina_;	// 最大スタミナ
+
+	// ダッシュ判定
+	bool isDash_;
 
 	// 汗UIの座標
 	VECTOR sweatPos_;

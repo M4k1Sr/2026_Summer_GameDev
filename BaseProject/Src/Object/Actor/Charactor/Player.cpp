@@ -7,6 +7,7 @@
 #include "../../../Manager/ResourceManager.h"
 #include "../../../Manager/Resource.h"
 #include "../../../Manager/SoundManager.h"
+#include "../Charactor/CharactorBase.h"
 #include "../../../Object/Common/AnimationController.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
@@ -30,8 +31,9 @@ Player::Player(void)
 	currentCnt_(0),
 	isClear_(false),
 	isIronBallHit_(false),
-	stamina_(100.0f),
-	maxStamina_(100.0f)
+	stamina_(15.0f),
+	maxStamina_(15.0f),
+	isDash_(false)
 {
 	sweatPos_ = transform_.pos;
 	int img_ = resMng_.Load(ResourceManager::SRC::SWEAT).handleId_;
@@ -47,33 +49,15 @@ void Player::Draw(void)
 
 	ServiceLocator::GetUI().Draw();
 
-//#ifdef _DEBUG
-//
-//	// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
-//	// pos_ は ObjectBase のメンバ変数であると想定しています
-//	DrawFormatString(200, 50, GetColor(0, 0, 0),
-//		"player Pos: x=%6.1f, y=%6.1f, z=%6.1f",
-//		transform_.pos.x, transform_.pos.y, transform_.pos.z);
-//
-//	if (isJump_ == true) {
-//		DrawFormatString(200, 240, GetColor(255, 0, 0), "Jumping");
-//	}
-//	else {
-//		DrawFormatString(200, 240, GetColor(0, 255, 0), "unJumping");
-//
-//		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
-//		if (tile == nullptr) {
-//			DrawFormatString(200, 200, GetColor(255, 0, 0), "Tile not found!");
-//		}
-//		else {
-//			DrawFormatString(200, 200, GetColor(0, 255, 0), "Tile found!");
-//		}
-//	}
-//
-//
-//#endif
 #ifdef _DEBUG
 
+<<<<<<< HEAD
+=======
+	DrawFormatString(200, 50, GetColor(0, 0, 0),
+		"stamina = %6.1f,maxStamina_ = %6.1f",
+		stamina_, maxStamina_);
+
+>>>>>>> m4k
 	//// 画面左上の座標 (0, 0) から、現在のタイルの座標を表示
 	//// pos_ は ObjectBase のメンバ変数であると想定しています
 	//DrawFormatString(200, 50, GetColor(0, 0, 0),
@@ -248,6 +232,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
+	isGravity_ = true;
 
 	// 移動操作
 	ProcessMove();
@@ -283,10 +268,16 @@ void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();
 
+	if (!isDash_ && stamina_ < maxStamina_)
+	{
+		stamina_ += STAMINA_DASH_DECREASE * scnMng_.GetDeltaTime();
+	}
+
+
 	// 移動量・方向・ダッシュフラグの初期化
 	movePow_ = AsoUtility::VECTOR_ZERO;
 	VECTOR dir = AsoUtility::VECTOR_ZERO;
-	bool isDash = false;
+	isDash_ = false;
 
 	// ----------------------------------------------------
 	// 1. 入力処理（キーボード / パッド）
@@ -298,14 +289,18 @@ void Player::ProcessMove(void)
 		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
 		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
 
+<<<<<<< HEAD
 		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash = true; }
+=======
+		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash_ = true; }
+>>>>>>> m4k
 	}
 	else
 	{
 		InputManager::JOYPAD_IN_STATE padState = ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
 		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
-		isDash = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
+		isDash_ = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 	}
 
 	// ----------------------------------------------------
@@ -316,7 +311,7 @@ void Player::ProcessMove(void)
 	if (hasInput)
 	{
 		// 移動スピードの決定
-		moveSpeed_ = isDash ? SPEED_DASH : SPEED_MOVE;
+		moveSpeed_ = isDash_ ? SPEED_DASH : SPEED_MOVE;
 
 		// カメラのY軸回転に合わせて移動方向を計算
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
@@ -349,10 +344,16 @@ void Player::ProcessMove(void)
 
 	if (hasInput && !isJump_)
 	{
-		if (isDash)
+		if (isDash_)
 		{
-			// ダッシュはスタミナ減少
-			stamina_ -= STAMINA_DASH_DECREASE * scnMng_.GetDeltaTime();
+			if (stamina_ <= maxStamina_) {
+				// ダッシュはスタミナ減少
+				stamina_ -= STAMINA_DASH_DECREASE * scnMng_.GetDeltaTime();
+				if (stamina_ <= 0.0f)
+				{
+					isDash_ = false;
+				}
+			}
 
 			// ダッシュに切り替わった瞬間に歩き音を止める
 			if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
@@ -368,6 +369,7 @@ void Player::ProcessMove(void)
 		}
 		else
 		{
+
 			// 歩きに切り替わった瞬間にダッシュ音を止める
 			if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_DASH))
 			{
@@ -383,6 +385,7 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
+
 		// 停止時は両方確実に止める
 		if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
 		{
@@ -407,7 +410,7 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
-		int nextAnimType = hasInput ? (isDash ? static_cast<int>(ANIM_TYPE::FAST_RUN) : static_cast<int>(ANIM_TYPE::RUN))
+		int nextAnimType = hasInput ? (isDash_ ? static_cast<int>(ANIM_TYPE::FAST_RUN) : static_cast<int>(ANIM_TYPE::RUN))
 			: static_cast<int>(ANIM_TYPE::IDLE);
 
 		// 前回と違うアニメーションの時だけ Play を呼ぶ

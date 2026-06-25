@@ -265,8 +265,8 @@ void GameScene::Update(void)
 
 void GameScene::Draw(void)
 {
-	// スカイドーム描画
-	skyDome_->Draw();
+	//// スカイドーム描画
+	//skyDome_->Draw();
 
 	// ステージ描画
 	stage_->Draw();
@@ -317,6 +317,9 @@ void GameScene::Release(void)
 	// オブジェクト解放
 	objMng_->Release();
 	delete objMng_;
+
+	ui_->Release();
+	delete ui_;
 
 	// プレイヤー解放
 	player_->Release();

@@ -86,7 +86,7 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
 	// ギミックスイッチモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Sswitch.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_SWITCH, res);
 
 	// タライモデル
