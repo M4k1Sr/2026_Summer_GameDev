@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Manager\ServiceLocator.cpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Manager\ServiceLocator.h" />

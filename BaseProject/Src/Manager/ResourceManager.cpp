@@ -93,6 +93,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/Tarai.mv1");
 	resourcesMap_.emplace(SRC::TARAI, res);
 
+	// トゲ床モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Needle_Floor.mv1");
+	resourcesMap_.emplace(SRC::NEEDLE_FLOOR, res);
+
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::CLOCK, res);

@@ -20,13 +20,22 @@ public:
 		SUB_STAGE,
 		SKY_DOME,
 		PLAYER_SHADOW,
+
+		// オブジェクト
 		OBJECT_BOX,
 		OBJECT_TILE,
 		IRON_BALL,
 		OBJECT_SWITCH,
 		TARAI,
+		NEEDLE_FLOOR,
+		BURNER,
+		CONVEYER,
+
+		// UI
 		CLOCK,
 		CLOCK_HAND,
+
+		// エネミー
 		BOSS_PIXIE,
 		BOSS_ORC,
 		BOSS_DIABLO,

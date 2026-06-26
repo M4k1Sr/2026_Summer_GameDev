@@ -7,6 +7,7 @@ class ColliderBase;
 class ObjectTile;
 class OjbectBossGimmick;
 class ObjectTarai;
+class NdlFloor;
 
 class ObjectManager
 {

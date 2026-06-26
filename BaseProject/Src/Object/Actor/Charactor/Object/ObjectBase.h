@@ -14,6 +14,7 @@ public:
 		TILE,
 		BOSS_GIMMICK,
 		TARAI,
+		NEEDLE_FLOOR,
 		MAX,
 	};
 

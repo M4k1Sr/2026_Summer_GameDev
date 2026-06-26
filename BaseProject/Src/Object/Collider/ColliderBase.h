@@ -22,11 +22,16 @@ public:
 	{
 		STAGE,
 		PLAYER,
+
+		// オブジェクト
 		BOX,
 		IRON_BALL,
 		TILE,
 		BOSS_GIMMICK,
 		TARAI,
+		NEEDLE_FLOOR,
+
+
 		CAMERA,
 	};
 

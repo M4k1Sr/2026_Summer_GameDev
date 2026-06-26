@@ -7,6 +7,7 @@
 #include "./ObjectTile.h"
 #include "./ObjectBossGimmick.h"
 #include "./ObjectTarai.h"
+#include "./NdlFloor.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -142,6 +143,11 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		break;
 	case ObjectBase::TYPE::TARAI:
 		object = new ObjectTarai(data);
+		break;
+	case ObjectBase::TYPE::NEEDLE_FLOOR:
+		object = new NdlFloor(data);
+		break;
+
 		break;
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
