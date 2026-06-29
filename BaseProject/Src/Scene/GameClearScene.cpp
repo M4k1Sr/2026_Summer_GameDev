@@ -21,7 +21,8 @@ GameClearScene::GameClearScene(void)
 	:
 	isEnd_(false),
 	mosPosX_(0),
-	mosPosY_(0)
+	mosPosY_(0),
+	gameClearImg_(-1)
 {
 }
 
@@ -32,6 +33,10 @@ GameClearScene::~GameClearScene(void)
 
 void GameClearScene::Init(void)
 {
+
+	// 画像読み込み
+	gameClearImg_ = resMng_.Load(ResourceManager::SRC::GameClearImg).handleId_;
+
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
 
 	Ranking::GetIns().Load();
@@ -100,13 +105,14 @@ void GameClearScene::Draw(void)
 	int second = (frame / 60) % 60;
 	int framePart = frame % 60;
 
-	// タイトル
-	DrawFormatString(700, 100, 0xffffff, "GAME CLEAR!");
+	//タイトル画像
+	// DrawGraph(IMG_CLEAR_POS_X, IMG_CLEAR_POS_Y, gameClearImg_, true);
+
 
 	// クリアタイム表示
 	DrawFormatString(
-		650,
-		160,
+		900,
+		150,
 		0xffffff,
 		"TIME %02d:%02d:%02d",
 		minute,
@@ -115,7 +121,7 @@ void GameClearScene::Draw(void)
 	);
 
 	// ランキングタイトル
-	DrawFormatString(100, 50, 0xffff00, "RANKING");
+	DrawFormatString(200, 150, 0xffff00, "RANKING");
 
 	// ランキング取得
 	const auto& ranking = Ranking::GetIns().GetRankingList();
@@ -132,10 +138,10 @@ void GameClearScene::Draw(void)
 		int rankFrame = ranking[i].score % 60;
 
 		DrawFormatString(
-			100,
-			100 + i * 60,
+			300,
+			400 + i * 60,
 			0xffffff,
-			"%2d位  %02d:%02d:%02d",
+			"%2d位        %02d:%02d:%02d",
 			i + 1,
 			rankMinute,
 			rankSecond,

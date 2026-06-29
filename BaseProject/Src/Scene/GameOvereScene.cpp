@@ -6,6 +6,7 @@
 #include"../Manager/SoundManager.h"
 #include "../Manager/InputManager.h"
 #include "../Manager/ResourceManager.h"
+#include "../Renderer/PostEffectRenderer/Src/Manager/PostEffectManager.h"
 #include "../Manager/Resource.h"
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
@@ -19,7 +20,9 @@ GameOvereScene::GameOvereScene()
 	:
 	isEnd_(false),
 	mosPosX_(0),
-	mosPosY_(0)
+	mosPosY_(0),
+	effect_(nullptr),
+	gameOverImg_(-1)
 {
 }
 
@@ -30,12 +33,19 @@ GameOvereScene::~GameOvereScene()
 
 void GameOvereScene::Init(void)
 {
+
+	//ゲームオーバー画像
+	gameOverImg_ = resMng_.Load(ResourceManager::SRC::GameOverImg).handleId_;
 	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
 
 	// BGM再生
 	ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_GAMEOVER, true);
 
+	// ポストエフェクト
+	effect_ = new PostEffectManager();
+	effect_->Init();
+	effect_->Load();
 }
 
 void GameOvereScene::Update(void)
@@ -76,6 +86,8 @@ void GameOvereScene::Update(void)
 		{
 			isEnd_ = true;
 		}
+
+		effect_->Update();
 	}
 
 
@@ -83,14 +95,21 @@ void GameOvereScene::Update(void)
 
 void GameOvereScene::Draw(void)
 {
+	
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
-	//ゲームシーンへ遷移
-	DrawFormatString(670, 270, 0xffffff, "リトライ : SPACE");
+	////ゲームシーンへ遷移
+	//DrawFormatString(670, 270, 0xffffff, "リトライ : SPACE");
 
-	//タイトルへ戻る
-	DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
+	////タイトルへ戻る
+	//DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
 
-	//ポーズ画面
+	//タイトル画像
+	DrawGraph(IMG_OVER_POS_X, IMG_OVER_POS_Y, gameOverImg_, true);
+
+
+	//ポーズ画d
 	IsPause();
 }
 

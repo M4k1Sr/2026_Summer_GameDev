@@ -145,6 +145,14 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
 	resourcesMap_.emplace(SRC::SWEAT, res);
 
+	//ゲームクリア画像
+	res = new RES(RES_T::IMG, PATH_IMG + "GameClearImg.png");
+	resourcesMap_.emplace(SRC::GameClearImg, res);
+
+	//ゲームオーバー画像
+	res = new RES(RES_T::IMG, PATH_IMG + "GameOverImg.png");
+	resourcesMap_.emplace(SRC::GameOverImg, res);
+
 
 }
 

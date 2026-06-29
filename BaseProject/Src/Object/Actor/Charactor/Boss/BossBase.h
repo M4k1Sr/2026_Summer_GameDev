@@ -158,6 +158,8 @@ protected:
 	// õ“G
 	virtual void Search(void) = 0;
 
+
+
 	// ƒvƒŒƒCƒ„[‚ğ’‹‚·‚é
 	virtual void LookPlayer(void) = 0;
 

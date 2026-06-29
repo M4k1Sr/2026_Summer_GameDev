@@ -40,6 +40,8 @@ public:
 		IRONBALL_HIT,	// 鉄球エフェクト
 		PIXIE_FIRE,		// ピクシー炎攻撃
 		PIXIE_WAVE,		// ピクシー波状攻撃
+		GameClearImg,	// ゲームクリア画像
+		GameOverImg,	// ゲームオーバー画像
 	};
 
 	// 明示的にインステンスを生成する

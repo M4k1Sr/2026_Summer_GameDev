@@ -7,6 +7,13 @@ class AnimationController;
 class GameClearScene : public SceneBase
 {
 public:
+
+	// タイトル画像のX座標
+	static constexpr int IMG_CLEAR_POS_X = 150;
+	// タイトル画像のY座標
+	static constexpr int IMG_CLEAR_POS_Y = -100;
+
+
 	// コンストラクタ
 	GameClearScene(void);
 	// デストラクタ
@@ -27,6 +34,9 @@ public:
 	void IsPause(void);
 
 private:
+
+	//ゲームクリア画像
+	int gameClearImg_;
 
 	//ポーズ画面の選択ボックス座標
 	static constexpr int DRAWBOX_SX = 400;
