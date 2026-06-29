@@ -65,10 +65,6 @@ void NdlFloor::InitAnimation(void)
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::START), 10.0f, 1);
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::STOP), 10.0f, 2);
 
-	//// アニメーション再生
-	//animationController_->Play(
-	//	static_cast<int>(ANIM_TYPE::CLOSE), true);
-
 }
 
 void NdlFloor::InitPost(void)
@@ -170,28 +166,40 @@ void NdlFloor::UpdateNone(void)
 void NdlFloor::UpdateStart(void)
 {
 	if (animationController_->IsEnd()) {
-		ChangeState(STATE::CLOSE);
+		ChangeState(STATE::STOP);
 	}
 }
 
 void NdlFloor::UpdateStop(void)
 {
-	if (animationController_->IsEnd()) {
-		if (state_ == STATE::CLOSE) {
-			ChangeState(STATE::START);
-		}
-		else {
-			ChangeState(STATE::CLOSE);
+	moveTimer_++;
+
+	if (moveTimer_ >500)
+	{
+		if (animationController_->IsEnd()) {
+			if (state_ == STATE::CLOSE) {
+				moveTimer_ = 0;
+				ChangeState(STATE::START);
+			}
+			else {
+				moveTimer_ = 0;
+				ChangeState(STATE::CLOSE);
+			}
 		}
 	}
 }
 
 void NdlFloor::UpdateClose(void)
 {
-	if (animationController_->IsEnd()) {
-		moveTimer_++;
-		if (moveTimer_ > 100)
-		ChangeState(STATE::START);
+	moveTimer_++;
+
+	if (moveTimer_ > 400)
+	{
+		if (animationController_->IsEnd()) {
+			if (moveTimer_ > 100)
+				moveTimer_ = 0;
+				ChangeState(STATE::START);
+		}
 	}
 }
 

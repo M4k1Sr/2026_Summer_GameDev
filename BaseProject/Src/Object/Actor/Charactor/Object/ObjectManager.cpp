@@ -147,8 +147,6 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
 		object = new NdlFloor(data);
 		break;
-
-		break;
 		// ‘‚¦‚é–ˆ‚É’Ç‰Á
 	}
 
