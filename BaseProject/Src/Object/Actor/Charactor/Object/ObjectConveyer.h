@@ -8,17 +8,23 @@ class ObjectConveyer : public ObjectBase
 {
 public:
 
+	// アニメーションの状態
+	enum class ANIM_TYPE
+	{
+		ROLL1,	
+		ROLL2,
+		ROLL3,
+		ROLL4,
+		ROLL5,
+		ROLL6,
+		MAX
+	};
+
 	// コンストラクタ
 	ObjectConveyer(const ObjectBase::ObjectData& data);
 
 	// デストラクタ
 	~ObjectConveyer(void) override;
-
-	// デバッグ描画処理
-	void Draw(void) override;
-
-	// 動く床の速度取得
-	VECTOR GetVelocity(void) const { return velocity_; }
 
 	// 床の座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
@@ -44,15 +50,20 @@ protected:
 	void UpdateProcess(void) override;
 	void UpdateProcessPost(void) override;
 
-	void DrawViewRange(void) {};
+	void DrawViewRange(void) override {};
 
 private:
+	
+	// ローラー6本分
+	static constexpr int ROLLER_NUM = 6;
+	int rollerModelId_[ROLLER_NUM];
+	AnimationController* rollerAnimCtrl_[ROLLER_NUM];
 
 	// モデルの大きさ
-	static constexpr float SCALE = 0.5f;
+	static constexpr float SCALE = 1.0f;
 
 	// モデルのローカル回転
-	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
+	static constexpr VECTOR ROT = { 0.0f, 0.0f, 0.0f };
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
@@ -69,16 +80,16 @@ private:
 	// 衝突判定用カプセル球体半径
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
 
-	// 前フレームの位置
-	VECTOR prevPos_;
+	// 初期位置
+	VECTOR startPos_;
 
 	// 移動速度
 	VECTOR velocity_;
 
-	// 移動時間
-	float moveTime_;
+	// タイマー
+	float moveTimer_;
 
-	// コンベア―処理
-	void UpdateProcessMove(void);
+	// コンベヤー処理
+	void UpdateProcessConveyer(void);
 
 };

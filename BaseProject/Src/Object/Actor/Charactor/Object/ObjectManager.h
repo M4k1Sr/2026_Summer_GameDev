@@ -8,6 +8,7 @@ class ObjectTile;
 class OjbectBossGimmick;
 class ObjectTarai;
 class NdlFloor;
+class ObjectBurner;
 
 class ObjectManager
 {

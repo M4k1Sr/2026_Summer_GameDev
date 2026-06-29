@@ -15,6 +15,8 @@ public:
 		BOSS_GIMMICK,
 		TARAI,
 		NEEDLE_FLOOR,
+		BURNER,
+		CONVEYER,
 		MAX,
 	};
 

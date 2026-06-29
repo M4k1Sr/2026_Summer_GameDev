@@ -8,6 +8,8 @@
 #include "./ObjectBossGimmick.h"
 #include "./ObjectTarai.h"
 #include "./NdlFloor.h"
+#include "./ObjectBurner.h"
+#include "./ObjectConveyer.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -146,6 +148,12 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		break;
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
 		object = new NdlFloor(data);
+		break;
+	case ObjectBase::TYPE::BURNER:
+		object = new Burner(data);
+		break;
+	case ObjectBase::TYPE::CONVEYER:
+		object = new ObjectConveyer(data);
 		break;
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
