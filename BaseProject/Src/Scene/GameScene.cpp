@@ -277,15 +277,19 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
-
-	//デバッグ用ゴール
-	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-		0.5f,                           // 中心X
-		0.5f,                           // 中心Y
-		400.0f,                         // サイズ
-		0.0f,                           // 回転
-		goalImg_,                       // 画像
-		TRUE);
+	
+	if(bossMng_->IsBossDead())
+	{
+		//デバッグ用ゴール
+		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+			0.5f,                           // 中心X
+			0.5f,                           // 中心Y
+			400.0f,                         // サイズ
+			0.0f,                           // 回転
+			goalImg_,                       // 画像
+			TRUE);
+	}
+	
     
 	//ボス描画
 	bossMng_->Draw();

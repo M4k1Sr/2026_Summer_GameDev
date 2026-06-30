@@ -1,2 +1,6 @@
-﻿  GameClearScene.cpp
+﻿  BossManager.cpp
+  GameScene.cpp
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(482,9): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(500,39): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  コードを生成中...
   BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

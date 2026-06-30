@@ -133,6 +133,19 @@ void BossManager::LoadCsvData(void)
 	ifs.close();
 }
 
+bool BossManager::IsBossDead(void)
+{
+	for (auto boss : bosses_)
+	{
+		if (boss != nullptr && boss->GetIsDead())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 BossBase* BossManager::Create(const BossBase::BossData& data)
 {
 	BossBase* boss = nullptr;
