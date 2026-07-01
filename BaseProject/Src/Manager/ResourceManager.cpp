@@ -53,13 +53,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Shadow.png");
 	resourcesMap_.emplace(SRC::PLAYER_SHADOW, res);
 
-	// 一面ステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/FirstStage.mv1");
+	// ステージモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/MainStage.mv1");
 	resourcesMap_.emplace(SRC::FIRST_STAGE, res);
-
-	// 二面ステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/SecondStage.mv1");
-	resourcesMap_.emplace(SRC::SECOND_STAGE, res);
 
 	// スカイドームモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "SkyDome/Skydome.mv1");
