@@ -52,7 +52,7 @@ private:
 	static constexpr VECTOR MAIN_STAGE_POS = { 0.0f, -100.0f, 0.0f };
 
 	// ステージのスケール
-	static constexpr VECTOR MAIN_STAGE_SCALE = { 0.1f, 0.1f, 0.1f };
+	static constexpr VECTOR MAIN_STAGE_SCALE = { 1.0f, 1.0f, 1.0f };
 
 	// 除外フレーム名称
 	const std::vector<std::string> EXCLUDE_FRAME_NAMES = {

@@ -42,7 +42,7 @@ void ObjectConveyer::InitTransform(void)
 
 void ObjectConveyer::InitCollider(void)
 {
-
+	
 	// 主に地面との衝突で使用する線分コライダ
 	ColliderLine* colLine = new ColliderLine(
 		ColliderBase::TAG::CONVEYER, &transform_,
@@ -61,33 +61,12 @@ void ObjectConveyer::InitAnimation(void)
 	//モデルアニメーション制御の初期化
 	animationController_ = new AnimationController(transform_.modelId);
 
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL1), 10.0f, 0);
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL2), 10.0f, 7);
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL3), 10.0f, 14);
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL4), 10.0f, 21);
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL5), 10.0f, 28);
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL6), 10.0f, 35);
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL), 10.0f, 0);
 
 
 	// アニメーション再生
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL1), true);
-	// アニメーション再生
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL2), true);
-	// アニメーション再生
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL3), true);
-	// アニメーション再生
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL4), true);
-	// アニメーション再生
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL5), true);
-	// アニメーション再生
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL6), true);
-
+		static_cast<int>(ANIM_TYPE::ROLL), true);
 }
 
 void ObjectConveyer::InitPost(void)

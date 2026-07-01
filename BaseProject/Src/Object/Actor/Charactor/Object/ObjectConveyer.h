@@ -11,12 +11,7 @@ public:
 	// アニメーションの状態
 	enum class ANIM_TYPE
 	{
-		ROLL1,	
-		ROLL2,
-		ROLL3,
-		ROLL4,
-		ROLL5,
-		ROLL6,
+		ROLL,	
 		MAX
 	};
 
@@ -60,10 +55,10 @@ private:
 	AnimationController* rollerAnimCtrl_[ROLLER_NUM];
 
 	// モデルの大きさ
-	static constexpr float SCALE = 1.0f;
+	static constexpr float SCALE = 0.3f;
 
 	// モデルのローカル回転
-	static constexpr VECTOR ROT = { 0.0f, 0.0f, 0.0f };
+	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
