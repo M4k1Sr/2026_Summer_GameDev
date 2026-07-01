@@ -9,24 +9,24 @@ UIManager::~UIManager()
     Release();
 }
 
-void UIManager::AddUiBase(UiBase* ui)
+void UIManager::AddUIBase(UIBase* UI)
 {
     // UIのソート
-    uiList_.push_back(ui);
-    std::sort(uiList_.begin(), uiList_.end(),
-        [](UiBase* a, UiBase* b)
+    UIList_.push_back(UI);
+    std::sort(UIList_.begin(), UIList_.end(),
+        [](UIBase* a, UIBase* b)
         {
             return a->drawOrder_ < b->drawOrder_;
         });
 
 }
 
-void UIManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
+void UIManager::AddUIBillboardBase(UIBillboardBase* UIBillboard)
 {
     // UIビルボードのソート
-    uiBillboardList_.push_back(uiBillboard);
-    std::sort(uiBillboardList_.begin(), uiBillboardList_.end(),
-        [](UiBillboardBase* a, UiBillboardBase* b)
+    UIBillboardList_.push_back(UIBillboard);
+    std::sort(UIBillboardList_.begin(), UIBillboardList_.end(),
+        [](UIBillboardBase* a, UIBillboardBase* b)
         {
             return a->drawOrder_ < b->drawOrder_;
         });
@@ -35,27 +35,27 @@ void UIManager::AddUiBillboardBase(UiBillboardBase* uiBillboard)
 
 void UIManager::Update()
 {
-    for (auto* ui : uiList_)
+    for (auto* UI : UIList_)
     {
-        ui->Update();
+        UI->Update();
     }
 
-    for (auto* uiBillboard : uiBillboardList_)
+    for (auto* UIBillboard : UIBillboardList_)
     {
-        uiBillboard->Update();
+        UIBillboard->Update();
     }
 }
 
 void UIManager::Draw()
 {
-    for (auto* ui : uiList_)
+    for (auto* UI : UIList_)
     {
-        ui->Draw();
+        UI->Draw();
     }
 
-    for (auto* uiBillboard : uiBillboardList_)
+    for (auto* UIBillboard : UIBillboardList_)
     {
-        uiBillboard->Draw();
+        UIBillboard->Draw();
     }
 
 
@@ -63,15 +63,15 @@ void UIManager::Draw()
 
 void UIManager::Release()
 {
-    for (auto* ui : uiList_)
+    for (auto* UI : UIList_)
     {
-        delete ui;
+        delete UI;
     }
-    uiList_.clear();
+    UIList_.clear();
 
-    for (auto* uiBillboard : uiBillboardList_)
+    for (auto* UIBillboard : UIBillboardList_)
     {
-        delete uiBillboard;
+        delete UIBillboard;
     }
-    uiBillboardList_.clear();
+    UIBillboardList_.clear();
 }

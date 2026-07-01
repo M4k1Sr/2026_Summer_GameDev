@@ -20,7 +20,7 @@
 #include "../Object/Actor/Attack/AttackManager.h"
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
-#include"../Object/UI/UI.h"
+#include"../Renderer/UIRenderer/UIElements/Clock.h"
 #include "GameScene.h"
 #include "../Application.h"
 #include"../Manager/ItemManager.h"
@@ -33,7 +33,7 @@ GameScene::GameScene(void)
 	skyDome_(nullptr),
 	player_(nullptr),
 	ironBall_(nullptr),
-	ui_(nullptr),
+	clockUI_(nullptr),
 	bossMng_(nullptr),
 	objMng_(nullptr),
 	attackMng_(nullptr),
@@ -174,8 +174,7 @@ void GameScene::Init(void)
 	}
 
 	// UIモデル
-	ui_ = new UI();
-	ui_->Init();
+	clockUI_ = new Clock();
 
 	// カメラモード変更
 	Camera* camera = SceneManager::GetInstance().GetCamera();
@@ -190,8 +189,11 @@ void GameScene::Update(void)
 
 	auto const& ins = InputManager::GetInstance();
 	
-	// ESC押下時ポーズ画面に遷移
-	if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
+	// ESC(START)押下時ポーズ画面に遷移 
+	if (ins.IsTrgDown(KEY_INPUT_ESCAPE) ||
+		ins.IsPadBtnTrgDown(
+			InputManager::JOYPAD_NO::PAD1,
+			InputManager::JOYPAD_BTN::START))
 	{
 		isPause_ = !isPause_;	// ポーズのON/OFFの切り替え
 	}
@@ -259,6 +261,7 @@ void GameScene::Update(void)
 
 		skyDome_->Update();
 		player_->Update();
+<<<<<<< HEAD
 		ui_->Update();
 		stage_->Update();
 
@@ -269,6 +272,13 @@ void GameScene::Update(void)
 			attackMng_->Update();
 			ironBall_->Update();
 		}
+=======
+		bossMng_->Update();
+		objMng_->Update();
+		attackMng_->Update();
+		ironBall_->Update();
+		clockUI_->Update();
+>>>>>>> origin/m4k
 
 		// ===========================================================
 		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
@@ -321,7 +331,7 @@ void GameScene::Update(void)
 
 
 	//ゲームオーバー判定
-	isEnd_ = ui_->GetIsGameOver();
+	isEnd_ = clockUI_->GetIsGameOver();
 	isEnd_ = player_->GetDeadFlag();
 
 	//ゲームオーバーシーンへ遷移
@@ -334,8 +344,8 @@ void GameScene::Update(void)
 
 void GameScene::Draw(void)
 {
-	// スカイドーム描画
-	skyDome_->Draw();
+	//// スカイドーム描画
+	//skyDome_->Draw();
 
 	// ステージごとの描画
 	stage_->Draw();
@@ -361,7 +371,7 @@ void GameScene::Draw(void)
 		TRUE);
     
 	// UI描画
-	ui_->Draw();
+	clockUI_->Draw();
 
 	// 作成したフェード関数を呼び出す（UIの上に黒を被せる）
 	DrawFade();
@@ -385,6 +395,7 @@ void GameScene::Release(void)
 	objMng_->Release();
 	delete objMng_;
 
+
 	// プレイヤー解放
 	player_->Release();
 	delete player_;
@@ -397,8 +408,7 @@ void GameScene::Release(void)
 	attackMng_->Release();
 	delete attackMng_;
 
-	ui_->Release();
-	delete ui_;
+	
 
 	ironBall_->Release();
 	delete ironBall_;
@@ -428,13 +438,62 @@ void GameScene::IsPause(void)
 		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
 
 		DrawBox(400, 600, 1600, 800, 0xffffff, false);
-		DrawFormatString(670, 670, 0xffffff, "ゲームを終了しますか?");
+		DrawFormatString(670, 670, 0xffffff, "タイトルに戻りますか?");
+
+		GetMousePoint(&mosPosX_, &mosPosY_);
 
 		//マウスポインタを表示状態にする
 		SetMouseDispFlag(TRUE);
 
+		//パッド取得
+		auto& ins = InputManager::GetInstance();
+
+		auto pad =
+			ins.GetJPadInputState(
+				InputManager::JOYPAD_NO::PAD1);
+
+		// 左スティック取得
+		float dx = pad.AKeyLX / 1000.0f;
+		float dy = pad.AKeyLY / 1000.0f;
+
+		// デッドゾーン
+		if (fabsf(dx) < 0.2f)
+		{
+			dx = 0.0f;
+		}
+
+		if (fabsf(dy) < 0.2f)
+		{
+			dy = 0.0f;
+		}
+
+		// カーソル速度
+		const int speed = 15;
+
+		// カーソル移動
+		mosPosX_ += static_cast<int>(dx * speed);
+		mosPosY_ += static_cast<int>(dy * speed);
+
+		// 画面外に出さない
+		mosPosX_ = std::clamp(
+			mosPosX_,
+			0,
+			Application::SCREEN_SIZE_X);
+
+		mosPosY_ = std::clamp(
+			mosPosY_,
+			0,
+			Application::SCREEN_SIZE_Y);
+
+		// 実際のマウスカーソルを移動
+		SetMousePoint(
+			mosPosX_,
+			mosPosY_);
+
 		//マウスポインタの座標を取得
 		GetMousePoint(&mosPosX_, &mosPosY_);
+
+		
 
 		//この中にマウスカーソルがあるかを判定
 		bool continueGame =
@@ -452,30 +511,37 @@ void GameScene::IsPause(void)
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			//マウスの左クリックを検知したらゲーム続行
-			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			if (GetMouseInput() & MOUSE_INPUT_LEFT ||
+				ins.IsPadBtnTrgDown(
+					InputManager::JOYPAD_NO::PAD1,
+					InputManager::JOYPAD_BTN::DOWN))
 			{
 				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isPause_ = false;
 			}
 		}
-		//ゲームを終了する
+		//タイトルに戻る
 		else if (exitGame)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-			//マウスの左クリックを検知したらゲーム終了
-			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			//マウスの左クリックを検知したらタイトルに戻る
+			if (GetMouseInput() & MOUSE_INPUT_LEFT ||
+				ins.IsPadBtnTrgDown(
+					InputManager::JOYPAD_NO::PAD1,
+					InputManager::JOYPAD_BTN::DOWN))
 			{
 				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
 				// Effekseerを終了する
-				Effkseer_End();
-				DxLib_End();
+				sceMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 			}
 		}
 	}
+
+
 }
 
 void GameScene::Score(void)

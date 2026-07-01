@@ -1,22 +1,22 @@
 #include <DxLib.h>
 #include <cmath>
-#include "StaminaUi.h"
+#include "StaminaUI.h"
 
-StaminaUi::StaminaUi(float* stamina, float* maxStamina, Vector2 pos)
+StaminaUI::StaminaUI(float* stamina, float* maxStamina, Vector2 pos)
     : stamina_(stamina)
     , maxStamina_(maxStamina)
-    , UiBase(pos)
+    , UIBase(pos)
     , radius_(30.0f)
     , blinkTimer_(0.0f)
 {   
     drawOrder_ = 10;
 }
 
-StaminaUi::~StaminaUi()
+StaminaUI::~StaminaUI()
 {
 }
 
-void StaminaUi::Update()
+void StaminaUI::Update()
 {
     float ratio = *stamina_ / *maxStamina_;
 
@@ -30,8 +30,13 @@ void StaminaUi::Update()
     }
 }
 
-void StaminaUi::Draw()
+void StaminaUI::Draw()
 {
+
+    if (!stamina_ || !maxStamina_)
+    {
+        return;
+    }
 
     unsigned int color;
     float cx = pos_.x;
@@ -59,10 +64,6 @@ void StaminaUi::Draw()
     DrawCircle((int)cx, (int)cy, (int)radius_,
         GetColor(50, 50, 50), TRUE);
 
-    // デバッグ表示
-    DrawFormatString(0, 0, GetColor(0, 0, 255),
-        "stamina:%.1f max:%.1f ratio:%.2f blink:%.2f",
-        *stamina_, *maxStamina_, ratio, blinkTimer_);
 
     // スタミナゲージ
     for (int i = 0; i < totalSteps; i++)

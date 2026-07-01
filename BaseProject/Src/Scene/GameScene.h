@@ -2,8 +2,13 @@
 #include "SceneBase.h"
 #include "../Framework.h"
 class IronBall;
+<<<<<<< HEAD
 class UI;
 class StageBase;
+=======
+class Clock;
+class Stage;
+>>>>>>> origin/m4k
 class SkyDome;
 class Player;
 class BossManager;
@@ -12,7 +17,7 @@ class AttackManager;
 class Ranking;
 class ItemManager;
 class SoundManager;
-class UiManager;
+class UIManager;
 class EffectManager;
 
 class GameScene : public SceneBase
@@ -69,7 +74,7 @@ private:
 	SoundManager* soundMng_;
 
 	// UIマネージャ
-	UiManager* uiMng_;
+	UIManager* UIMng_;
 
 	// フェードの状態を表す列挙型
 	enum class FadeState
@@ -109,8 +114,8 @@ private:
 	// 鉄球
 	IronBall* ironBall_;
 	
-	//UI
-	UI* ui_;
+	//時計のUI
+	Clock* clockUI_;
 
 	//Item
 	ItemManager* itemMng_;

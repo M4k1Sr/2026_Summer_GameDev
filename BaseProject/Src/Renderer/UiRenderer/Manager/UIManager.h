@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include "../Base/UiBase.h"
-#include "../Base/UiBillboardBase.h"
+#include "../Base/UIBase.h"
+#include "../Base/UIBillboardBase.h"
 
 class UIManager
 {
@@ -10,15 +10,15 @@ public:
 
     UIManager();
     ~UIManager();
-    void AddUiBase(UiBase* ui);
-    void AddUiBillboardBase(UiBillboardBase* uiBillboard);
+    void AddUIBase(UIBase* UI);
+    void AddUIBillboardBase(UIBillboardBase* UIBillboard);
     void Update();
     void Draw();
     void Release();
 
 private:
-    std::vector<UiBase*> uiList_;
+    std::vector<UIBase*> UIList_;
 
-    std::vector<UiBillboardBase*> uiBillboardList_;
+    std::vector<UIBillboardBase*> UIBillboardList_;
 
 };

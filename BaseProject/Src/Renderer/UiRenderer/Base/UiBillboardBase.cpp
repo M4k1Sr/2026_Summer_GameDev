@@ -1,11 +1,11 @@
-#include "UiBillboardBase.h"
+#include "UIBillboardBase.h"
 
-UiBillboardBase::UiBillboardBase(VECTOR pos)
+UIBillboardBase::UIBillboardBase(VECTOR pos)
     : drawOrder_(0)
     , pos_(pos)
 {
 }
 
-UiBillboardBase::~UiBillboardBase()
+UIBillboardBase::~UIBillboardBase()
 {
 }

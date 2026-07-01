@@ -45,14 +45,6 @@ void ResourceManager::Init(void)
 	//res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
 	//resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
 
-	// タイトル城モデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/castle/castle.mv1");
-	resourcesMap_.emplace(SRC::PIT_FALL_PLANET, res);
-
-	// 回転惑星モデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/SpherePlanet/SpherePlanet.mv1");
-	resourcesMap_.emplace(SRC::ROLL_PLANET, res);
-
 	// ニンゲンモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Player/Player.mv1");
 	resourcesMap_.emplace(SRC::PLAYER, res);
@@ -61,13 +53,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Shadow.png");
 	resourcesMap_.emplace(SRC::PLAYER_SHADOW, res);
 
-	// ステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/MainStage.mv1");
-	resourcesMap_.emplace(SRC::MAIN_STAGE, res);
-
-	// サブステージモデル
+	// 一面ステージモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/FirstStage.mv1");
-	resourcesMap_.emplace(SRC::SUB_STAGE, res);
+	resourcesMap_.emplace(SRC::FIRST_STAGE, res);
+
+	// 二面ステージモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/SecondStage.mv1");
+	resourcesMap_.emplace(SRC::SECOND_STAGE, res);
 
 	// スカイドームモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "SkyDome/Skydome.mv1");
@@ -86,12 +78,24 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::IRON_BALL, res);
 
 	// ギミックスイッチモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/gimmick.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Sswitch.mv1");
 	resourcesMap_.emplace(SRC::OBJECT_SWITCH, res);
 
 	// タライモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/BossGimmick/Tarai.mv1");
 	resourcesMap_.emplace(SRC::TARAI, res);
+
+	// トゲ床モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Needle_Floor.mv1");
+	resourcesMap_.emplace(SRC::NEEDLE_FLOOR, res);
+
+	// バーナーモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Burner.mv1");
+	resourcesMap_.emplace(SRC::BURNER, res);
+	
+	// コンベヤーモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Conveyer.mv1");
+	resourcesMap_.emplace(SRC::CONVEYER, res);
 
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
@@ -188,10 +192,10 @@ int ResourceManager::LoadModelDuplicate(SRC src)
 		return -1;
 	}
 
-	int duId = MV1DuplicateModel(res.handleId_);
-	res.duplicateModelIds_.push_back(duId);
+	int dUId = MV1DuplicateModel(res.handleId_);
+	res.duplicateModelIds_.push_back(dUId);
 
-	return duId;
+	return dUId;
 }
 
 ResourceManager::ResourceManager(void)

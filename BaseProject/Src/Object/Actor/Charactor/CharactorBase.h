@@ -75,6 +75,9 @@ protected:
 	// 死亡フラグ
 	bool isDead_;
 
+	// 重力フラグ
+	bool isGravity_;
+
 	// リソースロード
 	virtual void InitLoad(void) override;
 

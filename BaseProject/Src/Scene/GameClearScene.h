@@ -23,6 +23,7 @@ public:
 	// 解放
 	void Release(void) override;
 
+	// ポーズ画面の表示
 	void IsPause(void);
 
 private:

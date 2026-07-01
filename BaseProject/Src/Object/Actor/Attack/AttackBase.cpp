@@ -127,8 +127,8 @@ void AttackBase::Draw(void)
 	// DxLibのブレンド値は 0〜255 なので、alpha_(0.0〜1.0) に 255 を掛け算します
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(255 * alpha_));
 
-	//// 赤いデバッグ球体を描画
-	//DrawSphere3D(transform_.pos, 100.0f * param_.scale, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
+	// 赤いデバッグ球体を描画
+	DrawSphere3D(transform_.pos, 100.0f * param_.scale, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
 
 	// 重要：ブレンドモードをノーマル（不透明に戻しておく（他の描画が透けないようにするため）
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

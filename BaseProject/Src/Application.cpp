@@ -6,7 +6,7 @@
 #include "./Manager/ServiceLocator.h"
 #include "./Manager/SoundManager.h"
 #include "./Renderer/EffectRenderer/Manager/EffectManager.h"
-#include "./Renderer/UIRenderer/Manager/UiManager.h"	
+#include "./Renderer/UIRenderer/Manager/UIManager.h"	
 #include "Common/FpsController.h"
 #include "Application.h"
 
@@ -86,12 +86,12 @@ void Application::Init(void)
 	soundMng_->Init();
 
 	effectMng_ = new EffectManager();
-	uiMng_ = new UIManager();
+	UIMng_ = new UIManager();
 
 	// サービスロケータに登録
 	ServiceLocator::Provide(soundMng_);
 	ServiceLocator::Provide(effectMng_);
-	ServiceLocator::Provide(uiMng_);
+	ServiceLocator::Provide(UIMng_);
 
 	// シーン管理初期化
 	SceneManager::CreateInstance();
@@ -111,13 +111,16 @@ void Application::Run(void)
 	while (ProcessMessage() == 0 )
 	{
 
+		// 裏画面をクリア
+		ClearDrawScreen();
+
 		inputManager.Update();
 		sceneManager.Update();
 		ServiceLocator::GetEffect().Play();
-		ServiceLocator::GetUi().Update();
+		ServiceLocator::GetUI().Update();
 
 		sceneManager.Draw();
-		ServiceLocator::GetUi().Draw();
+
 		/*EffectManager::GetInstance().Update();
 		EffectManager::GetInstance().Draw();*/
 #ifdef _DEBUG
@@ -149,7 +152,7 @@ void Application::Destroy(void)
 
 	delete soundMng_;
 	delete effectMng_;
-	delete uiMng_;
+	delete UIMng_;
 
 	// Effekseerを終了する。
 	Effkseer_End();

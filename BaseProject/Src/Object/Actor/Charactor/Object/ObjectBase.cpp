@@ -9,6 +9,7 @@ ObjectBase::ObjectBase(const ObjectBase::ObjectData& data)
 {
 	// ‰ŠúÀ•W‚Ìİ’è
 	transform_.pos = data.defaultPos;
+	isGravity_ = false;
 }
 
 ObjectBase::~ObjectBase(void)

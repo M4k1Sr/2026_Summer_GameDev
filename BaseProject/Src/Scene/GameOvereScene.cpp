@@ -47,14 +47,20 @@ void GameOvereScene::Update(void)
 		auto& ins = InputManager::GetInstance();
 
 		//ゲームシーンへ遷移
-		if (ins.IsTrgDown(KEY_INPUT_SPACE))
+		if (ins.IsTrgDown(KEY_INPUT_SPACE)||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::DOWN))
 		{
 			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);
 		}
 
-		if (ins.IsTrgDown(KEY_INPUT_0))
+		if (ins.IsTrgDown(KEY_INPUT_0) ||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::RIGHT) )
 		{
 			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
@@ -63,7 +69,10 @@ void GameOvereScene::Update(void)
 		}
 
 		//ポーズ画面へ
-		if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
+		if (ins.IsTrgDown(KEY_INPUT_ESCAPE) ||
+			ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::START))
 		{
 			isEnd_ = true;
 		}
@@ -80,6 +89,7 @@ void GameOvereScene::Draw(void)
 
 	//タイトルへ戻る
 	DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
+
 	//ポーズ画面
 	IsPause();
 }
@@ -95,7 +105,6 @@ void GameOvereScene::IsPause(void)
 {
 	if (isEnd_)
 	{
-
 		// 透過背景
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);
@@ -103,18 +112,64 @@ void GameOvereScene::IsPause(void)
 
 		SetFontSize(64);
 
-		DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, false);
+		DrawBox(400, 200, 1600, 400, 0xffffff, false);
 		DrawFormatString(670, 270, 0xffffff, "ゲームを続けますか?");
 
-		DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, false);
+		DrawBox(400, 600, 1600, 800, 0xffffff, false);
 		DrawFormatString(670, 670, 0xffffff, "ゲームを終了しますか?");
+
+		GetMousePoint(&mosPosX_, &mosPosY_);
 
 		//マウスポインタを表示状態にする
 		SetMouseDispFlag(TRUE);
 
+		//パッド取得
+		auto& ins = InputManager::GetInstance();
+
+		auto pad =
+			ins.GetJPadInputState(
+				InputManager::JOYPAD_NO::PAD1);
+
+		// 左スティック取得
+		float dx = pad.AKeyLX / 1000.0f;
+		float dy = pad.AKeyLY / 1000.0f;
+
+		// デッドゾーン
+		if (fabsf(dx) < 0.2f)
+		{
+			dx = 0.0f;
+		}
+
+		if (fabsf(dy) < 0.2f)
+		{
+			dy = 0.0f;
+		}
+
+		// カーソル速度
+		const int speed = 15;
+
+		// カーソル移動
+		mosPosX_ += static_cast<int>(dx * speed);
+		mosPosY_ += static_cast<int>(dy * speed);
+
+		// 画面外に出さない
+		mosPosX_ = std::clamp(
+			mosPosX_,
+			0,
+			Application::SCREEN_SIZE_X);
+
+		mosPosY_ = std::clamp(
+			mosPosY_,
+			0,
+			Application::SCREEN_SIZE_Y);
+
+		// 実際のマウスカーソルを移動
+		SetMousePoint(
+			mosPosX_,
+			mosPosY_);
+
 		//マウスポインタの座標を取得
 		GetMousePoint(&mosPosX_, &mosPosY_);
-
 
 		//この中にマウスカーソルがあるかを判定
 		bool continueGame =
@@ -124,18 +179,21 @@ void GameOvereScene::IsPause(void)
 		bool exitGame =
 			(mosPosX_ >= DRAWBOX_SX && mosPosX_ <= DRAWBOX_EX &&
 				mosPosY_ >= DRAWBOX_GAMEEND_SY && mosPosY_ <= DRAWBOX_GAMEEND_EY);
-
 		//マウスカーソルがあるときの処理
 			//ゲームを続ける
 		if (continueGame)
 		{
+
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 			//マウスの左クリックを検知したらゲーム続行
-			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			if (GetMouseInput() & MOUSE_INPUT_LEFT ||
+				ins.IsPadBtnTrgDown(
+					InputManager::JOYPAD_NO::PAD1,
+					InputManager::JOYPAD_BTN::DOWN))
 			{
-				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isEnd_ = false;
 			}
@@ -143,19 +201,21 @@ void GameOvereScene::IsPause(void)
 		//ゲームを終了する
 		else if (exitGame)
 		{
+
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			//マウスの左クリックを検知したらゲーム終了
-			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			if (GetMouseInput() & MOUSE_INPUT_LEFT ||
+				ins.IsPadBtnTrgDown(
+					InputManager::JOYPAD_NO::PAD1,
+					InputManager::JOYPAD_BTN::DOWN))
 			{
 				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
-
-				// Effekseerを終了する。
+				// Effekseerを終了する
 				Effkseer_End();
 				DxLib_End();
-
 			}
 		}
 

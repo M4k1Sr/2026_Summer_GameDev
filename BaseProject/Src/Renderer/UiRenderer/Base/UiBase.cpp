@@ -1,11 +1,11 @@
-#include "UiBase.h"
+#include "UIBase.h"
 
-UiBase::UiBase(Vector2 pos)
+UIBase::UIBase(Vector2 pos)
     : drawOrder_(0)
     , pos_(pos)
 {
 }
 
-UiBase::~UiBase()
+UIBase::~UIBase()
 {
 }

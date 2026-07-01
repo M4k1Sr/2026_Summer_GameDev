@@ -31,6 +31,7 @@ TitleScene::TitleScene(void)
 	mosPosY_(0),
 	wallImg_(-1),
 	isBgmPlay_(false),
+	pauseSelect_(PauseSelect::CONTINUE),
 	SceneBase()
 {
 }
@@ -60,27 +61,6 @@ void TitleScene::Init(void)
 
 	//タイトル壁
 	wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
-	
-
-	// メイン惑星
-	bigPlanet_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::PIT_FALL_PLANET));
-	bigPlanet_.scl = { 0.7,0.4,0.4 };
-	bigPlanet_.pos = { 0.0f, -500.0f,400.0f };
-	bigPlanet_.quaRot = Quaternion::Identity();
-	bigPlanet_.quaRotLocal = Quaternion(1.0f, 1.0f, 0.0f, 0.0f);;
-	bigPlanet_.Update();
-
-
-	// 回転惑星
-	rollPlanet_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::ROLL_PLANET));
-	rollPlanet_.scl = VGet(ROLL_PLANET_SCALE, ROLL_PLANET_SCALE, ROLL_PLANET_SCALE);
-	rollPlanet_.quaRot = Quaternion::Identity();
-	rollPlanet_.quaRotLocal = Quaternion::Euler(ROLL_PLANET_ANGLE);
-	rollPlanet_.pos = ROLL_PLANET_POS;
-	rollPlanet_.Update();
-
 
 	// ニンゲン
 	player_.SetModel(resMng_.LoadModelDuplicate(
@@ -114,10 +94,16 @@ void TitleScene::Update(void)
 {
 	if (!isEnd_)
 	{
+		//マウスポインタを非表示状態にする
+		SetMouseDispFlag(FALSE);
+
 		auto& ins = InputManager::GetInstance();
 
 		//ゲームシーンへ遷移
-		if (ins.IsTrgDown(KEY_INPUT_SPACE))
+		if (ins.IsTrgDown(KEY_INPUT_SPACE)||
+			ins.IsPadBtnTrgDown(
+			InputManager::JOYPAD_NO::PAD1,
+			InputManager::JOYPAD_BTN::DOWN))
 		{
 			// クリック音
 			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
@@ -128,7 +114,10 @@ void TitleScene::Update(void)
 		}
 
 		//ポーズ画面へ
-		if (ins.IsTrgDown(KEY_INPUT_ESCAPE))
+		if (ins.IsTrgDown(KEY_INPUT_ESCAPE)||
+			ins.IsPadBtnTrgDown(
+			InputManager::JOYPAD_NO::PAD1,
+			InputManager::JOYPAD_BTN::START))
 		{
 			isEnd_ = true;
 		}
@@ -145,6 +134,8 @@ void TitleScene::Update(void)
 		effect_->Update();
 
 	}
+
+	
 
 }
 
@@ -210,8 +201,55 @@ void TitleScene::IsPause(void)
 		DrawBox(400, 600, 1600, 800, 0xffffff, false);
 		DrawFormatString(670, 670, 0xffffff, "ゲームを終了しますか?");
 
+		GetMousePoint(&mosPosX_, &mosPosY_);
+
 		//マウスポインタを表示状態にする
 		SetMouseDispFlag(TRUE);
+
+		//パッド取得
+		auto& ins = InputManager::GetInstance();
+
+		auto pad =
+			ins.GetJPadInputState(
+				InputManager::JOYPAD_NO::PAD1);
+
+		// 左スティック取得
+		float dx = pad.AKeyLX / 1000.0f;
+		float dy = pad.AKeyLY / 1000.0f;
+
+		// デッドゾーン
+		if (fabsf(dx) < 0.2f)
+		{
+			dx = 0.0f;
+		}
+
+		if (fabsf(dy) < 0.2f)
+		{
+			dy = 0.0f;
+		}
+
+		// カーソル速度
+		const int speed = 15;
+
+		// カーソル移動
+		mosPosX_ += static_cast<int>(dx * speed);
+		mosPosY_ += static_cast<int>(dy * speed);
+
+		// 画面外に出さない
+		mosPosX_ = std::clamp(
+			mosPosX_,
+			0,
+			Application::SCREEN_SIZE_X);
+
+		mosPosY_ = std::clamp(
+			mosPosY_,
+			0,
+			Application::SCREEN_SIZE_Y);
+
+		// 実際のマウスカーソルを移動
+		SetMousePoint(
+			mosPosX_,
+			mosPosY_);
 
 		//マウスポインタの座標を取得
 		GetMousePoint(&mosPosX_, &mosPosY_);
@@ -238,10 +276,13 @@ void TitleScene::IsPause(void)
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAME_SY, DRAWBOX_EX, DRAWBOX_GAME_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 			//マウスの左クリックを検知したらゲーム続行
-			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			if (GetMouseInput() & MOUSE_INPUT_LEFT ||
+				ins.IsPadBtnTrgDown(
+				InputManager::JOYPAD_NO::PAD1,
+				InputManager::JOYPAD_BTN::DOWN))
 			{
-				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 				isEnd_ = false;
 			}
@@ -260,7 +301,10 @@ void TitleScene::IsPause(void)
 			DrawBox(DRAWBOX_SX, DRAWBOX_GAMEEND_SY, DRAWBOX_EX, DRAWBOX_GAMEEND_EY, 0xffffff, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			//マウスの左クリックを検知したらゲーム終了
-			if (GetMouseInput() & MOUSE_INPUT_LEFT)
+			if (GetMouseInput() & MOUSE_INPUT_LEFT ||
+				ins.IsPadBtnTrgDown(
+					InputManager::JOYPAD_NO::PAD1,
+					InputManager::JOYPAD_BTN::DOWN))
 			{
 				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
@@ -274,5 +318,7 @@ void TitleScene::IsPause(void)
 			//カーソルがないときは音を鳴らさない
 			isBgmPlay_ = false;
 		}
+		
 	}
+
 }
