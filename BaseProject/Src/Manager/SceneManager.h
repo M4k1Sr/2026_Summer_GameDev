@@ -12,9 +12,9 @@ class SceneManager
 public:
 
 	// 背景色
-	static constexpr int BACKGROUND_COLOR_R = 0;
-	static constexpr int BACKGROUND_COLOR_G = 0;
-	static constexpr int BACKGROUND_COLOR_B = 0;
+	static constexpr int BACKGROUND_COLOR_R = 128;
+	static constexpr int BACKGROUND_COLOR_G = 128;
+	static constexpr int BACKGROUND_COLOR_B = 128;
 
 	// ディレクショナルライトの方向
 	static constexpr VECTOR LIGHT_DIRECTION = { 0.3f, -0.7f, 0.8f };
@@ -26,7 +26,6 @@ public:
 		TITLE,
 		STAGE_1,    
 		STAGE_2,    
-		STAGE_3,    
 		DEBUG,
 		GAMEOVER,
 		GAMECLEAR,
