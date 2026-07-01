@@ -55,14 +55,13 @@ public:
 
 private:
 
-<<<<<<< HEAD
 	// ★ステージの状態を表す列挙型を追加
 	enum class StageState
 	{
 		STAGE_1,
 		STAGE_2,
 	};
-=======
+
 	// エフェクトマネージャ
 	EffectManager* effectMng_;
 
@@ -71,10 +70,6 @@ private:
 
 	// UIマネージャ
 	UiManager* uiMng_;
-
-	// ステージ
-	Stage* stage_;
->>>>>>> m4k
 
 	// フェードの状態を表す列挙型
 	enum class FadeState

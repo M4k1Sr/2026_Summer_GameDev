@@ -7,14 +7,11 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
-<<<<<<< HEAD
 #include "../Object/Actor/StageBase.h"
 #include "../Object/Actor/Stage1.h"
 #include "../Object/Actor/Stage2.h"
-=======
 #include "../Object/Actor/Stage.h"
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
->>>>>>> m4k
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
@@ -69,15 +66,6 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-<<<<<<< HEAD
-	
-=======
-
-	// ステージ初期化
-	stage_ = new Stage();
-	stage_->Init();
-
->>>>>>> m4k
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
@@ -211,7 +199,6 @@ void GameScene::Update(void)
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
-<<<<<<< HEAD
 		// ★ 1. まずフェードの更新を行う
 		bool isFadeFinished = UpdateFade();
 
@@ -263,12 +250,10 @@ void GameScene::Update(void)
 		}
 
 		// --- ここから下は通常時（FadeState::NONE）のみ実行される ---
-=======
 		//エフェクト
 	//	EffectManager::GetInstance().Update();
 
 		//クリアタイム加算
->>>>>>> m4k
 		clearTime_++;
 		SetMouseDispFlag(false);
 

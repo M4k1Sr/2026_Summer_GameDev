@@ -1,4 +1,16 @@
-﻿  GameScene.cpp
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(484,9): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(505,40): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-  BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1129,5): warning MSB8027: UiBase.cpp という名前の複数のファイルでは、同じ場所に出力が生成されます。これにより、不適切なビルド結果が生じる可能性があります。関連するファイルは Src\Renderer\UiRenderer\UiBase.cpp, Src\Renderer\UiRenderer\Base\UiBase.cpp です。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1129,5): warning MSB8027: StaminaUi.cpp という名前の複数のファイルでは、同じ場所に出力が生成されます。これにより、不適切なビルド結果が生じる可能性があります。関連するファイルは Src\Renderer\UiRenderer\StaminaUi.cpp, Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp です。
+  UiBase.cpp
+\Src\Renderer\UiRenderer\UiBase.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Renderer\UiRenderer\UiBase.cpp':No such file or directory
+  (ソース ファイル '/Src/Renderer/UiRenderer/UiBase.cpp' をコンパイルしています)
+  
+  StaminaUi.cpp
+\Src\Renderer\UiRenderer\StaminaUi.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Renderer\UiRenderer\StaminaUi.cpp':No such file or directory
+  (ソース ファイル '/Src/Renderer/UiRenderer/StaminaUi.cpp' をコンパイルしています)
+  
+  StaminaUi.cpp
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp(37,14): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp(38,14): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+  SweatUi.cpp
+  UIManager.cpp
+  コードを生成中...

@@ -1,12 +1,13 @@
 #include "Stage1.h"
 #include "../../Manager/ResourceManager.h"
 #include "../../Manager/SoundManager.h"
+#include "../../Manager/ServiceLocator.h"
 
 void Stage1::InitLoad(void) 
 {
 
     transform_.SetModel(resMng_.LoadModelDuplicate(ResourceManager::SRC::SUB_STAGE));
-    SoundManager::GetInstance().LoadBank(BANK_ID::STAGE_1);
+    ServiceLocator::GetSound().LoadBank(BANK_ID::STAGE_1);
 
 }
 
@@ -30,6 +31,6 @@ void Stage1::InitCollider(void)
 void Stage1::InitPost(void)
 {
    
-    SoundManager::GetInstance().PlayEvent(SOUND_ID::BGM_STAGE1, true);
+    ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_STAGE1, true);
 
 }
