@@ -173,7 +173,7 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 
 	for (auto& object : objects_)
 	{
-		if (auto tile = dynamic_cast<ObjectTile*>(object)) // šObjectTile‚Å”»’è
+		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{
 			VECTOR tilePos = tile->GetPos();
 
