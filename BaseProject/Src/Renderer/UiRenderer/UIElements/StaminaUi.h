@@ -1,6 +1,7 @@
 #pragma once
 #include "../Base/UIBase.h"
 
+
 class StaminaUI : public UIBase
 {
 public:
@@ -15,6 +16,8 @@ private:
     // スタミナ計算
     float* stamina_;
     float* maxStamina_;
+    //プレイヤーのダッシュ判定
+	bool* isDash_;
 
     // 表示位置・サイズ
     float cx_;

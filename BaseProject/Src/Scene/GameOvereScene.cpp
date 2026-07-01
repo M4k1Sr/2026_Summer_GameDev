@@ -18,6 +18,7 @@
 
 GameOvereScene::GameOvereScene()
 	:
+	player_(),
 	isEnd_(false),
 	mosPosX_(0),
 	mosPosY_(0),
@@ -33,6 +34,21 @@ GameOvereScene::~GameOvereScene()
 
 void GameOvereScene::Init(void)
 {
+
+	// ニンゲン
+	player_.SetModel(resMng_.LoadModelDuplicate(
+		ResourceManager::SRC::PLAYER));
+	player_.scl = VGet(PLAYER_SCALE, PLAYER_SCALE, PLAYER_SCALE);
+	player_.quaRot = Quaternion::Euler(PLAYER_ANGLE);
+	player_.quaRotLocal = Quaternion::Euler(PLAYER_LOCAL_ANGLE);
+	player_.pos = PLAYER_POS;
+	player_.Update();
+
+	// アニメーションコントローラー
+	animationController_ =
+		new AnimationController(player_.modelId);
+	animationController_->Add(0, 20.0f, Application::PATH_MODEL + "Player/Sitting.mv1");
+	animationController_->Play(0, true);
 
 	//ゲームオーバー画像
 	gameOverImg_ = resMng_.Load(ResourceManager::SRC::GameOverImg).handleId_;
@@ -96,6 +112,9 @@ void GameOvereScene::Update(void)
 void GameOvereScene::Draw(void)
 {
 	
+	//プレイヤー
+	MV1DrawModel(player_.modelId);
+
 	// ポストエフェクト描画
 	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 

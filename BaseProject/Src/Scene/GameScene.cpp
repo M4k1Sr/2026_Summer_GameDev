@@ -495,7 +495,7 @@ void GameScene::IsClear(void)
 
 	isClear_ = player_->GetClearFlag();
 
-	if(isClear_)
+	if(isClear_ && bossMng_->IsBossDead())
 	{
 		GameData::GetInstance().clearTime = clearTime_;
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);

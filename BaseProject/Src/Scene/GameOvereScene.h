@@ -43,6 +43,13 @@ private:
 	PostEffectManager* effect_;
 
 
+	// アニメーション処理
+	AnimationController* animationController_;
+
+	// ニンゲン
+	Transform player_;
+
+
 	//ゲームオーバー画像
 	int gameOverImg_;
 
@@ -58,6 +65,15 @@ private:
 	static constexpr int DRAWBOX_GAME_SY = 200;
 
 	static constexpr int DRAWBOX_GAME_EY = 400;
+
+	// ニンゲンのスケール
+	static constexpr float PLAYER_SCALE = 4.5f;
+	// ニンゲン座標
+	static constexpr VECTOR PLAYER_POS = { -100.0f, -500.0f,400.0f };
+	// ニンゲンの角度
+	static constexpr VECTOR PLAYER_ANGLE = { 0.0f,  150.0f * DX_PI_F / 180.0f, 0.0f };
+	static constexpr VECTOR PLAYER_LOCAL_ANGLE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
+
 
 
 

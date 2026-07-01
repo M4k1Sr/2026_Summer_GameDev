@@ -32,8 +32,15 @@ void StaminaUI::Update()
 
 void StaminaUI::Draw()
 {
+  
 
     if (!stamina_ || !maxStamina_)
+    {
+        return;
+    }
+
+	// スタミナが最大値の場合は描画しない
+    if (*stamina_ >= *maxStamina_)
     {
         return;
     }

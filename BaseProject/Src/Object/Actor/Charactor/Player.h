@@ -44,6 +44,9 @@ public:
 
 	void IsClear(void);
 
+	//ダッシュ判定
+	bool GetDashFlag(void) const { return isDash_; }
+
 protected:
 
 	// リソースロード
