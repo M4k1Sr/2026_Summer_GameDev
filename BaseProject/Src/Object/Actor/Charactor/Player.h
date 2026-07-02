@@ -9,6 +9,7 @@ public:
 	enum class ANIM_TYPE
 	{
 		IDLE,
+		SLOW_WALK,
 		RUN,
 		FAST_RUN,
 		JUMP,
@@ -94,6 +95,9 @@ private:
 	// ダッシュ判定
 	bool isDash_;
 
+	// 歩き判定
+	bool isSlowWalk_;
+		
 	// 汗UIの座標
 	VECTOR sweatPos_;
 

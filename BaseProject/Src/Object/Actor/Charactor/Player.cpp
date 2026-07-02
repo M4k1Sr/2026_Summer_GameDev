@@ -33,7 +33,8 @@ Player::Player(void)
 	isIronBallHit_(false),
 	stamina_(15.0f),
 	maxStamina_(15.0f),
-	isDash_(false)
+	isDash_(false),
+	isSlowWalk_(false)
 {
 	sweatPos_ = transform_.pos;
 	int img_ = resMng_.Load(ResourceManager::SRC::SWEAT).handleId_;
@@ -111,9 +112,6 @@ void Player::InitLoad(void)
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
 
-	//// モデル読み込み
-	//transform_.SetModel(resMng_.LoadModelDuplicate(
-	//	ResourceManager::SRC::PLAYER));
 }
 
 void Player::InitTransform(void)
@@ -215,6 +213,7 @@ void Player::ProcessMove(void)
 	movePow_ = AsoUtility::VECTOR_ZERO;
 	VECTOR dir = AsoUtility::VECTOR_ZERO;
 	isDash_ = false;
+	isSlowWalk_ = false;
 
 	// ----------------------------------------------------
 	// 1. 入力処理（キーボード / パッド）
@@ -240,7 +239,9 @@ void Player::ProcessMove(void)
 	// ----------------------------------------------------
 	// 2. 移動量・ベクトルの計算（入力がある場合）
 	// ----------------------------------------------------
-	bool hasInput = !AsoUtility::EqualsVZero(dir);
+
+	float inputLength = VSize(dir);
+	bool hasInput = inputLength > 0.0f;
 
 	if (hasInput)
 	{
@@ -251,6 +252,19 @@ void Player::ProcessMove(void)
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
 		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
 		movePow_ = VScale(moveDir_, moveSpeed_);
+
+		if (inputLength > 1.0f)
+		{
+			inputLength = 1.0f;
+		}
+
+		animationController_->SetPlaySpeed(inputLength);
+
+	}
+	else
+	{
+		// 入力がない（IDLEなど）の時は等速（1.0倍）に戻しておく
+		animationController_->SetPlaySpeed(1.0f);
 	}
 
 	// ----------------------------------------------------

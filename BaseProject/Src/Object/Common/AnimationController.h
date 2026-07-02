@@ -48,6 +48,9 @@ public:
 	// 再生中のアニメーション情報を取得
 	const Animation& GetPlayAnim(void) const;
 
+	// アニメーションの再生速度
+	void SetPlaySpeed(float speedMultiplier);
+
 private:
 
 	// アニメーションするモデルのハンドルID
@@ -76,5 +79,6 @@ private:
 
 	// アニメーション追加の共通処理
 	void Add(int type, float speed, Animation& animation);
+
 
 };
