@@ -167,7 +167,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
-	isGravity_ = false;
+	isGravity_ = true;
 
 	// ˆÚ“®‘€ì
 	ProcessMove();

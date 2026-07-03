@@ -73,6 +73,7 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

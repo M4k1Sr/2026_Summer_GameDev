@@ -102,7 +102,7 @@ private:
 	VECTOR sweatPos_;
 
 	// プレイヤー座標
-	static constexpr VECTOR PLAYER_POS = { -700.0f, -50.0f, 750.0f };	// スタート位置
+	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
 

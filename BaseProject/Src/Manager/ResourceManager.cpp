@@ -93,6 +93,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Conveyer.mv1");
 	resourcesMap_.emplace(SRC::CONVEYER, res);
 
+	//‰ó‚ê‚½ŸBƒ‚ƒfƒ‹
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/BreakCage.mv1");
+	resourcesMap_.emplace(SRC::BREAK_CAGE, res);
+
 	// ŽžŒvƒ‚ƒfƒ‹
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::CLOCK, res);
