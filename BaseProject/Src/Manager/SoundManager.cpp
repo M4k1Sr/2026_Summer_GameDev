@@ -132,7 +132,7 @@ void SoundManager::PlayEvent(SOUND_ID soundId, bool loop)
     auto sPair = soundMap_.find(soundId);
     if (sPair == soundMap_.end() || sPair->second->handleId_ == -1) return;
 
-    ChangeVolumeSoundMem(255, sPair->second->handleId_);
+    ChangeVolumeSoundMem(120, sPair->second->handleId_);
 
     int playType = loop ? DX_PLAYTYPE_LOOP : DX_PLAYTYPE_BACK;
     PlaySoundMem(sPair->second->handleId_, playType, TRUE);

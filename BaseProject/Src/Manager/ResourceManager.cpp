@@ -109,13 +109,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Pixie/BossPixie.mv1");
 	resourcesMap_.emplace(SRC::BOSS_PIXIE, res);
 
-	// ボスモデル(オーク)
-	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Orc/BossOrc.mv1");
-	resourcesMap_.emplace(SRC::BOSS_ORC, res);
-
-	// ボスモデル(ディアブロ)
-	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
-	resourcesMap_.emplace(SRC::BOSS_DIABLO, res);
+	// ボスモデル(ゴブリン)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Goblin/BossGoblin.mv1");
+	resourcesMap_.emplace(SRC::BOSS_GOBLIN, res);
 
 	//アイテム鍵
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");

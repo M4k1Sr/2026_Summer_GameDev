@@ -22,6 +22,8 @@ public:
 	{
 		STAGE,
 		PLAYER,
+		PIXIE,
+		GOBLIN,
 
 		// オブジェクト
 		BOX,

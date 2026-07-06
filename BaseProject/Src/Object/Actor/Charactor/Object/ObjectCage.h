@@ -14,6 +14,8 @@ public:
 	// デストラクタ
 	~ObjectCage(void) override;
 
+	void Draw(void) override;
+
 	// 床の座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
 

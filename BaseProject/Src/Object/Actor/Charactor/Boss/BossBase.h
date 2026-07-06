@@ -15,7 +15,7 @@ public:
 	enum class BOSS_TYPE
 	{
 		PIXIE,
-		ORC,
+		GOBLIN,
 		DIABLO,
 	};
 
@@ -32,12 +32,28 @@ public:
 	// ó‘Ô
 	enum class STATE
 	{
+		// ’Êíó‘Ô
 		IDLE,
-		SURPRISE,
+		WALK,
+		RUN,
+		PATROL,
+
+		// ”­Œ©ó‘Ô
+		SURPRISE,	// ”­Œ©
+		THREAT,		// ˆÐŠd
+
+		// UŒ‚ó‘Ô
 		CHARGE,
+		ATTACK,
 		THROW,
 		ATTACK_WAVE,
 		ATTACK_END,
+
+		// UŒ‚ŒãŠ´î
+		CHEER,
+		ANGRY,
+
+		// ƒ_ƒ[ƒWó‘Ô
 		DAMAGE,
 		DOWN,
 		END,

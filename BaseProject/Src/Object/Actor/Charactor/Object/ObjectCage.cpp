@@ -19,6 +19,14 @@ ObjectCage::~ObjectCage(void)
 {
 }
 
+void ObjectCage::Draw(void)
+{
+
+	//------------------------------------------------------------------------
+	// ディゾルブ処理はこれより上に書く
+	ObjectBase::Draw();
+}
+
 void ObjectCage::InitLoad(void)
 {
 	// 基底クラスのリソースロード

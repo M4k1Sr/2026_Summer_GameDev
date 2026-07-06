@@ -38,8 +38,9 @@ public:
 
 		// エネミー
 		BOSS_PIXIE,
-		BOSS_ORC,
-		BOSS_DIABLO,
+		BOSS_GOBLIN,
+
+
 		KEY,         //アイテム鍵
 		WALL,
 		GOAL,

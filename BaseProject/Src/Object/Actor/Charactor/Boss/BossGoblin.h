@@ -1,38 +1,49 @@
-#pragma once
-#include <DxLib.h>
 #include "BossBase.h"
 #include "../CharactorBase.h"
 class Health;
 class AnimationController;
 
-class BossPixie : public BossBase
+class BossGoblin : public BossBase
 {
 public:
 
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
+		// 通常状態
 		IDLE,
-		SURPRISE,
-		CHARGE,
+		WALK,
+		RUN,
+		PATROL,
+
+		// 発見状態
+		SURPRISE,	// 発見
+		THREAT,		// 威嚇
+
+		// 攻撃状態
+		ATTACK,
 		THROW,
-		ATTACK_WAVE,
 		ATTACK_END,
+
+		// 攻撃後感情
+		CHEER,
+		ANGRY,
+
+		// ダメージ状態
 		DAMAGE,
 		DOWN,
-		END,
-		MAX,
+		END
 	};
 
 
 
 	// コンストラクタ
-	BossPixie(const BossBase::BossData& data);
+	BossGoblin(const BossBase::BossData& data);
 
 	// デストラクタ
-	virtual ~BossPixie();
+	virtual ~BossGoblin();
 
-	
+
 
 protected:
 
@@ -66,18 +77,12 @@ private:
 	// ダメージカウンタ
 	int lastDamageCnt_ = 0;
 
-	// 火の玉攻撃カウンタ
-	int throwCnt_;
-
-	// 攻撃波攻撃カウンタ
-	int waveAttackCnt_;
-	
 	// 攻撃タイマー
 	float attackTimer_;
 
 	// モデルの大きさ
-	static constexpr float SCALE = 3.0f;
-	
+	static constexpr float SCALE = 2.0f;
+
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
@@ -107,32 +112,62 @@ private:
 	// プレイヤーを注視する
 	void LookPlayer(void);
 
+	// 状態遷移
 	void ChangeState(STATE state);
+	
+	// 通常状態
 	void ChangeStateIdle(void);
+	void ChangeStateWalk(void);
+	void ChangeStateRun(void);
+	void ChangeStatePatrol(void);
+
+	// 発見状態
 	void ChangeStateSurprise(void);
-	void ChangeStateCharge(void);
+	void ChangeStateThreat(void);
+
+	// 攻撃状態
+	void ChangeStateAttack(void);
 	void ChangeStateThrow(void);
-	void ChangeStateAttackWave(void);
 	void ChangeStateAttackEnd(void);
+
+	// 攻撃後感情
+	void ChangeStateCheer(void);
+	void ChangeStateAngry(void);
+
+	// ダメージ状態
 	void ChangeStateDamage(void);
 	void ChangeStateDown(void);
 	void ChangeStateEnd(void);
 
-	void UpdateIdle(void);
-	void UpdateSurprise(void);
-	void UpdateCharge(void);
-	void UpdateThrow(void);
-	void UpdateAttackWave(void);
-	void UpdateAttackEnd(void);
-	void UpdateDamage(void);
-	void UpdateDown(void);
-	void UpdateEnd(void);
+
+	// 更新処理
+	// 通常状態
+	void UpdateIdle();
+	void UpdateWalk();
+	void UpdateRun();
+	void UpdatePatrol();
+
+	// 発見状態
+	void UpdateSurprise();
+	void UpdateThreat();
+
+	// 攻撃状態
+	void UpdateAttack();
+	void UpdateThrow();
+	void UpdateAttackEnd();
+
+	// 攻撃後感情
+	void UpdateCheer();
+	void UpdateAngry();
+
+	// ダメージ状態
+	void UpdateDamage();
+	void UpdateDown();
+	void UpdateEnd();
 
 	// フェーズ管理
 	void Phase(void) override;
 
-	
-	//死亡処理
 	void Dead(void);
 
 	bool isDead_;
