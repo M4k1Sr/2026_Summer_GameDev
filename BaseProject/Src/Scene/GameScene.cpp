@@ -21,6 +21,7 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
+#include "../Renderer/UIRenderer/Manager/UIManager.h"
 #include "GameScene.h"
 #include "../Application.h"
 #include"../Manager/ItemManager.h"
@@ -261,8 +262,7 @@ void GameScene::Update(void)
 
 		skyDome_->Update();
 		player_->Update();
-<<<<<<< HEAD
-		ui_->Update();
+		//ui_->Update();
 		stage_->Update();
 
 		if (stageState_ == StageState::STAGE_1)
@@ -272,13 +272,11 @@ void GameScene::Update(void)
 			attackMng_->Update();
 			ironBall_->Update();
 		}
-=======
 		bossMng_->Update();
 		objMng_->Update();
 		attackMng_->Update();
 		ironBall_->Update();
 		clockUI_->Update();
->>>>>>> origin/m4k
 
 		// ===========================================================
 		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え

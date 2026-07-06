@@ -2,13 +2,10 @@
 #include "SceneBase.h"
 #include "../Framework.h"
 class IronBall;
-<<<<<<< HEAD
 class UI;
 class StageBase;
-=======
 class Clock;
 class Stage;
->>>>>>> origin/m4k
 class SkyDome;
 class Player;
 class BossManager;

@@ -19,12 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Manager\ServiceLocator.cpp" />
     <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
     <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Manager\UIManager.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
@@ -43,6 +48,7 @@
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\SweatUi.cpp" />
     <ClCompile Include="Src\Scene\GameClearScene.cpp" />
     <ClCompile Include="Src\Ranking\Ranking.cpp" />
     <ClCompile Include="Src\Manager\Score.cpp" />
@@ -86,26 +92,13 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBase.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\SweatUi.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.cpp" />
-    <ClCompile Include="Src\Renderer\UiRenderer\Manager\UIManager.cpp" />
-=======
-    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
->>>>>>> origin/m4k
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
@@ -113,6 +106,7 @@
     <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Vignette.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock.h" />
     <ClInclude Include="Src\Object\UI\UI.h" />
@@ -132,6 +126,7 @@
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
+    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.h" />
     <ClInclude Include="Src\Scene\GameClearScene.h" />
     <ClInclude Include="Src\Ranking\Ranking.h" />
     <ClInclude Include="Src\Manager\Score.h" />
@@ -176,24 +171,13 @@
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Object\Actor\Stage.h" />
-<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBase.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\SweatUi.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\Manager\UIManager.h" />
-=======
-    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBase.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.h" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
->>>>>>> origin/m4k
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
@@ -206,11 +190,25 @@
     <None Include="Src\Renderer\PostEffectRenderer\PostEffect\Vignette.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Blackout.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Blur.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\GameOverNoise.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Monotone.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>

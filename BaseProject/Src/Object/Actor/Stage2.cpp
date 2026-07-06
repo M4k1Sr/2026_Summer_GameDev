@@ -5,8 +5,8 @@
 
 void Stage2::InitLoad(void)
 {
-	transform_.SetModel(resMng_.LoadModelDuplicate(ResourceManager::SRC::SUB_STAGE));
-	ServiceLocator::GetSound().LoadBank(BANK_ID::STAGE_1);
+	transform_.SetModel(resMng_.LoadModelDuplicate(ResourceManager::SRC::SECOND_STAGE));
+	ServiceLocator::GetSound().LoadBank(BANK_ID::STAGE_2);
 }
 
 void Stage2::InitTransform(void)
