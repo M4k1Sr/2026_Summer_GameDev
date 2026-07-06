@@ -32,6 +32,7 @@ public:
 		NEEDLE_FLOOR,
 		BURNER,
 		CONVEYER,
+		CAGE,
 
 
 		CAMERA,

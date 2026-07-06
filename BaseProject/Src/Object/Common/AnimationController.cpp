@@ -160,3 +160,13 @@ void AnimationController::Add(int type, float speed, Animation& animation)
 		animations_.emplace(type, animation);
 	}
 }
+
+void AnimationController::SetPlaySpeed(float speedMultiplier)
+{
+	// 念のため、初期状態（何も再生していないとき）は弾く
+	if (playType_ == -1) return;
+
+	// animations_ マップに登録されているオリジナルの速度をベースに、
+	// 外から渡された倍率（speedMultiplier）を掛け合わせる
+	playAnim_.speed = animations_[playType_].speed * speedMultiplier;
+}

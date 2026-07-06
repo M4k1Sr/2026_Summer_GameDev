@@ -28,6 +28,9 @@ public:
 		NEEDLE_FLOOR,
 		BURNER,
 		CONVEYER,
+		CAGE,
+		BREAK_CAGE,
+
 
 		// UI
 		CLOCK,
@@ -38,7 +41,6 @@ public:
 		BOSS_ORC,
 		BOSS_DIABLO,
 		KEY,         //アイテム鍵
-		CAGE,        //タイトルの檻
 		WALL,
 		GOAL,
 		DAMAGE,//ダメージエフェクト
