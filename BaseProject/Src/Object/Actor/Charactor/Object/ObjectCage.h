@@ -4,22 +4,15 @@
 #include "../CharactorBase.h"
 class AnimationController;
 
-class ObjectConveyer : public ObjectBase
+class ObjectCage : public ObjectBase
 {
 public:
 
-	// アニメーションの状態
-	enum class ANIM_TYPE
-	{
-		ROLL,	
-		MAX
-	};
-
 	// コンストラクタ
-	ObjectConveyer(const ObjectBase::ObjectData& data);
+	ObjectCage(const ObjectBase::ObjectData& data);
 
 	// デストラクタ
-	~ObjectConveyer(void) override;
+	~ObjectCage(void) override;
 
 	// 床の座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
@@ -48,14 +41,9 @@ protected:
 	void DrawViewRange(void) override {};
 
 private:
-	
-	// ローラー6本分
-	static constexpr int ROLLER_NUM = 6;
-	int rollerModelId_[ROLLER_NUM];
-	AnimationController* rollerAnimCtrl_[ROLLER_NUM];
 
-	// モデルの大きさ
-	static constexpr float SCALE = 0.3f;
+	// モデルの大きさ 
+	static constexpr float SCALE = 0.4f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
@@ -84,7 +72,7 @@ private:
 	// タイマー
 	float moveTimer_;
 
-	// コンベヤー処理
-	void UpdateProcessConveyer(void);
-
+	// 更新ステップ
+	float step_;
 };
+

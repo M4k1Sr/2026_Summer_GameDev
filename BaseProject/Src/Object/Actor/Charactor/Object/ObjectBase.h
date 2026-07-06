@@ -17,6 +17,7 @@ public:
 		NEEDLE_FLOOR,
 		BURNER,
 		CONVEYER,
+		BREAK_CAGE,
 		MAX,
 	};
 

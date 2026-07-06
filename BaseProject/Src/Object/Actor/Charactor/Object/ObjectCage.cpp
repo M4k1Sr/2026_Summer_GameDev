@@ -1,4 +1,4 @@
-#include "ObjectConveyer.h"
+#include "ObjectCage.h"
 #include "../../../../Manager/ResourceManager.h"
 #include "../../../Common/Transform.h"
 #include "../../../Common/AnimationController.h"
@@ -8,29 +8,29 @@
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Application.h"
 
-ObjectConveyer::ObjectConveyer(const ObjectBase::ObjectData& data)
+ObjectCage::ObjectCage(const ObjectBase::ObjectData& data)
 	:
 	ObjectBase(data),
 	moveTimer_(0.0f)
 {
 }
 
-ObjectConveyer::~ObjectConveyer(void)
+ObjectCage::~ObjectCage(void)
 {
 }
 
-void ObjectConveyer::InitLoad(void)
+void ObjectCage::InitLoad(void)
 {
 	// 基底クラスのリソースロード
 	ObjectBase::InitLoad();
 
 	// モデル読み込み
 	transform_.SetModel(
-		resMng_.LoadModelDuplicate(ResourceManager::SRC::CONVEYER));
+		resMng_.LoadModelDuplicate(ResourceManager::SRC::BREAK_CAGE));
 
 }
 
-void ObjectConveyer::InitTransform(void)
+void ObjectCage::InitTransform(void)
 {
 
 	// モデルの大きさ、回転、座標の初期化
@@ -40,36 +40,29 @@ void ObjectConveyer::InitTransform(void)
 	transform_.Update();
 }
 
-void ObjectConveyer::InitCollider(void)
+void ObjectCage::InitCollider(void)
 {
-	
+
 	// 主に地面との衝突で使用する線分コライダ
 	ColliderLine* colLine = new ColliderLine(
-		ColliderBase::TAG::CONVEYER, &transform_,
+		ColliderBase::TAG::CAGE, &transform_,
 		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::LINE), colLine);
 
 	// モデルとの衝突で使用するモデルコライダー
 	ColliderModel* colModel = new ColliderModel(
-		ColliderBase::TAG::CONVEYER,
+		ColliderBase::TAG::CAGE,
 		&transform_);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), colModel);
 }
 
-void ObjectConveyer::InitAnimation(void)
+void ObjectCage::InitAnimation(void)
 {
 	//モデルアニメーション制御の初期化
 	animationController_ = new AnimationController(transform_.modelId);
-
-	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::ROLL), 10.0f, 0);
-
-
-	// アニメーション再生
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ROLL), true);
 }
 
-void ObjectConveyer::InitPost(void)
+void ObjectCage::InitPost(void)
 {
 
 	// 基底クラスの初期化後処理
@@ -82,18 +75,13 @@ void ObjectConveyer::InitPost(void)
 	}
 }
 
-void ObjectConveyer::UpdateProcess(void)
+void ObjectCage::UpdateProcess(void)
 {
-	UpdateProcessConveyer();
 }
 
-void ObjectConveyer::UpdateProcessPost(void)
+void ObjectCage::UpdateProcessPost(void)
 {
 	transform_.Update();
 
 	ObjectBase::UpdateProcessPost();
-}
-
-void ObjectConveyer::UpdateProcessConveyer(void)
-{
 }

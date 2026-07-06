@@ -103,6 +103,10 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
+<<<<<<< HEAD
+>>>>>>> origin/m4k
+=======
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
 >>>>>>> origin/m4k
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +197,7 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

@@ -53,13 +53,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Shadow.png");
 	resourcesMap_.emplace(SRC::PLAYER_SHADOW, res);
 
-	// 一面ステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/FirstStage.mv1");
+	// ステージモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/MainStage.mv1");
 	resourcesMap_.emplace(SRC::FIRST_STAGE, res);
-
-	// 二面ステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/SecondStage.mv1");
-	resourcesMap_.emplace(SRC::SECOND_STAGE, res);
 
 	// スカイドームモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "SkyDome/Skydome.mv1");
@@ -96,6 +92,10 @@ void ResourceManager::Init(void)
 	// コンベヤーモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/Conveyer.mv1");
 	resourcesMap_.emplace(SRC::CONVEYER, res);
+
+	//壊れた檻モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/BreakCage.mv1");
+	resourcesMap_.emplace(SRC::BREAK_CAGE, res);
 
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
