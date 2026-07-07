@@ -73,6 +73,9 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -150,6 +153,9 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
@@ -91,8 +92,11 @@
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
@@ -168,6 +172,8 @@
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
