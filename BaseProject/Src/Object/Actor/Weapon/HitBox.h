@@ -48,9 +48,10 @@ struct WeaponData {
 	float damage = 0.0f;				// 武器のダメージ量
 	float criticalRate = 0.05f;			// 武器のクリティカル率(5%でクリティカル)
 	float criticalBonus = 1.5f;			// クリティカルダメージ倍率
-	VECTOR pos = AsoUtility::VECTOR_ZERO;	// 武器の座標
-	VECTOR rot = AsoUtility::VECTOR_ZERO;	// 武器の回転
-	VECTOR scl = AsoUtility::VECTOR_ONE;	// 武器のスケール
+	VECTOR pos;	// 武器の座標
+	VECTOR rot;	// 武器の回転
+	VECTOR scl;	// 武器のスケール
+	int modelId_;	// モデルID
 	// 武器データをゲーム別に追加
 };
 

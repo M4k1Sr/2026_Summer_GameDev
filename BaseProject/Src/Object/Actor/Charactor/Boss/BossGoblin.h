@@ -83,7 +83,7 @@ private:
 	// モデルの大きさ
 	static constexpr float SCALE = 2.0f;
 	// 武器モデルの大きさ
-	static constexpr float WEAPON_SCL = 1.5f;
+	static constexpr float WEAPON_SCL = 10.0f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };

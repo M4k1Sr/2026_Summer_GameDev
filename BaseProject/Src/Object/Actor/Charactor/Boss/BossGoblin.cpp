@@ -55,9 +55,9 @@ void BossGoblin::InitLoad(void)
 		.damage = 10.0f,
 		.criticalRate = 0.05f,
 		.criticalBonus = 1.5f,
-		.pos = AsoUtility::VECTOR_ZERO,
+		.pos = MV1GetFramePosition(transform_.modelId, 43),
 		.rot = AsoUtility::VECTOR_ZERO,
-		.scl = WEAPON_SCL
+		.scl = WEAPON_SCL,
 	};
 
 	weapon_->Add(std::make_unique<HitBox>(clubData));
@@ -192,6 +192,7 @@ void BossGoblin::UpdateProcess(void)
 	// 状態別更新
 	stateUpdate_();
 
+	MV1SetPosition(weaponData.modelId_, weaponData.pos);
 }
 
 void BossGoblin::UpdateProcessPost(void)
@@ -298,7 +299,6 @@ void BossGoblin::Search(void)
 		// ボスの視野範囲に入った
 		isAlerted_ = true;
 	}
-
 }
 
 void BossGoblin::LookPlayer(void)

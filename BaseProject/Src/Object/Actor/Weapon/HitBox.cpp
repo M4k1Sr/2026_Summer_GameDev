@@ -17,28 +17,24 @@ void HitBox::Load(void)
 {
 	// こん棒リソースロード
 	if (data_.kind == WeaponKind::Club) {
-		transform_.SetModel
-		(resMng_.LoadModelDuplicate(ResourceManager::SRC::CLUB));
+		data_.modelId_ = resMng_.LoadModelDuplicate(ResourceManager::SRC::CLUB);
 	}
 }
 
 // 更新
 void HitBox::Update(void)
 {
-	MV1SetPosition(transform_.modelId, data_.pos);
-	MV1SetRotationXYZ(transform_.modelId, data_.rot);
-	MV1SetScale(transform_.modelId, data_.scl);
 }
 
 // 描画
 void HitBox::Draw(void)
 {
-	MV1DrawModel(transform_.modelId);
+	MV1DrawModel(data_.modelId_);
 }
 
 // 解放
 void HitBox::Release(void)
 {
-	MV1DeleteModel(transform_.modelId);
+	MV1DeleteModel(data_.modelId_);
 }
 
