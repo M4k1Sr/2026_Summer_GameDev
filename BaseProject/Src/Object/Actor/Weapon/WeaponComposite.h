@@ -8,6 +8,12 @@ public:
 	// デストラクタ
 	virtual ~WeaponComposite() override = default;
 
+	// 共通関数
+	void Load(void) override;
+	void Update(void) override;
+	void Draw(void) override;
+	void Release(void) override;
+
 	// 子コンポーネント情報の促しと削除
 	void Add(std::unique_ptr<WeaponComponent> component) override;
 	void Remove(WeaponComponent* component) override;
@@ -15,14 +21,9 @@ public:
 	// 武器コンポーネントが複合かを判定
 	bool IsWeaponComposite() const override { return true; }
 
-protected:
-
-	std::vector<std::unique_ptr<WeaponComponent>> children_;
-
 private:
 
-
-
+	std::vector<std::unique_ptr<WeaponComponent>> children_;
 
 };
 

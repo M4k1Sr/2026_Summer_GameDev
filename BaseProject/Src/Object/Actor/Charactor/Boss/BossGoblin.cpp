@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <memory>
 #include "./BossBase.h"
 #include "../../Attack/StrategyAttack.h"
 #include "../../../../Utility/AsoUtility.h"
@@ -21,6 +22,7 @@
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
 #include "../../../../Manager/ServiceLocator.h"
+#include "../../Weapon/HitBox.h"
 
 
 BossGoblin::BossGoblin(const BossBase::BossData& data)
@@ -43,6 +45,24 @@ void BossGoblin::InitLoad(void)
 	// モデル読み込み
 	transform_.SetModel(
 		resMng_.LoadModelDuplicate(ResourceManager::SRC::BOSS_GOBLIN));
+
+	// 武器用のコンポジット
+	weapon_ = std::make_unique<WeaponComposite>();
+
+	WeaponData clubData = {
+		.type = WeaponType::ONE_HAND,
+		.kind = WeaponKind::Club,
+		.damage = 10.0f,
+		.criticalRate = 0.05f,
+		.criticalBonus = 1.5f,
+		.pos = AsoUtility::VECTOR_ZERO,
+		.rot = AsoUtility::VECTOR_ZERO,
+		.scl = WEAPON_SCL
+	};
+
+	weapon_->Add(std::make_unique<HitBox>(clubData));
+
+	weapon_->Load();
 
 }
 
@@ -89,9 +109,9 @@ void BossGoblin::InitAnimation(void)
 
 	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Throw.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK_END), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack_End.mv1");
-	
-	animationController_->Add(static_cast<int>(ANIM_TYPE::CHEER), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Cheer.mv1");
+	//animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK_END), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack_End.mv1");
+	//
+	//animationController_->Add(static_cast<int>(ANIM_TYPE::CHEER), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Cheer.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::ANGRY), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Angry.mv1");
 	
 	animationController_->Add(static_cast<int>(ANIM_TYPE::DAMAGE), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Damage.mv1");
@@ -121,9 +141,29 @@ void BossGoblin::InitPost(void)
 	// 初期遷移状態初期処理登録
 	stateChanges_.emplace(static_cast<int>(STATE::IDLE),
 		std::bind(&BossGoblin::ChangeStateIdle, this));
+	stateChanges_.emplace(static_cast<int>(STATE::RUN),
+		std::bind(&BossGoblin::ChangeStateRun, this));
+	stateChanges_.emplace(static_cast<int>(STATE::PATROL),
+		std::bind(&BossGoblin::ChangeStatePatrol, this));
+	stateChanges_.emplace(static_cast<int>(STATE::SURPRISE),
+		std::bind(&BossGoblin::ChangeStateSurprise, this));
+	stateChanges_.emplace(static_cast<int>(STATE::THREAT),
+		std::bind(&BossGoblin::ChangeStateThreat, this));
+	stateChanges_.emplace(static_cast<int>(STATE::ATTACK),
+		std::bind(&BossGoblin::ChangeStateAttack, this));
+	stateChanges_.emplace(static_cast<int>(STATE::THROW),
+		std::bind(&BossGoblin::ChangeStateThrow, this));
+	stateChanges_.emplace(static_cast<int>(STATE::ANGRY),
+		std::bind(&BossGoblin::ChangeStateAngry, this));
+	stateChanges_.emplace(static_cast<int>(STATE::DAMAGE),
+		std::bind(&BossGoblin::ChangeStateDamage, this));
+	stateChanges_.emplace(static_cast<int>(STATE::DOWN),
+		std::bind(&BossGoblin::ChangeStateDown, this));
+	stateChanges_.emplace(static_cast<int>(STATE::END),
+		std::bind(&BossGoblin::ChangeStateEnd, this));
 
 	// 初期状態設定
-	ChangeState(STATE::WALK);
+	ChangeState(STATE::IDLE);
 
 	// 初期フェーズ
 	phaseStep_ = (PHASE_STEP::PHASE_IDLE);
@@ -145,12 +185,13 @@ void BossGoblin::UpdateProcess(void)
 	{
 	}
 
+	// オブジェクト更新
+	WeaponData weaponData;
+	weaponData.pos = MV1GetFramePosition(transform_.modelId, 43);
+
 	// 状態別更新
 	stateUpdate_();
 
-	if (CheckHitKey(KEY_INPUT_K)) {
-		health_->TakeDamage(10);
-	}
 }
 
 void BossGoblin::UpdateProcessPost(void)
@@ -356,22 +397,6 @@ void BossGoblin::ChangeStateThrow(void)
 	animationController_->Play(
 		static_cast<int>(ANIM_TYPE::THROW), true);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateThrow, this);
-
-}
-
-void BossGoblin::ChangeStateAttackEnd(void)
-{
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ATTACK_END), true);
-	stateUpdate_ = std::bind(&BossGoblin::UpdateAttackEnd, this);
-
-}
-
-void BossGoblin::ChangeStateCheer(void)
-{
-	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::CHEER), true);
-	stateUpdate_ = std::bind(&BossGoblin::UpdateCheer, this);
 
 }
 

@@ -145,6 +145,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
 	resourcesMap_.emplace(SRC::SWEAT, res);
 
+	// こん棒オブジェクト
+	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club.mv1");
+	resourcesMap_.emplace(SRC::CLUB, res);
 
 }
 

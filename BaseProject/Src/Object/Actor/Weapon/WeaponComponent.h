@@ -6,6 +6,16 @@ public:
 
 	virtual ~WeaponComponent() = default;
 
+	// 武器
+	// ロード
+	virtual void Load(void) = 0;
+	// 更新
+	virtual void Update(void) = 0;
+	// 描画
+	virtual void Draw(void) = 0;
+	// 解放
+	virtual void Release(void) = 0;
+
 	// 親コンポーネントの設定と取得
 	void SetParent(WeaponComponent* parent) { this->parent_ = parent; }
 	WeaponComponent* GetParent() const { return this->parent_; }

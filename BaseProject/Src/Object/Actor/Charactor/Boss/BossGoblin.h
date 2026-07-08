@@ -23,10 +23,10 @@ public:
 		// 攻撃状態
 		ATTACK,
 		THROW,
-		ATTACK_END,
+		//ATTACK_END,
 
 		// 攻撃後感情
-		CHEER,
+		//CHEER,
 		ANGRY,
 
 		// ダメージ状態
@@ -82,6 +82,8 @@ private:
 
 	// モデルの大きさ
 	static constexpr float SCALE = 2.0f;
+	// 武器モデルの大きさ
+	static constexpr float WEAPON_SCL = 1.5f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
@@ -128,10 +130,8 @@ private:
 	// 攻撃状態
 	void ChangeStateAttack(void);
 	void ChangeStateThrow(void);
-	void ChangeStateAttackEnd(void);
 
 	// 攻撃後感情
-	void ChangeStateCheer(void);
 	void ChangeStateAngry(void);
 
 	// ダメージ状態

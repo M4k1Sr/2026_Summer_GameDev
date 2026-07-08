@@ -1,6 +1,36 @@
 #include "WeaponComposite.h"
 #include <algorithm>
 
+void WeaponComposite::Load(void)
+{
+	for (const auto& child : children_) {
+		if (child) child->Load();
+	}
+}
+
+void WeaponComposite::Update(void)
+{
+	for (const auto& child : children_) {
+		if (child) child->Update();
+	}
+}
+
+void WeaponComposite::Draw(void)
+{
+	for (const auto& child : children_) {
+		if (child) child->Draw();
+	}
+}
+
+void WeaponComposite::Release(void)
+{
+	for (const auto& child : children_) {
+		if (child) child->Release();
+	}
+
+	children_.clear();
+}
+
 void WeaponComposite::Add(std::unique_ptr<WeaponComponent> component)
 {
 	if (component) {
