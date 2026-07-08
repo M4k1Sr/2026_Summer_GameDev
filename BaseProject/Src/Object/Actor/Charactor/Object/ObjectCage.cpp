@@ -5,6 +5,8 @@
 #include "../../../Collider/ColliderBase.h"
 #include "../../../Collider/ColliderLine.h"
 #include "../../../Collider/ColliderModel.h"
+#include "../../../../Renderer/ModelRendere/ModelMaterial.h"
+#include "../../../../Renderer/ModelRendere/ModelRenderer.h"
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Application.h"
 
@@ -17,6 +19,13 @@ ObjectCage::ObjectCage(const ObjectBase::ObjectData& data)
 
 ObjectCage::~ObjectCage(void)
 {
+}
+
+void ObjectCage::Draw(void)
+{
+	renderer_->Draw();
+
+
 }
 
 void ObjectCage::InitLoad(void)
@@ -73,15 +82,47 @@ void ObjectCage::InitPost(void)
 	for (auto& col : ownColliders_) {
 		col.second->SetFollow(&this->transform_);
 	}
+
+	//モデル描画用
+	material_ = std::make_unique<ModelMaterial>(
+		"NoTexVS.cso", 0,
+		"Dissolve.cso", 1
+	);
+	material_->AddConstBufPS({ 0.0f, 0.0f, 0.0f, 0.0f });
+	// ノイズテクスチャを登録 (例として適当なスロット1に)
+	int noiseTex = LoadGraph("Data/Image/Noise.png"); // あらかじめ用意したノイズ画像
+	material_->SetTextureBuf(1, noiseTex);
+
+	renderer_ = std::make_unique<ModelRenderer>(transform_.modelId, *material_);
+
 }
 
 void ObjectCage::UpdateProcess(void)
 {
+
 }
 
 void ObjectCage::UpdateProcessPost(void)
 {
 	transform_.Update();
 
+	// タイマーを更新
+	timer_ += 1.0f;
+
+	// 0.0f ～ 1.0f の比率を計算
+	float timeRatio = timer_ / duration_;
+
+	// 終了判定
+	if (timeRatio >= 1.0f) {
+		timeRatio = 1.0f;
+		// 消滅完了後の処理（例: このオブジェクトを削除するフラグを立てるなど）
+	}
+
+	// しきい値を更新[cite: 15]
+	material_->SetConstBufPS(0, { timeRatio, 0.0f, 0.0f, 0.0f });
+
+
 	ObjectBase::UpdateProcessPost();
 }
+
+

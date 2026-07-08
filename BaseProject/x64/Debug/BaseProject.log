@@ -1,7 +1,2 @@
-﻿  SoundManager.cpp
-  TitleScene.cpp
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(70,21): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(70,25): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-C:\Users\2416036\Desktop\AGS\BaseProject\Src\Scene\TitleScene.cpp(70,29): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-  コードを生成中...
+﻿  compilation object save succeeded; see C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Dissolve.cso
   BaseProject.vcxproj -> C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe

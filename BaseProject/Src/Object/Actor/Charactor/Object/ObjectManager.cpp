@@ -250,6 +250,19 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 
 }
 
+
+ObjectCage* ObjectManager::GetCage()
+{
+	for (auto& object : objects_)
+	{
+		if (auto cage = dynamic_cast<ObjectCage*>(object))
+		{
+			return cage;
+		}
+	}
+
+	return nullptr;
+}
 bool ObjectManager::IsTaraiFalling(void)
 {
 	for (auto& object : objects_)

@@ -74,6 +74,8 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
+    <ClCompile Include="Src\Renderer\ModelRendere\ModelMaterial.cpp" />
+    <ClCompile Include="Src\Renderer\ModelRendere\ModelRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -152,6 +154,8 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
+    <ClInclude Include="Src\Renderer\ModelRendere\ModelMaterial.h" />
+    <ClInclude Include="Src\Renderer\ModelRendere\ModelRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
@@ -169,5 +173,7 @@
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Mosaic.hlsl" />
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\ScanLineShader.hlsl" />
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Noise.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Dissolve.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\NoTexVS.hlsl" />
   </ItemGroup>
 </Project>

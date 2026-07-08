@@ -10,6 +10,7 @@
 #include "../Object/Actor/Stage.h"
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
+#include"../Object/Actor/Charactor/Object/ObjectCage.h"
 #include"../Ranking/GameData.h"
 #include "../Object/Actor/IronBall.h"
 #include "../Object/Actor/Charactor/Player.h"
@@ -200,6 +201,8 @@ void GameScene::Update(void)
 		attackMng_->Update();
 		ironBall_->Update();
 		clockUI_->Update();
+
+	
 
 		// ===========================================================
 		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え

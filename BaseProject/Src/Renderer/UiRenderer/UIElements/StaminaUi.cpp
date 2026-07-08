@@ -59,11 +59,6 @@ void StaminaUI::Update()
 
 void StaminaUI::Draw()
 {
-<<<<<<< HEAD
-  
-
-=======
->>>>>>> m4k
     if (!stamina_ || !maxStamina_)
     {
         return;

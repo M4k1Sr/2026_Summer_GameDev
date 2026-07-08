@@ -111,22 +111,20 @@ void GameOvereScene::Update(void)
 
 void GameOvereScene::Draw(void)
 {
-	
+	//背景黒
+	DrawRotaGraph(0, 0, 5.0f, 1.0f, gameOverImg_, TRUE);
+
 	//プレイヤー
 	MV1DrawModel(player_.modelId);
 
 	// ポストエフェクト描画
-	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
+	//effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
-	////ゲームシーンへ遷移
-	//DrawFormatString(670, 270, 0xffffff, "リトライ : SPACE");
+	//ゲームシーンへ遷移
+	DrawFormatString(670, 270, 0xffffff, "リトライ : SPACE");
 
-	////タイトルへ戻る
-	//DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
-
-	//タイトル画像
-	DrawGraph(IMG_OVER_POS_X, IMG_OVER_POS_Y, gameOverImg_, true);
-
+	//タイトルへ戻る
+	DrawFormatString(1070, 270, 0xffffff, "タイトル : 0");
 
 	//ポーズ画d
 	IsPause();
