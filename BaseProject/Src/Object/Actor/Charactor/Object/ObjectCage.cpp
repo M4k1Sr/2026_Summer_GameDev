@@ -5,15 +5,21 @@
 #include "../../../Collider/ColliderBase.h"
 #include "../../../Collider/ColliderLine.h"
 #include "../../../Collider/ColliderModel.h"
+<<<<<<< HEAD
 #include "../../../../Renderer/ModelRendere/ModelMaterial.h"
 #include "../../../../Renderer/ModelRendere/ModelRenderer.h"
+=======
+#include "../../../../Renderer/ModelShader/ModelMaterial.h"
+#include "../../../../Renderer/ModelShader/ModelRenderer.h"
+>>>>>>> main
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Application.h"
 
 ObjectCage::ObjectCage(const ObjectBase::ObjectData& data)
 	:
 	ObjectBase(data),
-	moveTimer_(0.0f)
+	moveTimer_(0.0f),
+	isAlive_(true)
 {
 }
 
@@ -23,9 +29,20 @@ ObjectCage::~ObjectCage(void)
 
 void ObjectCage::Draw(void)
 {
+<<<<<<< HEAD
 	renderer_->Draw();
 
 
+=======
+	if (isAlive_ == true)
+	{
+		renderer_->Draw();
+	}
+
+	//------------------------------------------------------------------------
+	// ディゾルブ処理はこれより上に書く
+	//ObjectBase::Draw();
+>>>>>>> main
 }
 
 void ObjectCage::InitLoad(void)
@@ -86,15 +103,24 @@ void ObjectCage::InitPost(void)
 	//モデル描画用
 	material_ = std::make_unique<ModelMaterial>(
 		"NoTexVS.cso", 0,
+<<<<<<< HEAD
 		"Dissolve.cso", 1
 	);
+=======
+		"NoTexPS.cso", 1
+	);
+	
+>>>>>>> main
 	material_->AddConstBufPS({ 0.0f, 0.0f, 0.0f, 0.0f });
 	// ノイズテクスチャを登録 (例として適当なスロット1に)
 	int noiseTex = LoadGraph("Data/Image/Noise.png"); // あらかじめ用意したノイズ画像
 	material_->SetTextureBuf(1, noiseTex);
 
+<<<<<<< HEAD
 	material_->SetTextureAddress(ModelMaterial::TEXADDRESS::WRAP);
 
+=======
+>>>>>>> main
 	renderer_ = std::make_unique<ModelRenderer>(transform_.modelId, *material_);
 
 }
@@ -108,6 +134,7 @@ void ObjectCage::UpdateProcessPost(void)
 {
 	transform_.Update();
 
+<<<<<<< HEAD
 	// タイマーを更新
 	timer_ += 1.0f;
 
@@ -123,6 +150,21 @@ void ObjectCage::UpdateProcessPost(void)
 	// しきい値を更新[cite: 15]
 	material_->SetConstBufPS(0, { timeRatio, 0.0f, 0.0f, 0.0f });
 
+=======
+	timer_ += 1.0f;
+	float timeRatio = timer_ / duration_;
+
+	// 1.0 になった瞬間に消すのではなく、
+	// 1.0 を超えたら少し待ってから削除するような余裕を持たせる
+	if (timeRatio >= 1.1f) {
+		isAlive_ = false;
+	}
+
+	// smoothRatio は 1.0 を超えても計算し続けるようにし、
+	// シェーダー側で 1.0 を超えたら完全に真っ黒（透明）にする判定を入れる
+	float smoothRatio = min(timeRatio, 1.0f);
+	material_->SetConstBufPS(0, { smoothRatio, 0.0f, 0.0f, 0.0f });
+>>>>>>> main
 
 	ObjectBase::UpdateProcessPost();
 }

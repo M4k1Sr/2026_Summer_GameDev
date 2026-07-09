@@ -2,10 +2,10 @@
 #include <DxLib.h>
 #include "../Utility/AsoUtility.h"
 #include"../Manager/SceneManager.h"
+#include "../Manager/ResourceManager.h"
 #include "../Object/Common/Transform.h"
 #include"../Manager/SoundManager.h"
 #include "../Manager/InputManager.h"
-#include "../Manager/ResourceManager.h"
 #include "../Renderer/PostEffectRenderer/Src/Manager/PostEffectManager.h"
 #include "../Manager/Resource.h"
 #include "../Manager/Camera.h"
@@ -23,7 +23,10 @@ GameOvereScene::GameOvereScene()
 	mosPosX_(0),
 	mosPosY_(0),
 	effect_(nullptr),
-	gameOverImg_(-1)
+	gameOverImg_(-1),
+	playerPos_(PLAYER_POS),
+	playerId_(-1),
+	animationController_(nullptr)
 {
 }
 
@@ -52,6 +55,21 @@ void GameOvereScene::Init(void)
 
 	//ゲームオーバー画像
 	gameOverImg_ = resMng_.Load(ResourceManager::SRC::GameOverImg).handleId_;
+
+	//背景画像
+	backImg_ = LoadGraph("Data/Image/GameOverSceneBack2.png");
+
+	// アニメーションコントローラー
+	animationController_ =
+		new AnimationController(playerId_);
+
+	// アニメーション追加
+	animationController_->Add(static_cast<int>(ANIM_TYPE::DESPAIR), 20.0f, Application::PATH_MODEL + "Player/Despair.mv1");
+	
+	// アニメーション再生
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::DESPAIR), true);
+
 	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
 
@@ -106,7 +124,7 @@ void GameOvereScene::Update(void)
 		effect_->Update();
 	}
 
-
+	effect_->Update();
 }
 
 void GameOvereScene::Draw(void)
@@ -116,6 +134,16 @@ void GameOvereScene::Draw(void)
 
 	//プレイヤー
 	MV1DrawModel(player_.modelId);
+	//背景画像
+	DrawRotaGraph(Application::SCREEN_SIZE_X/2, 
+		Application::SCREEN_SIZE_Y/2,
+		2, 0, backImg_, true);
+
+	//プレイヤー
+	MV1DrawModel(playerId_);
+
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	// ポストエフェクト描画
 	//effect_->Draw(SceneManager::GetInstance().GetMainScreen());
@@ -132,6 +160,16 @@ void GameOvereScene::Draw(void)
 
 void GameOvereScene::Release(void)
 {
+	MV1DeleteModel(playerId_);
+	DeleteGraph(backImg_);
+
+	// アニメーション解放
+	if (animationController_ != nullptr)
+	{
+		animationController_->Release();
+		delete animationController_;
+	}
+
 	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_GAMEOVER);
 	ServiceLocator::GetSound().StopEvent(SOUND_ID::SE_CLICK);
 

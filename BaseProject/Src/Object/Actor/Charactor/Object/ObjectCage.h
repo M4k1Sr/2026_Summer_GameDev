@@ -1,5 +1,9 @@
 #pragma once
+<<<<<<< HEAD
 #include<memory>
+=======
+#include <memory>
+>>>>>>> main
 #include <DxLib.h>
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
@@ -17,7 +21,10 @@ public:
 	// デストラクタ
 	~ObjectCage(void) override;
 
+<<<<<<< HEAD
 	//ディゾルブ処理
+=======
+>>>>>>> main
 	void Draw(void) override;
 
 	// 床の座標取得
@@ -85,10 +92,18 @@ private:
 	//モデルマテリアル
 	std::unique_ptr<ModelMaterial> material_;
 
+<<<<<<< HEAD
 
 	float timer_ = 0.0f;    // 経過時間
 	float duration_ = 180.0f; // 消えるまでのフレーム数（例: 2秒なら120）
 
+=======
+	float timer_ = 0.0f;    // 経過時間
+	float duration_ = 300.0f; // 消えるまでのフレーム数（例: 2秒なら120）
+
+	//存在判定
+	bool isAlive_;
+>>>>>>> main
 
 	// タイマー
 	float moveTimer_;

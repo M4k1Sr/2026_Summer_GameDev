@@ -5,11 +5,9 @@ class AnimationController;
 class SkyDome;
 class PostEffectManager;
 
-
 class GameOvereScene : public SceneBase
 {
 public:
-
 
 
 
@@ -17,6 +15,12 @@ public:
 	static constexpr int IMG_OVER_POS_X = 150;
 	// ゲームオーバー画像のY座標
 	static constexpr int IMG_OVER_POS_Y = 100;
+
+	enum class ANIM_TYPE
+	{
+		DESPAIR,
+		MAX,
+	};
 
 	GameOvereScene();
 
@@ -74,8 +78,14 @@ private:
 	static constexpr VECTOR PLAYER_ANGLE = { 0.0f,  150.0f * DX_PI_F / 180.0f, 0.0f };
 	static constexpr VECTOR PLAYER_LOCAL_ANGLE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
+	//プレイヤー関係
+	VECTOR playerScl_;
+	VECTOR playerPos_;
+	VECTOR playerRot_;
+	int playerId_;
 
-
+	//背景画像のハンドルID
+	int backImg_;
 
 	//ポーズ画面
 	bool isEnd_;

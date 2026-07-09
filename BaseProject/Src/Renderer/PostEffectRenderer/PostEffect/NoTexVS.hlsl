@@ -36,7 +36,11 @@ VS_OUTPUT main(VS_INPUT VSInput)
     ret.svPos = mul(lViewPosition, g_base.projectionMatrix);
 
 	// 頂点座標変換 +++++++++++++++++++++++++++++++++++++( 終了 )
+<<<<<<< HEAD
    
+=======
+    
+>>>>>>> main
     // その他、ピクセルシェーダへ引継&初期化 ++++++++++++( 開始 )
 	// 法線
     ret.normal = VSInput.norm;
