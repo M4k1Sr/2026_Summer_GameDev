@@ -30,7 +30,7 @@ BossGoblin::BossGoblin(const BossBase::BossData& data)
 	isDead_(false),
 	BossBase(data)
 {
-	ChangeAttackStrategy(std::make_unique<FireBallAttack>());
+	idleTimer_ = 0.0f;
 }
 
 BossGoblin::~BossGoblin(void)
@@ -57,7 +57,11 @@ void BossGoblin::InitLoad(void)
 		.criticalBonus = 1.5f,
 		.pos = MV1GetFramePosition(transform_.modelId, 43),
 		.rot = AsoUtility::VECTOR_ZERO,
-		.scl = WEAPON_SCL,
+		.scl = {WEAPON_SCL, WEAPON_SCL, WEAPON_SCL},
+		.localPos = WEAPON_LOCAL_POS,
+		.localRot = WEAPON_LOCAL_ROT,
+		.ownerModelId = transform_.modelId,
+		.ownerFrameIndex = 43,
 	};
 
 	weapon_->Add(std::make_unique<HitBox>(clubData));
@@ -100,6 +104,10 @@ void BossGoblin::InitAnimation(void)
 
 	// アニメーション追加
 	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Idle.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::YAWN), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Yawn.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE_JUMP), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/IdleJump.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::SIT), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Sit.mv1");
+
 	animationController_->Add(static_cast<int>(ANIM_TYPE::WALK), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Walk.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Run.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::PATROL), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Patrol.mv1");
@@ -109,9 +117,6 @@ void BossGoblin::InitAnimation(void)
 
 	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Throw.mv1");
-	//animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK_END), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack_End.mv1");
-	//
-	//animationController_->Add(static_cast<int>(ANIM_TYPE::CHEER), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Cheer.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::ANGRY), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Angry.mv1");
 	
 	animationController_->Add(static_cast<int>(ANIM_TYPE::DAMAGE), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Damage.mv1");
@@ -141,6 +146,14 @@ void BossGoblin::InitPost(void)
 	// 初期遷移状態初期処理登録
 	stateChanges_.emplace(static_cast<int>(STATE::IDLE),
 		std::bind(&BossGoblin::ChangeStateIdle, this));
+	stateChanges_.emplace(static_cast<int>(STATE::YAWN),
+		std::bind(&BossGoblin::ChangeStateYawn, this));
+	stateChanges_.emplace(static_cast<int>(STATE::IDLE_JUMP),
+		std::bind(&BossGoblin::ChangeStateIdleJump, this));
+	stateChanges_.emplace(static_cast<int>(STATE::SIT),
+		std::bind(&BossGoblin::ChangeStateSit, this));
+	stateChanges_.emplace(static_cast<int>(STATE::WALK),
+		std::bind(&BossGoblin::ChangeStateWalk, this));
 	stateChanges_.emplace(static_cast<int>(STATE::RUN),
 		std::bind(&BossGoblin::ChangeStateRun, this));
 	stateChanges_.emplace(static_cast<int>(STATE::PATROL),
@@ -178,21 +191,19 @@ void BossGoblin::UpdateProcess(void)
 	{
 		// 索敵・注視関数
 		Search();
-		LookPlayer();
+		//LookPlayer();
 	}
 
 	if (player_ == nullptr)
 	{
 	}
 
-	// オブジェクト更新
-	WeaponData weaponData;
-	weaponData.pos = MV1GetFramePosition(transform_.modelId, 43);
+	// 時間取得
+	idleTimer_ = SceneManager::GetInstance().GetDeltaTime();
 
 	// 状態別更新
 	stateUpdate_();
 
-	MV1SetPosition(weaponData.modelId_, weaponData.pos);
 }
 
 void BossGoblin::UpdateProcessPost(void)
@@ -243,13 +254,13 @@ void BossGoblin::DrawViewRange(void)
 	// 正面から時計回り
 	VECTOR pos3 = VAdd(pos0, VScale(right, VIEW_RANGE));
 
-	//// 視野の描画
-	//pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
-	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
-	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
-	//DrawLine3D(pos0, pos1, 0xffff00);
-	//DrawLine3D(pos0, pos2, 0xffff00);
-	//DrawLine3D(pos0, pos3, 0xffff00);
+	// 視野の描画
+	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
+	DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
+	DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
+	DrawLine3D(pos0, pos1, 0xffff00);
+	DrawLine3D(pos0, pos2, 0xffff00);
+	DrawLine3D(pos0, pos3, 0xffff00);
 
 	std::string phaseName = "";
 
@@ -269,6 +280,7 @@ void BossGoblin::DrawViewRange(void)
 
 	//DrawFormatString(300, 100, GetColor(255, 0, 0), "Boss Phase: %s", phaseName.c_str());
 
+
 }
 
 void BossGoblin::Search(void)
@@ -282,6 +294,11 @@ void BossGoblin::Search(void)
 
 	// 今プレイヤーが見えているのか
 	bool findPlayerNow = (distance < VIEW_RANGE);
+
+
+	if (findPlayerNow) {
+		LookPlayer();
+	}
 
 	// 視野範囲
 	// 未発見状態
@@ -342,6 +359,18 @@ void BossGoblin::ChangeStateIdle(void)
 		static_cast<int>(ANIM_TYPE::IDLE), true);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateIdle, this);
 
+}
+
+void BossGoblin::ChangeStateYawn(void)
+{
+}
+
+void BossGoblin::ChangeStateIdleJump(void)
+{
+}
+
+void BossGoblin::ChangeStateSit(void)
+{
 }
 
 void BossGoblin::ChangeStateWalk(void)
@@ -434,6 +463,25 @@ void BossGoblin::ChangeStateEnd(void)
 
 void BossGoblin::UpdateIdle(void)
 {
+	if ((idleTimer_ / 5.0f) == 0)
+	{
+		ChangeState(STATE::YAWN);
+	}
+}
+
+void BossGoblin::UpdateYawn(void)
+{
+
+}
+
+void BossGoblin::UpdateIdleJump(void)
+{
+
+}
+
+void BossGoblin::UpdateSit(void)
+{
+
 }
 
 void BossGoblin::UpdateWalk(void)

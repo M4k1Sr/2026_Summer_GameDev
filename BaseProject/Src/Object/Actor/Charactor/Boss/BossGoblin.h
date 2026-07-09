@@ -12,6 +12,11 @@ public:
 	{
 		// 通常状態
 		IDLE,
+		YAWN,
+		IDLE_JUMP,
+		SIT,
+
+		// 移動状態
 		WALK,
 		RUN,
 		PATROL,
@@ -83,7 +88,7 @@ private:
 	// モデルの大きさ
 	static constexpr float SCALE = 2.0f;
 	// 武器モデルの大きさ
-	static constexpr float WEAPON_SCL = 10.0f;
+	static constexpr float WEAPON_SCL = 1.0f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
@@ -109,6 +114,10 @@ private:
 	// 衝突判定用カプセル球体半径
 	static constexpr float STATE_ATTACK_WAVE_TIME = 10.0f;
 
+	// 武器のローカル座標・回転
+	static constexpr VECTOR WEAPON_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
+	static constexpr VECTOR WEAPON_LOCAL_ROT = { 90.0f * DX_PI_F / 180.0f,90.0f * DX_PI_F / 180.0f,0.0f };
+
 	// 索敵
 	void Search(void);
 	// プレイヤーを注視する
@@ -119,6 +128,11 @@ private:
 	
 	// 通常状態
 	void ChangeStateIdle(void);
+	void ChangeStateYawn(void);
+	void ChangeStateIdleJump(void);
+	void ChangeStateSit(void);
+
+	// 移動状態
 	void ChangeStateWalk(void);
 	void ChangeStateRun(void);
 	void ChangeStatePatrol(void);
@@ -143,6 +157,11 @@ private:
 	// 更新処理
 	// 通常状態
 	void UpdateIdle();
+	void UpdateYawn();
+	void UpdateIdleJump();
+	void UpdateSit();
+
+	// 移動状態
 	void UpdateWalk();
 	void UpdateRun();
 	void UpdatePatrol();

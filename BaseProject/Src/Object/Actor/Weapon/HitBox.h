@@ -51,7 +51,11 @@ struct WeaponData {
 	VECTOR pos;	// 武器の座標
 	VECTOR rot;	// 武器の回転
 	VECTOR scl;	// 武器のスケール
-	int modelId_;	// モデルID
+	VECTOR localPos = { 0.0f, 0.0f, 0.0f };   // 握り位置の補正
+	VECTOR localRot = { 0.0f, 0.0f, 0.0f };   // 向きの補正
+	int modelId_ = -1;	// モデルID
+	int ownerModelId = -1;     // 持ち主(Boss)のモデルID
+	int ownerFrameIndex = -1;  // 追従するフレーム番号
 	// 武器データをゲーム別に追加
 };
 

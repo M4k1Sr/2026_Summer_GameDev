@@ -146,7 +146,7 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::SWEAT, res);
 
 	// こん棒オブジェクト
-	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club2.mv1");
 	resourcesMap_.emplace(SRC::CLUB, res);
 
 }

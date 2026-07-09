@@ -34,6 +34,11 @@ public:
 	{
 		// 通常状態
 		IDLE,
+		YAWN,
+		IDLE_JUMP,
+		SIT,
+
+		// 移動状態
 		WALK,
 		RUN,
 		PATROL,
@@ -151,6 +156,9 @@ protected:
 
 	// 経過時間
 	float stateTimer_;
+
+	// IDLEタイマー
+	float idleTimer_;
 
 	// ボス通知フラグ
 	bool isUnaware_;	// 未発見:true	発見後:false
