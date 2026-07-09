@@ -45,13 +45,11 @@ public:
 
 	void IsClear(void);
 
-<<<<<<< HEAD
 	//ダッシュ判定
 	bool GetDashFlag(void) const { return isDash_; }
-=======
+
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
->>>>>>> nakanishi
 
 protected:
 

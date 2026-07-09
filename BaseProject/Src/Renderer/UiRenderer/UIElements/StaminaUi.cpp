@@ -59,11 +59,6 @@ void StaminaUI::Update()
 
 void StaminaUI::Draw()
 {
-<<<<<<< HEAD
-  
-
-=======
->>>>>>> nakanishi
     if (!stamina_ || !maxStamina_)
     {
         return;

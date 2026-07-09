@@ -356,7 +356,6 @@ void GameScene::Draw(void)
 		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 	}
 
-<<<<<<< HEAD
 	// “S‹…•`‰æ
 	ironBall_->Draw();
 
@@ -376,7 +375,6 @@ void GameScene::Draw(void)
 			TRUE);
 	}
 	
-=======
 	// ƒvƒŒƒCƒ„[•`‰æ
 	player_->Draw();
 
@@ -388,7 +386,6 @@ void GameScene::Draw(void)
 		0.0f,                           // ‰ñ“]
 		goalImg_,                       // ‰æ‘œ
 		TRUE);
->>>>>>> nakanishi
     
 	// UI•`‰æ
 	clockUI_->Draw();
@@ -586,13 +583,10 @@ void GameScene::ItemDrop(void)
 void GameScene::IsClear(void)
 {
 
-<<<<<<< HEAD
 	isClear_ = player_->GetClearFlag();
 
 	if(isClear_ && bossMng_->IsBossDead())
-=======
 	switch (stageState_)
->>>>>>> nakanishi
 	{
 	case StageState::STAGE_1:
 		isClear_ = player_->GetClearFlag();
