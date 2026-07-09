@@ -93,6 +93,8 @@ void ObjectCage::InitPost(void)
 	int noiseTex = LoadGraph("Data/Image/Noise.png"); // ‚ ‚ç‚©‚¶‚ß—pˆÓ‚µ‚½ƒmƒCƒY‰æ‘œ
 	material_->SetTextureBuf(1, noiseTex);
 
+	material_->SetTextureAddress(ModelMaterial::TEXADDRESS::WRAP);
+
 	renderer_ = std::make_unique<ModelRenderer>(transform_.modelId, *material_);
 
 }

@@ -49,6 +49,8 @@ void ModelRenderer::Draw(void)
 	{
 		for (const auto& pair : textures)
 		{
+			SetUseTextureToShader(1, modelMaterial_.GetTextures().at(1)); // スロット1に強制セット
+
 			SetUseTextureToShader(pair.first, -1);
 		}
 	}
@@ -146,5 +148,11 @@ void ModelRenderer::SetReservePS(void)
 
 	// ピクセルシェーダー設定
 	SetUsePixelShader(modelMaterial_.GetShaderPS());
+
+
+	if (textures.count(1) > 0) // スロット1にテクスチャがあれば
+	{
+		SetUseTextureToShader(1, textures.at(1));
+	}
 
 }
