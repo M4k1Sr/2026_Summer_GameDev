@@ -33,7 +33,6 @@ int ObjectBossGimmick::GetCnt(void) const
 void ObjectBossGimmick::SetCnt(int gimmickOnCnt)
 {
 	gimmickOnCnt_ = gimmickOnCnt;
-
 }
 
 void ObjectBossGimmick::InitLoad(void)

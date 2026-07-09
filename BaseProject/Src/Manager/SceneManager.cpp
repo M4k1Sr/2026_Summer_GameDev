@@ -248,7 +248,6 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	// COMMONは常駐なので、ステージ1のバンクをアンロード
 	if (sceneId_ == SCENE_ID::STAGE_1)      ServiceLocator::GetSound().UnloadBank(BANK_ID::STAGE_1);
 	if (sceneId_ == SCENE_ID::STAGE_2)      ServiceLocator::GetSound().UnloadBank(BANK_ID::STAGE_2);
-	if (sceneId_ == SCENE_ID::STAGE_3)      ServiceLocator::GetSound().UnloadBank(BANK_ID::STAGE_3);
 
 	// シーンを変更する
 	sceneId_ = sceneId;

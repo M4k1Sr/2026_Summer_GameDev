@@ -62,27 +62,6 @@ void TitleScene::Init(void)
 
 	//É^ÉCÉgÉãï«
 	wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
-	
-
-	// ÉÅÉCÉìòfêØ
-	bigPlanet_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::PIT_FALL_PLANET));
-	bigPlanet_.scl = { 0.7,0.4,0.4 };
-	bigPlanet_.pos = { 0.0f, -500.0f,400.0f };
-	bigPlanet_.quaRot = Quaternion::Identity();
-	bigPlanet_.quaRotLocal = Quaternion(1.0f, 1.0f, 0.0f, 0.0f);;
-	bigPlanet_.Update();
-
-
-	// âÒì]òfêØ
-	rollPlanet_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::ROLL_PLANET));
-	rollPlanet_.scl = VGet(ROLL_PLANET_SCALE, ROLL_PLANET_SCALE, ROLL_PLANET_SCALE);
-	rollPlanet_.quaRot = Quaternion::Identity();
-	rollPlanet_.quaRotLocal = Quaternion::Euler(ROLL_PLANET_ANGLE);
-	rollPlanet_.pos = ROLL_PLANET_POS;
-	rollPlanet_.Update();
-
 
 	// ÉjÉìÉQÉì
 	player_.SetModel(resMng_.LoadModelDuplicate(

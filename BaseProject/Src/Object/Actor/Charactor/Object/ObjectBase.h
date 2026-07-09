@@ -14,6 +14,10 @@ public:
 		TILE,
 		BOSS_GIMMICK,
 		TARAI,
+		NEEDLE_FLOOR,
+		BURNER,
+		CONVEYER,
+		BREAK_CAGE,
 		MAX,
 	};
 

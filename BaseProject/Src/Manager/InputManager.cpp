@@ -449,8 +449,13 @@ VECTOR InputManager::GetDirectionXZAKey(int aKeyX, int aKeyY) const
 	dirX = (dirX / len) * scale;
 	dirZ = (dirZ / len) * scale;
 
-	// Zは前に倒すとマイナス値が返ってくるので反転
-	ret = VNorm({ dirX, 0.0f, -dirZ });
+
+	ret.x = dirX;
+	ret.y = 0.0f;
+	ret.z = -dirZ;
+
+	//// Zは前に倒すとマイナス値が返ってくるので反転
+	//ret = VNorm({ dirX, 0.0f, -dirZ });
 
 	return ret;
 

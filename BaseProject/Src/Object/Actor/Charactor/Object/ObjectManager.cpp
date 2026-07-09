@@ -7,6 +7,10 @@
 #include "./ObjectTile.h"
 #include "./ObjectBossGimmick.h"
 #include "./ObjectTarai.h"
+#include "./NdlFloor.h"
+#include "./ObjectBurner.h"
+#include "./ObjectConveyer.h"
+#include "./ObjectCage.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -143,6 +147,18 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::TARAI:
 		object = new ObjectTarai(data);
 		break;
+	case ObjectBase::TYPE::NEEDLE_FLOOR:
+		object = new NdlFloor(data);
+		break;
+	case ObjectBase::TYPE::BURNER:
+		object = new Burner(data);
+		break;
+	case ObjectBase::TYPE::CONVEYER:
+		object = new ObjectConveyer(data);
+		break;
+	case ObjectBase::TYPE::BREAK_CAGE:
+		object = new ObjectCage(data);
+		break;
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
 
@@ -161,7 +177,7 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 
 	for (auto& object : objects_)
 	{
-		if (auto tile = dynamic_cast<ObjectTile*>(object)) // ÅöObjectTileÇ≈îªíË
+		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{
 			VECTOR tilePos = tile->GetPos();
 

@@ -13,25 +13,34 @@ public:
 	{
 		TITLE,
 		PUSH_SPACE,
-		PIT_FALL_PLANET,
-		ROLL_PLANET,
 		PLAYER,
-		MAIN_STAGE,
-		SUB_STAGE,
+		FIRST_STAGE,
+		SECOND_STAGE,
 		SKY_DOME,
 		PLAYER_SHADOW,
+
+		// オブジェクト
 		OBJECT_BOX,
 		OBJECT_TILE,
 		IRON_BALL,
 		OBJECT_SWITCH,
 		TARAI,
+		NEEDLE_FLOOR,
+		BURNER,
+		CONVEYER,
+		CAGE,
+		BREAK_CAGE,
+
+
+		// UI
 		CLOCK,
 		CLOCK_HAND,
+
+		// エネミー
 		BOSS_PIXIE,
 		BOSS_ORC,
 		BOSS_DIABLO,
 		KEY,         //アイテム鍵
-		CAGE,        //タイトルの檻
 		WALL,
 		GOAL,
 		DAMAGE,//ダメージエフェクト

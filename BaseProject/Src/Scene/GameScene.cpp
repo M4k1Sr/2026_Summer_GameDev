@@ -7,6 +7,9 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
+#include "../Object/Actor/StageBase.h"
+#include "../Object/Actor/Stage1.h"
+#include "../Object/Actor/Stage2.h"
 #include "../Object/Actor/Stage.h"
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
@@ -18,6 +21,7 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
+#include "../Renderer/UIRenderer/Manager/UIManager.h"
 #include "GameScene.h"
 #include "../Application.h"
 #include"../Manager/ItemManager.h"
@@ -46,6 +50,11 @@ GameScene::GameScene(void)
 	isClear_(false),
 	goalImg_(-1),
 	clearTime_(0),
+	currentStageNum_(1),
+	fadeAlpha_(0),
+	fadeSpeed_(5),
+	fadeState_(FadeState::NONE),
+	stageState_(StageState::STAGE_1),
 	SceneBase()
 {
 }
@@ -58,11 +67,6 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-
-	// ステージ初期化
-	stage_ = new Stage();
-	stage_->Init();
-
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
@@ -71,6 +75,20 @@ void GameScene::Init(void)
 	player_ = new Player();
 	player_->Init();
 	player_->SetObjectManager(objMng_);
+
+	//ステージの状態ごとの初期化
+	switch (stageState_)
+	{
+	case StageState::STAGE_1:
+		stage_ = new Stage1();
+		stage_->Init();
+		break;
+
+	case StageState::STAGE_2:
+		stage_ = new Stage2();
+		stage_->Init();
+		break;
+	}
 
 	//画像ロード
 	goalImg_ = resMng_.Load(ResourceManager::SRC::GOAL).handleId_;
@@ -82,10 +100,9 @@ void GameScene::Init(void)
 
 	rank_->CreateIns();
 
-
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
-		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
+		stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
 
 	// スカイドーム初期化
@@ -185,16 +202,76 @@ void GameScene::Update(void)
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
+		// ★ 1. まずフェードの更新を行う
+		bool isFadeFinished = UpdateFade();
+
+		// ★ 2. フェードアウト完了時のステージ切り替え処理
+		if (isFadeFinished && fadeAlpha_ == 255)
+		{
+			if (stageState_ == StageState::STAGE_1)
+			{
+				// 1. 旧ステージモデルを安全に削除
+				if (stage_ != nullptr)
+				{
+					stage_->Release();
+					delete stage_;
+					stage_ = nullptr; // deleteした後はnullptrを入れておくのが安全
+				}
+
+				// 2. 新ステージの生成
+				stage_ = new Stage2();
+				stage_->Init();
+
+				// 3. プレイヤーの移動
+				VECTOR stage2StartPos = VGet(-800.0f, 0.0f, 700.0f);
+				player_->SetPosition(stage2StartPos);
+
+				// 4. コライダーの再登録
+				const ColliderBase* stageCollider = stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
+
+				// ※ 本来はここで player_ や camera の「古いコライダー登録」をクリアする関数を呼ぶのがベストです
+				player_->AddHitCollider(stageCollider);
+				objMng_->AddHitCollider(stageCollider);
+				bossMng_->AddHitCollider(stageCollider);
+
+				// カメラのコライダーを更新
+				Camera* camera = SceneManager::GetInstance().GetCamera();
+				// camera->ClearHitCollider(); // もし古いコライダーを外す関数があれば呼ぶ
+				camera->AddHitCollider(stageCollider);
+
+				// ステージ状態をSTAGE_2にして、フェードインを開始する
+				stageState_ = StageState::STAGE_2;
+				StartFade(FadeState::FADE_IN, 5);
+			}
+		}
+
+		// ★ 3. 【重要】フェード中（NONE 以外）は、以下のゲーム本編の更新をスキップする！
+		if (fadeState_ != FadeState::NONE)
+		{
+			// フェード中（暗転・明転アニメーション中）はゲームを動かさない
+			return;
+		}
+
+		// --- ここから下は通常時（FadeState::NONE）のみ実行される ---
 		//エフェクト
 	//	EffectManager::GetInstance().Update();
 
 		//クリアタイム加算
 		clearTime_++;
-		// マウスポインタを非表示にする
 		SetMouseDispFlag(false);
-		stage_->Update();
+
 		skyDome_->Update();
 		player_->Update();
+		//ui_->Update();
+		stage_->Update();
+
+		if (stageState_ == StageState::STAGE_1)
+		{
+			bossMng_->Update();
+			objMng_->Update();
+			attackMng_->Update();
+			ironBall_->Update();
+		}
 		bossMng_->Update();
 		objMng_->Update();
 		attackMng_->Update();
@@ -268,9 +345,18 @@ void GameScene::Draw(void)
 	//// スカイドーム描画
 	//skyDome_->Draw();
 
-	// ステージ描画
+	// ステージごとの描画
 	stage_->Draw();
+	if (stageState_ == StageState::STAGE_1)
+	{
+		ironBall_->Draw();
+		objMng_->Draw();
+		bossMng_->Draw();
+		attackMng_->Draw();
+		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
+	}
 
+<<<<<<< HEAD
 	// 鉄球描画
 	ironBall_->Draw();
 
@@ -290,20 +376,27 @@ void GameScene::Draw(void)
 			TRUE);
 	}
 	
-    
-	//ボス描画
-	bossMng_->Draw();
-
-	// 攻撃描画
-	attackMng_->Draw();
-
+=======
 	// プレイヤー描画
 	player_->Draw();
 
+	//デバッグ用ゴール
+	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+		0.5f,                           // 中心X
+		0.5f,                           // 中心Y
+		400.0f,                         // サイズ
+		0.0f,                           // 回転
+		goalImg_,                       // 画像
+		TRUE);
+>>>>>>> nakanishi
+    
 	// UI描画
 	clockUI_->Draw();
 
-	////ポーズ画面
+	// 作成したフェード関数を呼び出す（UIの上に黒を被せる）
+	DrawFade();
+
+	//ポーズ画面
 	IsPause();
 	
 }
@@ -493,11 +586,73 @@ void GameScene::ItemDrop(void)
 void GameScene::IsClear(void)
 {
 
+<<<<<<< HEAD
 	isClear_ = player_->GetClearFlag();
 
 	if(isClear_ && bossMng_->IsBossDead())
+=======
+	switch (stageState_)
+>>>>>>> nakanishi
 	{
-		GameData::GetInstance().clearTime = clearTime_;
-		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
+	case StageState::STAGE_1:
+		isClear_ = player_->GetClearFlag();
+		if (isClear_)
+		{
+			isClear_ = false;
+			GameData::GetInstance().clearTime = clearTime_;
+
+			// ★ ステージ切り替えのためのフェードアウトを開始
+			StartFade(FadeState::FADE_OUT, 5);
+		}
+		break;
+
+	case StageState::STAGE_2:
+		break;
+	}
+
+}
+
+void GameScene::StartFade(FadeState state, int speed)
+{
+	fadeState_ = state;
+	fadeSpeed_ = speed;
+	if (state == FadeState::FADE_OUT) fadeAlpha_ = 0;
+	if (state == FadeState::FADE_IN)  fadeAlpha_ = 255;
+}
+
+bool GameScene::UpdateFade(void)
+{
+	if (fadeState_ == FadeState::NONE) return false;
+
+	if (fadeState_ == FadeState::FADE_OUT)
+	{
+		fadeAlpha_ += fadeSpeed_;
+		if (fadeAlpha_ >= 255)
+		{
+			fadeAlpha_ = 255;
+			fadeState_ = FadeState::NONE;
+			return true; // フェードアウト完了
+		}
+	}
+	else if (fadeState_ == FadeState::FADE_IN)
+	{
+		fadeAlpha_ -= fadeSpeed_;
+		if (fadeAlpha_ <= 0)
+		{
+			fadeAlpha_ = 0;
+			fadeState_ = FadeState::NONE;
+			return true; // フェードイン完了
+		}
+	}
+	return false;
+}
+
+void GameScene::DrawFade(void) const
+{
+	if (fadeAlpha_ > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeAlpha_);
+		DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
