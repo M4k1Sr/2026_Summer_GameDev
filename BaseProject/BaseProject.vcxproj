@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\ModelShader\ModelMaterial.cpp" />
     <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
+=======
+    <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
+>>>>>>> m4k
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
@@ -63,8 +67,7 @@
     <ClCompile Include="Src\Object\Actor\IronBall.cpp" />
     <ClCompile Include="Src\Object\Common\Health.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossBase.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossDiablo.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossOrc.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossGoblin.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossPixie.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBase.cpp" />
@@ -100,6 +103,7 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
@@ -109,6 +113,18 @@
     <ClInclude Include="Src\Renderer\ModelShader\ModelRenderer.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
+=======
+    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
+>>>>>>> m4k
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
@@ -147,8 +163,7 @@
     <ClInclude Include="Src\Object\Actor\IronBall.h" />
     <ClInclude Include="Src\Object\Common\Health.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossBase.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossDiablo.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossOrc.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossGoblin.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossPixie.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBox.h" />
@@ -191,6 +206,8 @@
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

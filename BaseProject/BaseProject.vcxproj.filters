@@ -17,8 +17,7 @@
     <ClCompile Include="Src\Object\Actor\IronBall.cpp" />
     <ClCompile Include="Src\Object\Common\Health.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossBase.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossDiablo.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossOrc.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossGoblin.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossPixie.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBase.cpp" />
@@ -108,11 +107,17 @@
 =======
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\ModelRendere\ModelMaterial.cpp" />
     <ClCompile Include="Src\Renderer\ModelRendere\ModelRenderer.cpp" />
 =======
 >>>>>>> origin/m4k
 >>>>>>> main
+=======
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
+>>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -132,8 +137,7 @@
     <ClInclude Include="Src\Object\Actor\IronBall.h" />
     <ClInclude Include="Src\Object\Common\Health.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossBase.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossDiablo.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossOrc.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossGoblin.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossPixie.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBox.h" />
@@ -203,8 +207,14 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
+<<<<<<< HEAD
     <ClInclude Include="Src\Renderer\ModelRendere\ModelMaterial.h" />
     <ClInclude Include="Src\Renderer\ModelRendere\ModelRenderer.h" />
+=======
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
+>>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

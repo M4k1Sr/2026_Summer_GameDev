@@ -22,9 +22,12 @@ public:
 	~ObjectCage(void) override;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//ディゾルブ処理
 =======
 >>>>>>> main
+=======
+>>>>>>> m4k
 	void Draw(void) override;
 
 	// 床の座標取得

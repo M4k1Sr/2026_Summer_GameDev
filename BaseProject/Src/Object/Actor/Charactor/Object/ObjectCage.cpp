@@ -30,6 +30,7 @@ ObjectCage::~ObjectCage(void)
 void ObjectCage::Draw(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	renderer_->Draw();
 
 
@@ -43,6 +44,12 @@ void ObjectCage::Draw(void)
 	// ディゾルブ処理はこれより上に書く
 	//ObjectBase::Draw();
 >>>>>>> main
+=======
+
+	//------------------------------------------------------------------------
+	// ディゾルブ処理はこれより上に書く
+	ObjectBase::Draw();
+>>>>>>> m4k
 }
 
 void ObjectCage::InitLoad(void)
