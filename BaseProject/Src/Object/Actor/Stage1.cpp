@@ -14,8 +14,13 @@ void Stage1::InitLoad(void)
 void Stage1::InitTransform(void) 
 {
 
-    transform_.scl = VGet(0.1f, 0.1f, 0.1f);
-    transform_.pos = VGet(0.0f, -100.0f, 0.0f);
+    //transform_.scl = VGet(0.1f, 0.1f, 0.1f);
+    //transform_.pos = VGet(0.0f, -100.0f, 0.0f);
+    //transform_.Update();
+    transform_.scl = MAIN_STAGE_SCALE;
+    transform_.quaRot = Quaternion::Euler({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f });
+    transform_.quaRotLocal = Quaternion::Identity();
+    transform_.pos = MAIN_STAGE_POS;
     transform_.Update();
 
 }

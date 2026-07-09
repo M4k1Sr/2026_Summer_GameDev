@@ -1,8 +1,11 @@
 #pragma once
+#include <memory>
 #include <DxLib.h>
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
 class AnimationController;
+class ModelRenderer;
+class ModelMaterial;
 
 class ObjectCage : public ObjectBase
 {
@@ -13,6 +16,8 @@ public:
 
 	// デストラクタ
 	~ObjectCage(void) override;
+
+	void Draw(void) override;
 
 	// 床の座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
@@ -68,6 +73,18 @@ private:
 
 	// 移動速度
 	VECTOR velocity_;
+
+	//モデルレンダラー
+	std::unique_ptr<ModelRenderer> renderer_;
+
+	//モデルマテリアル
+	std::unique_ptr<ModelMaterial> material_;
+
+	float timer_ = 0.0f;    // 経過時間
+	float duration_ = 300.0f; // 消えるまでのフレーム数（例: 2秒なら120）
+
+	//存在判定
+	bool isAlive_;
 
 	// タイマー
 	float moveTimer_;

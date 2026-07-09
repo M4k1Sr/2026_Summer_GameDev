@@ -25,6 +25,12 @@
       <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\Noise.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\NoTexPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\NoTexVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
