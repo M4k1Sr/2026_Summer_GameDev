@@ -25,7 +25,7 @@ CharactorBase::CharactorBase(void)
 	isJump_(false),
 	isIronBallHit_(false),
 	ActorBase()
-{	
+{
 }
 
 CharactorBase::~CharactorBase(void)
@@ -63,9 +63,6 @@ void CharactorBase::Update(void)
 	// 各キャラクターごとの更新後処理
  	UpdateProcessPost();
 
-	if (weapon_) {
-		weapon_->Update();
-	}
 }
 
 void CharactorBase::Draw(void)
@@ -79,10 +76,6 @@ void CharactorBase::Draw(void)
 	// 視野描画
 	DrawViewRange();
 
-	if (weapon_) {
-		weapon_->Draw();
-	}
-
 }
 
 void CharactorBase::Release(void)
@@ -92,10 +85,6 @@ void CharactorBase::Release(void)
 	{
 		animationController_->Release();
 		delete animationController_;
-	}
-
-	if (weapon_) {
-		weapon_->Release();
 	}
 
 	// 基底クラス解放

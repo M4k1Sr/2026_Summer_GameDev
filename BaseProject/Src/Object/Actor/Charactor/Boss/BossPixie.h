@@ -129,7 +129,7 @@ private:
 	void UpdateEnd(void);
 
 	// フェーズ管理
-	void Phase(void) override;
+	void Phase(void);
 
 	
 	//死亡処理

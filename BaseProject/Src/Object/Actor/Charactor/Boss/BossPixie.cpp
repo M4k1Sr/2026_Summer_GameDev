@@ -61,13 +61,13 @@ void BossPixie::InitCollider(void)
 
 	// 主に地面との衝突で使用する線分コライダ
 	ColliderLine* colLine = new ColliderLine(
-		ColliderBase::TAG::PIXIE, &transform_,
+		ColliderBase::TAG::BOX, &transform_,
 		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::LINE), colLine);
 
 	// モデルとの衝突で使用するモデルコライダー
 	ColliderModel* colModel = new ColliderModel(
-		ColliderBase::TAG::PIXIE,
+		ColliderBase::TAG::BOX,
 		&transform_);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), colModel);
 }
