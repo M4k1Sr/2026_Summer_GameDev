@@ -81,7 +81,7 @@ private:
 	std::unique_ptr<ModelMaterial> material_;
 
 	float timer_ = 0.0f;    // 経過時間
-	float duration_ = 300.0f; // 消えるまでのフレーム数（例: 2秒なら120）
+	float duration_ = 180.0f; // 消えるまでのフレーム数（例: 2秒なら120）
 
 	//存在判定
 	bool isAlive_;

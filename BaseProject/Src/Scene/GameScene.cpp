@@ -263,19 +263,21 @@ void GameScene::Update(void)
 		skyDome_->Update();
 		player_->Update();
 		//ui_->Update();
-		stage_->Update();
 
-		if (stageState_ == StageState::STAGE_1)
+		switch (stageState_)
 		{
+		case GameScene::StageState::STAGE_1:
+			stage_->Update();
 			bossMng_->Update();
 			objMng_->Update();
 			attackMng_->Update();
 			ironBall_->Update();
+			break;
+		case GameScene::StageState::STAGE_2:
+			stage_->Update();
+			break;
 		}
-		bossMng_->Update();
-		objMng_->Update();
-		attackMng_->Update();
-		ironBall_->Update();
+
 		clockUI_->Update();
 
 		// ===========================================================
@@ -318,7 +320,7 @@ void GameScene::Update(void)
 			}
 			else
 			{
-				camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+				camera->ChangeMode(Camera::MODE::FREE);
 			}
 		}
 		// ===========================================================
@@ -346,22 +348,20 @@ void GameScene::Draw(void)
 	//skyDome_->Draw();
 
 	// ステージごとの描画
-	stage_->Draw();
-	if (stageState_ == StageState::STAGE_1)
+	switch (stageState_)
 	{
+	case GameScene::StageState::STAGE_1:
+		stage_->Draw();
 		ironBall_->Draw();
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
 		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
+		break;
+	case GameScene::StageState::STAGE_2:
+		stage_->Draw();
+		break;
 	}
-
-	// 鉄球描画
-	ironBall_->Draw();
-
-	// オブジェクト描画
-	objMng_->Draw();
-
 	
 	if(bossMng_->IsBossDead())
 	{
@@ -392,6 +392,10 @@ void GameScene::Draw(void)
 
 	// 作成したフェード関数を呼び出す（UIの上に黒を被せる）
 	DrawFade();
+
+	//カメラのデバッグ用座標表示
+	Camera* camera = SceneManager::GetInstance().GetCamera();
+	camera->DrawDebug();
 
 	//ポーズ画面
 	IsPause();

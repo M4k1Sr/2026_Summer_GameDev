@@ -17,6 +17,8 @@
 #include "../../../Collider/ColliderLine.h"
 #include "../../../Collider/ColliderCapsule.h"
 #include "../../../Collider/ColliderModel.h"
+#include "../../../../Renderer/ModelShader/ModelMaterial.h"
+#include "../../../../Renderer/ModelShader/ModelRenderer.h"
 #include "../../../../Application.h"
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
@@ -33,6 +35,30 @@ BossPixie::BossPixie(const BossBase::BossData& data)
 
 BossPixie::~BossPixie(void)
 {
+}
+
+void BossPixie::Draw(void)
+{
+	if (isDead_)
+	{
+		if (animationController_->IsEnd())
+		{
+			// 1. material_ の定数バッファ配列(constBufsPS_)を直接更新
+				// これで、material_ クラス内部の配列データが新しいしきい値に書き換わります
+			material_->SetConstBufPS(0, { timer_, 0.0f, 0.0f, 0.0f });
+
+			// 2. 更新した内容を GPU へ転送
+			// DxLibの UpdateShaderConstantBuffer を呼び出し、GPUに同期させる
+			UpdateShaderConstantBuffer(material_->GetConstBufPS());
+
+			// 3. 描画実行
+			renderer_->Draw();
+		}
+	}
+	else
+	{
+		BossBase::Draw();
+	}
 }
 
 void BossPixie::InitLoad(void)
@@ -146,6 +172,20 @@ void BossPixie::InitPost(void)
 
 	health_ = new Health();
 	health_->Init(1000);
+
+	//モデル描画用
+	material_ = std::make_unique<ModelMaterial>(
+		"NoTexVS.cso", 0,
+		"NoTexPS.cso", 1
+	);
+
+	material_->AddConstBufPS({ 0.0f, 0.0f, 0.0f, 0.0f });
+	// ノイズテクスチャを登録 (例として適当なスロット1に)
+	int noiseTex = LoadGraph("Data/Image/Noise.png"); // あらかじめ用意したノイズ画像
+	material_->SetTextureBuf(1, noiseTex);
+
+	renderer_ = std::make_unique<ModelRenderer>(transform_.modelId, *material_);
+
 }
 
 void BossPixie::UpdateProcess(void)
@@ -164,9 +204,15 @@ void BossPixie::UpdateProcess(void)
 	// 状態別更新
 	stateUpdate_();
 
+	//if (CheckHitKey(KEY_INPUT_K)) {
+	//	health_->TakeDamage(10);
+	//}
+
 	if (CheckHitKey(KEY_INPUT_K)) {
-		health_->TakeDamage(10);
+		ChangeState(STATE::DOWN);
 	}
+
+
 }
 
 void BossPixie::UpdateProcessPost(void)
@@ -175,6 +221,34 @@ void BossPixie::UpdateProcessPost(void)
 
 	// 一定量のダメージを受けたらフェーズが進む
 	Phase();
+
+	if (phaseStep_ == PHASE_STEP::PHASE_DEAD)
+	{
+		timer_ += 1.0f;
+		float timeRatio = timer_ / duration_;
+
+		// 1.0 になった瞬間に消すのではなく、
+		// 1.0 を超えたら少し待ってから削除するような余裕を持たせる
+		if (timeRatio >= 1.1f) {
+			//死亡判定
+		}
+
+		// smoothRatio は 1.0 を超えても計算し続けるようにし、
+		// シェーダー側で 1.0 を超えたら完全に真っ黒（透明）にする判定を入れる
+		float smoothRatio = min(timeRatio, 1.0f);
+		material_->SetConstBufPS(0, { smoothRatio, 0.0f, 0.0f, 0.0f });
+	}
+
+	if (isDead_)
+	{
+		// タイマーを進めて、duration_ (300フレーム) に達したら消去する等
+		timer_++;
+		if (timer_ >= duration_)
+		{
+			// ここでマネージャー等に「このオブジェクトを消去して」と伝える処理
+			// 例: SetDestroy(true); など
+		}
+	}
 
 	BossBase::UpdateProcessPost();
 
@@ -519,6 +593,15 @@ void BossPixie::UpdateDamage(void)
 
 void BossPixie::UpdateDown(void)
 {
+	// ダウンアニメーションが終了したらディゾルブを開始
+	if (animationController_->IsEnd())
+	{
+		// 死亡フラグを立てる（これでDrawでrenderer_->Draw()が呼ばれるようになる）
+		isDead_ = true;
+
+		// 必要であればここで「消滅開始」などのログ出しや
+		// サウンド再生などを追加してください
+	}
 }
 
 void BossPixie::UpdateEnd(void)
@@ -576,7 +659,6 @@ void BossPixie::Phase(void)
 		}
 	}
 }
-
 
 void BossPixie::Dead(void)
 {
