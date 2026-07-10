@@ -6,7 +6,6 @@ class Player;
 class ObjectManager;
 class StrategyAttack;
 class AttackManager;
-
 class BossBase : public CharactorBase
 {
 public:
@@ -157,8 +156,6 @@ protected:
 
 	// õ“G
 	virtual void Search(void) = 0;
-
-
 
 	// ƒvƒŒƒCƒ„[‚ğ’‹‚·‚é
 	virtual void LookPlayer(void) = 0;

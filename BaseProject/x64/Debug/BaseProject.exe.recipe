@@ -2,11 +2,16 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< HEAD
       <FullPath>C:\Users\2416014\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+=======
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+>>>>>>> a5891a58d97426ab46fb72c5fb4fbf4e87f7fd84
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+<<<<<<< HEAD
       <FullPath>C:\Users\2416014\Desktop\AGS\BaseProject\Data\Shader\(Filename).cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -32,6 +37,33 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\2416014\Desktop\AGS\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
+=======
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\(Filename).cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Blur.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\GameOverNoise.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Monotone.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Mosaic.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\Noise.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\NoTexPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\NoTexVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
+>>>>>>> a5891a58d97426ab46fb72c5fb4fbf4e87f7fd84
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
