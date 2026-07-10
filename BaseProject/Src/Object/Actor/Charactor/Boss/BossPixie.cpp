@@ -44,7 +44,7 @@ void BossPixie::Draw(void)
 		if (animationController_->IsEnd())
 		{
 			// 1. material_ の定数バッファ配列(constBufsPS_)を直接更新
-				// これで、material_ クラス内部の配列データが新しいしきい値に書き換わります
+			// これで、material_ クラス内部の配列データが新しいしきい値に書き換わります
 			material_->SetConstBufPS(0, { timer_, 0.0f, 0.0f, 0.0f });
 
 			// 2. 更新した内容を GPU へ転送

@@ -323,7 +323,7 @@ void GameScene::Update(void)
 			}
 			else
 			{
-				camera->ChangeMode(Camera::MODE::FREE);
+				camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
 			}
 		}
 		// ===========================================================
@@ -359,7 +359,6 @@ void GameScene::Draw(void)
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
-<<<<<<< HEAD
 		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 	case GameScene::StageState::STAGE_2:
@@ -367,8 +366,7 @@ void GameScene::Draw(void)
 		break;
 	}
 	
-	if(bossMng_->IsBossDead())
-=======
+	if(bossMng_->IsBossDead()){
 		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 	}
 
@@ -386,7 +384,6 @@ void GameScene::Draw(void)
 		objMng_->GetBossGimmick(player_->GetTransform().pos);
 
 	if (bossGimmick != nullptr)
->>>>>>> main
 	{
 		VECTOR pos = bossGimmick->GetTransform().pos;
 
