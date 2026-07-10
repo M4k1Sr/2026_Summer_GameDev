@@ -2,36 +2,36 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\(Filename).cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\(Filename).cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Blur.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Blur.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\GameOverNoise.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\GameOverNoise.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Monotone.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Monotone.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Mosaic.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Mosaic.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\Noise.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\Noise.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\NoTexPS.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\NoTexPS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\NoTexVS.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\NoTexVS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
+      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

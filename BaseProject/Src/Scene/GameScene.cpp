@@ -353,7 +353,7 @@ void GameScene::Draw(void)
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
-		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
+		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 	}
 
 	// 鉄球描画
@@ -363,29 +363,22 @@ void GameScene::Draw(void)
 	objMng_->Draw();
 
 	
-	if(bossMng_->IsBossDead())
-	{
-		//デバッグ用ゴール
-		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-			0.5f,                           // 中心X
-			0.5f,                           // 中心Y
-			400.0f,                         // サイズ
-			0.0f,                           // 回転
-			goalImg_,                       // 画像
-			TRUE);
-	}
+	//if(bossMng_->IsBossDead())
+	//{
+	//	//デバッグ用ゴール
+	//	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+	//		0.5f,                           // 中心X
+	//		0.5f,                           // 中心Y
+	//		400.0f,                         // サイズ
+	//		0.0f,                           // 回転
+	//		goalImg_,                       // 画像
+	//		TRUE);
+	//}
 	
 	// プレイヤー描画
 	player_->Draw();
 
-	//デバッグ用ゴール
-	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-		0.5f,                           // 中心X
-		0.5f,                           // 中心Y
-		400.0f,                         // サイズ
-		0.0f,                           // 回転
-		goalImg_,                       // 画像
-		TRUE);
+	
     
 	// UI描画
 	clockUI_->Draw();
@@ -583,26 +576,26 @@ void GameScene::ItemDrop(void)
 void GameScene::IsClear(void)
 {
 
-	isClear_ = player_->GetClearFlag();
+	//isClear_ = player_->GetClearFlag();
 
-	if(isClear_ && bossMng_->IsBossDead())
-	switch (stageState_)
-	{
-	case StageState::STAGE_1:
-		isClear_ = player_->GetClearFlag();
-		if (isClear_)
-		{
-			isClear_ = false;
-			GameData::GetInstance().clearTime = clearTime_;
+	//if(isClear_ && bossMng_->IsBossDead())
+	//switch (stageState_)
+	//{
+	//case StageState::STAGE_1:
+	//	isClear_ = player_->GetClearFlag();
+	//	if (isClear_)
+	//	{
+	//		isClear_ = false;
+	//		GameData::GetInstance().clearTime = clearTime_;
 
-			// ★ ステージ切り替えのためのフェードアウトを開始
-			StartFade(FadeState::FADE_OUT, 5);
-		}
-		break;
+	//		// ★ ステージ切り替えのためのフェードアウトを開始
+	//		StartFade(FadeState::FADE_OUT, 5);
+	//	}
+	//	break;
 
-	case StageState::STAGE_2:
-		break;
-	}
+	//case StageState::STAGE_2:
+	//	break;
+	//}
 
 }
 
