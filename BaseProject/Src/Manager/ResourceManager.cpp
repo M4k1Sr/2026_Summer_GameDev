@@ -156,7 +156,10 @@ void ResourceManager::Init(void)
 	//ゲームオーバー画像
 	res = new RES(RES_T::IMG, PATH_IMG + "GameOverImg.png");
 	resourcesMap_.emplace(SRC::GameOverImg, res);
-
+	
+	//PUSHUI
+	res = new RES(RES_T::IMG, PATH_IMG + "PushUI.png");
+	resourcesMap_.emplace(SRC::PUSH_BUTTON, res);
 
 }
 

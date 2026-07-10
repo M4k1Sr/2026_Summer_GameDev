@@ -116,6 +116,8 @@ private:
 
 	//Item
 	ItemManager* itemMng_;
+
+
 	
 	// 時計
 	Transform clock_;
@@ -148,8 +150,13 @@ private:
 	//デバッグ用ゴール画像
 	int goalImg_;
 
+	//UIの表示
+	int ButtonUIImg_;
+
 	// フェード処理用のプライベート関数群
 	void StartFade(FadeState state, int speed = 5); // フェード開始トリガー
 	bool UpdateFade(void);                          // フェードの更新（完了したらtrueを返す）
 	void DrawFade(void) const;
+
+	bool isShowPushUI_;
 };

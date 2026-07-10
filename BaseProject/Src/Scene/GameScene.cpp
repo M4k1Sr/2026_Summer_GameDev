@@ -49,6 +49,7 @@ GameScene::GameScene(void)
 	isEnd_(false),
 	isClear_(false),
 	goalImg_(-1),
+	ButtonUIImg_(-1),
 	clearTime_(0),
 	currentStageNum_(1),
 	fadeAlpha_(0),
@@ -174,6 +175,8 @@ void GameScene::Init(void)
 		}
 	}
 
+	ButtonUIImg_ = resMng_.Load(ResourceManager::SRC::PUSH_BUTTON).handleId_;
+
 	// UIモデル
 	clockUI_ = new Clock();
 
@@ -281,11 +284,11 @@ void GameScene::Update(void)
 		clockUI_->Update();
 
 		// ===========================================================
-		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
+		//  ボスの生存状態と距離によるカメラモードの自動切り替え
 		// ===========================================================
 		Camera* camera = SceneManager::GetInstance().GetCamera();
 
-		// ★1. まず最優先で「タライが落ちてきているか」をチェック
+		// 1. まず最優先で「タライが落ちてきているか」をチェック
 		if (objMng_->IsTaraiFalling() && bossMng_->GetBosses().size() > 0 && bossMng_->GetBosses().front() != nullptr)
 		{
 			// 最初のボス、または一番近いボスをターゲットに設定
@@ -295,7 +298,7 @@ void GameScene::Update(void)
 		}
 		else
 		{
-			// ★2. タライが落ちていない場合は、これまでのロックオン判定を行う
+			// 2. タライが落ちていない場合は、これまでのロックオン判定を行う
 			const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 			BossBase* nearestBoss = nullptr;
 			float minDistanceSq = 2500.0f * 2500.0f;
@@ -356,6 +359,7 @@ void GameScene::Draw(void)
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
+<<<<<<< HEAD
 		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 	case GameScene::StageState::STAGE_2:
@@ -364,28 +368,37 @@ void GameScene::Draw(void)
 	}
 	
 	if(bossMng_->IsBossDead())
+=======
+		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
+	}
+
+	// 鉄球描画
+	ironBall_->Draw();
+	
+	// オブジェクト描画
+	objMng_->Draw();
+
+	// プレイヤー描画
+	player_->Draw();	
+
+	// プレイヤーが近くにあるボスギミックを取得
+	ObjectBossGimmick* bossGimmick =
+		objMng_->GetBossGimmick(player_->GetTransform().pos);
+
+	if (bossGimmick != nullptr)
+>>>>>>> main
 	{
-		//デバッグ用ゴール
-		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-			0.5f,                           // 中心X
-			0.5f,                           // 中心Y
-			400.0f,                         // サイズ
-			0.0f,                           // 回転
-			goalImg_,                       // 画像
+		VECTOR pos = bossGimmick->GetTransform().pos;
+
+		DrawBillboard3D(
+			VAdd(pos, VGet(0.0f, 250.0f, 0.0f)), // ボタンの少し上
+			0.5f,
+			0.5f,
+			150.0f,
+			0.0f,
+			ButtonUIImg_,
 			TRUE);
 	}
-	
-	// プレイヤー描画
-	player_->Draw();
-
-	//デバッグ用ゴール
-	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-		0.5f,                           // 中心X
-		0.5f,                           // 中心Y
-		400.0f,                         // サイズ
-		0.0f,                           // 回転
-		goalImg_,                       // 画像
-		TRUE);
     
 	// UI描画
 	clockUI_->Draw();
@@ -587,26 +600,26 @@ void GameScene::ItemDrop(void)
 void GameScene::IsClear(void)
 {
 
-	isClear_ = player_->GetClearFlag();
+	//isClear_ = player_->GetClearFlag();
 
-	if(isClear_ && bossMng_->IsBossDead())
-	switch (stageState_)
-	{
-	case StageState::STAGE_1:
-		isClear_ = player_->GetClearFlag();
-		if (isClear_)
-		{
-			isClear_ = false;
-			GameData::GetInstance().clearTime = clearTime_;
+	//if(isClear_ && bossMng_->IsBossDead())
+	//switch (stageState_)
+	//{
+	//case StageState::STAGE_1:
+	//	isClear_ = player_->GetClearFlag();
+	//	if (isClear_)
+	//	{
+	//		isClear_ = false;
+	//		GameData::GetInstance().clearTime = clearTime_;
 
-			// ★ ステージ切り替えのためのフェードアウトを開始
-			StartFade(FadeState::FADE_OUT, 5);
-		}
-		break;
+	//		// ★ ステージ切り替えのためのフェードアウトを開始
+	//		StartFade(FadeState::FADE_OUT, 5);
+	//	}
+	//	break;
 
-	case StageState::STAGE_2:
-		break;
-	}
+	//case StageState::STAGE_2:
+	//	break;
+	//}
 
 }
 
