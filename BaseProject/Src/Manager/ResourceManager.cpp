@@ -97,6 +97,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/BreakCage.mv1");
 	resourcesMap_.emplace(SRC::BREAK_CAGE, res);
 
+	// ボス用の檻モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Bomb.mv1");
+	resourcesMap_.emplace(SRC::BOMB, res);
+	
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::CLOCK, res);
@@ -109,13 +113,9 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Pixie/BossPixie.mv1");
 	resourcesMap_.emplace(SRC::BOSS_PIXIE, res);
 
-	// ボスモデル(オーク)
-	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Orc/BossOrc.mv1");
-	resourcesMap_.emplace(SRC::BOSS_ORC, res);
-
-	// ボスモデル(ディアブロ)
-	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Diablo/BossDiablo.mv1");
-	resourcesMap_.emplace(SRC::BOSS_DIABLO, res);
+	// ボスモデル(ゴブリン)
+	res = new RES(RES_T::MODEL, PATH_MDL + "Enemy/Goblin/BossGoblin.mv1");
+	resourcesMap_.emplace(SRC::BOSS_GOBLIN, res);
 
 	//アイテム鍵
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");
@@ -149,6 +149,7 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
 	resourcesMap_.emplace(SRC::SWEAT, res);
 
+<<<<<<< HEAD
 	//ゲームクリア画像
 	res = new RES(RES_T::IMG, PATH_IMG + "GameClearImg.png");
 	resourcesMap_.emplace(SRC::GameClearImg, res);
@@ -160,6 +161,11 @@ void ResourceManager::Init(void)
 	//PUSHUI
 	res = new RES(RES_T::IMG, PATH_IMG + "PushUI.png");
 	resourcesMap_.emplace(SRC::PUSH_BUTTON, res);
+=======
+	// こん棒オブジェクト
+	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club2.mv1");
+	resourcesMap_.emplace(SRC::CLUB, res);
+>>>>>>> origin/m4k
 
 }
 

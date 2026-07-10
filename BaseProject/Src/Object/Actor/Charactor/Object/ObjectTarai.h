@@ -79,7 +79,7 @@ private:
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
 	
 	// タライの初期位置
-	static constexpr VECTOR INIT_POS = { 4400.0f, 800.0f, -750.0f };
+	static constexpr VECTOR INIT_POS = { 9800.0f, 700.0f, -1200.0f };
 	// タライの下降範囲
 	static constexpr float MOVE_DOWN_TARAI = 800.0f;
 

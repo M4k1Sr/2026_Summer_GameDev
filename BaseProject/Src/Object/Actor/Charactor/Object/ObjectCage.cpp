@@ -24,6 +24,7 @@ ObjectCage::~ObjectCage(void)
 
 void ObjectCage::Draw(void)
 {
+<<<<<<< HEAD
 	if (isAlive_ == true)
 	{
 		renderer_->Draw();
@@ -32,6 +33,12 @@ void ObjectCage::Draw(void)
 	//------------------------------------------------------------------------
 	// ディゾルブ処理はこれより上に書く
 	//ObjectBase::Draw();
+=======
+
+	//------------------------------------------------------------------------
+	// ディゾルブ処理はこれより上に書く
+	ObjectBase::Draw();
+>>>>>>> origin/m4k
 }
 
 void ObjectCage::InitLoad(void)
