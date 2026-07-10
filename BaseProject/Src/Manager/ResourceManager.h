@@ -35,6 +35,7 @@ public:
 		// UI
 		CLOCK,
 		CLOCK_HAND,
+		PUSH_BUTTON,
 
 		// エネミー
 		BOSS_PIXIE,

@@ -18,6 +18,14 @@ public:
 	int GetCnt(void) const;
 	void SetCnt(int gimmickOnCnt);
 
+
+	void SetPlayerNear(bool isNear);
+
+	bool IsPlayerNear() const;
+
+	VECTOR GetPos() const;
+
+
 protected:
 
 	// リソースロード
@@ -91,4 +99,7 @@ private:
 
 	// ギミック動作
 	void ActiveGimmick(void);
+
+	//ボタンに近いかどうか
+	bool isPlayerNear_;
 };
