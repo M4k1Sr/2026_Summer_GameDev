@@ -51,16 +51,12 @@ public:
 		IRONBALL_HIT,	// 鉄球エフェクト
 		PIXIE_FIRE,		// ピクシー炎攻撃
 		PIXIE_WAVE,		// ピクシー波状攻撃
-<<<<<<< HEAD
 		GameClearImg,	// ゲームクリア画像
 		GameOverImg,	// ゲームオーバー画像
-=======
 
 		// 武器オブジェクト
 		CLUB,
 
-
->>>>>>> origin/m4k
 	};
 
 	// 明示的にインステンスを生成する

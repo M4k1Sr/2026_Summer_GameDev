@@ -84,7 +84,7 @@ private:
 	float duration_ = 180.0f; // 消えるまでのフレーム数（例: 2秒なら120）
 
 	//存在判定
-	bool isAlive_;
+	bool isAlive_ = true;
 
 	// タイマー
 	float moveTimer_;

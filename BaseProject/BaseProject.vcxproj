@@ -19,15 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\ModelShader\ModelMaterial.cpp" />
     <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
-=======
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
->>>>>>> origin/m4k
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
@@ -99,7 +96,6 @@
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
@@ -109,19 +105,13 @@
     <ClInclude Include="Src\Renderer\ModelShader\ModelRenderer.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
-=======
-    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
-    <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
->>>>>>> origin/m4k
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
@@ -130,7 +120,6 @@
     <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Vignette.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock.h" />
     <ClInclude Include="Src\Object\UI\UI.h" />
@@ -150,7 +139,6 @@
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.h" />
     <ClInclude Include="Src\Scene\GameClearScene.h" />
     <ClInclude Include="Src\Ranking\Ranking.h" />
     <ClInclude Include="Src\Manager\Score.h" />
@@ -197,10 +185,6 @@
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
   </ItemGroup>

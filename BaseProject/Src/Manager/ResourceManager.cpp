@@ -149,7 +149,6 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Sweat.png");
 	resourcesMap_.emplace(SRC::SWEAT, res);
 
-<<<<<<< HEAD
 	//ゲームクリア画像
 	res = new RES(RES_T::IMG, PATH_IMG + "GameClearImg.png");
 	resourcesMap_.emplace(SRC::GameClearImg, res);
@@ -161,11 +160,10 @@ void ResourceManager::Init(void)
 	//PUSHUI
 	res = new RES(RES_T::IMG, PATH_IMG + "PushUI.png");
 	resourcesMap_.emplace(SRC::PUSH_BUTTON, res);
-=======
+
 	// こん棒オブジェクト
 	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club2.mv1");
 	resourcesMap_.emplace(SRC::CLUB, res);
->>>>>>> origin/m4k
 
 }
 

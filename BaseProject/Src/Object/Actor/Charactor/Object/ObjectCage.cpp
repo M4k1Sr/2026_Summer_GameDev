@@ -24,21 +24,11 @@ ObjectCage::~ObjectCage(void)
 
 void ObjectCage::Draw(void)
 {
-<<<<<<< HEAD
-	if (isAlive_ == true)
-	{
-		renderer_->Draw();
-	}
+	renderer_->Draw();
 
 	//------------------------------------------------------------------------
 	// ディゾルブ処理はこれより上に書く
 	//ObjectBase::Draw();
-=======
-
-	//------------------------------------------------------------------------
-	// ディゾルブ処理はこれより上に書く
-	ObjectBase::Draw();
->>>>>>> origin/m4k
 }
 
 void ObjectCage::InitLoad(void)
@@ -113,25 +103,34 @@ void ObjectCage::InitPost(void)
 
 void ObjectCage::UpdateProcess(void)
 {
+
 }
 
 void ObjectCage::UpdateProcessPost(void)
 {
 	transform_.Update();
 
-	timer_ += 1.0f;
-	float timeRatio = timer_ / duration_;
-
-	// 1.0 になった瞬間に消すのではなく、
-	// 1.0 を超えたら少し待ってから削除するような余裕を持たせる
-	if (timeRatio >= 1.1f) {
+	if (CheckHitKey(KEY_INPUT_K)) 
+	{
 		isAlive_ = false;
 	}
 
-	// smoothRatio は 1.0 を超えても計算し続けるようにし、
-	// シェーダー側で 1.0 を超えたら完全に真っ黒（透明）にする判定を入れる
-	float smoothRatio = min(timeRatio, 1.0f);
-	material_->SetConstBufPS(0, { smoothRatio, 0.0f, 0.0f, 0.0f });
+	if (!isAlive_)
+	{
+		timer_ += 1.0f;
+		float timeRatio = timer_ / duration_;
 
+		// 1.0 になった瞬間に消すのではなく、
+		// 1.0 を超えたら少し待ってから削除するような余裕を持たせる
+		if (timeRatio >= 1.1f) {
+			transform_.Release();
+		}
+
+		// smoothRatio は 1.0 を超えても計算し続けるようにし、
+		// シェーダー側で 1.0 を超えたら完全に真っ黒（透明）にする判定を入れる
+		float smoothRatio = min(timeRatio, 1.0f);
+		material_->SetConstBufPS(0, { smoothRatio, 0.0f, 0.0f, 0.0f });
+	}
+	
 	ObjectBase::UpdateProcessPost();
 }
