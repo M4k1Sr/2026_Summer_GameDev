@@ -18,6 +18,7 @@ public:
 		BURNER,
 		CONVEYER,
 		BREAK_CAGE,
+		BOSS_CAGE,
 		MAX,
 	};
 

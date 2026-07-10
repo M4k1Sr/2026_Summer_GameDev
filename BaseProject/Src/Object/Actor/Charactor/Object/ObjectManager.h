@@ -9,6 +9,7 @@ class OjbectBossGimmick;
 class ObjectTarai;
 class NdlFloor;
 class ObjectBurner;
+class ObjectBossCage;
 
 class ObjectManager
 {
@@ -53,8 +54,14 @@ public:
 	// タライを落とす用に追加
 	ObjectTarai* GetTarai(const VECTOR& pos);
 
+	// ボス檻を落とす用に追加
+	ObjectBossCage* GetBossCage(const VECTOR& pos);
+
 	// タライが落下中か
 	bool IsTaraiFalling(void);
+
+	// 檻が落下中か
+	bool IsCageFalling(void);
 
 private:
 
