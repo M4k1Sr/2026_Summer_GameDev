@@ -50,8 +50,8 @@ void Player::Draw(void)
 
 	ServiceLocator::GetUI().Draw();
 	
-	// プレイヤー座標
-	DrawFormatString(200, 60, GetColor(0, 0, 0), "Player Pos: X:%.1f, Y:%.1f, Z:%.1f", transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	//// プレイヤー座標
+	//DrawFormatString(200, 60, GetColor(0, 0, 0), "Player Pos: X:%.1f, Y:%.1f, Z:%.1f", transform_.pos.x, transform_.pos.y, transform_.pos.z);
 
 }
 
