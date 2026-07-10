@@ -6,7 +6,7 @@ class AnimationController;
 class ObjectManager;
 class ObjectBossGimmick;
 
-class ObjectTarai : public ObjectBase
+class ObjectBossCage : public ObjectBase
 {
 public:
 
@@ -20,14 +20,14 @@ public:
 	};
 
 	// コンストラクタ
-	ObjectTarai(const ObjectBase::ObjectData& data);
+	ObjectBossCage(const ObjectBase::ObjectData& data);
 
 	// デストラクタ
-	~ObjectTarai(void) override;
+	~ObjectBossCage(void) override;
 
 	// デバッグ描画処理
 	void Draw(void) override;
-	
+
 	// タライが動作中、または落下後の余韻時間中であれば true を返す
 	bool IsCameraFocusing(void) const;
 
@@ -58,33 +58,34 @@ protected:
 private:
 
 	// モデルの大きさ
-	static constexpr float SCALE = 0.5f;
+	static constexpr float SCALE = 20.0f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
 	// 衝突判定用線分開始
-	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
+	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 300.0f, 0.0f };
 
 	// 衝突判定用線分終了
 	static constexpr VECTOR COL_LINE_END_LOCAL_POS = { 0.0f, -10.0f, 0.0f };
 
 	// 衝突判定用カプセル上部球体
-	static constexpr VECTOR COL_CAPSULE_TOP_LOCAL_POS = { 0.0f, 110.0f, 0.0f };
+	static constexpr VECTOR COL_CAPSULE_TOP_LOCAL_POS = { 0.0f, 300.0f, 0.0f };
 
 	// 衝突判定用カプセル下部球体
 	static constexpr VECTOR COL_CAPSULE_DOWN_LOCAL_POS = { 0.0f, 30.0f, 0.0f };
 
 	// 衝突判定用カプセル球体半径
-	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
-	
+	static constexpr float COL_CAPSULE_RADIUS = 200.0f;
+
 	// タライの初期位置
-	static constexpr VECTOR INIT_POS = { 9800.0f, 700.0f, -1200.0f };
+	static constexpr VECTOR INIT_POS = { 30000.0f, 700.0f, -3750.0f };
+
 	// タライの下降範囲
 	static constexpr float MOVE_DOWN_TARAI = 800.0f;
 
 	// タライの最高降下速度
-	static constexpr float MAX_TARAI_SPEED =  -30.0f;
+	static constexpr float MAX_TARAI_SPEED = -30.0f;
 
 	// 初期位置
 	VECTOR startPos_;
@@ -114,7 +115,7 @@ private:
 	bool isTarai_;
 
 	// カメラ演出を維持するタイマー
-	int bossFrontDelayTimer_ = 0; 
+	int bossFrontDelayTimer_ = 0;
 
 	// カメラ演出を維持したいフレーム数（60 = 約1秒間）
 	static constexpr int CAMERA_KEEP_FRAME = 120;

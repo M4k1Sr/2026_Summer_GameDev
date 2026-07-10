@@ -76,7 +76,7 @@ public:
 	static constexpr float VIEW_ANGLE = 80.0f;
 
 	// 視野の広さ
-	static constexpr float VIEW_RANGE = 2500.0f;
+	static constexpr float VIEW_RANGE = 2000.0f;
 
 	// コンストラクタ
 	BossBase(const BossBase::BossData& data);
@@ -168,6 +168,9 @@ protected:
 
 	// 攻撃フラグ
 	bool isAttack_;
+
+	// 攻撃可能フラグ
+	bool doAttack_;
 
 	// 状態
 	STATE state_;

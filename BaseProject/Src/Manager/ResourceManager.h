@@ -30,6 +30,7 @@ public:
 		CONVEYER,
 		CAGE,
 		BREAK_CAGE,
+		BOMB,
 
 		// UI
 		CLOCK,

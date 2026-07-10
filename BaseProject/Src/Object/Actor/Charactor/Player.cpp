@@ -12,6 +12,7 @@
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectBossCage.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
@@ -28,7 +29,7 @@ Player::Player(void)
 	:
 	CharactorBase(),
 	isGimmick_(false),
-	currentCnt_(0),
+	currentCnt_(2),
 	isClear_(false),
 	isIronBallHit_(false),
 	stamina_(15.0f),
@@ -37,7 +38,6 @@ Player::Player(void)
 	isSlowWalk_(false)
 {
 	sweatPos_ = transform_.pos;
-	int img_ = resMng_.Load(ResourceManager::SRC::SWEAT).handleId_;
 }
 
 Player::~Player(void)
@@ -167,7 +167,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
-	isGravity_ = false;
+	isGravity_ = true;
 
 	// 移動操作
 	ProcessMove();
@@ -454,8 +454,8 @@ void Player::ProcessPush(void)
 		ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
 
 		//// タイルの判定
-		// こっちが本物
 		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+		ObjectBossCage* bossCage = objMng_->GetBossCage(transform_.pos);
 
 		if (bossGimmick != nullptr)
 		{
@@ -484,7 +484,14 @@ void Player::ProcessPush(void)
 
 					// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
 					// タライギミック作動
-					tarai->SetFlag(true);	
+					if (tarai) {
+						tarai->SetFlag(true);
+					}
+
+					// ボスケージ作動
+					if (bossCage && currentCnt_ == 5){
+						bossCage->SetFlag(true);
+					}
 				}
 				else {
 					bossGimmick->SetFlag(false);

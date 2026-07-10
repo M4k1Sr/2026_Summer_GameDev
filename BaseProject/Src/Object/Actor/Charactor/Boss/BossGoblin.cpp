@@ -31,6 +31,7 @@ BossGoblin::BossGoblin(const BossBase::BossData& data)
 	BossBase(data)
 {
 	idleTimer_ = 0.0f;
+	doAttack_ = false;
 }
 
 BossGoblin::~BossGoblin(void)
@@ -75,7 +76,7 @@ void BossGoblin::InitTransform(void)
 
 	// モデルの大きさ、回転、座標の初期化
 	transform_.scl = VGet(SCALE, SCALE, SCALE);
-	transform_.quaRot = Quaternion::Identity();
+	transform_.quaRot = Quaternion::Euler({ 0.0f, -90.0f * DX_PI_F / 180.0f, 0.0f });
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();
 }
@@ -103,24 +104,24 @@ void BossGoblin::InitAnimation(void)
 		new AnimationController(transform_.modelId);
 
 	// アニメーション追加
-	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Idle.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::YAWN), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Yawn.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE_JUMP), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/IdleJump.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::SIT), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Sit.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Idle.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::YAWN), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Yawn.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE_JUMP), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/IdleJump.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::SIT), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Sit.mv1");
 
 	animationController_->Add(static_cast<int>(ANIM_TYPE::WALK), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Walk.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Run.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::PATROL), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Patrol.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Run.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::PATROL), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Patrol.mv1");
 	
-	animationController_->Add(static_cast<int>(ANIM_TYPE::SURPRISE), 40.0f, Application::PATH_MODEL + "Enemy/Goblin/Surprised.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::THREAT), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Threat.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::SURPRISE), 40.0f, Application::PATH_MODEL + "Enemy/Goblin/Surprise.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::THREAT), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Threat.mv1");
 
-	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Throw.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::ANGRY), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Angry.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::ATTACK), 40.0f, Application::PATH_MODEL + "Enemy/Goblin/Attack.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 40.0f, Application::PATH_MODEL + "Enemy/Goblin/Throw.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::ANGRY), 60.0f, Application::PATH_MODEL + "Enemy/Goblin/Angry.mv1");
 	
-	animationController_->Add(static_cast<int>(ANIM_TYPE::DAMAGE), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Damage.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::DOWN), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Down.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::DAMAGE), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Damage.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::DOWN), 40.0f, Application::PATH_MODEL + "Enemy/Goblin/Down.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::END), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/End.mv1");
 
 	// アニメーション再生
@@ -131,6 +132,8 @@ void BossGoblin::InitAnimation(void)
 
 void BossGoblin::InitPost(void)
 {
+	damageCnt_ = player_->GetCurrentCnt();
+
 	// 基底クラスの初期化後処理
 	stateTimer_ = 0.0f;
 	stateTime_ = 0.0f;
@@ -187,11 +190,14 @@ void BossGoblin::InitPost(void)
 
 void BossGoblin::UpdateProcess(void)
 {
+	if (isUnaware_) {
+		transform_.quaRot = Quaternion::Euler({ 0.0f, -105.0f * DX_PI_F / 180.0f, 0.0f });
+	}
+
 	if (!isDead_)
 	{
 		// 索敵・注視関数
 		Search();
-		//LookPlayer();
 	}
 
 	if (player_ == nullptr)
@@ -199,11 +205,12 @@ void BossGoblin::UpdateProcess(void)
 	}
 
 	// 時間取得
-	idleTimer_ = SceneManager::GetInstance().GetDeltaTime();
+	idleTimer_ += SceneManager::GetInstance().GetDeltaTime();
 
 	// 状態別更新
 	stateUpdate_();
 
+	UpdateProcessPost();
 }
 
 void BossGoblin::UpdateProcessPost(void)
@@ -294,27 +301,15 @@ void BossGoblin::Search(void)
 
 	// 今プレイヤーが見えているのか
 	bool findPlayerNow = (distance < VIEW_RANGE);
+	
+	// 攻撃可能範囲なのか
+	doAttack_ = (distance < ATTACK_RANGE);
 
-
+	// プレイヤーを発見
 	if (findPlayerNow) {
-		LookPlayer();
-	}
-
-	// 視野範囲
-	// 未発見状態
-	if (state_ == STATE::IDLE && findPlayerNow)
-	{
-		// ボスの視野範囲に入った	
 		isAlerted_ = true;
-		// プレイヤーの所在に気づいている(二回目以降はずっと気づいている状態なのでfalse)
 		isUnaware_ = false;
-	}
-
-	// 発見後状態の未発見状態
-	if (isSearching_ && findPlayerNow)
-	{
-		// ボスの視野範囲に入った
-		isAlerted_ = true;
+		LookPlayer();
 	}
 }
 
@@ -356,21 +351,33 @@ void BossGoblin::ChangeState(STATE state)
 void BossGoblin::ChangeStateIdle(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::IDLE), true);
+		static_cast<int>(ANIM_TYPE::PATROL), true);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateIdle, this);
 
 }
 
 void BossGoblin::ChangeStateYawn(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::YAWN), false);
+	stateUpdate_ = std::bind(&BossGoblin::UpdateYawn, this);
+
 }
 
 void BossGoblin::ChangeStateIdleJump(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::IDLE_JUMP), false);
+	stateUpdate_ = std::bind(&BossGoblin::UpdateIdleJump, this);
+
 }
 
 void BossGoblin::ChangeStateSit(void)
 {
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::SIT), false);
+	stateUpdate_ = std::bind(&BossGoblin::UpdateSit, this);
+
 }
 
 void BossGoblin::ChangeStateWalk(void)
@@ -387,12 +394,14 @@ void BossGoblin::ChangeStateRun(void)
 		static_cast<int>(ANIM_TYPE::RUN), true);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateRun, this);
 
+
+
 }
 
 void BossGoblin::ChangeStatePatrol(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::PATROL), true);
+		static_cast<int>(ANIM_TYPE::PATROL), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdatePatrol, this);
 
 }
@@ -400,7 +409,7 @@ void BossGoblin::ChangeStatePatrol(void)
 void BossGoblin::ChangeStateSurprise(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::SURPRISE), true);
+		static_cast<int>(ANIM_TYPE::SURPRISE), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateSurprise, this);
 
 }
@@ -408,15 +417,17 @@ void BossGoblin::ChangeStateSurprise(void)
 void BossGoblin::ChangeStateThreat(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::THREAT), true);
+		static_cast<int>(ANIM_TYPE::THREAT), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateThreat, this);
 
 }
 
 void BossGoblin::ChangeStateAttack(void)
 {
+	movePow_ = AsoUtility::VECTOR_ZERO;
+
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ATTACK), true);
+		static_cast<int>(ANIM_TYPE::ATTACK), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateAttack, this);
 
 }
@@ -424,7 +435,7 @@ void BossGoblin::ChangeStateAttack(void)
 void BossGoblin::ChangeStateThrow(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::THROW), true);
+		static_cast<int>(ANIM_TYPE::THROW), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateThrow, this);
 
 }
@@ -432,7 +443,7 @@ void BossGoblin::ChangeStateThrow(void)
 void BossGoblin::ChangeStateAngry(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::ANGRY), true);
+		static_cast<int>(ANIM_TYPE::ANGRY), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateAngry, this);
 
 }
@@ -440,7 +451,7 @@ void BossGoblin::ChangeStateAngry(void)
 void BossGoblin::ChangeStateDamage(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::DAMAGE), true);
+		static_cast<int>(ANIM_TYPE::DAMAGE), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateDamage, this);
 
 }
@@ -448,7 +459,7 @@ void BossGoblin::ChangeStateDamage(void)
 void BossGoblin::ChangeStateDown(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::DOWN), true);
+		static_cast<int>(ANIM_TYPE::DOWN), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateDown, this);
 
 }
@@ -456,64 +467,115 @@ void BossGoblin::ChangeStateDown(void)
 void BossGoblin::ChangeStateEnd(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::END), true);
+		static_cast<int>(ANIM_TYPE::END), false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateEnd, this);
 
 }
 
 void BossGoblin::UpdateIdle(void)
 {
-	if ((idleTimer_ / 5.0f) == 0)
+	// 発見フラグがtrueになったら移動までの処理開始
+	if (isAlerted_) {
+		ChangeState(STATE::SURPRISE);
+	}
+
+	if (idleTimer_ > 5.0f)
 	{
+		idleTimer_ = 0.0f;
 		ChangeState(STATE::YAWN);
 	}
 }
 
 void BossGoblin::UpdateYawn(void)
 {
+	// 発見フラグがtrueになったら移動までの処理開始
+	if (isAlerted_) {
+		ChangeState(STATE::SURPRISE);
+	}
 
+	if (animationController_->IsEnd())
+	{
+		idleTimer_ = 0.0f;
+
+		ChangeState(STATE::IDLE_JUMP);
+	}
 }
 
 void BossGoblin::UpdateIdleJump(void)
 {
+	// 発見フラグがtrueになったら移動までの処理開始
+	if (isAlerted_) {
+		ChangeState(STATE::SURPRISE);
+	}
 
+	if (animationController_->IsEnd())
+	{
+		idleTimer_ = 0.0f;
+
+		ChangeState(STATE::IDLE);
+	}
 }
 
 void BossGoblin::UpdateSit(void)
 {
-
+	//if (idleTimer_ > 5.0f)
+	//{
+	//	if (animationController_->IsEnd()) {
+	//		idleTimer_ = 0.0f;
+	//		ChangeState(STATE::IDLE);
+	//	}
+	//}
 }
 
 void BossGoblin::UpdateWalk(void)
 {
+	// 歩き行動は現在のゲームでは導入無し
 }
 
 void BossGoblin::UpdateRun(void)
 {
+
+	ProcessMove();
+
+	// 攻撃範囲内に入ったら攻撃開始
+	// まずは威嚇行動から
+	// 現在は攻撃のみ
+	if (doAttack_) {
+		ChangeState(STATE::ANGRY);
+		//// もしくは石投げ攻撃
+		//ChangeState(STATE::THROW);
+	}
 }
 
 void BossGoblin::UpdatePatrol(void)
 {
+	// 索敵行動になるが、現在は無し
 }
 
 void BossGoblin::UpdateSurprise(void)
 {
+	if (animationController_->IsEnd()) {
+		ChangeState(STATE::THREAT);
+	}
 }
 
 void BossGoblin::UpdateThreat(void)
 {
+	if (animationController_->IsEnd()) {
+		ChangeState(STATE::RUN);
+	}
 }
 
 void BossGoblin::UpdateAttack(void)
 {
+	if (animationController_->IsEnd()) {
+		ChangeState(STATE::THREAT);
+	}
 }
 
 void BossGoblin::UpdateThrow(void)
 {
-}
-
-void BossGoblin::UpdateAttackEnd(void)
-{
+	ChangeState(STATE::THREAT);
 }
 
 void BossGoblin::UpdateCheer(void)
@@ -522,6 +584,18 @@ void BossGoblin::UpdateCheer(void)
 
 void BossGoblin::UpdateAngry(void)
 {
+	movePow_ = AsoUtility::VECTOR_ZERO;
+	if (animationController_->IsEnd()) {
+		if (doAttack_) {
+			ChangeState(STATE::ATTACK);
+			//// もしくは石投げ攻撃
+			//ChangeState(STATE::THROW);
+		}
+		else {
+			// 攻撃フラグが立っていない場合
+			ChangeState(STATE::RUN);
+		}
+	}
 }
 
 void BossGoblin::UpdateDamage(void)
@@ -530,65 +604,38 @@ void BossGoblin::UpdateDamage(void)
 
 void BossGoblin::UpdateDown(void)
 {
+
 }
 
 void BossGoblin::UpdateEnd(void)
 {
 }
-void BossGoblin::Phase(void)
+
+void BossGoblin::ProcessMove(void)
 {
 
-	//int damageCnt = player_->GetCurrentCnt();
+	// 移動処理
+	// 移動スピード
+	moveSpeed_ = MOVE_SPEED;
 
-	//// 処理を始める前に今のフェーズを保存
-	//PHASE_STEP oldPhase = phaseStep_;
+	// プレイヤーの方向に合わせて移動方向を計算
+	movePow_ = VScale(moveDir_, moveSpeed_);
 
-	//// ★【追加】前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
-	//if (damageCnt > lastDamageCnt_)
-	//{
-	//	ChangeState(STATE::DAMAGE);
-	//}
-	//// 今の値を保存して次のフレームの比較に使う
-	//lastDamageCnt_ = damageCnt;
+	// 自身の移動量（movePow_）分、座標を進める
+	transform_.pos = VAdd(transform_.pos, movePow_);
 
-
-	//// もし未発見フェーズはIDLE状態	
-	//if (!isUnaware_) {
-	//	phaseStep_ = PHASE_STEP::PHASE_IDLE;
-	//}
-
-	//// HP量に応じてフェーズが進む
-	//if (damageCnt >= 3) {
-	//	phaseStep_ = PHASE_STEP::PHASE_DEAD;
-	//}
-	//else if (damageCnt >= 2) {
-	//	phaseStep_ = PHASE_STEP::PHASE_CLIMAX;
-	//}
-	//else if (damageCnt >= 1) {
-	//	phaseStep_ = PHASE_STEP::PHASE_TACTICAL;
-	//}
-	//else if (damageCnt >= 0) {
-	//	phaseStep_ = PHASE_STEP::PHASE_ENCOUNT;
-	//}
-
-
-	//if (phaseStep_ != oldPhase)
-	//{
-	//	if (phaseStep_ == PHASE_STEP::PHASE_TACTICAL)
-	//	{
-	//		// 中盤フェーズに入ったら、攻撃を「波攻撃」に変更する！
-	//		ChangeAttackStrategy(std::make_unique<WaveAttack>());
-	//	}
-	//	else if (phaseStep_ == PHASE_STEP::PHASE_ENCOUNT)
-	//	{
-	//		// 序盤は火の玉
-	//		ChangeAttackStrategy(std::make_unique<FireBallAttack>());
-	//	}
-	//	}
 }
 
 
-	void BossGoblin::Dead(void)
+void BossGoblin::Phase(void)
+{
+	if (damageCnt_ > 5) {
+		ChangeState(STATE::DOWN);
+	}
+}
+
+
+void BossGoblin::Dead(void)
 {
 	if (phaseStep_ == PHASE_STEP::PHASE_DEAD)
 	{

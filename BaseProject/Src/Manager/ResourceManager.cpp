@@ -97,6 +97,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Gimmick/stageGimmick/BreakCage.mv1");
 	resourcesMap_.emplace(SRC::BREAK_CAGE, res);
 
+	// ボス用の檻モデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Bomb.mv1");
+	resourcesMap_.emplace(SRC::BOMB, res);
+	
 	// 時計モデル
 	res = new RES(RES_T::IMG, PATH_IMG + "clock.png");
 	resourcesMap_.emplace(SRC::CLOCK, res);

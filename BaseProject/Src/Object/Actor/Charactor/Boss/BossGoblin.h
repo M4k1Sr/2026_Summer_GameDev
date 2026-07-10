@@ -85,6 +85,9 @@ private:
 	// 攻撃タイマー
 	float attackTimer_;
 
+	// ダメージカウンタ
+	int damageCnt_;
+
 	// モデルの大きさ
 	static constexpr float SCALE = 2.0f;
 	// 武器モデルの大きさ
@@ -117,6 +120,12 @@ private:
 	// 武器のローカル座標・回転
 	static constexpr VECTOR WEAPON_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
 	static constexpr VECTOR WEAPON_LOCAL_ROT = { 90.0f * DX_PI_F / 180.0f,90.0f * DX_PI_F / 180.0f,0.0f };
+
+	// 攻撃可能範囲
+	static constexpr float ATTACK_RANGE = 350.0f;
+
+	// ゴブリン移動スピード
+	static constexpr float MOVE_SPEED = 3.0f;
 
 	// 索敵
 	void Search(void);
@@ -183,6 +192,9 @@ private:
 	void UpdateDamage();
 	void UpdateDown();
 	void UpdateEnd();
+
+	// 移動処理
+	void ProcessMove();
 
 	// フェーズ管理
 	void Phase(void) override;
