@@ -14,7 +14,7 @@ public:
 	
 	// ƒJƒƒ‰‚Ì‰ŠúŠp“x
 	static constexpr VECTOR DERFAULT_ANGLES = { 
-		30.0f * (DX_PI_F / 180.0f), 90.0f * (DX_PI_F / 180.0f), 0.0f
+		30.0f * (DX_PI_F / 180.0f),0.0f, 0.0f
 	};
 
 	// ƒJƒƒ‰‚Ì‰ñ“]—Ê

@@ -29,7 +29,7 @@ Player::Player(void)
 	:
 	CharactorBase(),
 	isGimmick_(false),
-	currentCnt_(2),
+	currentCnt_(0),
 	isClear_(false),
 	isIronBallHit_(false),
 	stamina_(15.0f),
@@ -89,13 +89,13 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
-	if (transform_.pos.x > 5060 &&
-		transform_.pos.x < 5235 &&
-		transform_.pos.z > -790 &&
-		transform_.pos.z < -490)
-	{
-		isClear_ = true;
-	}
+	//if (transform_.pos.x > 5060 &&
+	//	transform_.pos.x < 5235 &&
+	//	transform_.pos.z > -790 &&
+	//	transform_.pos.z < -490)
+	//{
+	//	isClear_ = true;
+	//}
 }
 
 bool Player::GetClearFlag(void) const
@@ -167,7 +167,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
-	isGravity_ = true;
+	isGravity_ = false;
 
 	// ˆÚ“®‘€ì
 	ProcessMove();
