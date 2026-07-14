@@ -23,11 +23,8 @@
     <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
-=======
->>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
@@ -109,7 +106,6 @@
     <ClInclude Include="Src\Renderer\ModelShader\ModelRenderer.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
-<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
@@ -117,8 +113,6 @@
   <ItemGroup>
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
-=======
->>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
@@ -193,15 +187,11 @@
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
-<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
-=======
     <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
->>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

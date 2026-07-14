@@ -160,13 +160,10 @@ void ResourceManager::Init(void)
 	//PUSHUI
 	res = new RES(RES_T::IMG, PATH_IMG + "PushUI.png");
 	resourcesMap_.emplace(SRC::PUSH_BUTTON, res);
-<<<<<<< HEAD
 
 	// こん棒オブジェクト
 	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club2.mv1");
 	resourcesMap_.emplace(SRC::CLUB, res);
-=======
->>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
 
 }
 
