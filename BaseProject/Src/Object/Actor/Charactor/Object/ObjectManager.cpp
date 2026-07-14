@@ -11,7 +11,6 @@
 #include "./ObjectBurner.h"
 #include "./ObjectConveyer.h"
 #include "./ObjectCage.h"
-#include "./ObjectBossCage.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -109,7 +108,7 @@ void ObjectManager::LoadCsvData(void)
 		data.id = stoi(strSplit[idx++]);
 
 		// 種別
- 		data.type = static_cast<ObjectBase::TYPE>(stoi(strSplit[idx++]));
+		data.type = static_cast<ObjectBase::TYPE>(stoi(strSplit[idx++]));
 
 		// 初期座標
 		data.defaultPos =
@@ -137,7 +136,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		object = new ObjectBox(data);
+		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);
@@ -160,10 +159,6 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::BREAK_CAGE:
 		object = new ObjectCage(data);
 		break;
-	case ObjectBase::TYPE::BOSS_CAGE:
-		object = new ObjectBossCage(data);
-		break;
-
 		// 増える毎に追加
 	}
 
@@ -255,54 +250,11 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 
 }
 
-// ボス用の檻
-ObjectBossCage* ObjectManager::GetBossCage(const VECTOR& pos)
-{
-	for (auto& object : objects_)
-	{
-		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
-		{
-			VECTOR taraiPos = tarai->GetPos();
-
-			// XZ平面のみで距離計算
-			float dx = taraiPos.x - pos.x;
-			float dz = taraiPos.z - pos.z;
-
-			float distXZ = dx * dx + dz * dz;
-
-			// XZの範囲内ならOKとする（高さYは無視）
-			if (distXZ < 100000000.0f)
-			{
-				return tarai;
-			}
-		}
-	}
-
-	return nullptr;
-
-}
-
 bool ObjectManager::IsTaraiFalling(void)
 {
 	for (auto& object : objects_)
 	{
 		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
-		{
-			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
-			if (tarai->IsCameraFocusing())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool ObjectManager::IsCageFalling(void)
-{
-	for (auto& object : objects_)
-	{
-		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
 		{
 			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
 			if (tarai->IsCameraFocusing())

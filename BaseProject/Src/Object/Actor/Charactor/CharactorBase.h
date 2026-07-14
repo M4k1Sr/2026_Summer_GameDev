@@ -1,6 +1,5 @@
 #pragma once
 #include "../ActorBase.h"
-#include "../Weapon/WeaponComposite.h"
 class AnimationController;
 
 class CharactorBase : public ActorBase
@@ -33,9 +32,6 @@ public:
 	virtual void Release(void) override;
 
 protected:
-
-	// 武器コンポジット
-	std::unique_ptr<WeaponComposite> weapon_;
 
 	// 最大落下速度
 	static constexpr float MAX_FALL_SPEED = -10.0f;

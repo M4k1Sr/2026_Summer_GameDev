@@ -109,6 +109,7 @@ private:
 
 	// プレイヤー座標
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
+<<<<<<< HEAD
 	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 9800.0f, 50.0f, -1220.0f };
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
@@ -117,6 +118,10 @@ private:
 	// static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 30000.0f, 0.0f, -3750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, 50.0f, -800.0f };
+=======
+	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
+	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
+>>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;

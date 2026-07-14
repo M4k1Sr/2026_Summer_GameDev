@@ -24,7 +24,14 @@ ObjectCage::~ObjectCage(void)
 
 void ObjectCage::Draw(void)
 {
+<<<<<<< HEAD
 	renderer_->Draw();
+=======
+	if (isAlive_ == true)
+	{
+		renderer_->Draw();
+	}
+>>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
 
 	//------------------------------------------------------------------------
 	// ƒfƒBƒ]ƒ‹ƒuˆ—‚Í‚±‚ê‚æ‚èã‚É‘‚­

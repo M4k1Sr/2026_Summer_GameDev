@@ -14,7 +14,7 @@ public:
 	enum class BOSS_TYPE
 	{
 		PIXIE,
-		GOBLIN,
+		ORC,
 		DIABLO,
 	};
 
@@ -31,33 +31,12 @@ public:
 	// 状態
 	enum class STATE
 	{
-		// 通常状態
 		IDLE,
-		YAWN,
-		IDLE_JUMP,
-		SIT,
-
-		// 移動状態
-		WALK,
-		RUN,
-		PATROL,
-
-		// 発見状態
-		SURPRISE,	// 発見
-		THREAT,		// 威嚇
-
-		// 攻撃状態
+		SURPRISE,
 		CHARGE,
-		ATTACK,
 		THROW,
 		ATTACK_WAVE,
 		ATTACK_END,
-
-		// 攻撃後感情
-		CHEER,
-		ANGRY,
-
-		// ダメージ状態
 		DAMAGE,
 		DOWN,
 		END,
@@ -75,7 +54,7 @@ public:
 	static constexpr float VIEW_ANGLE = 80.0f;
 
 	// 視野の広さ
-	static constexpr float VIEW_RANGE = 2000.0f;
+	static constexpr float VIEW_RANGE = 2500.0f;
 
 	// コンストラクタ
 	BossBase(const BossBase::BossData& data);
@@ -156,9 +135,6 @@ protected:
 	// 経過時間
 	float stateTimer_;
 
-	// IDLEタイマー
-	float idleTimer_;
-
 	// ボス通知フラグ
 	bool isUnaware_;	// 未発見:true	発見後:false
 	bool isAlerted_;	// 発見時:true
@@ -167,9 +143,6 @@ protected:
 
 	// 攻撃フラグ
 	bool isAttack_;
-
-	// 攻撃可能フラグ
-	bool doAttack_;
 
 	// 状態
 	STATE state_;

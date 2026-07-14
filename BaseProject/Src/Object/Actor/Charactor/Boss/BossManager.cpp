@@ -5,7 +5,8 @@
 #include "../../Charactor/Player.h"
 #include "./BossBase.h"
 #include "./BossPixie.h"
-#include "./BossGoblin.h"
+#include "./BossOrc.h"
+#include "./BossDiablo.h"
 #include "./BossManager.h"
 #include "../../../../Manager/SoundManager.h"
 #include "../../../../Manager/ServiceLocator.h"
@@ -154,9 +155,9 @@ BossBase* BossManager::Create(const BossBase::BossData& data)
 	case BossBase::BOSS_TYPE::PIXIE:
 		boss = new BossPixie(data);
 		break;
-	case BossBase::BOSS_TYPE::GOBLIN:
-		boss = new BossGoblin(data);
-		break;
+	//case BossBase::BOSS_TYPE::ORC:
+	//	boss = new BossOrc(data);
+	//	break;
 
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
