@@ -52,7 +52,7 @@ private:
 	static constexpr float INTERVAL_X = 300.0f;
 
 	// ìSãÖÇÃç¿ïW
-	static constexpr VECTOR IRON_BALL_POS = { 330.0f, 275.0f, 0.0f };
+	static constexpr VECTOR IRON_BALL_POS = { 1700.0f, 400.0f, -350.0f };
 
 	// çΩÇÃêÊí[ÇÃç¿ïW
 	static constexpr float CHAIN_END_POS = 160.0f;
