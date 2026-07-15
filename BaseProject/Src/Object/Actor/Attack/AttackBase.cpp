@@ -212,7 +212,6 @@ void AttackBase::UpdateFireBall(void)
 			fireEffectId_ = -1; // 消えていたらリセット
 		}
 	}
-
 }
 
 void AttackBase::UpdateWaveAttack(void)
