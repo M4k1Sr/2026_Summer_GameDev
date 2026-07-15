@@ -21,6 +21,7 @@ public:
 	enum class TAG
 	{
 		STAGE,
+		STAGE2,
 		PLAYER,
 		PIXIE,
 		GOBLIN,

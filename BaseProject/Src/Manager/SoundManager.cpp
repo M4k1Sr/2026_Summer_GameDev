@@ -31,7 +31,6 @@ void SoundManager::Init(void)
     bankMap_[BANK_ID::COMMON] = new SoundBank{ BANK_ID::COMMON, "Common" };
     bankMap_[BANK_ID::STAGE_1] = new SoundBank{ BANK_ID::STAGE_1, "Stage1" };
     bankMap_[BANK_ID::STAGE_2] = new SoundBank{ BANK_ID::STAGE_2, "Stage2" };
-    bankMap_[BANK_ID::STAGE_3] = new SoundBank{ BANK_ID::STAGE_3, "Stage3" };
     bankMap_[BANK_ID::BOSS] = new SoundBank{ BANK_ID::BOSS, "Boss" };
 
     // ÉäÉ\Å[ÉXÇÃê∂ê¨Ç∆ìoò^

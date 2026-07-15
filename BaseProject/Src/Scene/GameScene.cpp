@@ -7,7 +7,7 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
-#include "../Object/Actor/Stage.h"
+#include "../Object/Actor/Stage/StageManager.h"
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
@@ -60,8 +60,8 @@ void GameScene::Init(void)
 {
 
 	// ステージ初期化
-	stage_ = new Stage();
-	stage_->Init();
+	stageMng_ = new StageManager();
+	stageMng_->Init();
 
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
@@ -81,41 +81,6 @@ void GameScene::Init(void)
 	}
 
 	rank_->CreateIns();
-
-
-	// ステージモデルのコライダーをプレイヤーに登録
-	const ColliderBase* stageCollider =
-		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
-	player_->AddHitCollider(stageCollider);
-
-	// スカイドーム初期化
-	skyDome_ = new SkyDome(player_->GetTransform());
-	skyDome_->Init();
-
-	// オブジェクト(全て)のコライダーを登録
-	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
-	for (const auto& obj : objects)
-	{
-		// オブジェクト追加
-		obj->SetObjectManager(objMng_);
-
-		// オブジェクトがモデルコライダーを持っていれば登録
-		const ColliderBase* objectCollider = 
-		obj->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
-		if (objectCollider != nullptr)
-		{
-			player_->AddHitCollider(objectCollider);
-		}
-
-	}
-
-	// ステージモデルのコライダーをオブジェクトに登録
-	objMng_->AddHitCollider(stageCollider);
-
-
-	// 攻撃処理初期化
-	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
-	attackMng_->Init();
 
 	// ボス初期化
 	bossMng_ = new BossManager();
@@ -138,8 +103,62 @@ void GameScene::Init(void)
 		}
 	}
 
-	// ステージモデルのコライダーをボスに登録
-	bossMng_->AddHitCollider(stageCollider);
+	// ステージ(全て)のコライダーを登録
+	const std::vector<StageBase*>& stages = stageMng_->GetStage();
+	for (const auto& stage : stages)
+	{
+		// ステージ追加
+		stage->SetStageManager(stageMng_);
+
+		// ステージがモデルコライダーを持っていれば登録
+		const ColliderBase* stageCollider =
+			stage->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
+		if (stageCollider != nullptr)
+		{
+			// ステージモデルのコライダーをプレイヤーに登録
+			player_->AddHitCollider(stageCollider);
+			// ステージモデルのコライダーをオブジェクトに登録
+			objMng_->AddHitCollider(stageCollider);
+			// ステージモデルのコライダーをボスに登録
+			bossMng_->AddHitCollider(stageCollider);
+
+
+			// ステージモデルのコライダーをカメラに登録
+			// カメラモード変更
+			Camera* camera = SceneManager::GetInstance().GetCamera();
+			camera->SetFollow(&player_->GetTransform());
+			camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+			camera->AddHitCollider(stageCollider);
+
+		}
+
+	}
+
+	// スカイドーム初期化
+	skyDome_ = new SkyDome(player_->GetTransform());
+	skyDome_->Init();
+
+	// オブジェクト(全て)のコライダーを登録
+	const std::vector<ObjectBase*>& objects = objMng_->GetObjects();
+	for (const auto& obj : objects)
+	{
+		// オブジェクト追加
+		obj->SetObjectManager(objMng_);
+
+		// オブジェクトがモデルコライダーを持っていれば登録
+		const ColliderBase* objectCollider = 
+		obj->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+		if (objectCollider != nullptr)
+		{
+			player_->AddHitCollider(objectCollider);
+		}
+
+	}
+
+
+	// 攻撃処理初期化
+	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
+	attackMng_->Init();
 
 	// 鉄球モデル
 	ironBall_ = new IronBall();
@@ -159,12 +178,6 @@ void GameScene::Init(void)
 
 	// UIモデル
 	clockUI_ = new Clock();
-
-	// カメラモード変更
-	Camera* camera = SceneManager::GetInstance().GetCamera();
-	camera->SetFollow(&player_->GetTransform());
-	camera->AddHitCollider(stageCollider);
-	camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
 
 }
 
@@ -192,7 +205,7 @@ void GameScene::Update(void)
 		clearTime_++;
 		// マウスポインタを非表示にする
 		SetMouseDispFlag(false);
-		stage_->Update();
+		stageMng_->Update();
 		skyDome_->Update();
 		player_->Update();
 		bossMng_->Update();
@@ -269,7 +282,7 @@ void GameScene::Draw(void)
 	//skyDome_->Draw();
 
 	// ステージ描画
-	stage_->Draw();
+	stageMng_->Draw();
 
 	// 鉄球描画
 	ironBall_->Draw();
@@ -307,8 +320,8 @@ void GameScene::Draw(void)
 void GameScene::Release(void)
 {
 	// ステージ解放
-	stage_->Release();
-	delete stage_;
+	stageMng_->Release();
+	delete stageMng_;
 
 	// スカイドーム解放
 	skyDome_->Release();
