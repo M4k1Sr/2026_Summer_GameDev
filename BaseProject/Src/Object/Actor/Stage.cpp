@@ -1,23 +1,22 @@
 #include <DxLib.h>
 #include <chrono>
 #include <EffekseerForDXLib.h>
-#include "../../../Utility/AsoUtility.h"
-#include "../../../Object/Common/Transform.h"
-#include "../../../Object/Collider/ColliderModel.h"
-#include "../../../Manager/InputManager.h"
-#include "../../../Manager/SceneManager.h"
-#include "../../../Manager/ResourceManager.h"
-#include "../../../Manager/Resource.h"
-#include"../../../Manager/SoundManager.h"
-#include "../../../Application.h"
+#include "../../Utility/AsoUtility.h"
+#include "../../Object/Common/Transform.h"
+#include "../../Object/Collider/ColliderModel.h"
+#include "../../Manager/InputManager.h"
+#include "../../Manager/SceneManager.h"
+#include "../../Manager/ResourceManager.h"
+#include "../../Manager/Resource.h"
+#include"../../Manager/SoundManager.h"
+#include "../../Application.h"
 #include "Stage.h"
-#include "../../../Manager/ServiceLocator.h"
+#include "../../Manager/ServiceLocator.h"
 
-Stage::Stage(const StageBase::StageData& data)
+Stage::Stage(void)
 	:
-	StageBase()
+	ActorBase()
 {
-	data_ = data;
 }
 
 Stage::~Stage(void)
@@ -42,8 +41,6 @@ void Stage::Release(void)
 {
 	//// ÉTÉEÉìÉhí‚é~
 	ServiceLocator::GetSound().StopEvent(SOUND_ID::BGM_STAGE1);
-	MV1DeleteModel(transform_.modelId);
-
 }
 
 void Stage::InitLoad(void)
@@ -88,9 +85,12 @@ void Stage::InitCollider(void)
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::MODEL), colModel);
 }
 
+void Stage::InitAnimation(void)
+{
+}
+
 void Stage::InitPost(void)
 {
 	ServiceLocator::GetSound().PlayEvent(SOUND_ID::BGM_STAGE1, true);
 
 }
-

@@ -4,7 +4,7 @@
 #include "../Manager/InputManager.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/Camera.h"
-#include "../Object/Actor/Stage/Stage.h"
+#include "../Object/Actor/Stage.h"
 #include "../Object/Collider/ColliderModel.h"
 #include "DebugScene.h"
 
@@ -22,13 +22,13 @@ DebugScene::~DebugScene(void)
 void DebugScene::Init(void)
 {
 
-	//// ステージ生成
-	//stage_ = new Stage();
-	//stage_->Init();
+	// ステージ生成
+	stage_ = new Stage();
+	stage_->Init();
 
-	//// カメラの追従設定
-	//Camera* camera = sceMng_.GetCamera();
-	//camera->ChangeMode(Camera::MODE::FREE);
+	// カメラの追従設定
+	Camera* camera = sceMng_.GetCamera();
+	camera->ChangeMode(Camera::MODE::FREE);
 
 }
 

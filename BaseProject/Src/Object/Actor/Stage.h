@@ -1,14 +1,21 @@
 #pragma once
 #include <DxLib.h>
 #include <string>
-#include "./StageBase.h"
+#include "ActorBase.h"
 
-class Stage : public StageBase
+class Stage : public ActorBase
 {
 public:
 
+	// 衝突判定種別
+	enum class COLLIDER_TYPE
+	{
+		MODEL = 0,
+		MAX,
+	};
+
 	// コンストラクタ
-	Stage(const StageBase::StageData& data);
+	Stage(void);
 	// デストラクタ
 	~Stage(void) override;
 
@@ -31,12 +38,15 @@ protected:
 	void InitCollider(void) override;
 
 	// アニメーションの初期化
-	void InitAnimation(void) override {};
+	void InitAnimation(void) override;
 
 	// 初期化後の個別処理
 	void InitPost(void) override;
 
 private:
+
+	// ステージ
+	Transform mainStage_;
 
 	// ステージの座標
 	static constexpr VECTOR MAIN_STAGE_POS = { 0.0f, -100.0f, 0.0f };
@@ -53,8 +63,6 @@ private:
 	const std::vector<std::string> TARGET_FRAME_NAMES = {
 	"Ground","Cube",
 	};
-
-
 
 };
 

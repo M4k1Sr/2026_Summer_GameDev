@@ -9,7 +9,6 @@ class Player;
 class BossManager;
 class ObjectManager;
 class AttackManager;
-class StageManager;
 class Ranking;
 class ItemManager;
 class SoundManager;
@@ -82,9 +81,6 @@ private:
 
 	// 攻撃処
 	AttackManager* attackMng_;
-
-	// ステージ
-	StageManager* stageMng_;
 
 	//ランキング
 	Ranking* rank_;

@@ -87,7 +87,7 @@
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
-    <ClCompile Include="Src\Object\Actor\Stage\Stage.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
@@ -95,9 +95,6 @@
     <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
-    <ClCompile Include="Src\Object\Actor\Stage\StageBase.cpp" />
-    <ClCompile Include="Src\Object\Actor\Stage\StageManager.cpp" />
-    <ClCompile Include="Src\Object\Actor\Stage\Stage2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
@@ -171,7 +168,7 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
-    <ClInclude Include="Src\Object\Actor\Stage\Stage.h" />
+    <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
@@ -179,9 +176,6 @@
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
-    <ClInclude Include="Src\Object\Actor\Stage\StageBase.h" />
-    <ClInclude Include="Src\Object\Actor\Stage\StageManager.h" />
-    <ClInclude Include="Src\Object\Actor\Stage\Stage2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

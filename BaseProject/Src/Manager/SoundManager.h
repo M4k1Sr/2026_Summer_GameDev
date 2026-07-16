@@ -16,6 +16,7 @@ enum class BANK_ID {
     COMMON,
     STAGE_1,
     STAGE_2,
+    STAGE_3,
     BOSS
 };
 
@@ -24,6 +25,7 @@ enum class SOUND_ID {
     BGM_TITLE,
     BGM_STAGE1,
     BGM_STAGE2,
+    BGM_STAGE3,
     BGM_GAMEOVER,
     BGM_GAMECLEAR,
     SE_MOVE,

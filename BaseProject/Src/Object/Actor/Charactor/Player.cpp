@@ -87,12 +87,15 @@ int Player::GetCurrentCnt(void) const
 	return currentCnt_;
 }
 
-bool Player::IsClear(void) 
+void Player::IsClear(void) 
 {
-
-	if (CheckHitKey(KEY_INPUT_C)) {
-		return true;
-	}
+	//if (transform_.pos.x > 5060 &&
+	//	transform_.pos.x < 5235 &&
+	//	transform_.pos.z > -790 &&
+	//	transform_.pos.z < -490)
+	//{
+	//	isClear_ = true;
+	//}
 }
 
 bool Player::GetClearFlag(void) const

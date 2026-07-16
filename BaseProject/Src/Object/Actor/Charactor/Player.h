@@ -43,7 +43,7 @@ public:
 	//ƒQ[ƒ€ƒNƒŠƒA”»’è
 	bool GetClearFlag(void) const;
 
-	bool IsClear(void);
+	void IsClear(void);
 
 protected:
 
