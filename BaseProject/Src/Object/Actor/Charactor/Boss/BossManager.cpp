@@ -139,10 +139,10 @@ BossBase* BossManager::Create(const BossBase::BossData& data)
 	switch (data.type)
 	{
 	case BossBase::BOSS_TYPE::PIXIE:
-		boss = new BossPixie(data);
+ 		//boss = new BossPixie(data);
 		break;
 	case BossBase::BOSS_TYPE::GOBLIN:
-		//boss = new BossGoblin(data);
+		boss = new BossGoblin(data);
 		break;
 
 		// ëùÇ¶ÇÈñàÇ…í«â¡

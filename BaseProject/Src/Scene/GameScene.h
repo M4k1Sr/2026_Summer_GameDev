@@ -9,6 +9,7 @@ class Player;
 class BossManager;
 class ObjectManager;
 class AttackManager;
+class ItemManager;
 class Ranking;
 class ItemManager;
 class SoundManager;
@@ -47,11 +48,8 @@ public:
 	//スコア受け渡し
 	int GetScore(void);
 
-	//アイテムドロップ判定
-	void ItemDrop(void);
-
 	//ゲームクリア判定
-		void IsClear(void);
+	void IsClear(void);
 
 private:
 
@@ -79,8 +77,11 @@ private:
 	// オブジェクト
 	ObjectManager* objMng_;
 
-	// 攻撃処
+	// 攻撃処理
 	AttackManager* attackMng_;
+
+	// アイテム
+	ItemManager* itemMng_;
 
 	//ランキング
 	Ranking* rank_;
@@ -90,12 +91,6 @@ private:
 	
 	//時計のUI
 	Clock* clockUI_;
-
-	//Item
-	ItemManager* itemMng_;
-	
-	// 時計
-	Transform clock_;
 	
 	bool isPause_;
 	int pauseImg_;

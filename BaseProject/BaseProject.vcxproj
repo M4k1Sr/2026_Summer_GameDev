@@ -19,8 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
-    <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
@@ -33,8 +34,6 @@
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
-    <ClCompile Include="Src\Manager\ItemManager.cpp" />
-    <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
@@ -97,13 +96,15 @@
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\HitBox.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Manager\ServiceLocator.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Vignette.h" />
@@ -113,8 +114,6 @@
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
-    <ClInclude Include="Src\Manager\ItemManager.h" />
-    <ClInclude Include="Src\Object\Actor\Item\Item.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackBase.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackManager.h" />
     <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h" />
@@ -311,6 +310,7 @@
       <AdditionalIncludeDirectories>C:\DxLib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

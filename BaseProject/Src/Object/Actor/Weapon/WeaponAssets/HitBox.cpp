@@ -1,6 +1,6 @@
 #include "HitBox.h"
-#include "../../../Manager/ResourceManager.h"
-#include "../../../Utility/MatrixUtility.h"
+#include "../../../../Manager/ResourceManager.h"
+#include "../../../../Utility/MatrixUtility.h"
 
 // コンストラクタ
 HitBox::HitBox(const WeaponData& data)
@@ -17,7 +17,7 @@ HitBox::HitBox(const WeaponData& data)
 void HitBox::Load(void)
 {
 	// こん棒リソースロード
-	if (data_.kind == WeaponKind::Club) {
+	if (data_.weapon == WeaponKind::CLUB) {
 		data_.modelId_ = resMng_.LoadModelDuplicate(ResourceManager::SRC::CLUB);
 	}
 }

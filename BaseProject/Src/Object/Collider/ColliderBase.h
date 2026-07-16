@@ -37,6 +37,8 @@ public:
 		CAGE,
 		OBJECT_BOSS_CAGE,
 
+		// ƒAƒCƒeƒ€
+		BOMB,
 
 		CAMERA,
 	};

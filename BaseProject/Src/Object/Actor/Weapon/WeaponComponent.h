@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "WeaponData.h"
 class WeaponComponent
 {
 public:
@@ -30,5 +31,6 @@ public:
 protected:
 
 	WeaponComponent* parent_ = nullptr;
+
 
 };
