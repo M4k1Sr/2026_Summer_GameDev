@@ -93,12 +93,9 @@
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
-<<<<<<< HEAD
-=======
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
->>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Renderer\ModelShader\ModelMaterial.h" />
@@ -180,13 +177,10 @@
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
-<<<<<<< HEAD
-=======
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
->>>>>>> m4k
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

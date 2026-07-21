@@ -114,17 +114,8 @@ private:
 	
 	//ŽžŒv‚ÌUI
 	Clock* clockUI_;
-<<<<<<< HEAD
-
-	//Item
-	ItemManager* itemMng_;
 
 
-	
-	// ŽžŒv
-	Transform clock_;
-=======
->>>>>>> m4k
 	
 	bool isPause_;
 	int pauseImg_;

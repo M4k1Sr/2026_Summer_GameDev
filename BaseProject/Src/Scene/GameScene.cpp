@@ -22,11 +22,8 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
-<<<<<<< HEAD
 #include "../Renderer/UIRenderer/Manager/UIManager.h"
 #include "GameScene.h"
-=======
->>>>>>> m4k
 #include "../Application.h"
 #include<EffekseerForDXLib.h>
 #include "../Manager/ServiceLocator.h"
@@ -382,8 +379,6 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
-<<<<<<< HEAD
-=======
 	//デバッグ用ゴール
 	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
 		0.5f,                           // 中心X
@@ -399,7 +394,6 @@ void GameScene::Draw(void)
 	// 攻撃描画
 	attackMng_->Draw();
 
->>>>>>> m4k
 	// プレイヤー描画
 	player_->Draw();	
 

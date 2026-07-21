@@ -19,14 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\ModelShader\ModelMaterial.cpp" />
     <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
-=======
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
->>>>>>> m4k
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
