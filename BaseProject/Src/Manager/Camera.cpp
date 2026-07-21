@@ -64,6 +64,12 @@ void Camera::SetBeforeDraw(void)
 	case Camera::MODE::BOSS_FRONT:
 		SetBeforeDrawBossFront();
 		break;
+	case Camera::MODE::PLAYER_FRONT:
+		SetBeforeDrawPlayerFront();
+		break;
+	case MODE::START_DEMO:
+		SetBeforeDrawStartDemo();
+		break;
 	}
 
 	// カメラの設定(位置と注視点による制御)
@@ -80,9 +86,9 @@ void Camera::SetBeforeDraw(void)
 
 void Camera::DrawDebug(void)
 {
-	DrawFormatString(200, 80, GetColor(0, 0, 0),
-		"camera Pos: x=%f, y=%f, z=%f",
-		transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	//DrawFormatString(200, 80, GetColor(0, 0, 0),
+	//	"camera Pos: x=%f, y=%f, z=%f",
+	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
 }
 
 void Camera::Release(void)
@@ -425,6 +431,53 @@ void Camera::SetBeforeDrawBossFront(void)
 	// 4. カメラのクォータニオンを更新（注視点への向きを計算）
 	VECTOR lookDir = VNorm(VSub(targetPos_, transform_.pos));
 	transform_.quaRot = Quaternion::LookRotation(lookDir, AsoUtility::AXIS_Y);
+}
+
+void Camera::SetBeforeDrawPlayerFront(void)
+{
+	if (lockOnTargetTransform_ == nullptr)
+	{
+		SetBeforeDrawFollow();
+		return;
+	}
+
+	// 1. プレイヤーの位置と回転（向き）を取得
+	VECTOR playerPos = lockOnTargetTransform_->pos;
+
+	// プレイヤーの持っているクォータニオンから前方向（ローカルZ軸）を取得
+	VECTOR playerForward = lockOnTargetTransform_->quaRot.GetForward();
+
+	// Y軸の傾きを無視して水平方向の前方に補正したい場合は以下（必要に応じて）
+	playerForward.y = 0.0f;
+	playerForward = VNorm(playerForward);
+
+	// 2. カメラの位置を決定（プレイヤーの正面から少し離れて、やや見下ろす高さに設定）
+	float distance = 1200.0f; // プレイヤーからカメラまでの距離（好みに合わせて調整）
+	float height = 250.0f;   // カメラの高さ（好みに合わせて調整）
+
+	// プレイヤーの位置から、プレイヤーの前方向へ進んだ位置に高さを加える
+	transform_.pos = VAdd(playerPos, VScale(playerForward, distance));
+	transform_.pos.y += height;
+
+	// 3. 注視点をプレイヤー（あるいはプレイヤーの少し高めの位置）に設定
+	targetPos_ = playerPos;
+	targetPos_.y += 50.0f; // プレイヤーの中心あたりを映すように少し上にずらす
+
+	// 4. カメラのクォータニオンを更新（注視点への向きを計算）
+	VECTOR lookDir = VNorm(VSub(targetPos_, transform_.pos));
+	transform_.quaRot = Quaternion::LookRotation(lookDir, AsoUtility::AXIS_Y);
+}
+
+void Camera::SetBeforeDrawStartDemo(void)
+{
+	SetBeforeDrawPlayerFront();
+
+	startDemoTimer_++;
+
+	if (startDemoTimer_ >= START_DEMO_TIME)
+	{
+		ChangeMode(MODE::SCROLL_FOLLOW);
+	}
 }
 
 void Camera::Collision(void)

@@ -54,10 +54,10 @@ void GameOvereScene::Init(void)
 	animationController_->Play(0, true);
 
 	//ゲームオーバー画像
-	gameOverImg_ = resMng_.Load(ResourceManager::SRC::GameOverImg).handleId_;
+	//gameOverImg_ = resMng_.Load(ResourceManager::SRC::GameOverImg).handleId_;
 
 	//背景画像
-	backImg_ = LoadGraph("Data/Image/GameOverSceneBack2.png");
+	//backImg_ = LoadGraph("Data/Image/GameOverSceneBack2.png");
 
 	// アニメーションコントローラー
 	animationController_ =
@@ -132,28 +132,32 @@ void GameOvereScene::Draw(void)
 	
 	//プレイヤー
 	MV1DrawModel(player_.modelId);
-	//背景画像
-	DrawRotaGraph(Application::SCREEN_SIZE_X/2, 
-		Application::SCREEN_SIZE_Y/2,
-		2, 0, backImg_, true);
+	////背景画像
+	//DrawRotaGraph(Application::SCREEN_SIZE_X/2, 
+	//	Application::SCREEN_SIZE_Y/2,
+	//	2, 0, backImg_, true);
 
-	//プレイヤー
-	MV1DrawModel(playerId_);
+	////プレイヤー
+	//MV1DrawModel(playerId_);
+
+	// ポストエフェクト描画
+	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
 	// ポストエフェクト描画
 	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
 
-	// ポストエフェクト描画
-	effect_->Draw(SceneManager::GetInstance().GetMainScreen());
+
+	//フォントのサイズ
+	SetFontSize(64);
 
 	////ゲームシーンへ遷移
-	//DrawFormatString(670, 270, 0xffffff, "リトライ : SPACE");
+	DrawFormatString(670, 270, 0xffffff, "リトライ : SPACE");
 
 	////タイトルへ戻る
-	//DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
+	DrawFormatString(670, 670, 0xffffff, "タイトル : 0");
 
 	//タイトル画像
-	DrawGraph(IMG_OVER_POS_X, IMG_OVER_POS_Y, gameOverImg_, true);
+	//DrawGraph(IMG_OVER_POS_X, IMG_OVER_POS_Y, gameOverImg_, true);
 
 
 	//ポーズ画d

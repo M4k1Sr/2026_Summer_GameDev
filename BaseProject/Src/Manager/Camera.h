@@ -48,6 +48,8 @@ public:
 		SCROLL_FOLLOW,
 		LOCK_ON, 
 		BOSS_FRONT,
+		PLAYER_FRONT,
+		START_DEMO,
 	};
 
 	// 衝突判定種別
@@ -189,8 +191,16 @@ private:
 	void SetBeforeDrawScrollFollow(void);
 	void SetBeforeDrawLockOn(void);
 	void SetBeforeDrawBossFront(void);
-
+	void SetBeforeDrawPlayerFront(void);
+	void SetBeforeDrawStartDemo(void);
 	// 衝突判定
 	void Collision(void);
+
+	//ゲームが始まってからの時間
+	int startDemoTimer_;
+
+	//この時間経過したらカメラを戻す(5秒）
+	static constexpr int START_DEMO_TIME = 300;
+
 
 };

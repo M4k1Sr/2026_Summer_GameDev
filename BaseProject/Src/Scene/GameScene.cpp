@@ -202,13 +202,16 @@ void GameScene::Update(void)
 		isPause_ = !isPause_;	// ポーズのON/OFFの切り替え
 	}
 
+	//ゲーム開始時プレイヤーの方向にカメラを向ける
+	
+
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
-		// ★ 1. まずフェードの更新を行う
+		//  1. まずフェードの更新を行う
 		bool isFadeFinished = UpdateFade();
 
-		// ★ 2. フェードアウト完了時のステージ切り替え処理
+		//  2. フェードアウト完了時のステージ切り替え処理
 		if (isFadeFinished && fadeAlpha_ == 255)
 		{
 			if (stageState_ == StageState::STAGE_1)
@@ -248,7 +251,7 @@ void GameScene::Update(void)
 			}
 		}
 
-		// ★ 3. 【重要】フェード中（NONE 以外）は、以下のゲーム本編の更新をスキップする！
+		// 3. 【重要】フェード中（NONE 以外）は、以下のゲーム本編の更新をスキップする！
 		if (fadeState_ != FadeState::NONE)
 		{
 			// フェード中（暗転・明転アニメーション中）はゲームを動かさない
@@ -359,7 +362,7 @@ void GameScene::Draw(void)
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
-		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
+		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 	case GameScene::StageState::STAGE_2:
 		stage_->Draw();
@@ -388,10 +391,10 @@ void GameScene::Draw(void)
 		VECTOR pos = bossGimmick->GetTransform().pos;
 
 		DrawBillboard3D(
-			VAdd(pos, VGet(0.0f, 250.0f, 0.0f)), // ボタンの少し上
+			VAdd(pos, VGet(0.0f, 170.0f, 0.0f)), // ボタンの少し上
 			0.5f,
 			0.5f,
-			150.0f,
+			300.0f,
 			0.0f,
 			ButtonUIImg_,
 			TRUE);
