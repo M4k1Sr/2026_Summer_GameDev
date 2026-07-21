@@ -50,7 +50,6 @@
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
-    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
@@ -76,6 +75,10 @@
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage1.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage2.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -128,7 +131,6 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
-    <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
@@ -157,6 +159,10 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\Stage1.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\Stage2.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

@@ -90,13 +90,10 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
-	//if (transform_.pos.x > 5060 &&
-	//	transform_.pos.x < 5235 &&
-	//	transform_.pos.z > -790 &&
-	//	transform_.pos.z < -490)
-	//{
-	//	isClear_ = true;
-	//}
+	if (CheckHitKey(KEY_INPUT_C))
+	{
+		isClear_ = true;
+	}
 }
 
 bool Player::GetClearFlag(void) const

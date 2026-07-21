@@ -3,6 +3,7 @@
 #include "../Framework.h"
 class IronBall;
 class Clock;
+class StageBase;
 class Stage;
 class SkyDome;
 class Player;
@@ -53,6 +54,13 @@ public:
 
 private:
 
+	// ステージ状態
+	enum class StageState
+	{
+		STAGE_1,
+		STAGE_2,
+	};
+
 	// エフェクトマネージャ
 	EffectManager* effectMng_;
 
@@ -62,8 +70,22 @@ private:
 	// UIマネージャ
 	UIManager* UIMng_;
 
+	// フェード状態
+	enum class FadeState
+	{
+		NONE,       // フェードしていない（通常時）
+		FADE_OUT,   // 暗転中
+		FADE_IN     // 明転中
+	};
+
+	// ステージ状態
+	StageState stageState_;
+
+	//フェード管理
+	FadeState fadeState_ = FadeState::NONE;
+
 	// ステージ
-	Stage* stage_;
+	StageBase* stage_;
 
 	// スカイドーム
 	SkyDome* skyDome_;
@@ -97,6 +119,9 @@ private:
 	bool isSousa_;
 	int sousaImg_;
 	int mosPosX_, mosPosY_;
+	int currentStageNum_;
+	int fadeAlpha_;
+	int fadeSpeed_;
 
 	static constexpr int DRAWBOX_SX = 400;
 	static constexpr int DRAWBOX_EX = 1600;
@@ -116,5 +141,10 @@ private:
 
 	//デバッグ用ゴール画像
 	int goalImg_;
+
+	// フェード処理用のプライベート関数群
+	void StartFade(FadeState state, int speed = 5); // フェード開始トリガー
+	bool UpdateFade(void);                          // フェードの更新（完了したらtrueを返す）
+	void DrawFade(void) const;
 
 };

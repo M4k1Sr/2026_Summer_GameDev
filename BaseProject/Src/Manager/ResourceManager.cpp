@@ -57,6 +57,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/Stage.mv1");
 	resourcesMap_.emplace(SRC::FIRST_STAGE, res);
 
+	// ステージモデル
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/Stage2.mv1");
+	resourcesMap_.emplace(SRC::SECOND_STAGE, res);
+
 	// スカイドームモデル
 	res = new RES(RES_T::MODEL, PATH_MDL + "SkyDome/Skydome.mv1");
 	resourcesMap_.emplace(SRC::SKY_DOME, res);
