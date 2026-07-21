@@ -22,16 +22,13 @@ public:
 	// 武器コンポーネントが複合かを判定
 	bool IsWeaponComposite() const override { return true; }
 
+protected:
+
+
 private:
 
-	static constexpr float MAX_FALL_SPEED = -10.0f;
 
 	std::vector<std::unique_ptr<WeaponComponent>> children_;
-
-	// ジャンプ量
-	VECTOR jumpPow_;
-
-	void Gravity(void);
 
 
 };

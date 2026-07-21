@@ -50,6 +50,10 @@ public:
 
 	void IsClear(void);
 
+	// プレイヤーの向き
+	VECTOR GetDir(void) const { return dir_; }
+	void SetDir(VECTOR dir) { dir_ = dir; }
+
 protected:
 
 	// リソースロード
@@ -111,9 +115,12 @@ private:
 	// ボム座標
 	VECTOR bombPos_;
 
+	// 向き
+	VECTOR dir_;
+
 	// プレイヤー座標
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
-	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
+	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;

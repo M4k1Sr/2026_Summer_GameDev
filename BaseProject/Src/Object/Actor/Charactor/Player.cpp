@@ -187,7 +187,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
-	isGravity_ = true;
+	isGravity_ = false;
 
 	// 移動操作
 	ProcessMove();
@@ -230,17 +230,17 @@ void Player::ProcessMove(void)
 
 	// 移動量・方向・ダッシュフラグの初期化
 	movePow_ = AsoUtility::VECTOR_ZERO;
-	VECTOR dir = AsoUtility::VECTOR_ZERO;
+	dir_ = AsoUtility::VECTOR_ZERO;
 	isDash_ = false;
 	isSlowWalk_ = false;
 
 	// 入力処理(キーボード / パッド)
 	if (GetJoypadNum() == 0)
 	{
-		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
-		if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
-		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
-		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
+		if (ins.IsNew(KEY_INPUT_W)) { dir_ = AsoUtility::DIR_F; }
+		if (ins.IsNew(KEY_INPUT_A)) { dir_ = AsoUtility::DIR_L; }
+		if (ins.IsNew(KEY_INPUT_S)) { dir_ = AsoUtility::DIR_B; }
+		if (ins.IsNew(KEY_INPUT_D)) { dir_ = AsoUtility::DIR_R; }
 
 
 		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash_ = true; }
@@ -248,14 +248,14 @@ void Player::ProcessMove(void)
 	else
 	{
 		InputManager::JOYPAD_IN_STATE padState = ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
-		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
+		dir_ = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
 		isDash_ = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 	}
 
 	// 移動量・ベクトルの計算
 
-	float inputLength = VSize(dir);
+	float inputLength = VSize(dir_);
 	bool hasInput = inputLength > 0.0f;
 
 	if (hasInput)
@@ -265,7 +265,7 @@ void Player::ProcessMove(void)
 
 		// カメラのY軸回転に合わせて移動方向を計算
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
-		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
+		moveDir_ = Quaternion::PosAxis(cameraRot, dir_);
 		movePow_ = VScale(moveDir_, moveSpeed_);
 
 		if (inputLength > 1.0f)

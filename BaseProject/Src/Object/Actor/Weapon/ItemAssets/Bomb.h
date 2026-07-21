@@ -3,6 +3,7 @@
 #include "../../../Common/Transform.h"
 #include "../../../../Utility/AsoUtility.h"
 class ResourceManager;
+class Player;
 
 class Bomb : public WeaponComponent
 {
@@ -47,9 +48,13 @@ public:
 	void SetAct(bool isAct) { isAct_ = isAct; }
 	void SetActTimer(float timer) { actTimer_ = timer; }
 
+	void Gravity(void);
 
 
 private:
+
+	// 重力制限
+	static constexpr float MAX_FALL_SPEED = -10.0f;
 
 	// シングルトン参照
 	ResourceManager& resMng_;
@@ -60,6 +65,13 @@ private:
 	// 武器が所持しているデータ
 	WeaponData data_;
 
+	// 発射量
+	VECTOR jumpPow_;
+	
+	// 重力量
+	VECTOR gravity_;
+	float gravityPow_;
+
 	// 攻撃判定
 	bool isThrow_;		// 投擲したか
 	bool isHit_;			// ヒットしたか
@@ -67,6 +79,7 @@ private:
 	bool isAct_;			// ヒットボックスが出ているか
 	float actTimer_;		// ヒットボックスが出ている時間
 
-	void Throw(void);
+	void Throw(void);		// 投擲処理
+	void ThrowSet(void);	// 投げる位置をセット
 };
 
