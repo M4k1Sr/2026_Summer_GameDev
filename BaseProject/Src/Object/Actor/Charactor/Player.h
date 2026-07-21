@@ -1,6 +1,7 @@
 #pragma once
 #include "./CharactorBase.h"
 class ObjectManager;
+class ItemManager;
 
 class Player : public CharactorBase
 {
@@ -14,6 +15,8 @@ public:
 		FAST_RUN,
 		JUMP,
 		PUSH,
+		HOLD,
+		THROW,
 		MAX,
 	};
 
@@ -30,8 +33,10 @@ public:
 	void Release(void) override;
 
 	// オブジェクトマネージャーのセット
-	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
+	void SetObjectManager(ObjectManager* objMng) { objMng_ = objMng; }
 
+	// アイテムマネージャーのセット
+	void SetItemManager(ItemManager* itemMng) { itemMng_ = itemMng; }
 	//プレイヤー座標のゲッター
 	bool GetDeadFlag(void);
 
@@ -72,9 +77,8 @@ protected:
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
 
-
 	// 視野描画
-	virtual void DrawViewRange(void) override;
+	virtual void DrawViewRange(void) override {};
 
 protected:
 	
@@ -86,6 +90,9 @@ private:
 
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
+
+	// アイテムマネージャー
+	ItemManager* itemMng_;
 
 	// ギミック動作カウンタ
 	float gimmickCnt_;
@@ -107,7 +114,11 @@ private:
 	// 汗UIの座標
 	VECTOR sweatPos_;
 
+	// ボム座標
+	VECTOR bombPos_;
+
 	// プレイヤー座標
+<<<<<<< HEAD
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 9800.0f, 50.0f, -1220.0f };
@@ -117,6 +128,10 @@ private:
 	// static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 30000.0f, 0.0f, -3750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, 50.0f, -800.0f };
+=======
+	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
+>>>>>>> m4k
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
@@ -169,6 +184,13 @@ private:
 	// ダッシュスタミナ
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
 
+	// 爆弾モデルの大きさ
+	static constexpr float BOMB_SCL = 1.0f;
+
+	// 爆弾のローカル座標・回転
+	static constexpr VECTOR BOMB_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
+	static constexpr VECTOR BOMB_LOCAL_ROT = { 90.0f * DX_PI_F / 180.0f,90.0f * DX_PI_F / 180.0f,0.0f };
+
 	// UI初期化
 	void InitUI(void);
 
@@ -178,7 +200,7 @@ private:
 
 	// ギミック操作
 	void ProcessPush(void);
-	void ProcessCarry(void);
+	void ProcessThrow(void);
 
 	// 衝突判定
 	void CollisionReserve(void) override;

@@ -137,7 +137,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		object = new ObjectBox(data);
+		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);
@@ -149,19 +149,19 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		object = new ObjectTarai(data);
 		break;
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
-		object = new NdlFloor(data);
+		//object = new NdlFloor(data);
 		break;
 	case ObjectBase::TYPE::BURNER:
-		object = new Burner(data);
+		//object = new Burner(data);
 		break;
 	case ObjectBase::TYPE::CONVEYER:
-		object = new ObjectConveyer(data);
+		//object = new ObjectConveyer(data);
 		break;
 	case ObjectBase::TYPE::BREAK_CAGE:
 		object = new ObjectCage(data);
 		break;
 	case ObjectBase::TYPE::BOSS_CAGE:
-		object = new ObjectBossCage(data);
+		//object = new ObjectBossCage(data);
 		break;
 
 		// ëùÇ¶ÇÈñàÇ…í«â¡
@@ -198,6 +198,7 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 			}
 		}
 	}
+
 	return nullptr;
 }
 

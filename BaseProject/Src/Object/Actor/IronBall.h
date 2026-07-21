@@ -51,8 +51,13 @@ private:
 	// 横の間隔
 	static constexpr float INTERVAL_X = 300.0f;
 
+<<<<<<< HEAD
 	// 鉄球の座標
 	static constexpr VECTOR IRON_BALL_POS = { 1650.0f, 400.0f, -1200.0f };
+=======
+	// 鉄球の座標f
+	static constexpr VECTOR IRON_BALL_POS = { 700.0f, 400.0f, 1630.0f };
+>>>>>>> m4k
 
 	// 鎖の先端の座標
 	static constexpr float CHAIN_END_POS = 160.0f;

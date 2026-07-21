@@ -1,64 +1,8 @@
 #pragma once
-#include "./WeaponComponent.h"
-#include "../../Common/Transform.h"
-#include "../../../Utility/AsoUtility.h"
+#include "../WeaponComponent.h"
+#include "../../../Common/Transform.h"
+#include "../../../../Utility/AsoUtility.h"
 class ResourceManager;
-
-// 武器のタイプ列挙型
-enum class WeaponType
-{
-	NONE,
-
-	// 片手剣タイプ
-	ONE_HAND,
-
-	// 両手剣タイプ
-	TWO_HAND,
-
-	// 槍タイプ
-	SPEAR,
-
-	MAX
-	
-};
-
-// 武器列挙型
-enum class WeaponKind
-{
-	None,
-
-	// 片手
-	Club,
-	Sword,
-
-	// 両手
-	GreatSword,
-	Axe,
-
-	// 槍
-	Lance,
-
-	Max
-};
-
-// 武器データ構造体
-struct WeaponData {
-	WeaponType type = WeaponType::NONE;	// 武器タイプ
-	WeaponKind kind = WeaponKind::None;	// 武器種別
-	float damage = 0.0f;				// 武器のダメージ量
-	float criticalRate = 0.05f;			// 武器のクリティカル率(5%でクリティカル)
-	float criticalBonus = 1.5f;			// クリティカルダメージ倍率
-	VECTOR pos;	// 武器の座標
-	VECTOR rot;	// 武器の回転
-	VECTOR scl;	// 武器のスケール
-	VECTOR localPos = { 0.0f, 0.0f, 0.0f };   // 握り位置の補正
-	VECTOR localRot = { 0.0f, 0.0f, 0.0f };   // 向きの補正
-	int modelId_ = -1;	// モデルID
-	int ownerModelId = -1;     // 持ち主(Boss)のモデルID
-	int ownerFrameIndex = -1;  // 追従するフレーム番号
-	// 武器データをゲーム別に追加
-};
-
 
 class HitBox : public WeaponComponent
 {
