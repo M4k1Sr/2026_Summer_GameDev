@@ -4,8 +4,6 @@
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
-    <ClCompile Include="Src\Manager\ItemManager.cpp" />
-    <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
@@ -113,19 +111,21 @@
 =======
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
-    <ClCompile Include="Src\Object\Actor\Weapon\HitBox.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
+<<<<<<< HEAD
 >>>>>>> origin/m4k
 =======
 >>>>>>> origin/m4k
 >>>>>>> baf809ff4fd63a3b4eed0f08813994179bda4edc
+=======
+    <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+>>>>>>> origin/m4k
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
-    <ClInclude Include="Src\Manager\ItemManager.h" />
-    <ClInclude Include="Src\Object\Actor\Item\Item.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackBase.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackManager.h" />
     <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h" />
@@ -209,6 +209,15 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
+>>>>>>> origin/m4k
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

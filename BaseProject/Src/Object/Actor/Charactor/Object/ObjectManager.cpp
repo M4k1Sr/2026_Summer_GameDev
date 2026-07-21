@@ -148,17 +148,24 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		object = new ObjectTarai(data);
 		break;
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
-		object = new NdlFloor(data);
+		//object = new NdlFloor(data);
 		break;
 	case ObjectBase::TYPE::BURNER:
-		object = new Burner(data);
+		//object = new Burner(data);
 		break;
 	case ObjectBase::TYPE::CONVEYER:
-		object = new ObjectConveyer(data);
+		//object = new ObjectConveyer(data);
 		break;
 	case ObjectBase::TYPE::BREAK_CAGE:
 		object = new ObjectCage(data);
 		break;
+<<<<<<< HEAD
+=======
+	case ObjectBase::TYPE::BOSS_CAGE:
+		//object = new ObjectBossCage(data);
+		break;
+
+>>>>>>> origin/m4k
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
 
@@ -193,6 +200,7 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 			}
 		}
 	}
+
 	return nullptr;
 }
 

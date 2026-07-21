@@ -1,6 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include <vector>
+#include "GameScene.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/InputManager.h"
 #include "../Manager/ResourceManager.h"
@@ -21,10 +22,12 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
+<<<<<<< HEAD
 #include "../Renderer/UIRenderer/Manager/UIManager.h"
 #include "GameScene.h"
+=======
+>>>>>>> origin/m4k
 #include "../Application.h"
-#include"../Manager/ItemManager.h"
 #include<EffekseerForDXLib.h>
 #include "../Manager/ServiceLocator.h"
 
@@ -76,6 +79,7 @@ void GameScene::Init(void)
 	player_ = new Player();
 	player_->Init();
 	player_->SetObjectManager(objMng_);
+	player_->SetItemManager(itemMng_);
 
 	//ステージの状態ごとの初期化
 	switch (stageState_)
@@ -129,7 +133,6 @@ void GameScene::Init(void)
 
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
-
 
 	// 攻撃処理初期化
 	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
@@ -376,6 +379,24 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
+<<<<<<< HEAD
+=======
+	//デバッグ用ゴール
+	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
+		0.5f,                           // 中心X
+		0.5f,                           // 中心Y
+		400.0f,                         // サイズ
+		0.0f,                           // 回転
+		goalImg_,                       // 画像
+		TRUE);
+    
+	//ボス描画
+	bossMng_->Draw();
+
+	// 攻撃描画
+	attackMng_->Draw();
+
+>>>>>>> origin/m4k
 	// プレイヤー描画
 	player_->Draw();	
 
@@ -426,7 +447,6 @@ void GameScene::Release(void)
 	objMng_->Release();
 	delete objMng_;
 
-
 	// プレイヤー解放
 	player_->Release();
 	delete player_;
@@ -439,14 +459,8 @@ void GameScene::Release(void)
 	attackMng_->Release();
 	delete attackMng_;
 
-	
-
 	ironBall_->Release();
 	delete ironBall_;
-
-	//// ItemManager解放
-	//itemMng_->Release();
-	//delete itemMng_;
 
 	DeleteGraph(pauseImg_);
 
@@ -584,14 +598,6 @@ void GameScene::Score(void)
 int GameScene::GetScore(void)
 {
 	return clearTime_;
-}
-
-void GameScene::ItemDrop(void)
-{
-	//一旦プレイヤーの場所にアイテムを出す
-	//itemMng_->SpawnItem(ItemManager::ITEM_TYPE::KEY, player_->GetTransform().pos);
-
-
 }
 
 void GameScene::IsClear(void)

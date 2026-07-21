@@ -34,6 +34,8 @@ public:
 		CONVEYER,
 		CAGE,
 
+		// ƒAƒCƒeƒ€
+		BOMB,
 
 		CAMERA,
 	};
