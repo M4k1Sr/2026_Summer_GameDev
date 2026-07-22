@@ -13,6 +13,7 @@
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossCage.h"
+#include "../../../Object/Actor/Charactor/Object/NdlFloor.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
@@ -25,6 +26,7 @@
 #include "Player.h"	
 #include "../../../Manager/ServiceLocator.h"
 #include "../Weapon/ItemAssets/Bomb.h"
+#include "../../Common/Health.h"
 
 Player::Player(void)
 	:
@@ -74,7 +76,7 @@ bool Player::GetDeadFlag(void)
 }
 
 //プレイヤーの死亡判定
-void Player::playerDead(void)
+void Player::PlayerDead(void)
 {
 	//プレイヤーのy座標が-1000.0f以下になったら死亡とする
 	if(transform_.pos.y < -1000.0f)
@@ -181,6 +183,12 @@ void Player::InitAnimation(void)
 void Player::InitPost(void)
 {
 	InitUI();
+
+	health_ = new Health();
+	health_->Init(5);
+
+	nowHp_ = health_->GetHp();
+
 }
 
 void Player::UpdateProcess(void)
@@ -196,8 +204,8 @@ void Player::UpdateProcess(void)
 	// ジャンプ処理
 	ProcessJump();
 
-	//プレイや死亡判定
-	playerDead();
+	//プレイヤー死亡判定
+	PlayerDead();
 
 	//プレイヤーのクリア判定
 	IsClear();
@@ -207,6 +215,16 @@ void Player::UpdateProcess(void)
 
 	// アイテム投擲処理
 	ProcessThrow();
+
+	// ダメージ処理
+	TakeToDamage();
+
+	// ダメージ判定
+	if (toDamage_){
+		health_->TakeDamage(1);
+
+		return;
+	}
 
 }
 
@@ -566,3 +584,24 @@ void Player::CollisionReserve(void)
 		}
 	}
 }
+
+void Player::TakeToDamage(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// プレイヤーがギミック針床付近にいる場合
+	if (objMng_ != nullptr)
+	{
+
+		// 針床ギミック
+		NdlFloor* ndlFloor = objMng_->GetNdl(transform_.pos);
+
+		if (ndlFloor != nullptr) {
+			if (ndlFloor->GetStart()) {
+				toDamage_ = true;
+			}
+		}
+	}
+
+}
+

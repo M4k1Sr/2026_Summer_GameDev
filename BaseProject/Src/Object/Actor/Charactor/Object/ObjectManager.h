@@ -58,6 +58,9 @@ public:
 	// ボス檻を落とす用に追加
 	ObjectBossCage* GetBossCage(const VECTOR& pos);
 
+	// 針床判定用に追加
+	NdlFloor* GetNdl(const VECTOR& pos);
+
 	// タライが落下中か
 	bool IsTaraiFalling(void);
 

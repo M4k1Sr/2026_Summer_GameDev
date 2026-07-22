@@ -318,6 +318,38 @@ ObjectBossCage* ObjectManager::GetBossCage(const VECTOR& pos)
 
 }
 
+NdlFloor* ObjectManager::GetNdl(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
+		if (auto ndl = dynamic_cast<NdlFloor*>(object))
+		{
+			ndl->GetStart();
+
+			VECTOR ndlPos = ndl->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = ndlPos.x - pos.x;
+			float dz = ndlPos.z - pos.z;
+			float distXZ = sqrtf(dx * dx + dz * dz);
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 130.0f)
+			{
+				return ndl;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
 bool ObjectManager::IsTaraiFalling(void)
 {
 	for (auto& object : objects_)

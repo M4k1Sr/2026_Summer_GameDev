@@ -60,7 +60,8 @@ protected:
 
 private:
 
-	// HP管理
+	// 
+	// 管理
 	Health* health_;
 
 	// ダメージカウンタ

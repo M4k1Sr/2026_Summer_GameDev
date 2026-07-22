@@ -2,6 +2,7 @@
 #include "./CharactorBase.h"
 class ObjectManager;
 class ItemManager;
+class Health;
 
 class Player : public CharactorBase
 {
@@ -40,7 +41,7 @@ public:
 	//プレイヤー座標のゲッター
 	bool GetDeadFlag(void);
 
-	void playerDead(void);
+	void PlayerDead(void);
 
 	// ダメージカウンタゲッター
 	int GetCurrentCnt(void) const;
@@ -97,6 +98,9 @@ private:
 
 	// ボムデータ
 	WeaponData bombData_;
+
+	// HP管理
+	Health* health_;
 
 	// ギミック動作カウンタ
 	float gimmickCnt_;
@@ -199,6 +203,9 @@ private:
 
 	// 衝突判定
 	void CollisionReserve(void) override;
+
+	// ダメージを受ける
+	void TakeToDamage(void);
 
 	//ゲームクリア判定用のフラグ
 	bool isClear_;
