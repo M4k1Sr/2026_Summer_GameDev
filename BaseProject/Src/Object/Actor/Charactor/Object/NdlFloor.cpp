@@ -174,7 +174,7 @@ void NdlFloor::UpdateStop(void)
 {
 	moveTimer_++;
 
-	if (moveTimer_ >500)
+	if (moveTimer_ > 500)
 	{
 		if (animationController_->IsEnd()) {
 			if (state_ == STATE::CLOSE) {

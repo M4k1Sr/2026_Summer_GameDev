@@ -148,7 +148,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		object = new ObjectBox(data);
+		//object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);
@@ -160,7 +160,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		object = new ObjectTarai(data);
 		break;
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
-		//object = new NdlFloor(data);
+		object = new NdlFloor(data);
 		break;
 	case ObjectBase::TYPE::BURNER:
 		//object = new Burner(data);
