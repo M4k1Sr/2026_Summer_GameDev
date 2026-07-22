@@ -1,11 +1,8 @@
 #pragma once
-#include <memory>
 #include <DxLib.h>
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
 class AnimationController;
-class ModelRenderer;
-class ModelMaterial;
 
 class ObjectCage : public ObjectBase
 {
@@ -51,7 +48,7 @@ private:
 	static constexpr float SCALE = 0.4f;
 
 	// モデルのローカル回転
-	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
+	static constexpr VECTOR ROT = { 0.0f, 90.0f * (DX_PI_F / 180.0f), 0.0f};
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
@@ -73,18 +70,6 @@ private:
 
 	// 移動速度
 	VECTOR velocity_;
-
-	//モデルレンダラー
-	std::unique_ptr<ModelRenderer> renderer_;
-
-	//モデルマテリアル
-	std::unique_ptr<ModelMaterial> material_;
-
-	float timer_ = 0.0f;    // 経過時間
-	float duration_ = 180.0f; // 消えるまでのフレーム数（例: 2秒なら120）
-
-	//存在判定
-	bool isAlive_;
 
 	// タイマー
 	float moveTimer_;

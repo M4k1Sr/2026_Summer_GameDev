@@ -1,13 +1,9 @@
 #pragma once
 #include <DxLib.h>
-#include <memory>
 #include "BossBase.h"
 #include "../CharactorBase.h"
 class Health;
 class AnimationController;
-class ModelMaterial;
-class ModelRenderer;
-
 
 class BossPixie : public BossBase
 {
@@ -36,8 +32,7 @@ public:
 	// デストラクタ
 	virtual ~BossPixie();
 
-	void Draw(void) override;
-
+	
 
 protected:
 
@@ -65,14 +60,9 @@ protected:
 
 private:
 
-	// HP管理
+	// 
+	// 管理
 	Health* health_;
-
-	//モデルレンダラー
-	std::unique_ptr<ModelRenderer> renderer_;
-
-	//モデルマテリアル
-	std::unique_ptr<ModelMaterial> material_;
 
 	// ダメージカウンタ
 	int lastDamageCnt_ = 0;
@@ -85,12 +75,6 @@ private:
 	
 	// 攻撃タイマー
 	float attackTimer_;
-
-	// 経過時間
-	float timer_ = 0.0f;
-
-	// 消えるまでのフレーム数（例: 2秒なら120）
-	float duration_ = 300.0f;
 
 	// モデルの大きさ
 	static constexpr float SCALE = 3.0f;
@@ -146,7 +130,7 @@ private:
 	void UpdateEnd(void);
 
 	// フェーズ管理
-	void Phase(void);
+	void Phase(void) override;
 
 	
 	//死亡処理

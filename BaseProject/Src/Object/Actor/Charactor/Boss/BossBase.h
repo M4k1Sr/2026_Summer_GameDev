@@ -6,6 +6,7 @@ class Player;
 class ObjectManager;
 class StrategyAttack;
 class AttackManager;
+
 class BossBase : public CharactorBase
 {
 public:
@@ -14,7 +15,7 @@ public:
 	enum class BOSS_TYPE
 	{
 		PIXIE,
-		ORC,
+		GOBLIN,
 		DIABLO,
 	};
 
@@ -31,12 +32,33 @@ public:
 	// 状態
 	enum class STATE
 	{
+		// 通常状態
 		IDLE,
-		SURPRISE,
+		YAWN,
+		IDLE_JUMP,
+		SIT,
+
+		// 移動状態
+		WALK,
+		RUN,
+		PATROL,
+
+		// 発見状態
+		SURPRISE,	// 発見
+		THREAT,		// 威嚇
+
+		// 攻撃状態
 		CHARGE,
+		ATTACK,
 		THROW,
 		ATTACK_WAVE,
 		ATTACK_END,
+
+		// 攻撃後感情
+		CHEER,
+		ANGRY,
+
+		// ダメージ状態
 		DAMAGE,
 		DOWN,
 		END,
@@ -48,13 +70,14 @@ public:
 		int id;
 		BossBase::BOSS_TYPE type;
 		VECTOR defaultPos;
+		int stageType;
 	};
 
 	// 視野角
 	static constexpr float VIEW_ANGLE = 80.0f;
 
 	// 視野の広さ
-	static constexpr float VIEW_RANGE = 2500.0f;
+	static constexpr float VIEW_RANGE = 2000.0f;
 
 	// コンストラクタ
 	BossBase(const BossBase::BossData& data);
@@ -85,6 +108,9 @@ public:
 	// ボスが死亡しているかどうかを取得する関数を追加
 	bool GetIsDead(void) const { return phaseStep_ == PHASE_STEP::PHASE_DEAD; }
 
+	// ステージタイプ
+	int GetStageType(void) const { return data_.stageType; }
+
 protected:
 
 	Player* player_;
@@ -107,6 +133,9 @@ protected:
 
 	// 状態管理(更新ステップ)
 	std::function<void(void)> stateUpdate_;
+
+	// ボスデータ
+	BossData data_;
 
 	// リソースロード
 	void InitLoad(void) override {}
@@ -135,6 +164,9 @@ protected:
 	// 経過時間
 	float stateTimer_;
 
+	// IDLEタイマー
+	float idleTimer_;
+
 	// ボス通知フラグ
 	bool isUnaware_;	// 未発見:true	発見後:false
 	bool isAlerted_;	// 発見時:true
@@ -143,6 +175,9 @@ protected:
 
 	// 攻撃フラグ
 	bool isAttack_;
+
+	// 攻撃可能フラグ
+	bool doAttack_;
 
 	// 状態
 	STATE state_;

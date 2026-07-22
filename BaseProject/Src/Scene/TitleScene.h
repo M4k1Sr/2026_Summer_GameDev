@@ -52,7 +52,7 @@ private:
 	//タイトル檻
 	Transform cage_;
 
-	// ニンゲンz
+	// ニンゲン
 	Transform player_;
 
 	//壁画像
@@ -119,8 +119,5 @@ private:
 
 	//ポーズ選択肢
 	PauseSelect pauseSelect_;
-
-	//タイトルをゆらすための角度
-	float angle;
 
 };

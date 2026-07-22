@@ -1,6 +1,8 @@
 #pragma once
 #include "./CharactorBase.h"
 class ObjectManager;
+class ItemManager;
+class Health;
 
 class Player : public CharactorBase
 {
@@ -14,6 +16,8 @@ public:
 		FAST_RUN,
 		JUMP,
 		PUSH,
+		HOLD,
+		THROW,
 		MAX,
 	};
 
@@ -30,12 +34,14 @@ public:
 	void Release(void) override;
 
 	// オブジェクトマネージャーのセット
-	void SetObjectManager(ObjectManager* manager) { objMng_ = manager; }
+	void SetObjectManager(ObjectManager* objMng) { objMng_ = objMng; }
 
+	// アイテムマネージャーのセット
+	void SetItemManager(ItemManager* itemMng) { itemMng_ = itemMng; }
 	//プレイヤー座標のゲッター
 	bool GetDeadFlag(void);
 
-	void playerDead(void);
+	void PlayerDead(void);
 
 	// ダメージカウンタゲッター
 	int GetCurrentCnt(void) const;
@@ -45,8 +51,9 @@ public:
 
 	void IsClear(void);
 
-	//ダッシュ判定
-	bool GetDashFlag(void) const { return isDash_; }
+	// プレイヤーの向き
+	VECTOR GetDir(void) const { return dir_; }
+	void SetDir(VECTOR dir) { dir_ = dir; }
 
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
@@ -72,9 +79,8 @@ protected:
 	virtual void UpdateProcess(void) override;
 	virtual void UpdateProcessPost(void) override;
 
-
 	// 視野描画
-	virtual void DrawViewRange(void) override;
+	virtual void DrawViewRange(void) override {};
 
 protected:
 	
@@ -86,6 +92,15 @@ private:
 
 	// オブジェクトマネージャー
 	ObjectManager* objMng_ = nullptr;
+
+	// アイテムマネージャー
+	ItemManager* itemMng_;
+
+	// ボムデータ
+	WeaponData bombData_;
+
+	// HP管理
+	Health* health_;
 
 	// ギミック動作カウンタ
 	float gimmickCnt_;
@@ -107,13 +122,15 @@ private:
 	// 汗UIの座標
 	VECTOR sweatPos_;
 
-	// プレイヤー座標
-	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 9800.0f, 50.0f, -1220.0f };
-	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
+	// ボム座標
+	VECTOR bombPos_;
+
+	// 向き
+	VECTOR dir_;
+
+	//// プレイヤー座標
+	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
@@ -166,6 +183,13 @@ private:
 	// ダッシュスタミナ
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
 
+	// 爆弾モデルの大きさ
+	static constexpr float BOMB_SCL = 2.0f;
+
+	// 爆弾のローカル座標・回転
+	static constexpr VECTOR BOMB_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
+	static constexpr VECTOR BOMB_LOCAL_ROT = { 90.0f * DX_PI_F / 180.0f,90.0f * DX_PI_F / 180.0f,0.0f };
+
 	// UI初期化
 	void InitUI(void);
 
@@ -175,18 +199,18 @@ private:
 
 	// ギミック操作
 	void ProcessPush(void);
-	void ProcessCarry(void);
+	void ProcessThrow(void);
 
 	// 衝突判定
 	void CollisionReserve(void) override;
+
+	// ダメージを受ける
+	void TakeToDamage(void);
 
 	//ゲームクリア判定用のフラグ
 	bool isClear_;
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;
-
-
-
 };
 

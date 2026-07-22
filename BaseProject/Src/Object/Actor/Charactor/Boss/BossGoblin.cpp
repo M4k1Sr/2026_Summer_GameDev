@@ -22,7 +22,7 @@
 #include "../Object/ObjectBossGimmick.h"
 #include "../Object/ObjectManager.h"
 #include "../../../../Manager/ServiceLocator.h"
-#include "../../Weapon/HitBox.h"
+#include "../../Weapon/WeaponAssets/HitBox.h"
 
 
 BossGoblin::BossGoblin(const BossBase::BossData& data)
@@ -52,10 +52,10 @@ void BossGoblin::InitLoad(void)
 
 	WeaponData clubData = {
 		.type = WeaponType::ONE_HAND,
-		.kind = WeaponKind::Club,
+		.weapon = WeaponKind::CLUB,
 		.damage = 10.0f,
-		.criticalRate = 0.05f,
-		.criticalBonus = 1.5f,
+		//.criticalRate = 0.05f,
+		//.criticalBonus = 1.5f,
 		.pos = MV1GetFramePosition(transform_.modelId, 43),
 		.rot = AsoUtility::VECTOR_ZERO,
 		.scl = {WEAPON_SCL, WEAPON_SCL, WEAPON_SCL},
@@ -76,7 +76,7 @@ void BossGoblin::InitTransform(void)
 
 	// モデルの大きさ、回転、座標の初期化
 	transform_.scl = VGet(SCALE, SCALE, SCALE);
-	transform_.quaRot = Quaternion::Euler({ 0.0f, -90.0f * DX_PI_F / 180.0f, 0.0f });
+	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();
 }
@@ -109,7 +109,7 @@ void BossGoblin::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE_JUMP), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/IdleJump.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::SIT), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Sit.mv1");
 
-	animationController_->Add(static_cast<int>(ANIM_TYPE::WALK), 20.0f, Application::PATH_MODEL + "Enemy/Goblin/Walk.mv1");
+	animationController_->Add(static_cast<int>(ANIM_TYPE::WALK), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Walk.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::RUN), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Run.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::PATROL), 30.0f, Application::PATH_MODEL + "Enemy/Goblin/Patrol.mv1");
 	
@@ -184,15 +184,11 @@ void BossGoblin::InitPost(void)
 	// 初期フェーズ
 	phaseStep_ = (PHASE_STEP::PHASE_IDLE);
 
-	health_ = new Health();
-	health_->Init(1000);
 }
 
 void BossGoblin::UpdateProcess(void)
 {
-	if (isUnaware_) {
-		transform_.quaRot = Quaternion::Euler({ 0.0f, -105.0f * DX_PI_F / 180.0f, 0.0f });
-	}
+	isGravity_ = true;
 
 	if (!isDead_)
 	{
@@ -262,12 +258,12 @@ void BossGoblin::DrawViewRange(void)
 	VECTOR pos3 = VAdd(pos0, VScale(right, VIEW_RANGE));
 
 	// 視野の描画
-	pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
-	DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
-	DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
-	DrawLine3D(pos0, pos1, 0xffff00);
-	DrawLine3D(pos0, pos2, 0xffff00);
-	DrawLine3D(pos0, pos3, 0xffff00);
+	//pos0.y = pos1.y = pos2.y = pos3.y = 10.0f;	// 地面の少し上
+	//DrawTriangle3D(pos0, pos2, pos1, 0x0000ff, true);
+	//DrawTriangle3D(pos0, pos1, pos3, 0x0000ff, true);
+	//DrawLine3D(pos0, pos1, 0xffff00);
+	//DrawLine3D(pos0, pos2, 0xffff00);
+	//DrawLine3D(pos0, pos3, 0xffff00);
 
 	std::string phaseName = "";
 

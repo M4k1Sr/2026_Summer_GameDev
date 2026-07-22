@@ -23,23 +23,23 @@ ObjectTile::ObjectTile(const ObjectBase::ObjectData& data)
 	// ★CSVの数値(moveType)によって、最初に動き出す方向を4パターンに分岐
 	if (data.moveType == 0)
 	{
-		// パターン0：右から左へ（最初は左へ進む）
-		myMoveDir_ = AsoUtility::DIR_F;
+		// パターン0：右から左へ
+		myMoveDir_ = AsoUtility::DIR_R;
 	}
 	else if (data.moveType == 1)
 	{
-		// パターン1：左から右へ（最初は右へ進む）
-		myMoveDir_ = AsoUtility::DIR_B;
+		// パターン1：左から右へ
+		myMoveDir_ = AsoUtility::DIR_L;
 	}
 	else if (data.moveType == 2)
 	{
 		// パターン2：手前から奥へ
-		myMoveDir_ = AsoUtility::DIR_R;
+		myMoveDir_ = AsoUtility::DIR_F;
 	}
 	else if (data.moveType == 3)
 	{
 		// パターン3：奥から手前へ
-		myMoveDir_ = AsoUtility::DIR_L;
+		myMoveDir_ = AsoUtility::DIR_B;
 	}
 	transform_.pos = data.defaultPos;
 }
@@ -107,16 +107,8 @@ void ObjectTile::InitLoad(void)
 void ObjectTile::InitTransform(void)
 {
 
-//	// モデルの大きさ、回転、座標の初期化
-//	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);
-//	transform_.scl = VGet(SCALE, SCALE * 2, SCALE);
-
-
+	// モデルの大きさ、回転、座標の初期化
 	transform_.scl = VGet(SCALE, SCALE * 2, SCALE);
-//	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);
-
-	transform_.scl = VGet(SCALE, SCALE * 2, SCALE);
-//	transform_.scl = VGet(SCALE * 3, SCALE * 100, SCALE * 1.5);｡
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();

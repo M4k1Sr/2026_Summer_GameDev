@@ -21,6 +21,7 @@ ObjectTarai::ObjectTarai(const ObjectBase::ObjectData& data)
 	prevPos_(AsoUtility::VECTOR_ZERO),
 	velocity_(AsoUtility::VECTOR_ZERO)
 {
+
 }
 
 ObjectTarai::~ObjectTarai(void)
@@ -163,7 +164,7 @@ void ObjectTarai::UpdateProcessPost(void)
 	{
 		jumpPow_ = AsoUtility::VECTOR_ZERO;
 		movePow_ = AsoUtility::VECTOR_ZERO;
-		transform_.pos = INIT_POS;	
+		transform_.pos = INIT_POS;
 	}
 
 	ObjectBase::UpdateProcessPost();

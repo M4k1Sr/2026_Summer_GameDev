@@ -84,8 +84,8 @@ void IronBall::InitLoad(void)
 		// リソースマネージャーからモデルを複製
 		data.transform.SetModel(resMng_.LoadModelDuplicate(ResourceManager::SRC::IRON_BALL));
 
-		// Z軸方向に間隔をずらして初期座標を設定
-		data.basePos = VAdd(IRON_BALL_POS, VGet(0.0f, 0.0f, -(i * INTERVAL_X)));
+		// X軸方向に間隔をずらして初期座標を設定
+		data.basePos = VAdd(IRON_BALL_POS, VGet(-(i * INTERVAL_X), 0.0f, 0.0f));
 		data.transform.scl = IRON_BALL_SCALE;
 
 		// 登場のタイミングを0.5秒ずつずらす
@@ -144,7 +144,7 @@ void IronBall::Pendulum(InstanceData& data)
 	float currentDegree = sinf(time * 2.0f) * maxDegree;
 
 	// 回転クォータニオンの計算と適用
-	data.transform.quaRot = Quaternion::Euler(0.0f, 0.0f, AsoUtility::Deg2RadF(currentDegree));
+	data.transform.quaRot = Quaternion::Euler(AsoUtility::Deg2RadF(currentDegree),0.0f, 0.0f);
 
 	// 支点を中心とした位置の再計算
 	VECTOR pivot = VAdd(data.basePos, VGet(0.0f, CHAIN_END_POS, 0.0f));

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "./WeaponComponent.h"
+
 class WeaponComposite : public WeaponComponent
 {
 public:
@@ -21,9 +22,14 @@ public:
 	// 武器コンポーネントが複合かを判定
 	bool IsWeaponComposite() const override { return true; }
 
+protected:
+
+
 private:
 
+
 	std::vector<std::unique_ptr<WeaponComponent>> children_;
+
 
 };
 

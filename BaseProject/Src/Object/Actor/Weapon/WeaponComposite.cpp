@@ -1,5 +1,8 @@
 #include "WeaponComposite.h"
 #include <algorithm>
+#include "../../../Utility/AsoUtility.h"
+#include "../../../Application.h"
+#include "../../../Manager/SceneManager.h"
 
 void WeaponComposite::Load(void)
 {
@@ -53,3 +56,4 @@ void WeaponComposite::Remove(WeaponComponent* component)
 		children_.erase(it, children_.end());
 	}
 }
+

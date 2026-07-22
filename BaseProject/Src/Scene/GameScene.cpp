@@ -1,15 +1,16 @@
 #pragma once
 #include <DxLib.h>
 #include <vector>
+#include "GameScene.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/InputManager.h"
 #include "../Manager/ResourceManager.h"
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
-#include "../Object/Actor/StageBase.h"
-#include "../Object/Actor/Stage1.h"
-#include "../Object/Actor/Stage2.h"
+#include "../Object/Actor/Stage/StageBase.h"
+#include "../Object/Actor/Stage/Stage1.h"
+#include "../Object/Actor/Stage/Stage2.h"
 #include "../Object/Actor/Stage.h"
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
@@ -21,10 +22,7 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
-#include "../Renderer/UIRenderer/Manager/UIManager.h"
-#include "GameScene.h"
 #include "../Application.h"
-#include"../Manager/ItemManager.h"
 #include<EffekseerForDXLib.h>
 #include "../Manager/ServiceLocator.h"
 
@@ -49,13 +47,7 @@ GameScene::GameScene(void)
 	isEnd_(false),
 	isClear_(false),
 	goalImg_(-1),
-	ButtonUIImg_(-1),
 	clearTime_(0),
-	currentStageNum_(1),
-	fadeAlpha_(0),
-	fadeSpeed_(5),
-	fadeState_(FadeState::NONE),
-	stageState_(StageState::STAGE_1),
 	SceneBase()
 {
 }
@@ -68,14 +60,20 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
+
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
+
+	//ステージ状態によってステージ番号を伝える
+	int currentStageNum = (stageState_ == StageState::STAGE_1) ? 1 : 2;
+	objMng_->SetCurrentStage(currentStageNum);
 
 	// プレイヤー初期化
 	player_ = new Player();
 	player_->Init();
 	player_->SetObjectManager(objMng_);
+	player_->SetItemManager(itemMng_);
 
 	//ステージの状態ごとの初期化
 	switch (stageState_)
@@ -101,9 +99,10 @@ void GameScene::Init(void)
 
 	rank_->CreateIns();
 
+
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
-		stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
+		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
 
 	// スカイドーム初期化
@@ -130,7 +129,6 @@ void GameScene::Init(void)
 	// ステージモデルのコライダーをオブジェクトに登録
 	objMng_->AddHitCollider(stageCollider);
 
-
 	// 攻撃処理初期化
 	attackMng_ = new AttackManager(objMng_);	// オブジェクトマネージャを渡して攻撃オブジェクト生成
 	attackMng_->Init();
@@ -139,6 +137,9 @@ void GameScene::Init(void)
 	bossMng_ = new BossManager();
 	bossMng_->SetPlayer(player_);
 	bossMng_->Init();
+
+	//ステージ状態によってステージ番号を伝える
+	bossMng_->SetCurrentStage(currentStageNum);
 
 	// ボス(全て)のコライダーを登録
 	const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
@@ -174,8 +175,6 @@ void GameScene::Init(void)
 			}
 		}
 	}
-
-	ButtonUIImg_ = resMng_.Load(ResourceManager::SRC::PUSH_BUTTON).handleId_;
 
 	// UIモデル
 	clockUI_ = new Clock();
@@ -213,36 +212,52 @@ void GameScene::Update(void)
 		{
 			if (stageState_ == StageState::STAGE_1)
 			{
-				// 1. 旧ステージモデルを安全に削除
+				// 1. 旧ステージモデルを削除
 				if (stage_ != nullptr)
 				{
 					stage_->Release();
 					delete stage_;
-					stage_ = nullptr; // deleteした後はnullptrを入れておくのが安全
+					stage_ = nullptr;
 				}
 
-				// 2. 新ステージの生成
+				// 2. 新ステージ（Stage2）の生成
 				stage_ = new Stage2();
 				stage_->Init();
 
-				// 3. プレイヤーの移動
+				// 3. プレイヤーの位置調整
 				VECTOR stage2StartPos = VGet(-800.0f, 0.0f, 700.0f);
 				player_->SetPosition(stage2StartPos);
 
-				// 4. コライダーの再登録
-				const ColliderBase* stageCollider = stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
+				// 4. ObjectManager のステージ番号を 2 に更新
+				objMng_->SetCurrentStage(2);
 
-				// ※ 本来はここで player_ や camera の「古いコライダー登録」をクリアする関数を呼ぶのがベストです
+				// ★5. プレイヤーとカメラの古いコライダー判定を一旦全消去！
+				player_->ClearHitCollider();
+				Camera* camera = SceneManager::GetInstance().GetCamera();
+				// camera->ClearHitCollider(); // もしCameraにもあれば呼ぶ
+
+				// ★6. 新しいステージ（Stage2）の地形コライダーを登録
+				const ColliderBase* stageCollider = stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
 				player_->AddHitCollider(stageCollider);
 				objMng_->AddHitCollider(stageCollider);
 				bossMng_->AddHitCollider(stageCollider);
-
-				// カメラのコライダーを更新
-				Camera* camera = SceneManager::GetInstance().GetCamera();
-				// camera->ClearHitCollider(); // もし古いコライダーを外す関数があれば呼ぶ
 				camera->AddHitCollider(stageCollider);
 
-				// ステージ状態をSTAGE_2にして、フェードインを開始する
+				// ★7. ステージ2のオブジェクト（および全ステージ共通の0）のコライダーだけをプレイヤーに再登録！
+				for (const auto& obj : objMng_->GetObjects())
+				{
+					if (obj->GetStageType() == 0 || obj->GetStageType() == 2)
+					{
+						const ColliderBase* objectCollider =
+							obj->GetOwnCollider(static_cast<int>(ObjectBase::COLLIDER_TYPE::MODEL));
+						if (objectCollider != nullptr)
+						{
+							player_->AddHitCollider(objectCollider);
+						}
+					}
+				}
+
+				// ステージ状態更新＆フェードイン開始
 				stageState_ = StageState::STAGE_2;
 				StartFade(FadeState::FADE_IN, 5);
 			}
@@ -257,15 +272,14 @@ void GameScene::Update(void)
 
 		// --- ここから下は通常時（FadeState::NONE）のみ実行される ---
 		//エフェクト
-	//	EffectManager::GetInstance().Update();
+		// EffectManager::GetInstance().Update();
 
 		//クリアタイム加算
 		clearTime_++;
 		SetMouseDispFlag(false);
 
-		skyDome_->Update();
+		//skyDome_->Update();
 		player_->Update();
-		//ui_->Update();
 
 		switch (stageState_)
 		{
@@ -278,51 +292,70 @@ void GameScene::Update(void)
 			break;
 		case GameScene::StageState::STAGE_2:
 			stage_->Update();
+			objMng_->Update();
+			bossMng_->Update();
 			break;
-		}
+		}		
 
 		clockUI_->Update();
 
 		// ===========================================================
-		//  ボスの生存状態と距離によるカメラモードの自動切り替え
+		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
 		// ===========================================================
 		Camera* camera = SceneManager::GetInstance().GetCamera();
 
-		// 1. まず最優先で「タライが落ちてきているか」をチェック
+		// ★1. まず最優先で「タライが落ちてきているか」をチェック
 		if (objMng_->IsTaraiFalling() && bossMng_->GetBosses().size() > 0 && bossMng_->GetBosses().front() != nullptr)
 		{
-			// 最初のボス、または一番近いボスをターゲットに設定
+			// タライ使用時は最初のボス（または適切なボス）にフロントカメラを向ける
 			BossBase* boss = bossMng_->GetBosses().front();
 			camera->SetLockOnTarget(&boss->GetTransform());
 			camera->ChangeMode(Camera::MODE::BOSS_FRONT);
 		}
 		else
 		{
-			// 2. タライが落ちていない場合は、これまでのロックオン判定を行う
+			// ★2. ステージ別に追従するボスを切り替える
 			const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
-			BossBase* nearestBoss = nullptr;
-			float minDistanceSq = 2500.0f * 2500.0f;
-			VECTOR playerPos = player_->GetTransform().pos;
+			BossBase* targetBoss = nullptr;
 
-			for (auto* boss : bosses)
+			if (stageState_ == StageState::STAGE_1)
 			{
-				if (boss == nullptr) continue;
-				if (boss->GetIsDead()) continue;
-				float distSq = VSquareSize(VSub(boss->GetTransform().pos, playerPos));
-				if (distSq < minDistanceSq)
+				// STAGE 1: 1体目のボス (要素 0) を追従
+				if (bosses.size() >= 1 && bosses[0] != nullptr && !bosses[0]->GetIsDead())
 				{
-					minDistanceSq = distSq;
-					nearestBoss = boss;
+					// 一定距離以内かチェック（必要に応じて）
+					float distSq = VSquareSize(VSub(bosses[0]->GetTransform().pos, player_->GetTransform().pos));
+					if (distSq < 2500.0f * 2500.0f)
+					{
+						targetBoss = bosses[0];
+					}
+				}
+			}
+			else if (stageState_ == StageState::STAGE_2)
+			{
+				// STAGE 2: 2体目のボス (要素 1) を追従
+				// （もしボスが1体ずつしか追加されない仕組みなら bosses.back() や bosses[0] に適宜変更）
+				size_t bossIdx = (bosses.size() >= 2) ? 1 : 0;
+
+				if (bosses.size() > bossIdx && bosses[bossIdx] != nullptr && !bosses[bossIdx]->GetIsDead())
+				{
+					float distSq = VSquareSize(VSub(bosses[bossIdx]->GetTransform().pos, player_->GetTransform().pos));
+					if (distSq < 2500.0f * 2500.0f)
+					{
+						targetBoss = bosses[bossIdx];
+					}
 				}
 			}
 
-			if (nearestBoss != nullptr)
+			// ターゲットが存在する場合はロックオン、いない場合は通常追従
+			if (targetBoss != nullptr)
 			{
-				camera->SetLockOnTarget(&nearestBoss->GetTransform());
+				camera->SetLockOnTarget(&targetBoss->GetTransform());
 				camera->ChangeMode(Camera::MODE::LOCK_ON);
 			}
 			else
 			{
+				camera->SetLockOnTarget(nullptr);
 				camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
 			}
 		}
@@ -359,44 +392,17 @@ void GameScene::Draw(void)
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
-		DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 	case GameScene::StageState::STAGE_2:
 		stage_->Draw();
+		objMng_->Draw();
+		bossMng_->Draw();
 		break;
 	}
-	
-	if(bossMng_->IsBossDead()){
-		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
-	}
-
-	// 鉄球描画
-	ironBall_->Draw();
-	
-	// オブジェクト描画
-	objMng_->Draw();
 
 	// プレイヤー描画
-	player_->Draw();	
+	player_->Draw();
 
-	// プレイヤーが近くにあるボスギミックを取得
-	ObjectBossGimmick* bossGimmick =
-		objMng_->GetBossGimmick(player_->GetTransform().pos);
-
-	if (bossGimmick != nullptr)
-	{
-		VECTOR pos = bossGimmick->GetTransform().pos;
-
-		DrawBillboard3D(
-			VAdd(pos, VGet(0.0f, 250.0f, 0.0f)), // ボタンの少し上
-			0.5f,
-			0.5f,
-			150.0f,
-			0.0f,
-			ButtonUIImg_,
-			TRUE);
-	}
-    
 	// UI描画
 	clockUI_->Draw();
 
@@ -407,7 +413,7 @@ void GameScene::Draw(void)
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->DrawDebug();
 
-	//ポーズ画面
+	////ポーズ画面
 	IsPause();
 	
 }
@@ -426,7 +432,6 @@ void GameScene::Release(void)
 	objMng_->Release();
 	delete objMng_;
 
-
 	// プレイヤー解放
 	player_->Release();
 	delete player_;
@@ -439,14 +444,8 @@ void GameScene::Release(void)
 	attackMng_->Release();
 	delete attackMng_;
 
-	
-
 	ironBall_->Release();
 	delete ironBall_;
-
-	//// ItemManager解放
-	//itemMng_->Release();
-	//delete itemMng_;
 
 	DeleteGraph(pauseImg_);
 
@@ -586,37 +585,29 @@ int GameScene::GetScore(void)
 	return clearTime_;
 }
 
-void GameScene::ItemDrop(void)
-{
-	//一旦プレイヤーの場所にアイテムを出す
-	//itemMng_->SpawnItem(ItemManager::ITEM_TYPE::KEY, player_->GetTransform().pos);
-
-
-}
-
 void GameScene::IsClear(void)
 {
 
-	//isClear_ = player_->GetClearFlag();
+	isClear_ = player_->GetClearFlag();
 
 	//if(isClear_ && bossMng_->IsBossDead())
-	//switch (stageState_)
-	//{
-	//case StageState::STAGE_1:
-	//	isClear_ = player_->GetClearFlag();
-	//	if (isClear_)
-	//	{
-	//		isClear_ = false;
-	//		GameData::GetInstance().clearTime = clearTime_;
+	switch (stageState_)
+	{
+	case StageState::STAGE_1:
+		isClear_ = player_->GetClearFlag();
+		if (isClear_)
+		{
+			isClear_ = false;
+			GameData::GetInstance().clearTime = clearTime_;
 
-	//		// ★ ステージ切り替えのためのフェードアウトを開始
-	//		StartFade(FadeState::FADE_OUT, 5);
-	//	}
-	//	break;
+			// ステージ切り替えのためのフェードアウトを開始
+			StartFade(FadeState::FADE_OUT, 5);
+		}
+		break;
 
-	//case StageState::STAGE_2:
-	//	break;
-	//}
+	case StageState::STAGE_2:
+		break;
+	}
 
 }
 

@@ -80,7 +80,7 @@ void Camera::SetBeforeDraw(void)
 
 void Camera::DrawDebug(void)
 {
-	//DrawFormatString(200, 80, GetColor(0, 0, 0),
+	//DrawFormatString(200, 70, GetColor(0, 0, 0),
 	//	"camera Pos: x=%f, y=%f, z=%f",
 	//	transform_.pos.x, transform_.pos.y, transform_.pos.z);
 }
@@ -263,7 +263,7 @@ void Camera::ProcessMove(void)
 		VECTOR direction = VNorm(transform_.quaRot.PosAxis(moveDir));
 
 		// 移動させたい方向に移動量をかける(=移動量)
-		VECTOR movePow = VScale(direction, 20.0f);  // ← SPEEDの定数が必要
+		VECTOR movePow = VScale(direction, 5.0f);  // ← SPEEDの定数が必要
 
 		// カメラ位置も注視点も移動させる
 		transform_.pos = VAdd(transform_.pos, movePow);  // ← pos_ → transform_.pos

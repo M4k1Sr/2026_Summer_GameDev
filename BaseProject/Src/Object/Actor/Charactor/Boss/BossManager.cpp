@@ -5,8 +5,7 @@
 #include "../../Charactor/Player.h"
 #include "./BossBase.h"
 #include "./BossPixie.h"
-#include "./BossOrc.h"
-#include "./BossDiablo.h"
+#include "./BossGoblin.h"
 #include "./BossManager.h"
 #include "../../../../Manager/SoundManager.h"
 #include "../../../../Manager/ServiceLocator.h"
@@ -33,7 +32,11 @@ void BossManager::Update(void)
 	// 更新
 	for (auto& boss : bosses_)
 	{
-		boss->Update();
+		// ステージ一致により更新
+		if (boss->GetStageType() == 0 || boss->GetStageType() == currentStageType_)
+		{
+			boss->Update();
+		}
 	}
 }
 
@@ -42,9 +45,12 @@ void BossManager::Draw(void)
 	// 描画
 	for (auto& boss : bosses_)
 	{
-		boss->Draw();
+		// ステージ一致により更新
+		if (boss->GetStageType() == 0 || boss->GetStageType() == currentStageType_)
+		{
+			boss->Draw();
+		}
 	}
-
 }
 
 void BossManager::Release(void)
@@ -125,6 +131,9 @@ void BossManager::LoadCsvData(void)
 		stof(strSplit[idx++])
 		};
 
+		// ステージ別で動かすオブジェクトを設定
+		data.stageType = stoi(strSplit[idx++]);
+
 		// オブジェクト生成
 		Create(data);
 
@@ -133,32 +142,22 @@ void BossManager::LoadCsvData(void)
 	ifs.close();
 }
 
-bool BossManager::IsBossDead(void)
-{
-	for (auto boss : bosses_)
-	{
-		if (boss != nullptr && boss->GetIsDead())
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
 BossBase* BossManager::Create(const BossBase::BossData& data)
 {
 	BossBase* boss = nullptr;
 
 	switch (data.type)
 	{
-	case BossBase::BOSS_TYPE::PIXIE:
-		boss = new BossPixie(data);
-		break;
-	//case BossBase::BOSS_TYPE::ORC:
-	//	boss = new BossOrc(data);
-	//	break;
-
+		if (data.stageType == 1) {
+			case BossBase::BOSS_TYPE::PIXIE:
+			boss = new BossPixie(data);
+			break;
+		}
+		if (data.stageType == 2) {
+			case BossBase::BOSS_TYPE::GOBLIN:
+				boss = new BossGoblin(data);
+				break;
+		}
 		// 増える毎に追加
 	}
 

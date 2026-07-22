@@ -12,6 +12,8 @@
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectBossCage.h"
+#include "../../../Object/Actor/Charactor/Object/NdlFloor.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
@@ -21,8 +23,10 @@
 #include "../../../Renderer/UIRenderer/Manager/UIManager.h"
 #include "../../../Renderer/UIRenderer/Base/UIBase.h"
 #include "../../../Application.h"
-#include "Player.h"
+#include "Player.h"	
 #include "../../../Manager/ServiceLocator.h"
+#include "../Weapon/ItemAssets/Bomb.h"
+#include "../../Common/Health.h"
 
 Player::Player(void)
 	:
@@ -37,7 +41,6 @@ Player::Player(void)
 	isSlowWalk_(false)
 {
 	sweatPos_ = transform_.pos;
-	int img_ = resMng_.Load(ResourceManager::SRC::SWEAT).handleId_;
 }
 
 Player::~Player(void)
@@ -50,8 +53,8 @@ void Player::Draw(void)
 
 	ServiceLocator::GetUI().Draw();
 	
-	//// プレイヤー座標
-	//DrawFormatString(200, 60, GetColor(0, 0, 0), "Player Pos: X:%.1f, Y:%.1f, Z:%.1f", transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	// プレイヤー座標
+	DrawFormatString(200, 60, GetColor(0, 0, 0), "Player Pos: X:%.1f, Y:%.1f, Z:%.1f", transform_.pos.x, transform_.pos.y, transform_.pos.z);
 
 }
 
@@ -73,7 +76,7 @@ bool Player::GetDeadFlag(void)
 }
 
 //プレイヤーの死亡判定
-void Player::playerDead(void)
+void Player::PlayerDead(void)
 {
 	//プレイヤーのy座標が-1000.0f以下になったら死亡とする
 	if(transform_.pos.y < -1000.0f)
@@ -89,10 +92,7 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
-	if (transform_.pos.x > 5060 &&
-		transform_.pos.x < 5235 &&
-		transform_.pos.z > -790 &&
-		transform_.pos.z < -490)
+	if (CheckHitKey(KEY_INPUT_C))
 	{
 		isClear_ = true;
 	}
@@ -111,6 +111,26 @@ void Player::InitLoad(void)
 	// モデルのロード
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
+
+	// 武器用のコンポジット
+	weapon_ = std::make_unique<WeaponComposite>();
+
+	bombData_ = {
+		.item = ItemKind::BOMB,
+		.damage = 10.0f,
+		.pos = MV1GetFramePosition(transform_.modelId, 43),
+		.rot = AsoUtility::VECTOR_ZERO,
+		.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
+		.dir = dir_,
+		.localPos = BOMB_LOCAL_POS,
+		.localRot = BOMB_LOCAL_ROT,
+		.ownerModelId = transform_.modelId,
+		.ownerFrameIndex = 43,
+	};
+
+	weapon_->Add(std::make_unique<Bomb>(bombData_));
+	
+	weapon_->Load();
 
 }
 
@@ -153,7 +173,7 @@ void Player::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 35.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 40.0f, Application::PATH_MODEL + "Player/Jump.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 50.0f, Application::PATH_MODEL + "Player/Push.mv1");
-
+	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Player/Throw.mv1");
 	// アニメーション再生
 	animationController_->Play(
 		static_cast<int>(ANIM_TYPE::IDLE), true);
@@ -163,11 +183,20 @@ void Player::InitAnimation(void)
 void Player::InitPost(void)
 {
 	InitUI();
+
+	health_ = new Health();
+	health_->Init(5);
+
+	nowHp_ = health_->GetHp();
+
 }
 
 void Player::UpdateProcess(void)
 {
-	isGravity_ = true;
+	isGravity_ = false;
+
+	// ボムの向き
+	bombData_.dir = dir_;
 
 	// 移動操作
 	ProcessMove();
@@ -175,8 +204,8 @@ void Player::UpdateProcess(void)
 	// ジャンプ処理
 	ProcessJump();
 
-	//プレイや死亡判定
-	playerDead();
+	//プレイヤー死亡判定
+	PlayerDead();
 
 	//プレイヤーのクリア判定
 	IsClear();
@@ -184,13 +213,22 @@ void Player::UpdateProcess(void)
 	// ギミック処理
 	ProcessPush();
 
+	// アイテム投擲処理
+	ProcessThrow();
+
+	// ダメージ処理
+	TakeToDamage();
+
+	// ダメージ判定
+	if (toDamage_){
+		health_->TakeDamage(1);
+
+		return;
+	}
+
 }
 
 void Player::UpdateProcessPost(void)
-{
-}
-
-void Player::DrawViewRange(void)
 {
 }
 
@@ -211,19 +249,17 @@ void Player::ProcessMove(void)
 
 	// 移動量・方向・ダッシュフラグの初期化
 	movePow_ = AsoUtility::VECTOR_ZERO;
-	VECTOR dir = AsoUtility::VECTOR_ZERO;
+	dir_ = AsoUtility::VECTOR_ZERO;
 	isDash_ = false;
 	isSlowWalk_ = false;
 
-	// ----------------------------------------------------
-	// 1. 入力処理（キーボード / パッド）
-	// ----------------------------------------------------
+	// 入力処理(キーボード / パッド)
 	if (GetJoypadNum() == 0)
 	{
-		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
-		if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
-		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
-		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
+		if (ins.IsNew(KEY_INPUT_W)) { dir_ = AsoUtility::DIR_F; }
+		if (ins.IsNew(KEY_INPUT_A)) { dir_ = AsoUtility::DIR_L; }
+		if (ins.IsNew(KEY_INPUT_S)) { dir_ = AsoUtility::DIR_B; }
+		if (ins.IsNew(KEY_INPUT_D)) { dir_ = AsoUtility::DIR_R; }
 
 
 		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash_ = true; }
@@ -231,16 +267,14 @@ void Player::ProcessMove(void)
 	else
 	{
 		InputManager::JOYPAD_IN_STATE padState = ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
-		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
+		dir_ = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
 		isDash_ = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 	}
 
-	// ----------------------------------------------------
-	// 2. 移動量・ベクトルの計算（入力がある場合）
-	// ----------------------------------------------------
+	// 移動量・ベクトルの計算
 
-	float inputLength = VSize(dir);
+	float inputLength = VSize(dir_);
 	bool hasInput = inputLength > 0.0f;
 
 	if (hasInput)
@@ -250,7 +284,7 @@ void Player::ProcessMove(void)
 
 		// カメラのY軸回転に合わせて移動方向を計算
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
-		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
+		moveDir_ = Quaternion::PosAxis(cameraRot, dir_);
 		movePow_ = VScale(moveDir_, moveSpeed_);
 
 		if (inputLength > 1.0f)
@@ -263,19 +297,17 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
-		// 入力がない（IDLEなど）の時は等速（1.0倍）に戻しておく
+		// 入力がない場合は通常速度に戻しておく
 		animationController_->SetPlaySpeed(1.0f);
 	}
 
-	// ----------------------------------------------------
-	// 3. 動くタイルへの追従と座標の更新
-	// ----------------------------------------------------
+	// 動くタイルへの追従と座標の更新
 	
 	// まず自身の移動量（movePow_）分、座標を進める
 	transform_.pos = VAdd(transform_.pos, movePow_);
 	transform_.pos = VAdd(transform_.pos, VScale(jumpPow_, scnMng_.GetDeltaTime())); // ジャンプ力も反映
 
-	// ★修正ポイント：【ジャンプ中（空中）ではない時だけ】タイルに追従する
+	// タイルに追従する
 	if (!isJump_ && objMng_ != nullptr)
 	{
 		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
@@ -317,7 +349,6 @@ void Player::ProcessMove(void)
 		}
 		else
 		{
-
 			// 歩きに切り替わった瞬間にダッシュ音を止める
 			if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_DASH))
 			{
@@ -333,7 +364,6 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
-
 		// 停止時は両方確実に止める
 		if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
 		{
@@ -345,9 +375,7 @@ void Player::ProcessMove(void)
 		}
 	}
 
-	// ----------------------------------------------------
-	// 4. アニメーション制御
-	// ----------------------------------------------------
+	//アニメーション制御
 	if (isJump_)
 	{
 		if (currentAnimType_ != static_cast<int>(ANIM_TYPE::JUMP))
@@ -376,10 +404,8 @@ void Player::ProcessJump(void)
 	auto& ins = InputManager::GetInstance();
 	float deltaTime = scnMng_.GetDeltaTime();
 
-	// ----------------------------------------------------
-	// 1. 入力状態の取得
-	// ----------------------------------------------------
-	// 押した瞬間 (Trigger Down)
+	// 入力状態の取得
+	// 押した瞬間
 	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE) ||
 		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
@@ -387,9 +413,7 @@ void Player::ProcessJump(void)
 	bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE) ||
 		ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
-	// ----------------------------------------------------
-	// 2. 初期ジャンプ処理（押した瞬間）
-	// ----------------------------------------------------
+	// 初期ジャンプ処理（押した瞬間）
 	if (isJumpTrg && !isJump_)
 	{
 		ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_JUMP);
@@ -405,9 +429,7 @@ void Player::ProcessJump(void)
 
 	}
 
-	// ----------------------------------------------------
-	// 3. 持続ジャンプ処理（空中での制御）
-	// ----------------------------------------------------
+	// 持続ジャンプ処理
 	if (isJump_)
 	{
 		if (isJumpStay && stepJump_ < TIME_JUMP_INPUT)
@@ -434,18 +456,6 @@ void Player::ProcessPush(void)
 {
 	auto& ins = InputManager::GetInstance();
 
-	// タイルの判定
-	// これデバッグ用です
-	//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
-
-	//// チートキー
-	//bool cheatKey = ins.IsPress(KEY_INPUT_O);
-	//if (cheatKey) {
-	//	// タライギミック作動
-	//	tarai->SetFlag(true);
-	//}
-
-			
 	// プレイヤーがギミック付近にいる場合
 	if (objMng_ != nullptr)
 	{
@@ -454,13 +464,13 @@ void Player::ProcessPush(void)
 		ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
 
 		//// タイルの判定
-		// こっちが本物
 		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
+		ObjectBossCage* bossCage = objMng_->GetBossCage(transform_.pos);
 
 		if (bossGimmick != nullptr)
 		{
 
-			// 持続ジャンプ処理
+			// ギミック処理
 			bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
 				|| ins.IsPadBtnPress(
 					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
@@ -484,7 +494,14 @@ void Player::ProcessPush(void)
 
 					// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
 					// タライギミック作動
-					tarai->SetFlag(true);	
+					if (tarai) {
+						tarai->SetFlag(true);
+					}
+
+					// ボスケージ作動
+					if (bossCage && currentCnt_ == 5){
+						bossCage->SetFlag(true);
+					}
 				}
 				else {
 					bossGimmick->SetFlag(false);
@@ -495,6 +512,23 @@ void Player::ProcessPush(void)
 			}
 			
 		}
+	}
+}
+
+// アイテム投擲処理
+void Player::ProcessThrow(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// ギミック処理
+	bool isHitKeyNew = ins.IsPress(KEY_INPUT_E)
+		|| ins.IsPadBtnPress(
+			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+
+	if (isHitKeyNew) {
+		// アニメーション再生
+		animationController_->Play(
+			static_cast<int>(ANIM_TYPE::THROW));
 	}
 }
 
@@ -550,3 +584,24 @@ void Player::CollisionReserve(void)
 		}
 	}
 }
+
+void Player::TakeToDamage(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// プレイヤーがギミック針床付近にいる場合
+	if (objMng_ != nullptr)
+	{
+
+		// 針床ギミック
+		NdlFloor* ndlFloor = objMng_->GetNdl(transform_.pos);
+
+		if (ndlFloor != nullptr) {
+			if (ndlFloor->GetStart()) {
+				toDamage_ = true;
+			}
+		}
+	}
+
+}
+

@@ -22,6 +22,8 @@ public:
 	{
 		STAGE,
 		PLAYER,
+		PIXIE,
+		GOBLIN,
 
 		// オブジェクト
 		BOX,
@@ -33,7 +35,10 @@ public:
 		BURNER,
 		CONVEYER,
 		CAGE,
+		OBJECT_BOSS_CAGE,
 
+		// アイテム
+		BOMB,
 
 		CAMERA,
 	};

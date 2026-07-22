@@ -5,10 +5,10 @@
 #include "../Player.h"
 #include "../../../../Manager/SoundManager.h"
 
-
 BossBase::BossBase(const BossBase::BossData& data)
 	:
 	CharactorBase(),
+	data_(data),
 	type_(data.type),
 	stateBase_(0),
 	player_()
@@ -48,3 +48,4 @@ void BossBase::ChangeAttackStrategy(std::unique_ptr<StrategyAttack> newStrategy)
 	// ここなら StrategyAttack の中身が完全に見えているので、安全に移動・消去ができます！
 	currentAttack_ = std::move(newStrategy);
 }
+
