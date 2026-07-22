@@ -70,6 +70,7 @@ public:
 		int id;
 		BossBase::BOSS_TYPE type;
 		VECTOR defaultPos;
+		int stageType;
 	};
 
 	// 視野角
@@ -107,6 +108,9 @@ public:
 	// ボスが死亡しているかどうかを取得する関数を追加
 	bool GetIsDead(void) const { return phaseStep_ == PHASE_STEP::PHASE_DEAD; }
 
+	// ステージタイプ
+	int GetStageType(void) const { return data_.stageType; }
+
 protected:
 
 	Player* player_;
@@ -129,6 +133,9 @@ protected:
 
 	// 状態管理(更新ステップ)
 	std::function<void(void)> stateUpdate_;
+
+	// ボスデータ
+	BossData data_;
 
 	// リソースロード
 	void InitLoad(void) override {}

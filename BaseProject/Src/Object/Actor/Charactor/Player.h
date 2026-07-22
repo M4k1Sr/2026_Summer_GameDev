@@ -95,6 +95,9 @@ private:
 	// アイテムマネージャー
 	ItemManager* itemMng_;
 
+	// ボムデータ
+	WeaponData bombData_;
+
 	// ギミック動作カウンタ
 	float gimmickCnt_;
 	bool isGimmick_;
@@ -121,7 +124,7 @@ private:
 	// 向き
 	VECTOR dir_;
 
-	// プレイヤー座標
+	//// プレイヤー座標
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
 	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
 
@@ -177,7 +180,7 @@ private:
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
 
 	// 爆弾モデルの大きさ
-	static constexpr float BOMB_SCL = 1.0f;
+	static constexpr float BOMB_SCL = 2.0f;
 
 	// 爆弾のローカル座標・回転
 	static constexpr VECTOR BOMB_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
@@ -202,6 +205,5 @@ private:
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;
-
 };
 

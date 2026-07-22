@@ -113,19 +113,20 @@ void Player::InitLoad(void)
 	// 武器用のコンポジット
 	weapon_ = std::make_unique<WeaponComposite>();
 
-	WeaponData bombData = {
+	bombData_ = {
 		.item = ItemKind::BOMB,
 		.damage = 10.0f,
 		.pos = MV1GetFramePosition(transform_.modelId, 43),
 		.rot = AsoUtility::VECTOR_ZERO,
 		.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
+		.dir = dir_,
 		.localPos = BOMB_LOCAL_POS,
 		.localRot = BOMB_LOCAL_ROT,
 		.ownerModelId = transform_.modelId,
 		.ownerFrameIndex = 43,
 	};
 
-	weapon_->Add(std::make_unique<Bomb>(bombData));
+	weapon_->Add(std::make_unique<Bomb>(bombData_));
 	
 	weapon_->Load();
 
@@ -185,6 +186,9 @@ void Player::InitPost(void)
 void Player::UpdateProcess(void)
 {
 	isGravity_ = false;
+
+	// ボムの向き
+	bombData_.dir = dir_;
 
 	// 移動操作
 	ProcessMove();

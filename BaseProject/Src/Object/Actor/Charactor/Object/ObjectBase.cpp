@@ -4,6 +4,7 @@
 ObjectBase::ObjectBase(const ObjectBase::ObjectData& data)
 	:
 	CharactorBase(),
+	data_(data),
 	type_(data.type),
 	stateBase_(0)
 {

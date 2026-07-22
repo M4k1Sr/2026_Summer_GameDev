@@ -48,9 +48,6 @@ public:
 	void SetAct(bool isAct) { isAct_ = isAct; }
 	void SetActTimer(float timer) { actTimer_ = timer; }
 
-	void Gravity(void);
-
-
 private:
 
 	// 重力制限
@@ -79,6 +76,7 @@ private:
 	bool isAct_;			// ヒットボックスが出ているか
 	float actTimer_;		// ヒットボックスが出ている時間
 
+	void ThrowStart(void);
 	void Throw(void);		// 投擲処理
 	void ThrowSet(void);	// 投げる位置をセット
 };

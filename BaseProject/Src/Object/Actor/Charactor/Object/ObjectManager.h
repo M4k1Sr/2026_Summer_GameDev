@@ -10,6 +10,7 @@ class ObjectTarai;
 class NdlFloor;
 class ObjectBurner;
 class ObjectBossCage;
+class StageBase;
 
 class ObjectManager
 {
@@ -63,6 +64,9 @@ public:
 	// 檻が落下中か
 	bool IsCageFalling(void);
 
+	// 現在のステージを取得
+	void SetCurrentStage(int stageType) { currentStageType_ = stageType; }
+
 private:
 
 	// オブジェクト
@@ -70,4 +74,7 @@ private:
 
 	// タライフラグ
 	bool isTarai_;
+
+	// ステージ番号取得
+	int currentStageType_ = 1;
 };

@@ -35,7 +35,11 @@ void ObjectManager::Update(void)
 	// 更新
 	for (auto& object : objects_)
 	{
-		object->Update();
+		// ステージ一致により更新
+		if (object->GetStageType() == 0 || object->GetStageType() == currentStageType_)
+		{
+			object->Update();
+		}
 	}
 }
 
@@ -44,7 +48,11 @@ void ObjectManager::Draw(void)
 	// 描画
 	for (auto& object : objects_)
 	{
-		object->Draw();
+		// ステージ一致により描画
+		if (object->GetStageType() == 0 || object->GetStageType() == currentStageType_)
+		{
+			object->Draw();
+		}
 	}
 
 }
@@ -122,6 +130,9 @@ void ObjectManager::LoadCsvData(void)
 		// 移動タイプ
 		data.moveType = stoi(strSplit[idx++]);
 
+		// ステージ別で動かすオブジェクトを設定
+		data.stageType = stoi(strSplit[idx++]);
+
 		// オブジェクト生成
 		Create(data);
 
@@ -137,7 +148,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	switch (data.type)
 	{
 	case ObjectBase::TYPE::BOX:
-		//object = new ObjectBox(data);
+		object = new ObjectBox(data);
 		break;
 	case ObjectBase::TYPE::TILE:
 		object = new ObjectTile(data);
@@ -182,6 +193,12 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{
 			VECTOR tilePos = tile->GetPos();
@@ -207,6 +224,12 @@ ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto bossGimmick = dynamic_cast<ObjectBossGimmick*>(object))
 		{
 			VECTOR bossGimmickPos = bossGimmick->GetPos();
@@ -234,6 +257,12 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
 		{
 			VECTOR taraiPos = tarai->GetPos();
@@ -261,6 +290,12 @@ ObjectBossCage* ObjectManager::GetBossCage(const VECTOR& pos)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
 		{
 			VECTOR taraiPos = tarai->GetPos();
@@ -287,6 +322,12 @@ bool ObjectManager::IsTaraiFalling(void)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
 		{
 			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
@@ -303,6 +344,12 @@ bool ObjectManager::IsCageFalling(void)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
 		{
 			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする

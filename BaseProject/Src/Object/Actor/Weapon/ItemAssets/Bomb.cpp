@@ -14,7 +14,6 @@ Bomb::Bomb(const WeaponData& data)
 	, isAct_(false)
 	, actTimer_(0.0f)
 	, resMng_(ResourceManager::GetInstance())
-
 {
 }
 
@@ -33,33 +32,26 @@ void Bomb::Update(void)
 	auto& ins = InputManager::GetInstance();
 
 	// 投擲キー判定 (Eキー)
-	bool isHitKeyNew = ins.IsNew(KEY_INPUT_E)
+	bool isHitKeyNew = ins.IsTrgDown(KEY_INPUT_E)
 		|| ins.IsPadBtnPress(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
 
-	// Eキーが押されたら、手に持っていようが既に飛んでいようが Throw() を呼ぶ！
+	// Eキーが押されたら投擲開始
 	if (isHitKeyNew) {
+		// 1. 手の現在座標にワープ＆飛翔状態を開始する
+		ThrowStart();
+	}
+
+	// 状態ごとの移動・追従処理
+	if (isThrow_) {
+		// 2. 投げられている間：毎フレーム位置計算＆モデル行列の更新を行う
 		Throw();
 	}
-
-	// 投擲中の処理
-	if (isThrow_) {
-		float deltaTime = SceneManager::GetInstance().GetDeltaTime();
-
-		// 重力計算・移動処理
-		Gravity();
-		data_.pos = VAdd(data_.pos, VScale(jumpPow_, deltaTime));
-		VECTOR gravityVec = VScale(AsoUtility::DIR_U, gravityPow_);
-		data_.pos = VAdd(data_.pos, gravityVec);
-
-		// モデル位置更新
-		MATRIX scaleMat = MGetScale(data_.scl);
-		MATRIX transMat = MGetTranslate(data_.pos);
-		MV1SetMatrix(data_.modelId_, MMult(scaleMat, transMat));
-	}
 	else {
-		// 初期状態（手に持っている間）
+		// 3. まだ投げていない間：プレイヤーの手のボーンに張り付く
 		ThrowSet();
 	}
+
+	transform_.Update();
 }
 
 // 描画
@@ -75,49 +67,52 @@ void Bomb::Release(void)
 	MV1DeleteModel(data_.modelId_);
 }
 
-void Bomb::Gravity(void)
-{
-	float deltaTime = SceneManager::GetInstance().GetDeltaTime();
-
-	// 重力加速度計算
-	gravityPow_ += Application::GetInstance().GetGravityPow() * deltaTime;
-
-	// 落下速度制限 (MAX_FALL_SPEED)
-	if (gravityPow_ > -MAX_FALL_SPEED)
-	{
-		gravityPow_ = -MAX_FALL_SPEED;
-	}
-}
-
-void Bomb::Throw(void)
+void Bomb::ThrowStart(void)
 {
 	if (data_.ownerModelId == -1) return;
 
 	isThrow_ = true;
 
-	// ① 手の位置を取得
+	// ① 手の現在位置（ワールド座標）を取得して爆弾の位置にする
 	MATRIX handMat = MV1GetFrameLocalWorldMatrix(data_.ownerModelId, data_.ownerFrameIndex);
 	data_.pos = VGet(handMat.m[3][0], handMat.m[3][1], handMat.m[3][2]);
 
-	// ② 重力のリセット
+	// ② 重力蓄積をリセット
 	gravityPow_ = 0.0f;
 
-	// ③ プレイヤーのモデル行列を取得
+	// ③ プレイヤー本体モデルの行列から正面方向を取得
 	MATRIX ownerMat = MV1GetMatrix(data_.ownerModelId);
-	VECTOR ownerForward = VGet(ownerMat.m[2][0], ownerMat.m[2][1], ownerMat.m[2][2]);
+	VECTOR forward = VGet(ownerMat.m[2][0], ownerMat.m[2][1], ownerMat.m[2][2]);
 
-	// ★ 後ろを向いているため、反転させる（ -1.0f を掛ける）
-	ownerForward = VScale(ownerForward, -1.0f);
+	// 向きを矯正
+	forward = VScale(forward, -1.0f);
 
-	// 水平にして正規化
-	ownerForward.y = 0.0f;
-	ownerForward = VNorm(ownerForward);
+	// 水平方向に調整して正規化
+	forward.y = 0.0f;
+	forward = VNorm(forward);
 
-	// ④ 初速の計算
-	float throwPower = 600.0f; // 前方への速度
-	float upPower = 300.0f; // 上方向の力
+	// ④ 初速ベクトル（jumpPow_）の計算
+	float throwSpeed = 300.0f; // 前方への飛翔スピード
+	float upPower = 600.0f; // 山なりに上げるための上方向の力
 
-	jumpPow_ = VAdd(VScale(ownerForward, throwPower), VGet(0.0f, upPower, 0.0f));
+	// jumpPow_ に「前方の力」と「上方向の力」を合成してセット
+	jumpPow_ = VAdd(VScale(forward, throwSpeed), VGet(0.0f, upPower, 0.0f));
+}
+void Bomb::Throw(void)
+{
+	float deltaTime = SceneManager::GetInstance().GetDeltaTime();
+
+	// ① 初速（移動ベクトル）による座標更新
+	data_.pos = VAdd(data_.pos, VScale(jumpPow_, deltaTime));
+
+	// ② 重力の計算（加速度的に下にひっぱる）
+	gravityPow_ += 980.0f * deltaTime; // 重力の強さ
+	data_.pos.y -= gravityPow_ * deltaTime;
+
+	// ③ ★重要：移動後の座標でモデルの行列を書き換える
+	MATRIX scaleMat = MGetScale(data_.scl);
+	MATRIX transMat = MGetTranslate(data_.pos);
+	MV1SetMatrix(data_.modelId_, MMult(scaleMat, transMat));
 }
 
 void Bomb::ThrowSet(void)
