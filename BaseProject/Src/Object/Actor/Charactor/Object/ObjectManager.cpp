@@ -159,13 +159,9 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::BREAK_CAGE:
 		object = new ObjectCage(data);
 		break;
-<<<<<<< HEAD
-=======
 	case ObjectBase::TYPE::BOSS_CAGE:
 		//object = new ObjectBossCage(data);
 		break;
-
->>>>>>> origin/m4k
 		// ‘‚¦‚é–ˆ‚É’Ç‰Á
 	}
 

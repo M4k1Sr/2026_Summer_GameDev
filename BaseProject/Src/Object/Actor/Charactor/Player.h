@@ -118,7 +118,6 @@ private:
 	VECTOR bombPos_;
 
 	// プレイヤー座標
-<<<<<<< HEAD
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 
 	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
@@ -129,10 +128,9 @@ private:
 	// static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 30000.0f, 0.0f, -3750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, 50.0f, -800.0f };
-=======
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
 	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
->>>>>>> origin/m4k
+
 
 	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };

@@ -1,18 +1,85 @@
-﻿  ObjectBossCage.cpp
+﻿  Bomb.cpp
+  ObjectBossCage.cpp
+  StrategyAttack.cpp
+  IronBall.cpp
+  BossBase.cpp
+  BossPixie.cpp
+  BossManager.cpp
+  ObjectManager.cpp
+  Player.cpp
+  SceneManager.cpp
+  GameScene.cpp
+  WeaponComponent.cpp
 \Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp':No such file or directory
   (ソース ファイル '/Src/Object/Actor/Charactor/Object/ObjectBossCage.cpp' をコンパイルしています)
   
-  HitBox.cpp
-\Src\Object\Actor\Weapon\HitBox.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Object\Actor\Weapon\HitBox.cpp':No such file or directory
-  (ソース ファイル '/Src/Object/Actor/Weapon/HitBox.cpp' をコンパイルしています)
-  
-  Stage2.cpp
-  WeaponComponent.cpp
 \Src\Object\Actor\Weapon\WeaponComponent.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Object\Actor\Weapon\WeaponComponent.cpp':No such file or directory
   (ソース ファイル '/Src/Object/Actor/Weapon/WeaponComponent.cpp' をコンパイルしています)
   
-  WeaponComposite.cpp
-\Src\Object\Actor\Weapon\WeaponComposite.cpp(1,1): error C1083: ソース ファイルを開けません。'Src\Object\Actor\Weapon\WeaponComposite.cpp':No such file or directory
-  (ソース ファイル '/Src/Object/Actor/Weapon/WeaponComposite.cpp' をコンパイルしています)
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.h(132,26): error C2086: 'const DxLib::VECTOR Player::PLAYER_POS': 再定義されました。
+  (ソース ファイル 'Src/Object/Actor/Attack/StrategyAttack.cpp' をコンパイルしています)
   
-  コードを生成中...
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Attack\StrategyAttack.cpp(59,21): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp(22,69): error C2838: 'BOMB': メンバー宣言内の限定名が間違っています
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp(22,69): error C2065: 'BOMB': 定義されていない識別子です。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.h(132,26): error C2086: 'const DxLib::VECTOR Player::PLAYER_POS': 再定義されました。
+  (ソース ファイル 'Src/Object/Actor/Charactor/Boss/BossBase.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.h(132,26): error C2086: 'const DxLib::VECTOR Player::PLAYER_POS': 再定義されました。
+  (ソース ファイル 'Src/Object/Actor/Charactor/Boss/BossManager.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectManager.cpp(162,25): error C2838: 'BOSS_CAGE': メンバー宣言内の限定名が間違っています
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectManager.cpp(162,25): error C2065: 'BOSS_CAGE': 定義されていない識別子です。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectManager.cpp(162,25): error C2131: 式は定数に評価されませんでした
+      C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectManager.cpp(162,25):
+      非定数の式 (またはサブ式) が検出されました
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Object\ObjectManager.cpp(162,25): error C2051: case 式は、整数型定数でなければなりません。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.h(119,15): error C2086: 'ItemManager *GameScene::itemMng_': 再定義されました。
+  (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.h(124,12): error C3646: 'clock_': 不明なオーバーライド指定子です
+  (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.h(124,2): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+  (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\IronBall.h(58,26): error C2086: 'const DxLib::VECTOR IronBall::IRON_BALL_POS': 再定義されました。
+  (ソース ファイル 'Src/Object/Actor/IronBall.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.h(132,26): error C2086: 'const DxLib::VECTOR Player::PLAYER_POS': 再定義されました。
+  (ソース ファイル 'Src/Object/Actor/Charactor/Player.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(117,2): error C2065: 'weapon_': 定義されていない識別子です。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(117,29): error C2065: 'WeaponComposite': 定義されていない識別子です。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(117,17): error C2672: 'std::make_unique': 一致するオーバーロードされた関数が見つかりませんでした。
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3640,6):
+      'void std::make_unique(_Types ...)' の可能性があります
+          C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(117,29):
+          'std::make_unique': テンプレート 引数が '_Ty' に対して無効です。型が必要です
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3634,57):
+      または 'std::unique_ptr<_Ty,std::default_delete<_Ty>> std::make_unique(const size_t)'
+          C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(117,29):
+          'std::make_unique': テンプレート 引数が '_Ty' に対して無効です。型が必要です
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3629,57):
+      または 'std::unique_ptr<_Ty,std::default_delete<_Ty>> std::make_unique(_Types ...)'
+          C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(117,29):
+          'std::make_unique': テンプレート 引数が '_Ty' に対して無効です。型が必要です
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(131,2): error C2065: 'weapon_': 定義されていない識別子です。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.cpp(133,2): error C2065: 'weapon_': 定義されていない識別子です。
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.h(132,26): error C2086: 'const DxLib::VECTOR Player::PLAYER_POS': 再定義されました。
+  (ソース ファイル 'Src/Object/Actor/Charactor/Boss/BossPixie.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\IronBall.h(58,26): error C2086: 'const DxLib::VECTOR IronBall::IRON_BALL_POS': 再定義されました。
+  (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Object\Actor\Charactor\Player.h(132,26): error C2086: 'const DxLib::VECTOR Player::PLAYER_POS': 再定義されました。
+  (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.h(119,15): error C2086: 'ItemManager *GameScene::itemMng_': 再定義されました。
+  (ソース ファイル 'Src/Manager/SceneManager.cpp' をコンパイルしています)
+  
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(378,1): error C2059: 構文エラー: '<<'
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(395,1): error C2059: 構文エラー: '>>'
+C:\Users\2416027\Desktop\AGS\BaseProject\Src\Scene\GameScene.cpp(596,9): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。

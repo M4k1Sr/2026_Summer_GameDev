@@ -22,11 +22,7 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
-<<<<<<< HEAD
 #include "../Renderer/UIRenderer/Manager/UIManager.h"
-#include "GameScene.h"
-=======
->>>>>>> origin/m4k
 #include "../Application.h"
 #include<EffekseerForDXLib.h>
 #include "../Manager/ServiceLocator.h"
