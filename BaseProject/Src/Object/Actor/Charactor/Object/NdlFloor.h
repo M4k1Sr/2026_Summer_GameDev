@@ -64,7 +64,7 @@ protected:
 private:
 
 	// モデルの大きさ
-	static constexpr float SCALE = 0.5f;
+	static constexpr float SCALE = 1.0f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };

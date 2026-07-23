@@ -92,6 +92,10 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
+	if (CheckHitKey(KEY_INPUT_C)) {
+		isClear_ = true;
+	}
+
 	if (currentCnt_ == 3)
 	{
 		isClear_ = true;
@@ -472,7 +476,7 @@ void Player::ProcessPush(void)
 			// ギミック処理
 			bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
 				|| ins.IsPadBtnPress(
-					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::TOP);
 
 			if (isHitKeyNew) {
 
@@ -525,6 +529,7 @@ void Player::ProcessThrow(void)
 			static_cast<int>(ANIM_TYPE::THROW));
 	}
 }
+
 void Player::CollisionReserve(void)
 {
 	// アニメーションごとの線分調整

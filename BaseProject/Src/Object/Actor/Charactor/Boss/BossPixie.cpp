@@ -474,7 +474,6 @@ void BossPixie::UpdateAttackWave(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
-				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
