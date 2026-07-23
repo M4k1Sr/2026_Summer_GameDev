@@ -5,8 +5,8 @@
 Clock::Clock(void)
 	:
 	UIBase(Vector2(CLOCK_POS, CLOCK_POS)),
-	maxTime_(120.0f),
-	time_(120.0f),
+	maxTime_(300.0f),
+	time_(300.0f),
 	angle_(0.0f),
 	oldTime_(GetNowCount()),
 	secondHandImg_(-1),
