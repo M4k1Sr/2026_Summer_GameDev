@@ -11,7 +11,7 @@
 #include "./ObjectBurner.h"
 #include "./ObjectConveyer.h"
 #include "./ObjectCage.h"
-#include "./ObjectBossCage.h"
+//#include "./ObjectBossCage.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -174,7 +174,6 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::BOSS_CAGE:
 		//object = new ObjectBossCage(data);
 		break;
-
 		// 増える毎に追加
 	}
 
@@ -286,37 +285,37 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 }
 
 // ボス用の檻
-ObjectBossCage* ObjectManager::GetBossCage(const VECTOR& pos)
-{
-	for (auto& object : objects_)
-	{
-		// ステージ番号と一致しないものはスキップ
-		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
-		{
-			continue;
-		}
-
-		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
-		{
-			VECTOR taraiPos = tarai->GetPos();
-
-			// XZ平面のみで距離計算
-			float dx = taraiPos.x - pos.x;
-			float dz = taraiPos.z - pos.z;
-
-			float distXZ = dx * dx + dz * dz;
-
-			// XZの範囲内ならOKとする（高さYは無視）
-			if (distXZ < 100000000.0f)
-			{
-				return tarai;
-			}
-		}
-	}
-
-	return nullptr;
-
-}
+//ObjectBossCage* ObjectManager::GetBossCage(const VECTOR& pos)
+//{
+//	for (auto& object : objects_)
+//	{
+//		// ステージ番号と一致しないものはスキップ
+//		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+//		{
+//			continue;
+//		}
+//
+//		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
+//		{
+//			VECTOR taraiPos = tarai->GetPos();
+//
+//			// XZ平面のみで距離計算
+//			float dx = taraiPos.x - pos.x;
+//			float dz = taraiPos.z - pos.z;
+//
+//			float distXZ = dx * dx + dz * dz;
+//
+//			// XZの範囲内ならOKとする（高さYは無視）
+//			if (distXZ < 100000000.0f)
+//			{
+//				return tarai;
+//			}
+//		}
+//	}
+//
+//	return nullptr;
+//
+//}
 
 NdlFloor* ObjectManager::GetNdl(const VECTOR& pos)
 {
@@ -372,24 +371,24 @@ bool ObjectManager::IsTaraiFalling(void)
 	return false;
 }
 
-bool ObjectManager::IsCageFalling(void)
-{
-	for (auto& object : objects_)
-	{
-		// ステージ番号と一致しないものはスキップ
-		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
-		{
-			continue;
-		}
-
-		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
-		{
-			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
-			if (tarai->IsCameraFocusing())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
+//bool ObjectManager::IsCageFalling(void)
+//{
+//	for (auto& object : objects_)
+//	{
+//		// ステージ番号と一致しないものはスキップ
+//		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+//		{
+//			continue;
+//		}
+//
+//		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
+//		{
+//			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
+//			if (tarai->IsCameraFocusing())
+//			{
+//				return true;
+//			}
+//		}
+//	}
+//	return false;
+//}

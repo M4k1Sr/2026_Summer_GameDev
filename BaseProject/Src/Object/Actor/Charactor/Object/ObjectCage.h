@@ -1,6 +1,6 @@
 #pragma once
-#include <memory>
 #include <DxLib.h>
+#include <memory>
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
 class AnimationController;

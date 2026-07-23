@@ -26,7 +26,7 @@ void NdlFloor::InitLoad(void)
 
 	// モデル読み込み
 	transform_.SetModel(
-		resMng_.LoadModelDuplicate(ResourceManager::SRC::NEEDLE_FLOOR));
+		resMng_.LoadModelDuplicate(ResourceManager::SRC::OBJECT_TILE));
 
 }
 
@@ -34,7 +34,7 @@ void NdlFloor::InitTransform(void)
 {
 
 	// モデルの大きさ、回転、座標の初期化
-	transform_.scl = VGet(SCALE, SCALE, SCALE);
+	transform_.scl = VGet(SCALE / 2, SCALE / 5, SCALE / 2);
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();

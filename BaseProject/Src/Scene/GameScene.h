@@ -2,8 +2,6 @@
 #include "SceneBase.h"
 #include "../Framework.h"
 class IronBall;
-class UI;
-class StageBase;
 class Clock;
 class StageBase;
 class Stage;
@@ -18,6 +16,7 @@ class ItemManager;
 class SoundManager;
 class UIManager;
 class EffectManager;
+class Transform;
 
 class GameScene : public SceneBase
 {
@@ -56,7 +55,11 @@ public:
 
 private:
 
+<<<<<<< HEAD
 
+=======
+	// ステージ状態
+>>>>>>> main
 	enum class StageState
 	{
 		STAGE_1,
@@ -72,13 +75,20 @@ private:
 	// UIマネージャ
 	UIManager* UIMng_;
 
+<<<<<<< HEAD
+=======
+	// フェード状態
+>>>>>>> main
 	enum class FadeState
 	{
 		NONE,       // フェードしていない（通常時）
 		FADE_OUT,   // 暗転中
 		FADE_IN     // 明転中
 	};
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 
 	// ステージ状態
 	StageState stageState_;
@@ -89,7 +99,10 @@ private:
 	// ステージ
 	StageBase* stage_;
 
+<<<<<<< HEAD
 	
+=======
+>>>>>>> main
 	// スカイドーム
 	SkyDome* skyDome_;
 
@@ -116,17 +129,31 @@ private:
 	
 	//時計のUI
 	Clock* clockUI_;
+<<<<<<< HEAD
 
 
 	
+=======
+
+
+
+	
+	// 時計
+	//Transform clock_;
+	
+>>>>>>> main
 	bool isPause_;
 	int pauseImg_;
 	bool isSousa_;
 	int sousaImg_;
 	int mosPosX_, mosPosY_;
 	int currentStageNum_;
+<<<<<<< HEAD
 	int fadeAlpha_;                  
 
+=======
+	int fadeAlpha_;
+>>>>>>> main
 	int fadeSpeed_;
 
 	static constexpr int DRAWBOX_SX = 400;
@@ -148,15 +175,21 @@ private:
 	//デバッグ用ゴール画像
 	int goalImg_;
 
+<<<<<<< HEAD
 
 	//UIの表示
 	int ButtonUIImg_;
 
+=======
+>>>>>>> main
 	// フェード処理用のプライベート関数群
 	void StartFade(FadeState state, int speed = 5); // フェード開始トリガー
 	bool UpdateFade(void);                          // フェードの更新（完了したらtrueを返す）
 	void DrawFade(void) const;
 
+<<<<<<< HEAD
 	bool isShowPushUI_;
 
+=======
+>>>>>>> main
 };

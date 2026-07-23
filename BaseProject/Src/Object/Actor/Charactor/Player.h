@@ -49,16 +49,25 @@ public:
 	//ゲームクリア判定
 	bool GetClearFlag(void) const;
 
+	// 1stStageクリア判定
 	void IsClear(void);
 
+<<<<<<< HEAD
 
 	//ダッシュ判定
 	bool GetDashFlag(void) const { return isDash_; }
+=======
+	// ゲームクリア判定
+	bool IsGameClear(void);
+>>>>>>> main
 
 	// プレイヤーの向き
 	VECTOR GetDir(void) const { return dir_; }
 	void SetDir(VECTOR dir) { dir_ = dir; }
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
@@ -131,8 +140,13 @@ private:
 	VECTOR bombPos_;
 
 	// プレイヤー座標
+<<<<<<< HEAD
 
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
+=======
+	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
+
+>>>>>>> main
 	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 9800.0f, 50.0f, -1220.0f };
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
@@ -141,17 +155,33 @@ private:
 	// static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 30000.0f, 0.0f, -3750.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, 50.0f, -800.0f };
+<<<<<<< HEAD
 
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
 
+=======
+	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
+
+
+	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
+	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
+>>>>>>> main
 
 	// 向き
 	VECTOR dir_;
 
+<<<<<<< HEAD
+=======
+	//// プレイヤー座標
+	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
+>>>>>>> main
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
+
 	// プレイヤーローカル角度
 	static constexpr VECTOR PLAYER_LOCAL_ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
@@ -222,17 +252,17 @@ private:
 	// 衝突判定
 	void CollisionReserve(void) override;
 
-	// ダメージを与える
-	void GiveDamage(void);
-
-	// ダメージを受ける
-	void TakeToDamage(void);
-
-	//ゲームクリア判定用のフラグ
+	// 1stStageクリア判定用のフラグ
 	bool isClear_;
+
+	// 2ndStageクリア判定用のフラグ
+	bool gameClear_;
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 };
 

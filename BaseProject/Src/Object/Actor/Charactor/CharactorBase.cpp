@@ -181,12 +181,12 @@ void CharactorBase::CollisionGravity(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 
-		// ステージ・ボックス以外は処理を飛ばす
-		if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
-			&& hitCol->GetTag() != ColliderBase::TAG::BOX
-			&& hitCol->GetTag() != ColliderBase::TAG::TILE
-			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
-			&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
+		//// ステージ・ボックス以外は処理を飛ばす
+		//if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
+		//	&& hitCol->GetTag() != ColliderBase::TAG::BOX
+		//	&& hitCol->GetTag() != ColliderBase::TAG::TILE
+		//	&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
+		//	&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
 
 		// 派生クラスへキャスト
 		const ColliderModel* colliderModel =

@@ -9,7 +9,7 @@ cbuffer cbParam : register(b4)
 float4 main(PS_INPUT PSInput) : SV_TARGET
 {
 
-    float2 texelSize = float2(1.0f / 1024.0f, 1.0f / 640.0f) * g_color.y;
+    float2 texelSize = float2(1.0f / 1024.0f, 1.0f / 640.0f) * (g_color.y * 0.5);
     
     float4 blurCol = float4(0.0f, 0.0f, 0.0f, 0.0f);
     

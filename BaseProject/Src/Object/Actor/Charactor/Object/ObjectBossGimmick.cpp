@@ -17,8 +17,7 @@ ObjectBossGimmick::ObjectBossGimmick(const ObjectBase::ObjectData& data)
 	:
 	ObjectBase(data),
 	prevPos_(AsoUtility::VECTOR_ZERO),
-	velocity_(AsoUtility::VECTOR_ZERO),
-	isPlayerNear_(false)
+	velocity_(AsoUtility::VECTOR_ZERO)
 {
 }
 
@@ -34,21 +33,6 @@ int ObjectBossGimmick::GetCnt(void) const
 void ObjectBossGimmick::SetCnt(int gimmickOnCnt)
 {
 	gimmickOnCnt_ = gimmickOnCnt;
-}
-
-void ObjectBossGimmick::SetPlayerNear(bool isNear)
-{
-	isPlayerNear_ = isNear;
-}
-
-bool ObjectBossGimmick::IsPlayerNear() const
-{
-	return isPlayerNear_;
-}
-
-VECTOR ObjectBossGimmick::GetPos() const
-{
-	return transform_.pos;
 }
 
 void ObjectBossGimmick::InitLoad(void)
@@ -127,13 +111,11 @@ void ObjectBossGimmick::DrawViewRange(void)
 
 void ObjectBossGimmick::ActiveGimmick(void)
 {
-	if (isGimmick_) 
-	{
+	if (isGimmick_) {
 		// ギミックがアクティブ状態になった場合
 		// ギミックのモデルの色が変化
 		COLOR_F color = { 50.0f, 0.0f, 0.0f, 1.0f }; // 赤色
 		MV1SetMaterialDifColor(transform_.modelId, 0, color); // 赤色に変更
-		isPlayerNear_ = false;
 	}
 
 

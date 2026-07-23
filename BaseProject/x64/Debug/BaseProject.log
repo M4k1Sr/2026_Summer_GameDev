@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Stage.cpp
   GameScene.cpp
   StageBase.cpp
@@ -18,3 +19,7 @@ C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\StageBase.h(2,10): err
 C:\Users\2416036\Desktop\AGS\BaseProject\Src\Object\Actor\StageBase.h(2,10): error C1083: include ファイルを開けません。'../ActorBase.h':No such file or directory
   (ソース ファイル 'Src/Scene/GameScene.cpp' をコンパイルしています)
   
+=======
+﻿  ObjectCage.cpp
+  BaseProject.vcxproj -> C:\Users\2416027\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe
+>>>>>>> main

@@ -86,24 +86,67 @@
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
+=======
+    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+    <ClCompile Include="Src\Manager\SoundManager.cpp" />
+    <ClCompile Include="Src\Ranking\GameData.cpp" />
+>>>>>>> main
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\UIElements\SweatUi.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UiRenderer\Manager\UIManager.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
+    <ClCompile Include="Src\Manager\ServiceLocator.cpp" />
+>>>>>>> main
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+=======
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
+    <ClCompile Include="Src\Manager\ServiceLocator.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage1.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage2.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+    <ClCompile Include="Src\Renderer\ModelShader\ModelMaterial.cpp" />
+    <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
+>>>>>>> main
   </ItemGroup>
 	  <ItemGroup>
     <ClInclude Include="Src\Renderer\ModelShader\ModelMaterial.h" />
@@ -179,6 +222,14 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Src\Manager\SoundManager.h" />
+    <ClInclude Include="Src\Ranking\GameData.h" />
+    <ClInclude Include="Src\Object\Actor\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage1.h" />
+    <ClInclude Include="Src\Object\Actor\Stage2.h" />
+>>>>>>> main
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
@@ -186,13 +237,6 @@
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
     <ClInclude Include="Src\Object\UI\UI.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBase.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
     <ClInclude Include="Src\Manager\ServiceLocator.h" />
@@ -201,13 +245,25 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
+<<<<<<< HEAD
 
+=======
+    <ClInclude Include="Src\Object\Actor\Stage\Stage1.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\Stage2.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage.h" />
+    <ClInclude Include="Src\Renderer\ModelShader\ModelMaterial.h" />
+    <ClInclude Include="Src\Renderer\ModelShader\ModelRenderer.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBase.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />
@@ -219,4 +275,16 @@
     <None Include="Src\Renderer\PostEffectRenderer\Common\Vertex\VertexShader3DHeader.hlsli" />
     <None Include="Src\Renderer\PostEffectRenderer\PostEffect\Vignette.hlsli" />
   </ItemGroup>
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Blur.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Monotone.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Mosaic.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\ScanLineShader.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\Noise.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\NoTexPS.hlsl" />
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\NoTexVS.hlsl" />
+  </ItemGroup>
+>>>>>>> main
 </Project>

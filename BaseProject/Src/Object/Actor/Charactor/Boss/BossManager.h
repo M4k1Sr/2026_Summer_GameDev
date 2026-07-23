@@ -40,9 +40,6 @@ public:
 	// CSVからオブジェクト情報の読取を行う
 	void LoadCsvData(void);
 
-	//ボスの死亡判定
-	bool IsBossDead(void);
-
 	// オブジェクト生成
 	BossBase* Create(const BossBase::BossData& data);
 

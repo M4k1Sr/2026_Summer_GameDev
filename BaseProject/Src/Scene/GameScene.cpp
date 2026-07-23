@@ -8,9 +8,16 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
+<<<<<<< HEAD
 #include "../Object/Actor/StageBase.h"
 #include "../Object/Actor/Stage1.h"
 #include "../Object/Actor/Stage2.h"
+=======
+#include "../Object/Actor/Stage/StageBase.h"
+#include "../Object/Actor/Stage/Stage1.h"
+#include "../Object/Actor/Stage/Stage2.h"
+#include "../Object/Actor/Stage.h"
+>>>>>>> main
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
@@ -22,7 +29,10 @@
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
 #include "../Renderer/UIRenderer/Manager/UIManager.h"
+<<<<<<< HEAD
 #include "GameScene.h"
+=======
+>>>>>>> main
 #include "../Application.h"
 #include<EffekseerForDXLib.h>
 #include "../Manager/ServiceLocator.h"
@@ -48,13 +58,7 @@ GameScene::GameScene(void)
 	isEnd_(false),
 	isClear_(false),
 	goalImg_(-1),
-	ButtonUIImg_(-1),
 	clearTime_(0),
-	currentStageNum_(1),
-	fadeAlpha_(0),
-	fadeSpeed_(5),
-	fadeState_(FadeState::NONE),
-	stageState_(StageState::STAGE_1),
 	SceneBase()
 {
 }
@@ -67,6 +71,10 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
@@ -105,9 +113,10 @@ void GameScene::Init(void)
 
 	rank_->CreateIns();
 
+
 	// ステージモデルのコライダーをプレイヤーに登録
 	const ColliderBase* stageCollider =
-		stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
+		stage_->GetOwnCollider(static_cast<int>(Stage::COLLIDER_TYPE::MODEL));
 	player_->AddHitCollider(stageCollider);
 
 	// スカイドーム初期化
@@ -181,8 +190,6 @@ void GameScene::Init(void)
 		}
 	}
 
-	ButtonUIImg_ = resMng_.Load(ResourceManager::SRC::PUSH_BUTTON).handleId_;
-
 	// UIモデル
 	clockUI_ = new Clock();
 
@@ -223,11 +230,16 @@ void GameScene::Update(void)
 		{
 			if (stageState_ == StageState::STAGE_1)
 			{
+<<<<<<< HEAD
 
+=======
+				// 1. 旧ステージモデルを削除
+>>>>>>> main
 				if (stage_ != nullptr)
 				{
 					stage_->Release();
 					delete stage_;
+<<<<<<< HEAD
 					stage_ = nullptr; // deleteした後はnullptrを入れておくのが安全
 				}
 
@@ -253,6 +265,8 @@ void GameScene::Update(void)
 				camera->AddHitCollider(stageCollider);
 
 				// ステージ状態をSTAGE_2にして、フェードインを開始する
+=======
+>>>>>>> main
 					stage_ = nullptr;
 				}
 
@@ -315,10 +329,13 @@ void GameScene::Update(void)
 		clearTime_++;
 		SetMouseDispFlag(false);
 
+<<<<<<< HEAD
 
 		skyDome_->Update();
 		player_->Update();
 		//ui_->Update();
+=======
+>>>>>>> main
 		//skyDome_->Update();
 		player_->Update();
 
@@ -337,16 +354,19 @@ void GameScene::Update(void)
 			bossMng_->Update();
 			break;
 		}		
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 
 		clockUI_->Update();
 
 		// ===========================================================
-		//  ボスの生存状態と距離によるカメラモードの自動切り替え
+		// ★ ボスの生存状態と距離によるカメラモードの自動切り替え
 		// ===========================================================
 		Camera* camera = SceneManager::GetInstance().GetCamera();
 
-		// 1. まず最優先で「タライが落ちてきているか」をチェック
+		// ★1. まず最優先で「タライが落ちてきているか」をチェック
 		if (objMng_->IsTaraiFalling() && bossMng_->GetBosses().size() > 0 && bossMng_->GetBosses().front() != nullptr)
 		{
 			// タライ使用時は最初のボス（または適切なボス）にフロントカメラを向ける
@@ -434,12 +454,19 @@ void GameScene::Draw(void)
 		break;
 	case GameScene::StageState::STAGE_2:
 		stage_->Draw();
+<<<<<<< HEAD
 		break;
 	}
 	
 	if(bossMng_->IsBossDead()){
 		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 	}
+=======
+		objMng_->Draw();
+		bossMng_->Draw();
+		break;
+	}
+>>>>>>> main
 
 	// 鉄球描画
 	ironBall_->Draw();
@@ -463,8 +490,9 @@ void GameScene::Draw(void)
 	attackMng_->Draw();
 
 	// プレイヤー描画
-	player_->Draw();	
+	player_->Draw();
 
+<<<<<<< HEAD
 	// プレイヤーが近くにあるボスギミックを取得
 	ObjectBossGimmick* bossGimmick =
 		objMng_->GetBossGimmick(player_->GetTransform().pos);
@@ -483,6 +511,8 @@ void GameScene::Draw(void)
 			TRUE);
 	}
     
+=======
+>>>>>>> main
 	// UI描画
 	clockUI_->Draw();
 
@@ -492,6 +522,11 @@ void GameScene::Draw(void)
 	//カメラのデバッグ用座標表示
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->DrawDebug();
+<<<<<<< HEAD
+=======
+
+	////ポーズ画面
+>>>>>>> main
 	IsPause();
 	
 }
@@ -666,6 +701,7 @@ int GameScene::GetScore(void)
 void GameScene::IsClear(void)
 {
 
+<<<<<<< HEAD
 	
 
 }
@@ -685,6 +721,16 @@ bool GameScene::UpdateFade(void)
 	if (fadeState_ == FadeState::FADE_OUT)
 	{
 		switch (stageState_)
+=======
+	isClear_ = player_->GetClearFlag();
+
+	//if(isClear_ && bossMng_->IsBossDead())
+	switch (stageState_)
+	{
+	case StageState::STAGE_1:
+		isClear_ = player_->GetClearFlag();
+		if (isClear_)
+>>>>>>> main
 		{
 		case StageState::STAGE_1:
 			isClear_ = player_->GetClearFlag();
@@ -702,6 +748,14 @@ bool GameScene::UpdateFade(void)
 			break;
 		}
 
+<<<<<<< HEAD
+=======
+	case StageState::STAGE_2:
+		if (player_->IsGameClear()) {
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
+		}
+		break;
+>>>>>>> main
 	}
 }
 

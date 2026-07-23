@@ -7,6 +7,7 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+<<<<<<< HEAD
       <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\(Filename).cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -17,6 +18,12 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Monotone.cso</FullPath>
+=======
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Blur.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\2416027\Desktop\AGS\BaseProject\Data\Shader\Monotone.cso</FullPath>
+>>>>>>> main
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Mosaic.cso</FullPath>
