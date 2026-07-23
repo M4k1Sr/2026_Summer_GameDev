@@ -23,6 +23,8 @@
     <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBurner.cpp" />
@@ -38,8 +40,6 @@
     <ClCompile Include="Src\Ranking\GameData.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectTile.cpp" />
-    <ClCompile Include="Src\Manager\ItemManager.cpp" />
-    <ClCompile Include="Src\Object\Actor\Item\Item.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\AttackManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Attack\StrategyAttack.cpp" />
@@ -104,23 +104,27 @@
     <ClInclude Include="Src\Renderer\ModelShader\ModelRenderer.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Manager\ServiceLocator.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
     <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Vignette.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock.h" />
     <ClInclude Include="Src\Object\UI\UI.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectTile.h" />
-    <ClInclude Include="Src\Manager\ItemManager.h" />
-    <ClInclude Include="Src\Object\Actor\Item\Item.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackBase.h" />
     <ClInclude Include="Src\Object\Actor\Attack\AttackManager.h" />
     <ClInclude Include="Src\Object\Actor\Attack\StrategyAttack.h" />
@@ -132,7 +136,6 @@
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\UIElements\StaminaUi.h" />
     <ClInclude Include="Src\Scene\GameClearScene.h" />
     <ClInclude Include="Src\Ranking\Ranking.h" />
     <ClInclude Include="Src\Manager\Score.h" />
@@ -180,8 +183,8 @@
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
   </ItemGroup>
@@ -341,6 +344,7 @@
       <AdditionalIncludeDirectories>C:\DxLib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

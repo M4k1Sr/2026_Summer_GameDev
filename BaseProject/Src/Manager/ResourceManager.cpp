@@ -36,6 +36,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Title.png");
 	resourcesMap_.emplace(SRC::TITLE, res);
 	
+	// タイトル背景画像
+	res = new RES(RES_T::IMG, PATH_IMG + "BackGroundTitle.png");
+	resourcesMap_.emplace(SRC::BACKGROUND, res);
+	
 	// タイトルPush画像
 	res = new RES(RES_T::IMG, PATH_IMG + "PushSpace.png");
 	resourcesMap_.emplace(SRC::PUSH_SPACE, res);
@@ -54,7 +58,7 @@ void ResourceManager::Init(void)
 	resourcesMap_.emplace(SRC::PLAYER_SHADOW, res);
 
 	// ステージモデル
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/MainStage.mv1");
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/MainStage/Stage.mv1");
 	resourcesMap_.emplace(SRC::FIRST_STAGE, res);
 
 	// スカイドームモデル
@@ -121,9 +125,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");
 	resourcesMap_.emplace(SRC::KEY, res);
 
-	//タイトル檻
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Cage.mv1");
-	resourcesMap_.emplace(SRC::CAGE, res);
+	////タイトル檻
+	//res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Cage.mv1");
+	//resourcesMap_.emplace(SRC::CAGE, res);
+
+	//タイトル牢屋
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Prison.mv1");
+	resourcesMap_.emplace(SRC::PRISON, res);
 
 	//壁
 	res = new RES(RES_T::IMG, PATH_IMG + "wall.png");
@@ -160,6 +168,10 @@ void ResourceManager::Init(void)
 	//PUSHUI
 	res = new RES(RES_T::IMG, PATH_IMG + "PushUI.png");
 	resourcesMap_.emplace(SRC::PUSH_BUTTON, res);
+
+	// こん棒オブジェクト
+	res = new RES(RES_T::MODEL, PATH_MDL + "Weapon/Club2.mv1");
+	resourcesMap_.emplace(SRC::CLUB, res);
 
 }
 

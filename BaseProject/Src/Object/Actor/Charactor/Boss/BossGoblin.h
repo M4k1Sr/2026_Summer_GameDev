@@ -122,10 +122,10 @@ private:
 	static constexpr VECTOR WEAPON_LOCAL_ROT = { 90.0f * DX_PI_F / 180.0f,90.0f * DX_PI_F / 180.0f,0.0f };
 
 	// 攻撃可能範囲
-	static constexpr float ATTACK_RANGE = 350.0f;
+	static constexpr float ATTACK_RANGE = 400.0f;
 
 	// ゴブリン移動スピード
-	static constexpr float MOVE_SPEED = 3.0f;
+	static constexpr float MOVE_SPEED = 7.0f;
 
 	// 索敵
 	void Search(void);

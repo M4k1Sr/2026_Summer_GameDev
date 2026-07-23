@@ -49,16 +49,19 @@ void TitleScene::Init(void)
 
 	imgPush_ = resMng_.Load(ResourceManager::SRC::PUSH_SPACE).handleId_;
 
+	imgBackGround_ = resMng_.Load(ResourceManager::SRC::BACKGROUND).handleId_;
+
 	// 定点カメラ
 	sceMng_.GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
 
-	//タイトル檻
-	cage_.SetModel(resMng_.LoadModelDuplicate(
-		ResourceManager::SRC::CAGE));
+	//タイトル牢屋
+	prison_.SetModel(resMng_.LoadModelDuplicate(
+		ResourceManager::SRC::PRISON));
 
-	cage_.scl = { 0.7f,0.7f,0.7f };
-	cage_.pos = { 0.0f, -500.0f,400.0f };
-	cage_.Update();
+	prison_.quaRot = Quaternion::Euler(PRISON_ANGLE);
+	prison_.scl = VGet(PRISON_SCALE, PRISON_SCALE, PRISON_SCALE);
+	prison_.pos = PRISON_POS;
+	prison_.Update();
 
 	//タイトル壁
 	wallImg_ = resMng_.Load(ResourceManager::SRC::WALL).handleId_;
@@ -138,17 +141,23 @@ void TitleScene::Update(void)
 		effect_->Update();
 
 	}
-
 }
 
 void TitleScene::Draw(void)
 {
+	//背景画像
+	DrawRotaGraph(Application::SCREEN_SIZE_X / 2,
+		Application::SCREEN_SIZE_Y / 2,
+		1.0f, 0.0f, imgBackGround_, true);
+
+	// 真上からまっすぐ照らす
+	SetLightDirection(VGet(0.0f, -1.0f, 0.0f));
+
+	// 牢屋モデルを描画する
+	MV1DrawModel(prison_.modelId);
 
 	//プレイヤー
 	MV1DrawModel(player_.modelId);
-
-	//檻
-	MV1DrawModel(cage_.modelId);
 
 	// ポストエフェクト描画
 	effect_->Draw(SceneManager::GetInstance().GetMainScreen());

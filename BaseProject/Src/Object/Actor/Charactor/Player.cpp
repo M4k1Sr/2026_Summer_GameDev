@@ -21,8 +21,9 @@
 #include "../../../Renderer/UIRenderer/Manager/UIManager.h"
 #include "../../../Renderer/UIRenderer/Base/UIBase.h"
 #include "../../../Application.h"
-#include "Player.h"
+#include "Player.h"	
 #include "../../../Manager/ServiceLocator.h"
+#include "../Weapon/ItemAssets/Bomb.h"
 
 Player::Player(void)
 	:
@@ -89,13 +90,13 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
-	if (transform_.pos.x > 5060 &&
-		transform_.pos.x < 5235 &&
-		transform_.pos.z > -790 &&
-		transform_.pos.z < -490)
-	{
-		isClear_ = true;
-	}
+	//if (transform_.pos.x > 5060 &&
+	//	transform_.pos.x < 5235 &&
+	//	transform_.pos.z > -790 &&
+	//	transform_.pos.z < -490)
+	//{
+	//	isClear_ = true;
+	//}
 }
 
 bool Player::GetClearFlag(void) const
@@ -111,6 +112,25 @@ void Player::InitLoad(void)
 	// モデルのロード
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
+
+	// 武器用のコンポジット
+	//weapon_ = std::make_unique<WeaponComposite>();
+
+	WeaponData bombData = {
+		.item = ItemKind::BOMB,
+		.damage = 10.0f,
+		.pos = MV1GetFramePosition(transform_.modelId, 43),
+		.rot = AsoUtility::VECTOR_ZERO,
+		.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
+		.localPos = BOMB_LOCAL_POS,
+		.localRot = BOMB_LOCAL_ROT,
+		.ownerModelId = transform_.modelId,
+		.ownerFrameIndex = 43,
+	};
+
+	//weapon_->Add(std::make_unique<Bomb>(bombData));
+	
+	//weapon_->Load();
 
 }
 
@@ -153,7 +173,7 @@ void Player::InitAnimation(void)
 	animationController_->Add(static_cast<int>(ANIM_TYPE::FAST_RUN), 35.0f, Application::PATH_MODEL + "Player/FastRun.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 40.0f, Application::PATH_MODEL + "Player/Jump.mv1");
 	animationController_->Add(static_cast<int>(ANIM_TYPE::PUSH), 50.0f, Application::PATH_MODEL + "Player/Push.mv1");
-
+	animationController_->Add(static_cast<int>(ANIM_TYPE::THROW), 30.0f, Application::PATH_MODEL + "Player/Throw.mv1");
 	// アニメーション再生
 	animationController_->Play(
 		static_cast<int>(ANIM_TYPE::IDLE), true);
@@ -184,13 +204,12 @@ void Player::UpdateProcess(void)
 	// ギミック処理
 	ProcessPush();
 
+	// アイテム投擲処理
+	ProcessThrow();
+
 }
 
 void Player::UpdateProcessPost(void)
-{
-}
-
-void Player::DrawViewRange(void)
 {
 }
 
@@ -215,9 +234,7 @@ void Player::ProcessMove(void)
 	isDash_ = false;
 	isSlowWalk_ = false;
 
-	// ----------------------------------------------------
-	// 1. 入力処理（キーボード / パッド）
-	// ----------------------------------------------------
+	// 入力処理(キーボード / パッド)
 	if (GetJoypadNum() == 0)
 	{
 		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
@@ -236,9 +253,7 @@ void Player::ProcessMove(void)
 		isDash_ = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 	}
 
-	// ----------------------------------------------------
-	// 2. 移動量・ベクトルの計算（入力がある場合）
-	// ----------------------------------------------------
+	// 移動量・ベクトルの計算
 
 	float inputLength = VSize(dir);
 	bool hasInput = inputLength > 0.0f;
@@ -263,19 +278,17 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
-		// 入力がない（IDLEなど）の時は等速（1.0倍）に戻しておく
+		// 入力がない場合は通常速度に戻しておく
 		animationController_->SetPlaySpeed(1.0f);
 	}
 
-	// ----------------------------------------------------
-	// 3. 動くタイルへの追従と座標の更新
-	// ----------------------------------------------------
+	// 動くタイルへの追従と座標の更新
 	
 	// まず自身の移動量（movePow_）分、座標を進める
 	transform_.pos = VAdd(transform_.pos, movePow_);
 	transform_.pos = VAdd(transform_.pos, VScale(jumpPow_, scnMng_.GetDeltaTime())); // ジャンプ力も反映
 
-	// ★修正ポイント：【ジャンプ中（空中）ではない時だけ】タイルに追従する
+	// タイルに追従する
 	if (!isJump_ && objMng_ != nullptr)
 	{
 		ObjectTile* tile = objMng_->GetTileAt(transform_.pos);
@@ -317,7 +330,6 @@ void Player::ProcessMove(void)
 		}
 		else
 		{
-
 			// 歩きに切り替わった瞬間にダッシュ音を止める
 			if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_DASH))
 			{
@@ -333,7 +345,6 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
-
 		// 停止時は両方確実に止める
 		if (ServiceLocator::GetSound().IsPlaying(SOUND_ID::SE_MOVE))
 		{
@@ -345,9 +356,7 @@ void Player::ProcessMove(void)
 		}
 	}
 
-	// ----------------------------------------------------
-	// 4. アニメーション制御
-	// ----------------------------------------------------
+	//アニメーション制御
 	if (isJump_)
 	{
 		if (currentAnimType_ != static_cast<int>(ANIM_TYPE::JUMP))
@@ -376,10 +385,8 @@ void Player::ProcessJump(void)
 	auto& ins = InputManager::GetInstance();
 	float deltaTime = scnMng_.GetDeltaTime();
 
-	// ----------------------------------------------------
-	// 1. 入力状態の取得
-	// ----------------------------------------------------
-	// 押した瞬間 (Trigger Down)
+	// 入力状態の取得
+	// 押した瞬間
 	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE) ||
 		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
@@ -387,9 +394,7 @@ void Player::ProcessJump(void)
 	bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE) ||
 		ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
-	// ----------------------------------------------------
-	// 2. 初期ジャンプ処理（押した瞬間）
-	// ----------------------------------------------------
+	// 初期ジャンプ処理（押した瞬間）
 	if (isJumpTrg && !isJump_)
 	{
 		ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_JUMP);
@@ -405,9 +410,7 @@ void Player::ProcessJump(void)
 
 	}
 
-	// ----------------------------------------------------
-	// 3. 持続ジャンプ処理（空中での制御）
-	// ----------------------------------------------------
+	// 持続ジャンプ処理
 	if (isJump_)
 	{
 		if (isJumpStay && stepJump_ < TIME_JUMP_INPUT)
@@ -434,18 +437,6 @@ void Player::ProcessPush(void)
 {
 	auto& ins = InputManager::GetInstance();
 
-	// タイルの判定
-	// これデバッグ用です
-	//ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
-
-	//// チートキー
-	//bool cheatKey = ins.IsPress(KEY_INPUT_O);
-	//if (cheatKey) {
-	//	// タライギミック作動
-	//	tarai->SetFlag(true);
-	//}
-
-			
 	// プレイヤーがギミック付近にいる場合
 	if (objMng_ != nullptr)
 	{
@@ -460,7 +451,7 @@ void Player::ProcessPush(void)
 		if (bossGimmick != nullptr)
 		{
 
-			// 持続ジャンプ処理
+			// ギミック処理
 			bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
 				|| ins.IsPadBtnPress(
 					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
@@ -495,6 +486,23 @@ void Player::ProcessPush(void)
 			}
 			
 		}
+	}
+}
+
+// アイテム投擲処理
+void Player::ProcessThrow(void)
+{
+	auto& ins = InputManager::GetInstance();
+
+	// ギミック処理
+	bool isHitKeyNew = ins.IsPress(KEY_INPUT_E)
+		|| ins.IsPadBtnPress(
+			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+
+	if (isHitKeyNew) {
+		// アニメーション再生
+		animationController_->Play(
+			static_cast<int>(ANIM_TYPE::THROW));
 	}
 }
 

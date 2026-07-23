@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "./WeaponComponent.h"
+
 class WeaponComposite : public WeaponComponent
 {
 public:
@@ -23,7 +24,15 @@ public:
 
 private:
 
+	static constexpr float MAX_FALL_SPEED = -10.0f;
+
 	std::vector<std::unique_ptr<WeaponComponent>> children_;
+
+	// ƒWƒƒƒ“ƒv—Ê
+	VECTOR jumpPow_;
+
+	void Gravity(void);
+
 
 };
 

@@ -208,9 +208,9 @@ void BossPixie::UpdateProcess(void)
 	//	health_->TakeDamage(10);
 	//}
 
-	if (CheckHitKey(KEY_INPUT_K)) {
-		ChangeState(STATE::DOWN);
-	}
+	//if (CheckHitKey(KEY_INPUT_K)) {
+	//	ChangeState(STATE::DOWN);
+	//}
 
 
 }
