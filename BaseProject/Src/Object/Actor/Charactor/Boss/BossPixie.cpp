@@ -474,7 +474,6 @@ void BossPixie::UpdateAttackWave(void)
 		if (attackTimer_ >= 50) {
 			if (currentAttack_) {
 				currentAttack_->ExecuteAttack(*this);
-				//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 				ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_ENEMY_FIRE);
 			}
 			attackTimer_ = 0; // タイマーリセット
@@ -533,7 +532,7 @@ void BossPixie::Phase(void)
 	// 処理を始める前に今のフェーズを保存
 	PHASE_STEP oldPhase = phaseStep_;
 
-	// ★【追加】前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
+	// 前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
 	if (damageCnt > lastDamageCnt_)
 	{
 		ChangeState(STATE::DAMAGE);
