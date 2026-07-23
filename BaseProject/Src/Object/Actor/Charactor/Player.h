@@ -2,6 +2,7 @@
 #include "./CharactorBase.h"
 class ObjectManager;
 class ItemManager;
+class Health;
 
 class Player : public CharactorBase
 {
@@ -40,7 +41,7 @@ public:
 	//プレイヤー座標のゲッター
 	bool GetDeadFlag(void);
 
-	void playerDead(void);
+	void PlayerDead(void);
 
 	// ダメージカウンタゲッター
 	int GetCurrentCnt(void) const;
@@ -50,8 +51,14 @@ public:
 
 	void IsClear(void);
 
+<<<<<<< HEAD
 	//ダッシュ判定
 	bool GetDashFlag(void) const { return isDash_; }
+=======
+	// プレイヤーの向き
+	VECTOR GetDir(void) const { return dir_; }
+	void SetDir(VECTOR dir) { dir_ = dir; }
+>>>>>>> m4k
 
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
@@ -94,6 +101,12 @@ private:
 	// アイテムマネージャー
 	ItemManager* itemMng_;
 
+	// ボムデータ
+	WeaponData bombData_;
+
+	// HP管理
+	Health* health_;
+
 	// ギミック動作カウンタ
 	float gimmickCnt_;
 	bool isGimmick_;
@@ -117,6 +130,7 @@ private:
 	// ボム座標
 	VECTOR bombPos_;
 
+<<<<<<< HEAD
 	// プレイヤー座標
 
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
@@ -132,6 +146,14 @@ private:
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
 
+=======
+	// 向き
+	VECTOR dir_;
+
+	//// プレイヤー座標
+	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
+>>>>>>> m4k
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
@@ -185,7 +207,7 @@ private:
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
 
 	// 爆弾モデルの大きさ
-	static constexpr float BOMB_SCL = 1.0f;
+	static constexpr float BOMB_SCL = 2.0f;
 
 	// 爆弾のローカル座標・回転
 	static constexpr VECTOR BOMB_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
@@ -205,13 +227,22 @@ private:
 	// 衝突判定
 	void CollisionReserve(void) override;
 
+	// ダメージを与える
+	void GiveDamage(void);
+
+	// ダメージを受ける
+	void TakeToDamage(void);
+
 	//ゲームクリア判定用のフラグ
 	bool isClear_;
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> m4k
 };
 

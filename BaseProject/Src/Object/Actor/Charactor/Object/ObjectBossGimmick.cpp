@@ -10,8 +10,8 @@
 #include "../../../Collider/ColliderModel.h"
 #include "../../../../Object/Common/AnimationController.h"
 #include "../../../../Application.h"
-#include"./ObjectBase.h"
-#include "ObjectBossGimmick.h"
+#include "./ObjectBase.h"
+#include "./ObjectBossGimmick.h"
 
 ObjectBossGimmick::ObjectBossGimmick(const ObjectBase::ObjectData& data)
 	:

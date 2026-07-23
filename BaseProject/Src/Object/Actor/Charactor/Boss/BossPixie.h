@@ -65,7 +65,8 @@ protected:
 
 private:
 
-	// HPŠÇ—
+	// 
+	// ŠÇ—
 	Health* health_;
 
 	//ƒ‚ƒfƒ‹ƒŒƒ“ƒ_ƒ‰[

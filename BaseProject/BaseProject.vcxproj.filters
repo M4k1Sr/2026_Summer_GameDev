@@ -86,16 +86,32 @@
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
     <ClCompile Include="Src\Object\Actor\StageBase.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
+=======
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
+    <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
+>>>>>>> m4k
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage1.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage2.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Renderer\ModelShader\ModelMaterial.h" />
@@ -171,16 +187,45 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
+<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
+=======
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.h" />
+    <ClInclude Include="Src\Object\UI\UI.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\Clock.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBase.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.h" />
+    <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Base\EffectBase.h" />
+    <ClInclude Include="Src\Renderer\EffectRenderer\Manager\EffectManager.h" />
+    <ClInclude Include="Src\Manager\ServiceLocator.h" />
+    <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Vignette.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBurner.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
+>>>>>>> m4k
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\Stage1.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\Stage2.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

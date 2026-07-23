@@ -82,6 +82,12 @@ protected:
 	// 重力フラグ
 	bool isGravity_;
 
+	// 現在のHP
+	int nowHp_;
+
+	// ダメージを受けたか
+	bool toDamage_;
+
 	// リソースロード
 	virtual void InitLoad(void) override;
 

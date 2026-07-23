@@ -32,7 +32,11 @@ void BossManager::Update(void)
 	// 更新
 	for (auto& boss : bosses_)
 	{
-		boss->Update();
+		// ステージ一致により更新
+		if (boss->GetStageType() == 0 || boss->GetStageType() == currentStageType_)
+		{
+			boss->Update();
+		}
 	}
 }
 
@@ -41,9 +45,12 @@ void BossManager::Draw(void)
 	// 描画
 	for (auto& boss : bosses_)
 	{
-		boss->Draw();
+		// ステージ一致により更新
+		if (boss->GetStageType() == 0 || boss->GetStageType() == currentStageType_)
+		{
+			boss->Draw();
+		}
 	}
-
 }
 
 void BossManager::Release(void)
@@ -124,6 +131,9 @@ void BossManager::LoadCsvData(void)
 		stof(strSplit[idx++])
 		};
 
+		// ステージ別で動かすオブジェクトを設定
+		data.stageType = stoi(strSplit[idx++]);
+
 		// オブジェクト生成
 		Create(data);
 
@@ -151,13 +161,16 @@ BossBase* BossManager::Create(const BossBase::BossData& data)
 
 	switch (data.type)
 	{
-	case BossBase::BOSS_TYPE::PIXIE:
- 		//boss = new BossPixie(data);
-		break;
-	case BossBase::BOSS_TYPE::GOBLIN:
-		boss = new BossGoblin(data);
-		break;
-
+		if (data.stageType == 1) {
+			case BossBase::BOSS_TYPE::PIXIE:
+			boss = new BossPixie(data);
+			break;
+		}
+		if (data.stageType == 2) {
+			case BossBase::BOSS_TYPE::GOBLIN:
+				boss = new BossGoblin(data);
+				break;
+		}
 		// 増える毎に追加
 	}
 

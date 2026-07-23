@@ -35,6 +35,9 @@ public:
 	// 床の座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
 
+	// 針が出ている瞬間
+	bool GetStart(void) const { return isStart_; }
+
 protected:
 
 	// リソースロード
@@ -89,6 +92,9 @@ private:
 
 	// 状態
 	STATE state_;
+
+	// 針が出ている状態
+	bool isStart_;
 
 	// タイマー
 	float moveTimer_;

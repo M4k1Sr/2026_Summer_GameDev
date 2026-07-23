@@ -21,6 +21,7 @@ ObjectTarai::ObjectTarai(const ObjectBase::ObjectData& data)
 	prevPos_(AsoUtility::VECTOR_ZERO),
 	velocity_(AsoUtility::VECTOR_ZERO)
 {
+
 }
 
 ObjectTarai::~ObjectTarai(void)

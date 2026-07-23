@@ -5,10 +5,10 @@
 #include "../Player.h"
 #include "../../../../Manager/SoundManager.h"
 
-
 BossBase::BossBase(const BossBase::BossData& data)
 	:
 	CharactorBase(),
+	data_(data),
 	type_(data.type),
 	stateBase_(0),
 	player_()
