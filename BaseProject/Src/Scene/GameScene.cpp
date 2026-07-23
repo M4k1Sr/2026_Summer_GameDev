@@ -8,16 +8,9 @@
 #include "../Manager/Camera.h"
 #include "../Object/Common/AnimationController.h"
 #include"../Manager/SoundManager.h"
-<<<<<<< HEAD
 #include "../Object/Actor/StageBase.h"
 #include "../Object/Actor/Stage1.h"
 #include "../Object/Actor/Stage2.h"
-=======
-#include "../Object/Actor/Stage/StageBase.h"
-#include "../Object/Actor/Stage/Stage1.h"
-#include "../Object/Actor/Stage/Stage2.h"
->>>>>>> m4k
-#include "../Object/Actor/Stage.h"
 #include"../Renderer/EffectRenderer/Manager/EffectManager.h"
 #include "../Object/Actor/SkyDome.h"
 #include"../Ranking/GameData.h"
@@ -74,10 +67,6 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-<<<<<<< HEAD
-=======
-
->>>>>>> m4k
 	// オブジェクト初期化
 	objMng_ = new ObjectManager();
 	objMng_->Init();
@@ -225,31 +214,20 @@ void GameScene::Update(void)
 	// ポーズ画面中はゲームを静止させる
 	if (!isPause_)
 	{
-<<<<<<< HEAD
-		//  1. まずフェードの更新を行う
-		bool isFadeFinished = UpdateFade();
 
-		//  2. フェードアウト完了時のステージ切り替え処理
-=======
 		// ★ 1. まずフェードの更新を行う
 		bool isFadeFinished = UpdateFade();
 
 		// ★ 2. フェードアウト完了時のステージ切り替え処理
->>>>>>> m4k
 		if (isFadeFinished && fadeAlpha_ == 255)
 		{
 			if (stageState_ == StageState::STAGE_1)
 			{
-<<<<<<< HEAD
-				// 1. 旧ステージモデルを安全に削除
-=======
-				// 1. 旧ステージモデルを削除
->>>>>>> m4k
+
 				if (stage_ != nullptr)
 				{
 					stage_->Release();
 					delete stage_;
-<<<<<<< HEAD
 					stage_ = nullptr; // deleteした後はnullptrを入れておくのが安全
 				}
 
@@ -275,7 +253,6 @@ void GameScene::Update(void)
 				camera->AddHitCollider(stageCollider);
 
 				// ステージ状態をSTAGE_2にして、フェードインを開始する
-=======
 					stage_ = nullptr;
 				}
 
@@ -316,19 +293,14 @@ void GameScene::Update(void)
 						}
 					}
 				}
-
 				// ステージ状態更新＆フェードイン開始
->>>>>>> m4k
 				stageState_ = StageState::STAGE_2;
 				StartFade(FadeState::FADE_IN, 5);
 			}
 		}
 
-<<<<<<< HEAD
+
 		// 3. 【重要】フェード中（NONE 以外）は、以下のゲーム本編の更新をスキップする！
-=======
-		// ★ 3. 【重要】フェード中（NONE 以外）は、以下のゲーム本編の更新をスキップする！
->>>>>>> m4k
 		if (fadeState_ != FadeState::NONE)
 		{
 			// フェード中（暗転・明転アニメーション中）はゲームを動かさない
@@ -343,14 +315,12 @@ void GameScene::Update(void)
 		clearTime_++;
 		SetMouseDispFlag(false);
 
-<<<<<<< HEAD
+
 		skyDome_->Update();
 		player_->Update();
 		//ui_->Update();
-=======
 		//skyDome_->Update();
 		player_->Update();
->>>>>>> m4k
 
 		switch (stageState_)
 		{
@@ -363,15 +333,11 @@ void GameScene::Update(void)
 			break;
 		case GameScene::StageState::STAGE_2:
 			stage_->Update();
-<<<<<<< HEAD
-			break;
-		}
-=======
 			objMng_->Update();
 			bossMng_->Update();
 			break;
 		}		
->>>>>>> m4k
+
 
 		clockUI_->Update();
 
@@ -390,11 +356,7 @@ void GameScene::Update(void)
 		}
 		else
 		{
-<<<<<<< HEAD
-			// 2. タライが落ちていない場合は、これまでのロックオン判定を行う
-=======
 			// ★2. ステージ別に追従するボスを切り替える
->>>>>>> m4k
 			const std::vector<BossBase*>& bosses = bossMng_->GetBosses();
 			BossBase* targetBoss = nullptr;
 
@@ -443,9 +405,6 @@ void GameScene::Update(void)
 		
 		// ゲームクリア判定
 		IsClear();
-	}
-
-
 	//ゲームオーバー判定
 	isEnd_ = clockUI_->GetIsGameOver();
 	isEnd_ = player_->GetDeadFlag();
@@ -472,8 +431,6 @@ void GameScene::Draw(void)
 		objMng_->Draw();
 		bossMng_->Draw();
 		attackMng_->Draw();
-<<<<<<< HEAD
-		//DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f), 0.5f, 0.5f, 400.0f, 0.0f, goalImg_, TRUE);
 		break;
 	case GameScene::StageState::STAGE_2:
 		stage_->Draw();
@@ -504,15 +461,6 @@ void GameScene::Draw(void)
 
 	// 攻撃描画
 	attackMng_->Draw();
-=======
-		break;
-	case GameScene::StageState::STAGE_2:
-		stage_->Draw();
-		objMng_->Draw();
-		bossMng_->Draw();
-		break;
-	}
->>>>>>> m4k
 
 	// プレイヤー描画
 	player_->Draw();	
@@ -544,12 +492,6 @@ void GameScene::Draw(void)
 	//カメラのデバッグ用座標表示
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->DrawDebug();
-
-<<<<<<< HEAD
-	//ポーズ画面
-=======
-	////ポーズ画面
->>>>>>> m4k
 	IsPause();
 	
 }
@@ -724,27 +666,7 @@ int GameScene::GetScore(void)
 void GameScene::IsClear(void)
 {
 
-	//isClear_ = player_->GetClearFlag();
-
-	//if(isClear_ && bossMng_->IsBossDead())
-<<<<<<< HEAD
-	//switch (stageState_)
-	//{
-	//case StageState::STAGE_1:
-	//	isClear_ = player_->GetClearFlag();
-	//	if (isClear_)
-	//	{
-	//		isClear_ = false;
-	//		GameData::GetInstance().clearTime = clearTime_;
-
-	//		// ★ ステージ切り替えのためのフェードアウトを開始
-	//		StartFade(FadeState::FADE_OUT, 5);
-	//	}
-	//	break;
-
-	//case StageState::STAGE_2:
-	//	break;
-	//}
+	
 
 }
 
@@ -762,25 +684,25 @@ bool GameScene::UpdateFade(void)
 
 	if (fadeState_ == FadeState::FADE_OUT)
 	{
-=======
-	switch (stageState_)
-	{
-	case StageState::STAGE_1:
-		isClear_ = player_->GetClearFlag();
-		if (isClear_)
+		switch (stageState_)
 		{
-			isClear_ = false;
-			GameData::GetInstance().clearTime = clearTime_;
+		case StageState::STAGE_1:
+			isClear_ = player_->GetClearFlag();
+			if (isClear_)
+			{
+				isClear_ = false;
+				GameData::GetInstance().clearTime = clearTime_;
 
-			// ステージ切り替えのためのフェードアウトを開始
-			StartFade(FadeState::FADE_OUT, 5);
+				// ステージ切り替えのためのフェードアウトを開始
+				StartFade(FadeState::FADE_OUT, 5);
+			}
+			break;
+
+		case StageState::STAGE_2:
+			break;
 		}
-		break;
 
-	case StageState::STAGE_2:
-		break;
 	}
-
 }
 
 void GameScene::StartFade(FadeState state, int speed)
@@ -797,7 +719,6 @@ bool GameScene::UpdateFade(void)
 
 	if (fadeState_ == FadeState::FADE_OUT)
 	{
->>>>>>> m4k
 		fadeAlpha_ += fadeSpeed_;
 		if (fadeAlpha_ >= 255)
 		{
@@ -816,7 +737,8 @@ bool GameScene::UpdateFade(void)
 			return true; // フェードイン完了
 		}
 	}
-	return false;
+
+	return false; // フェード中
 }
 
 void GameScene::DrawFade(void) const

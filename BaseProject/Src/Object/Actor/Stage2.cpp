@@ -1,7 +1,7 @@
 #include "Stage2.h"
-#include "../../Manager/ResourceManager.h"
-#include "../../Manager/SoundManager.h"
-#include "../../Manager/ServiceLocator.h"
+#include "../../../Manager/ResourceManager.h"
+#include "../../../Manager/SoundManager.h"
+#include "../../../Manager/ServiceLocator.h"
 
 void Stage2::InitLoad(void)
 {
@@ -11,8 +11,8 @@ void Stage2::InitLoad(void)
 
 void Stage2::InitTransform(void)
 {
-	transform_.scl = VGet(0.1f, 0.1f, 0.1f);
-	transform_.pos = VGet(0.0f, -100.0f, 0.0f);
+	transform_.scl = SECOND_STAGE_SCALE;
+	transform_.pos = MAIN_STAGE_POS;
 	transform_.Update();
 }
 

@@ -51,14 +51,14 @@ public:
 
 	void IsClear(void);
 
-<<<<<<< HEAD
+
 	//ダッシュ判定
 	bool GetDashFlag(void) const { return isDash_; }
-=======
+
 	// プレイヤーの向き
 	VECTOR GetDir(void) const { return dir_; }
 	void SetDir(VECTOR dir) { dir_ = dir; }
->>>>>>> m4k
+
 
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
@@ -130,7 +130,6 @@ private:
 	// ボム座標
 	VECTOR bombPos_;
 
-<<<<<<< HEAD
 	// プレイヤー座標
 
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
@@ -146,14 +145,10 @@ private:
 	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
 	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
 
-=======
+
 	// 向き
 	VECTOR dir_;
 
-	//// プレイヤー座標
-	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
->>>>>>> m4k
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
@@ -238,11 +233,6 @@ private:
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> m4k
 };
 

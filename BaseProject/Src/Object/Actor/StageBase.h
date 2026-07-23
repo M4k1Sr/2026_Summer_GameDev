@@ -1,8 +1,9 @@
 #pragma once
-#include "ActorBase.h"
-#include "../../Object/Collider/ColliderModel.h"
+#include "../ActorBase.h"
+#include "../../../Object/Collider/ColliderModel.h"
 #include <string>
 #include <vector>
+#include "../Collider/ColliderBase.h"
 
 class StageBase : public ActorBase
 {
@@ -37,4 +38,5 @@ protected:
 
     // 子クラスからアクセスしやすいようにコライダー設定用の共通関数を作っておく
     void SetupModelCollider(ColliderBase::TAG tag, const std::vector<std::string>& excludeFrames, const std::vector<std::string>& targetFrames);
+
 };
