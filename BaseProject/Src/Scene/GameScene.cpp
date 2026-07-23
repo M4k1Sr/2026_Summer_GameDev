@@ -228,8 +228,9 @@ void GameScene::Update(void)
 				VECTOR stage2StartPos = VGet(-800.0f, 0.0f, 700.0f);
 				player_->SetPosition(stage2StartPos);
 
-				// 4. ObjectManager のステージ番号を 2 に更新
+				// 4. ObjectManager,BossManager のステージ番号を 2 に更新
 				objMng_->SetCurrentStage(2);
+				bossMng_->SetCurrentStage(2);
 
 				// ★5. プレイヤーとカメラの古いコライダー判定を一旦全消去！
 				player_->ClearHitCollider();
