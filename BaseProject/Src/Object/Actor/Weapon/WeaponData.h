@@ -74,7 +74,8 @@ struct WeaponData {
 	int modelId_ = -1;	// モデルID
 	int ownerModelId = -1;     // 持ち主のモデルID
 	int ownerFrameIndex = -1;  // 追従するフレーム番号
-	float speed = 3.0f;
+	float speed = 3.0f;		// 速度
+	float dmgRange = 0.0f;	// Damage範囲
 
 
 	// 武器データをゲーム別に追加

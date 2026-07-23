@@ -92,8 +92,8 @@ void Bomb::ThrowStart(void)
 	forward = VNorm(forward);
 
 	// ④ 初速ベクトル（jumpPow_）の計算
-	float throwSpeed = 300.0f; // 前方への飛翔スピード
-	float upPower = 600.0f; // 山なりに上げるための上方向の力
+	float throwSpeed = 400.0f; // 前方への飛翔スピード
+	float upPower = 700.0f; // 山なりに上げるための上方向の力
 
 	// jumpPow_ に「前方の力」と「上方向の力」を合成してセット
 	jumpPow_ = VAdd(VScale(forward, throwSpeed), VGet(0.0f, upPower, 0.0f));

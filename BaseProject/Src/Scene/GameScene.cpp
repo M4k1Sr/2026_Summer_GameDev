@@ -225,7 +225,7 @@ void GameScene::Update(void)
 				stage_->Init();
 
 				// 3. プレイヤーの位置調整
-				VECTOR stage2StartPos = VGet(-800.0f, 0.0f, 700.0f);
+				VECTOR stage2StartPos = VGet(-1800.0f, 0.0f, -3380.0f);
 				player_->SetPosition(stage2StartPos);
 
 				// 4. ObjectManager,BossManager のステージ番号を 2 に更新

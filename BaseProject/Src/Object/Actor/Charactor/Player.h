@@ -129,8 +129,8 @@ private:
 	VECTOR dir_;
 
 	//// プレイヤー座標
-	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
-	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
+	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
@@ -203,6 +203,9 @@ private:
 
 	// 衝突判定
 	void CollisionReserve(void) override;
+
+	// ダメージを与える
+	void GiveDamage(void);
 
 	// ダメージを受ける
 	void TakeToDamage(void);

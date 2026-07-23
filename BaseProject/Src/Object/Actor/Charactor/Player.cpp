@@ -92,7 +92,7 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
-	if (CheckHitKey(KEY_INPUT_C))
+	if (currentCnt_ == 3)
 	{
 		isClear_ = true;
 	}
@@ -126,6 +126,7 @@ void Player::InitLoad(void)
 		.localRot = BOMB_LOCAL_ROT,
 		.ownerModelId = transform_.modelId,
 		.ownerFrameIndex = 43,
+		.dmgRange = 50.0f
 	};
 
 	weapon_->Add(std::make_unique<Bomb>(bombData_));
@@ -225,7 +226,6 @@ void Player::UpdateProcess(void)
 
 		return;
 	}
-
 }
 
 void Player::UpdateProcessPost(void)
@@ -465,7 +465,6 @@ void Player::ProcessPush(void)
 
 		//// タイルの判定
 		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
-		ObjectBossCage* bossCage = objMng_->GetBossCage(transform_.pos);
 
 		if (bossGimmick != nullptr)
 		{
@@ -497,11 +496,6 @@ void Player::ProcessPush(void)
 					if (tarai) {
 						tarai->SetFlag(true);
 					}
-
-					// ボスケージ作動
-					if (bossCage && currentCnt_ == 5){
-						bossCage->SetFlag(true);
-					}
 				}
 				else {
 					bossGimmick->SetFlag(false);
@@ -510,7 +504,7 @@ void Player::ProcessPush(void)
 			else {
 				gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
 			}
-			
+
 		}
 	}
 }
@@ -531,7 +525,6 @@ void Player::ProcessThrow(void)
 			static_cast<int>(ANIM_TYPE::THROW));
 	}
 }
-
 void Player::CollisionReserve(void)
 {
 	// アニメーションごとの線分調整
