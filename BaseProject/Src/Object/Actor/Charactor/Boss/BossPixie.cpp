@@ -532,7 +532,7 @@ void BossPixie::Phase(void)
 	// 処理を始める前に今のフェーズを保存
 	PHASE_STEP oldPhase = phaseStep_;
 
-	// ★【追加】前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
+	// 前のフレームよりカウントが増えていたら、ダメージ状態へ遷移
 	if (damageCnt > lastDamageCnt_)
 	{
 		ChangeState(STATE::DAMAGE);

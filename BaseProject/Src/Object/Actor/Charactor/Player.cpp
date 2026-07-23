@@ -100,6 +100,15 @@ void Player::IsClear(void)
 	{
 		isClear_ = true;
 	}
+	
+	if (currentCnt_ == 6) {
+		gameClear_ = true;
+	}
+}
+
+bool Player::IsGameClear(void)
+{
+	return gameClear_;
 }
 
 bool Player::GetClearFlag(void) const
@@ -116,26 +125,26 @@ void Player::InitLoad(void)
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
 
-	// 武器用のコンポジット
-	weapon_ = std::make_unique<WeaponComposite>();
+	//// 武器用のコンポジット
+	//weapon_ = std::make_unique<WeaponComposite>();
 
-	bombData_ = {
-		.item = ItemKind::BOMB,
-		.damage = 10.0f,
-		.pos = MV1GetFramePosition(transform_.modelId, 43),
-		.rot = AsoUtility::VECTOR_ZERO,
-		.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
-		.dir = dir_,
-		.localPos = BOMB_LOCAL_POS,
-		.localRot = BOMB_LOCAL_ROT,
-		.ownerModelId = transform_.modelId,
-		.ownerFrameIndex = 43,
-		.dmgRange = 50.0f
-	};
+	//bombData_ = {
+	//	.item = ItemKind::BOMB,
+	//	.damage = 10.0f,
+	//	.pos = MV1GetFramePosition(transform_.modelId, 43),
+	//	.rot = AsoUtility::VECTOR_ZERO,
+	//	.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
+	//	.dir = dir_,
+	//	.localPos = BOMB_LOCAL_POS,
+	//	.localRot = BOMB_LOCAL_ROT,
+	//	.ownerModelId = transform_.modelId,
+	//	.ownerFrameIndex = 43,
+	//	.dmgRange = 50.0f
+	//};
 
-	weapon_->Add(std::make_unique<Bomb>(bombData_));
-	
-	weapon_->Load();
+	//weapon_->Add(std::make_unique<Bomb>(bombData_));
+	//
+	//weapon_->Load();
 
 }
 
@@ -198,7 +207,7 @@ void Player::InitPost(void)
 
 void Player::UpdateProcess(void)
 {
-	isGravity_ = false;
+	isGravity_ = true;
 
 	// ボムの向き
 	bombData_.dir = dir_;
@@ -218,18 +227,15 @@ void Player::UpdateProcess(void)
 	// ギミック処理
 	ProcessPush();
 
-	// アイテム投擲処理
-	ProcessThrow();
+	//// アイテム投擲処理
+	//ProcessThrow();
 
-	// ダメージ処理
-	TakeToDamage();
+	//// ダメージ判定
+	//if (toDamage_){
+	//	health_->TakeDamage(1);
 
-	// ダメージ判定
-	if (toDamage_){
-		health_->TakeDamage(1);
-
-		return;
-	}
+	//	return;
+	//}
 }
 
 void Player::UpdateProcessPost(void)
@@ -583,23 +589,4 @@ void Player::CollisionReserve(void)
 	}
 }
 
-void Player::TakeToDamage(void)
-{
-	auto& ins = InputManager::GetInstance();
-
-	// プレイヤーがギミック針床付近にいる場合
-	if (objMng_ != nullptr)
-	{
-
-		// 針床ギミック
-		NdlFloor* ndlFloor = objMng_->GetNdl(transform_.pos);
-
-		if (ndlFloor != nullptr) {
-			if (ndlFloor->GetStart()) {
-				toDamage_ = true;
-			}
-		}
-	}
-
-}
 

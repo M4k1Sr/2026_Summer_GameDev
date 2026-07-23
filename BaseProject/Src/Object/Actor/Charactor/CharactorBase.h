@@ -95,12 +95,6 @@ protected:
 	virtual void UpdateProcess(void) = 0;
 	virtual void UpdateProcessPost(void) = 0;
 
-	//// õ“G
-	//virtual void Search(void) = 0;
-
-	//// ƒvƒŒƒCƒ„[‚ğ’‹‚·‚é
-	//virtual void LookPlayer(void) = 0;
-
 	//‹–ì•`‰æ
 	virtual void DrawViewRange(void) = 0;
 

@@ -49,7 +49,11 @@ public:
 	//ゲームクリア判定
 	bool GetClearFlag(void) const;
 
+	// 1stStageクリア判定
 	void IsClear(void);
+
+	// ゲームクリア判定
+	bool IsGameClear(void);
 
 	// プレイヤーの向き
 	VECTOR GetDir(void) const { return dir_; }
@@ -129,11 +133,12 @@ private:
 	VECTOR dir_;
 
 	//// プレイヤー座標
-	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
-	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
+	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
+
 	// プレイヤーローカル角度
 	static constexpr VECTOR PLAYER_LOCAL_ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
@@ -204,14 +209,11 @@ private:
 	// 衝突判定
 	void CollisionReserve(void) override;
 
-	// ダメージを与える
-	void GiveDamage(void);
-
-	// ダメージを受ける
-	void TakeToDamage(void);
-
-	//ゲームクリア判定用のフラグ
+	// 1stStageクリア判定用のフラグ
 	bool isClear_;
+
+	// 2ndStageクリア判定用のフラグ
+	bool gameClear_;
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;

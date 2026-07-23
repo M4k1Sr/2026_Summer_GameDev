@@ -607,6 +607,9 @@ void GameScene::IsClear(void)
 		break;
 
 	case StageState::STAGE_2:
+		if (player_->IsGameClear()) {
+			sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMECLEAR);
+		}
 		break;
 	}
 
