@@ -375,8 +375,6 @@ void GameScene::Draw(void)
 	// オブジェクト描画
 	objMng_->Draw();
 
-<<<<<<< HEAD
-=======
 	//デバッグ用ゴール
 	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
 		0.5f,                           // 中心X
@@ -392,7 +390,6 @@ void GameScene::Draw(void)
 	// 攻撃描画
 	attackMng_->Draw();
 
->>>>>>> origin/m4k
 	// プレイヤー描画
 	player_->Draw();	
 

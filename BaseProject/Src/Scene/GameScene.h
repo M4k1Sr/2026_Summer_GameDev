@@ -17,6 +17,7 @@ class ItemManager;
 class SoundManager;
 class UIManager;
 class EffectManager;
+class Transform;
 
 class GameScene : public SceneBase
 {
@@ -115,13 +116,11 @@ private:
 	//ŽžŒv‚ÌUI
 	Clock* clockUI_;
 
-	//Item
-	ItemManager* itemMng_;
 
 
 	
 	// ŽžŒv
-	Transform clock_;
+	//Transform clock_;
 	
 	bool isPause_;
 	int pauseImg_;

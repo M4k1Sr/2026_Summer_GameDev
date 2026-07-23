@@ -114,7 +114,7 @@ void Player::InitLoad(void)
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
 
 	// 武器用のコンポジット
-	weapon_ = std::make_unique<WeaponComposite>();
+	//weapon_ = std::make_unique<WeaponComposite>();
 
 	WeaponData bombData = {
 		.item = ItemKind::BOMB,
@@ -128,9 +128,9 @@ void Player::InitLoad(void)
 		.ownerFrameIndex = 43,
 	};
 
-	weapon_->Add(std::make_unique<Bomb>(bombData));
+	//weapon_->Add(std::make_unique<Bomb>(bombData));
 	
-	weapon_->Load();
+	//weapon_->Load();
 
 }
 

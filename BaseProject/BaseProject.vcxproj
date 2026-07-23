@@ -24,7 +24,6 @@
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
@@ -106,12 +105,10 @@
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
-    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBossCage.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
@@ -186,7 +183,6 @@
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />

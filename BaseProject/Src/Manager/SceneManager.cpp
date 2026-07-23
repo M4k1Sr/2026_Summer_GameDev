@@ -63,7 +63,7 @@ void SceneManager::Init(void)
 	ServiceLocator::GetSound().LoadBank(BANK_ID::COMMON);
 
 	// ‰ŠúƒV[ƒ“‚Ìİ’è
-	DoChangeScene(SCENE_ID::STAGE_1);
+	DoChangeScene(SCENE_ID::TITLE);
 
 }
 

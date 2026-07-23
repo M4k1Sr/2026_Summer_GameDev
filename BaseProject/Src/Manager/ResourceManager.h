@@ -18,6 +18,7 @@ public:
 		SECOND_STAGE,
 		SKY_DOME,
 		PLAYER_SHADOW,
+		BACKGROUND,
 
 		// オブジェクト
 		OBJECT_BOX,
@@ -30,6 +31,7 @@ public:
 		CONVEYER,
 		CAGE,
 		BREAK_CAGE,
+		PRISON,
 
 
 		// UI

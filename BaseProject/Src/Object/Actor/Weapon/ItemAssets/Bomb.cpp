@@ -18,9 +18,9 @@ Bomb::Bomb(const WeaponData& data)
 void Bomb::Load(void)
 {
 	// 爆弾リソースロード
-	if (data_.item == ItemKind::BOMB) {
-		data_.modelId_ = resMng_.LoadModelDuplicate(ResourceManager::SRC::BOMB);
-	}
+	//if (data_.item == ItemKind::BOMB) {
+	//	data_.modelId_ = resMng_.LoadModelDuplicate(ResourceManager::SRC::BOMB);
+	//}
 }
 
 // 更新

@@ -36,6 +36,10 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::IMG, PATH_IMG + "Title.png");
 	resourcesMap_.emplace(SRC::TITLE, res);
 	
+	// タイトル背景画像
+	res = new RES(RES_T::IMG, PATH_IMG + "BackGroundTitle.png");
+	resourcesMap_.emplace(SRC::BACKGROUND, res);
+	
 	// タイトルPush画像
 	res = new RES(RES_T::IMG, PATH_IMG + "PushSpace.png");
 	resourcesMap_.emplace(SRC::PUSH_SPACE, res);
@@ -121,9 +125,13 @@ void ResourceManager::Init(void)
 	res = new RES(RES_T::MODEL, PATH_MDL + "Object/Item/Key.mv1");
 	resourcesMap_.emplace(SRC::KEY, res);
 
-	//タイトル檻
-	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Cage.mv1");
-	resourcesMap_.emplace(SRC::CAGE, res);
+	////タイトル檻
+	//res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Cage.mv1");
+	//resourcesMap_.emplace(SRC::CAGE, res);
+
+	//タイトル牢屋
+	res = new RES(RES_T::MODEL, PATH_MDL + "Stage/Title/Prison.mv1");
+	resourcesMap_.emplace(SRC::PRISON, res);
 
 	//壁
 	res = new RES(RES_T::IMG, PATH_IMG + "wall.png");

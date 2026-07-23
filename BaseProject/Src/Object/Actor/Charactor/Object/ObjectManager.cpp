@@ -159,9 +159,9 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::BREAK_CAGE:
 		object = new ObjectCage(data);
 		break;
-	case ObjectBase::TYPE::BOSS_CAGE:
-		//object = new ObjectBossCage(data);
-		break;
+	//case ObjectBase::TYPE::BOSS_CAGE:
+	//	//object = new ObjectBossCage(data);
+	//	break;
 		// ëùÇ¶ÇÈñàÇ…í«â¡
 	}
 

@@ -49,8 +49,9 @@ private:
 	// 回転惑星
 	Transform rollPlanet_;
 
-	//タイトル檻
-	Transform cage_;
+	//タイトル牢屋
+	//Transform cage_;
+	Transform prison_;
 
 	// ニンゲンz
 	Transform player_;
@@ -82,13 +83,21 @@ private:
 	static constexpr VECTOR ROLL_PLANET_ANGLE = { 90.0f * DX_PI_F / 180.0f, 0.0f, 0.0f};
 
 
+	// 牢屋のスケール
+	static constexpr float PRISON_SCALE = 0.7f;
+	// 牢屋座標
+	static constexpr VECTOR PRISON_POS = { 0.0f, -600.0f,	0.0f };
+	// 牢屋の角度
+	static constexpr VECTOR PRISON_ANGLE = { 0.0f , 90.0f * DX_PI_F / 180.0f, 20.0f * DX_PI_F / 180.0f };
+	static constexpr VECTOR PRISON_LOCAL_ANGLE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
+
 	// ニンゲンのスケール
-	static constexpr float PLAYER_SCALE = 4.5f;
+	static constexpr float PLAYER_SCALE = 3.0f;
 	// ニンゲン座標
-	static constexpr VECTOR PLAYER_POS = { -100.0f, -500.0f,400.0f };
+	static constexpr VECTOR PLAYER_POS = { -450.0f, -500.0f, 500.0f };
 	// ニンゲンの角度
-	static constexpr VECTOR PLAYER_ANGLE = {0.0f,  150.0f * DX_PI_F / 180.0f, 0.0f };
-	static constexpr VECTOR PLAYER_LOCAL_ANGLE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
+	static constexpr VECTOR PLAYER_ANGLE = { 0.0f, 0.0f, 0.0f };
+	static constexpr VECTOR PLAYER_LOCAL_ANGLE = { 0.0f, 0.0f, 0.0f };
 
 	bool isPause_;
 	int pauseImg_;
@@ -105,6 +114,9 @@ private:
 
 	// タイトル画像
 	int imgTitle_;
+
+	//タイトル背景画像
+	int imgBackGround_;
 
 	// プッシュ画像
 	int imgPush_;
