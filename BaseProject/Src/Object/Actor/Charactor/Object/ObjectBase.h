@@ -18,6 +18,7 @@ public:
 		BURNER,
 		CONVEYER,
 		BREAK_CAGE,
+		BOSS_CAGE,
 		MAX,
 	};
 
@@ -28,6 +29,7 @@ public:
 		ObjectBase::TYPE type;
 		VECTOR defaultPos;
 		int moveType;
+		int stageType;
 	};
 
 	// コンストラクタ
@@ -46,6 +48,9 @@ public:
 	// オブジェクトマネージャのセッター
 	void SetObjectManager(ObjectManager* objMng) { objMng_ = objMng; } 
 
+	// ステージタイプ
+	int GetStageType(void) const { return data_.stageType; }
+
 protected:
 
 	// オブジェクトマネージャ
@@ -59,6 +64,9 @@ protected:
 
 	// 状態管理(更新ステップ)
 	std::function<void(void)> stateUpdate_;
+
+	// オブジェクトデータ
+	ObjectData data_;
 
 	// リソースロード
 	void InitLoad(void) override {}

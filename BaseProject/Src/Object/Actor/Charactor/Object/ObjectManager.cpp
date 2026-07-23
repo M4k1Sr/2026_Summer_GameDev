@@ -11,6 +11,7 @@
 #include "./ObjectBurner.h"
 #include "./ObjectConveyer.h"
 #include "./ObjectCage.h"
+#include "./ObjectBossCage.h"
 #include "./ObjectArray.h"
 #include "./ObjectManager.h"
 
@@ -34,7 +35,11 @@ void ObjectManager::Update(void)
 	// 更新
 	for (auto& object : objects_)
 	{
-		object->Update();
+		// ステージ一致により更新
+		if (object->GetStageType() == 0 || object->GetStageType() == currentStageType_)
+		{
+			object->Update();
+		}
 	}
 }
 
@@ -43,7 +48,11 @@ void ObjectManager::Draw(void)
 	// 描画
 	for (auto& object : objects_)
 	{
-		object->Draw();
+		// ステージ一致により描画
+		if (object->GetStageType() == 0 || object->GetStageType() == currentStageType_)
+		{
+			object->Draw();
+		}
 	}
 
 }
@@ -108,7 +117,7 @@ void ObjectManager::LoadCsvData(void)
 		data.id = stoi(strSplit[idx++]);
 
 		// 種別
-		data.type = static_cast<ObjectBase::TYPE>(stoi(strSplit[idx++]));
+ 		data.type = static_cast<ObjectBase::TYPE>(stoi(strSplit[idx++]));
 
 		// 初期座標
 		data.defaultPos =
@@ -120,6 +129,9 @@ void ObjectManager::LoadCsvData(void)
 		
 		// 移動タイプ
 		data.moveType = stoi(strSplit[idx++]);
+
+		// ステージ別で動かすオブジェクトを設定
+		data.stageType = stoi(strSplit[idx++]);
 
 		// オブジェクト生成
 		Create(data);
@@ -148,7 +160,7 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		object = new ObjectTarai(data);
 		break;
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
-		//object = new NdlFloor(data);
+		object = new NdlFloor(data);
 		break;
 	case ObjectBase::TYPE::BURNER:
 		//object = new Burner(data);
@@ -159,9 +171,16 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 	case ObjectBase::TYPE::BREAK_CAGE:
 		object = new ObjectCage(data);
 		break;
+<<<<<<< HEAD
 	//case ObjectBase::TYPE::BOSS_CAGE:
 	//	//object = new ObjectBossCage(data);
 	//	break;
+=======
+	case ObjectBase::TYPE::BOSS_CAGE:
+		//object = new ObjectBossCage(data);
+		break;
+
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 		// 増える毎に追加
 	}
 
@@ -180,6 +199,12 @@ ObjectTile* ObjectManager::GetTileAt(const VECTOR& pos)
 
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tile = dynamic_cast<ObjectTile*>(object))
 		{
 			VECTOR tilePos = tile->GetPos();
@@ -205,6 +230,12 @@ ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto bossGimmick = dynamic_cast<ObjectBossGimmick*>(object))
 		{
 			VECTOR bossGimmickPos = bossGimmick->GetPos();
@@ -232,6 +263,12 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
 		{
 			VECTOR taraiPos = tarai->GetPos();
@@ -254,11 +291,104 @@ ObjectTarai* ObjectManager::GetTarai(const VECTOR& pos)
 
 }
 
+// ボス用の檻
+ObjectBossCage* ObjectManager::GetBossCage(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
+		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
+		{
+			VECTOR taraiPos = tarai->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = taraiPos.x - pos.x;
+			float dz = taraiPos.z - pos.z;
+
+			float distXZ = dx * dx + dz * dz;
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 100000000.0f)
+			{
+				return tarai;
+			}
+		}
+	}
+
+	return nullptr;
+
+}
+
+NdlFloor* ObjectManager::GetNdl(const VECTOR& pos)
+{
+	for (auto& object : objects_)
+	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
+		if (auto ndl = dynamic_cast<NdlFloor*>(object))
+		{
+			ndl->GetStart();
+
+			VECTOR ndlPos = ndl->GetPos();
+
+			// XZ平面のみで距離計算
+			float dx = ndlPos.x - pos.x;
+			float dz = ndlPos.z - pos.z;
+			float distXZ = sqrtf(dx * dx + dz * dz);
+
+			// XZの範囲内ならOKとする（高さYは無視）
+			if (distXZ < 130.0f)
+			{
+				return ndl;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
 bool ObjectManager::IsTaraiFalling(void)
 {
 	for (auto& object : objects_)
 	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
 		if (auto tarai = dynamic_cast<ObjectTarai*>(object))
+		{
+			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
+			if (tarai->IsCameraFocusing())
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool ObjectManager::IsCageFalling(void)
+{
+	for (auto& object : objects_)
+	{
+		// ステージ番号と一致しないものはスキップ
+		if (object->GetStageType() != 0 && object->GetStageType() != currentStageType_)
+		{
+			continue;
+		}
+
+		if (auto tarai = dynamic_cast<ObjectBossCage*>(object))
 		{
 			// ★ isGimmick_ だけでなく、タイマーが残っている間も true にする
 			if (tarai->IsCameraFocusing())

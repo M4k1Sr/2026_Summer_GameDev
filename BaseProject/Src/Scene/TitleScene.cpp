@@ -32,7 +32,6 @@ TitleScene::TitleScene(void)
 	wallImg_(-1),
 	isBgmPlay_(false),
 	pauseSelect_(PauseSelect::CONTINUE),
-	angle(0.0f),
 	SceneBase()
 {
 }
@@ -129,9 +128,6 @@ void TitleScene::Update(void)
 		rollPlanet_.quaRot = rollPlanet_.quaRot.Mult(
 			Quaternion::Euler(0.0f, 0.0f, AsoUtility::Deg2RadF(-1.0f)));
 
-		//タイトルを不気味に
-		angle = sinf(GetNowCount() * 0.0015f) * 0.5f;
-
 		rollPlanet_.Update();
 
 		animationController_->Update();
@@ -141,6 +137,12 @@ void TitleScene::Update(void)
 		effect_->Update();
 
 	}
+<<<<<<< HEAD
+=======
+
+	
+
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 }
 
 void TitleScene::Draw(void)

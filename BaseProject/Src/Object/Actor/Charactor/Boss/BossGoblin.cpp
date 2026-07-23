@@ -207,6 +207,7 @@ void BossGoblin::UpdateProcess(void)
 	stateUpdate_();
 
 	UpdateProcessPost();
+
 }
 
 void BossGoblin::UpdateProcessPost(void)
@@ -455,7 +456,7 @@ void BossGoblin::ChangeStateDamage(void)
 void BossGoblin::ChangeStateDown(void)
 {
 	animationController_->Play(
-		static_cast<int>(ANIM_TYPE::DOWN), false);
+		static_cast<int>(ANIM_TYPE::DOWN),false);
 	stateUpdate_ = std::bind(&BossGoblin::UpdateDown, this);
 
 }
@@ -600,11 +601,17 @@ void BossGoblin::UpdateDamage(void)
 
 void BossGoblin::UpdateDown(void)
 {
+	if (animationController_->IsEnd()) {
+		ChangeState(STATE::END);
+	}
 
 }
 
 void BossGoblin::UpdateEnd(void)
 {
+	if (animationController_->IsEnd()) {
+		isDead_ = true;
+	}
 }
 
 void BossGoblin::ProcessMove(void)
@@ -625,7 +632,9 @@ void BossGoblin::ProcessMove(void)
 
 void BossGoblin::Phase(void)
 {
-	if (damageCnt_ > 5) {
+	int damageCnt = player_->GetCurrentCnt();
+
+	if (damageCnt > 5) {
 		ChangeState(STATE::DOWN);
 	}
 }

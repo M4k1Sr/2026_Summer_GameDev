@@ -15,8 +15,7 @@
     <ClCompile Include="Src\Object\Actor\IronBall.cpp" />
     <ClCompile Include="Src\Object\Common\Health.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossBase.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossDiablo.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossOrc.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossGoblin.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossPixie.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Boss\BossManager.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectBase.cpp" />
@@ -51,6 +50,7 @@
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\AsoUtility.cpp" />
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />
     <ClCompile Include="Src\Ranking\GameData.cpp" />
@@ -59,12 +59,15 @@
     <ClCompile Include="Src\Object\Actor\Stage2.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\UiBase.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\StaminaUi.cpp" />
+=======
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\MosaicShader.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\PostEffectBase.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\ScanLineShader.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\DrawableManager.cpp" />
     <ClCompile Include="Src\Object\UI\UI.cpp" />
     <ClCompile Include="Src\Renderer\UiRenderer\UIElements\Clock_Needle.cpp" />
@@ -77,6 +80,15 @@
     <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
     <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
     <ClCompile Include="Src\Manager\ServiceLocator.cpp" />
+=======
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock_Needle.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\Clock.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBase.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
+    <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClCompile Include="Src\Renderer\EffectRenderer\Base\EffectBase.cpp" />
     <ClCompile Include="Src\Renderer\EffectRenderer\Manager\EffectManager.cpp" />
     <ClCompile Include="Src\Manager\ServiceLocator.cpp" />
@@ -84,9 +96,20 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\NdlFloor.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Src\Object\Actor\Stage\Stage1.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\Stage2.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Stage.cpp" />
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -104,8 +127,7 @@
     <ClInclude Include="Src\Object\Actor\IronBall.h" />
     <ClInclude Include="Src\Object\Common\Health.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossBase.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossDiablo.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossOrc.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossGoblin.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossPixie.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Boss\BossManager.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectBox.h" />
@@ -140,6 +162,7 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
+<<<<<<< HEAD
     <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
     <ClInclude Include="Src\Ranking\GameData.h" />
@@ -148,6 +171,8 @@
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\UiBase.h" />
     <ClInclude Include="Src\Renderer\UiRenderer\StaminaUi.h" />
+=======
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\Manager\PostEffectManager.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlurShader.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\MonoShader.h" />
@@ -163,10 +188,21 @@
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectConveyer.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\NdlFloor.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponData.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Src\Object\Actor\Stage\Stage1.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\Stage2.h" />
+    <ClInclude Include="Src\Object\Actor\Stage\StageBase.h" />
+    <ClInclude Include="Src\Object\Actor\Stage.h" />
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Renderer\PostEffectRenderer\Common\Pixel\PixelShader2DHeader.hlsli" />

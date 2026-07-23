@@ -1,5 +1,6 @@
 #pragma once
 #include "../ActorBase.h"
+#include "../Weapon/WeaponComposite.h"
 class AnimationController;
 
 class CharactorBase : public ActorBase
@@ -32,6 +33,9 @@ public:
 	virtual void Release(void) override;
 
 protected:
+
+	// 武器コンポジット
+	std::unique_ptr<WeaponComposite> weapon_;
 
 	// 最大落下速度
 	static constexpr float MAX_FALL_SPEED = -10.0f;
@@ -78,18 +82,18 @@ protected:
 	// 重力フラグ
 	bool isGravity_;
 
+	// 現在のHP
+	int nowHp_;
+
+	// ダメージを受けたか
+	bool toDamage_;
+
 	// リソースロード
 	virtual void InitLoad(void) override;
 
 	// 更新系
 	virtual void UpdateProcess(void) = 0;
 	virtual void UpdateProcessPost(void) = 0;
-
-	//// 索敵
-	//virtual void Search(void) = 0;
-
-	//// プレイヤーを注視する
-	//virtual void LookPlayer(void) = 0;
 
 	//視野描画
 	virtual void DrawViewRange(void) = 0;

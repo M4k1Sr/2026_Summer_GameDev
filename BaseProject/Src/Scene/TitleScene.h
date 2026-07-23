@@ -53,7 +53,7 @@ private:
 	//Transform cage_;
 	Transform prison_;
 
-	// ニンゲンz
+	// ニンゲン
 	Transform player_;
 
 	//壁画像
@@ -131,8 +131,5 @@ private:
 
 	//ポーズ選択肢
 	PauseSelect pauseSelect_;
-
-	//タイトルをゆらすための角度
-	float angle;
 
 };

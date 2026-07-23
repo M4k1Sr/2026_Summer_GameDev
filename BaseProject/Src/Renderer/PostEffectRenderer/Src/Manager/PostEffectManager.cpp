@@ -3,8 +3,6 @@
 #include "../MonoShader.h"
 #include "../MosaicShader.h"
 #include "../ScanLineShader.h"
-#include "../GameOverNoise.h"
-#include "../BlackOut.h"
 #include "../../../../Manager/SceneManager.h"
 #include "../PostEffectBase.h"
 #include <algorithm>

@@ -2,6 +2,7 @@
 #include "./CharactorBase.h"
 class ObjectManager;
 class ItemManager;
+class Health;
 
 class Player : public CharactorBase
 {
@@ -40,7 +41,7 @@ public:
 	//プレイヤー座標のゲッター
 	bool GetDeadFlag(void);
 
-	void playerDead(void);
+	void PlayerDead(void);
 
 	// ダメージカウンタゲッター
 	int GetCurrentCnt(void) const;
@@ -48,10 +49,15 @@ public:
 	//ゲームクリア判定
 	bool GetClearFlag(void) const;
 
+	// 1stStageクリア判定
 	void IsClear(void);
 
-	//ダッシュ判定
-	bool GetDashFlag(void) const { return isDash_; }
+	// ゲームクリア判定
+	bool IsGameClear(void);
+
+	// プレイヤーの向き
+	VECTOR GetDir(void) const { return dir_; }
+	void SetDir(VECTOR dir) { dir_ = dir; }
 
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
@@ -94,6 +100,12 @@ private:
 	// アイテムマネージャー
 	ItemManager* itemMng_;
 
+	// ボムデータ
+	WeaponData bombData_;
+
+	// HP管理
+	Health* health_;
+
 	// ギミック動作カウンタ
 	float gimmickCnt_;
 	bool isGimmick_;
@@ -117,6 +129,7 @@ private:
 	// ボム座標
 	VECTOR bombPos_;
 
+<<<<<<< HEAD
 	// プレイヤー座標
 	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
 <<<<<<< HEAD
@@ -138,9 +151,18 @@ private:
 	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
 	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
 
+=======
+	// 向き
+	VECTOR dir_;
+
+	//// プレイヤー座標
+	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;
+
 	// プレイヤーローカル角度
 	static constexpr VECTOR PLAYER_LOCAL_ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
 
@@ -191,7 +213,7 @@ private:
 	static constexpr float STAMINA_DASH_DECREASE = 5.0f;	// ダッシュスタミナ減少量
 
 	// 爆弾モデルの大きさ
-	static constexpr float BOMB_SCL = 1.0f;
+	static constexpr float BOMB_SCL = 2.0f;
 
 	// 爆弾のローカル座標・回転
 	static constexpr VECTOR BOMB_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
@@ -211,13 +233,13 @@ private:
 	// 衝突判定
 	void CollisionReserve(void) override;
 
-	//ゲームクリア判定用のフラグ
+	// 1stStageクリア判定用のフラグ
 	bool isClear_;
+
+	// 2ndStageクリア判定用のフラグ
+	bool gameClear_;
 
 	//鉄球との衝突判定
 	bool isIronBallHit_;
-
-
-
 };
 

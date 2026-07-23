@@ -5,16 +5,13 @@
 #include "../../../Collider/ColliderBase.h"
 #include "../../../Collider/ColliderLine.h"
 #include "../../../Collider/ColliderModel.h"
-#include "../../../../Renderer/ModelShader/ModelMaterial.h"
-#include "../../../../Renderer/ModelShader/ModelRenderer.h"
 #include "../../../../Utility/AsoUtility.h"
 #include "../../../../Application.h"
 
 ObjectCage::ObjectCage(const ObjectBase::ObjectData& data)
 	:
 	ObjectBase(data),
-	moveTimer_(0.0f),
-	isAlive_(true)
+	moveTimer_(0.0f)
 {
 }
 
@@ -24,15 +21,18 @@ ObjectCage::~ObjectCage(void)
 
 void ObjectCage::Draw(void)
 {
+<<<<<<< HEAD
 	renderer_->Draw();
 	if (isAlive_ == true)
 	{
 		renderer_->Draw();
 	}
+=======
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 
 	//------------------------------------------------------------------------
 	// ディゾルブ処理はこれより上に書く
-	//ObjectBase::Draw();
+	ObjectBase::Draw();
 }
 
 void ObjectCage::InitLoad(void)
@@ -89,20 +89,6 @@ void ObjectCage::InitPost(void)
 	for (auto& col : ownColliders_) {
 		col.second->SetFollow(&this->transform_);
 	}
-
-	//モデル描画用
-	material_ = std::make_unique<ModelMaterial>(
-		"NoTexVS.cso", 0,
-		"NoTexPS.cso", 1
-	);
-	
-	material_->AddConstBufPS({ 0.0f, 0.0f, 0.0f, 0.0f });
-	// ノイズテクスチャを登録 (例として適当なスロット1に)
-	int noiseTex = LoadGraph("Data/Image/Noise.png"); // あらかじめ用意したノイズ画像
-	material_->SetTextureBuf(1, noiseTex);
-
-	renderer_ = std::make_unique<ModelRenderer>(transform_.modelId, *material_);
-
 }
 
 void ObjectCage::UpdateProcess(void)
@@ -114,6 +100,7 @@ void ObjectCage::UpdateProcessPost(void)
 {
 	transform_.Update();
 
+<<<<<<< HEAD
 	if (CheckHitKey(KEY_INPUT_K)) 
 	{
 		isAlive_ = false;
@@ -136,5 +123,7 @@ void ObjectCage::UpdateProcessPost(void)
 		material_->SetConstBufPS(0, { smoothRatio, 0.0f, 0.0f, 0.0f });
 	}
 	
+=======
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	ObjectBase::UpdateProcessPost();
 }

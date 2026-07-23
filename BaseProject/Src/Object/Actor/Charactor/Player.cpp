@@ -12,6 +12,8 @@
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
+#include "../../../Object/Actor/Charactor/Object/ObjectBossCage.h"
+#include "../../../Object/Actor/Charactor/Object/NdlFloor.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
@@ -24,6 +26,7 @@
 #include "Player.h"	
 #include "../../../Manager/ServiceLocator.h"
 #include "../Weapon/ItemAssets/Bomb.h"
+#include "../../Common/Health.h"
 
 Player::Player(void)
 	:
@@ -38,7 +41,6 @@ Player::Player(void)
 	isSlowWalk_(false)
 {
 	sweatPos_ = transform_.pos;
-	int img_ = resMng_.Load(ResourceManager::SRC::SWEAT).handleId_;
 }
 
 Player::~Player(void)
@@ -51,8 +53,8 @@ void Player::Draw(void)
 
 	ServiceLocator::GetUI().Draw();
 	
-	//// プレイヤー座標
-	//DrawFormatString(200, 60, GetColor(0, 0, 0), "Player Pos: X:%.1f, Y:%.1f, Z:%.1f", transform_.pos.x, transform_.pos.y, transform_.pos.z);
+	// プレイヤー座標
+	DrawFormatString(200, 60, GetColor(0, 0, 0), "Player Pos: X:%.1f, Y:%.1f, Z:%.1f", transform_.pos.x, transform_.pos.y, transform_.pos.z);
 
 }
 
@@ -74,7 +76,7 @@ bool Player::GetDeadFlag(void)
 }
 
 //プレイヤーの死亡判定
-void Player::playerDead(void)
+void Player::PlayerDead(void)
 {
 	//プレイヤーのy座標が-1000.0f以下になったら死亡とする
 	if(transform_.pos.y < -1000.0f)
@@ -90,13 +92,23 @@ int Player::GetCurrentCnt(void) const
 
 void Player::IsClear(void) 
 {
-	//if (transform_.pos.x > 5060 &&
-	//	transform_.pos.x < 5235 &&
-	//	transform_.pos.z > -790 &&
-	//	transform_.pos.z < -490)
-	//{
-	//	isClear_ = true;
-	//}
+	if (CheckHitKey(KEY_INPUT_C)) {
+		isClear_ = true;
+	}
+
+	if (currentCnt_ == 3)
+	{
+		isClear_ = true;
+	}
+	
+	if (currentCnt_ == 6) {
+		gameClear_ = true;
+	}
+}
+
+bool Player::IsGameClear(void)
+{
+	return gameClear_;
 }
 
 bool Player::GetClearFlag(void) const
@@ -113,23 +125,34 @@ void Player::InitLoad(void)
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
 
+<<<<<<< HEAD
 	// 武器用のコンポジット
+=======
+	//// 武器用のコンポジット
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	//weapon_ = std::make_unique<WeaponComposite>();
 
-	WeaponData bombData = {
-		.item = ItemKind::BOMB,
-		.damage = 10.0f,
-		.pos = MV1GetFramePosition(transform_.modelId, 43),
-		.rot = AsoUtility::VECTOR_ZERO,
-		.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
-		.localPos = BOMB_LOCAL_POS,
-		.localRot = BOMB_LOCAL_ROT,
-		.ownerModelId = transform_.modelId,
-		.ownerFrameIndex = 43,
-	};
+	//bombData_ = {
+	//	.item = ItemKind::BOMB,
+	//	.damage = 10.0f,
+	//	.pos = MV1GetFramePosition(transform_.modelId, 43),
+	//	.rot = AsoUtility::VECTOR_ZERO,
+	//	.scl = {BOMB_SCL, BOMB_SCL, BOMB_SCL},
+	//	.dir = dir_,
+	//	.localPos = BOMB_LOCAL_POS,
+	//	.localRot = BOMB_LOCAL_ROT,
+	//	.ownerModelId = transform_.modelId,
+	//	.ownerFrameIndex = 43,
+	//	.dmgRange = 50.0f
+	//};
 
+<<<<<<< HEAD
 	//weapon_->Add(std::make_unique<Bomb>(bombData));
 	
+=======
+	//weapon_->Add(std::make_unique<Bomb>(bombData_));
+	//
+>>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	//weapon_->Load();
 
 }
@@ -183,11 +206,20 @@ void Player::InitAnimation(void)
 void Player::InitPost(void)
 {
 	InitUI();
+
+	health_ = new Health();
+	health_->Init(5);
+
+	nowHp_ = health_->GetHp();
+
 }
 
 void Player::UpdateProcess(void)
 {
 	isGravity_ = true;
+
+	// ボムの向き
+	bombData_.dir = dir_;
 
 	// 移動操作
 	ProcessMove();
@@ -195,8 +227,8 @@ void Player::UpdateProcess(void)
 	// ジャンプ処理
 	ProcessJump();
 
-	//プレイや死亡判定
-	playerDead();
+	//プレイヤー死亡判定
+	PlayerDead();
 
 	//プレイヤーのクリア判定
 	IsClear();
@@ -204,9 +236,15 @@ void Player::UpdateProcess(void)
 	// ギミック処理
 	ProcessPush();
 
-	// アイテム投擲処理
-	ProcessThrow();
+	//// アイテム投擲処理
+	//ProcessThrow();
 
+	//// ダメージ判定
+	//if (toDamage_){
+	//	health_->TakeDamage(1);
+
+	//	return;
+	//}
 }
 
 void Player::UpdateProcessPost(void)
@@ -230,17 +268,17 @@ void Player::ProcessMove(void)
 
 	// 移動量・方向・ダッシュフラグの初期化
 	movePow_ = AsoUtility::VECTOR_ZERO;
-	VECTOR dir = AsoUtility::VECTOR_ZERO;
+	dir_ = AsoUtility::VECTOR_ZERO;
 	isDash_ = false;
 	isSlowWalk_ = false;
 
 	// 入力処理(キーボード / パッド)
 	if (GetJoypadNum() == 0)
 	{
-		if (ins.IsNew(KEY_INPUT_W)) { dir = AsoUtility::DIR_F; }
-		if (ins.IsNew(KEY_INPUT_A)) { dir = AsoUtility::DIR_L; }
-		if (ins.IsNew(KEY_INPUT_S)) { dir = AsoUtility::DIR_B; }
-		if (ins.IsNew(KEY_INPUT_D)) { dir = AsoUtility::DIR_R; }
+		if (ins.IsNew(KEY_INPUT_W)) { dir_ = AsoUtility::DIR_F; }
+		if (ins.IsNew(KEY_INPUT_A)) { dir_ = AsoUtility::DIR_L; }
+		if (ins.IsNew(KEY_INPUT_S)) { dir_ = AsoUtility::DIR_B; }
+		if (ins.IsNew(KEY_INPUT_D)) { dir_ = AsoUtility::DIR_R; }
 
 
 		if (ins.IsNew(KEY_INPUT_LSHIFT) && stamina_ > 0) { isDash_ = true; }
@@ -248,14 +286,14 @@ void Player::ProcessMove(void)
 	else
 	{
 		InputManager::JOYPAD_IN_STATE padState = ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
-		dir = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
+		dir_ = ins.GetDirectionXZAKey(padState.AKeyLX, padState.AKeyLY);
 
 		isDash_ = ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::L_TRIGGER);
 	}
 
 	// 移動量・ベクトルの計算
 
-	float inputLength = VSize(dir);
+	float inputLength = VSize(dir_);
 	bool hasInput = inputLength > 0.0f;
 
 	if (hasInput)
@@ -265,7 +303,7 @@ void Player::ProcessMove(void)
 
 		// カメラのY軸回転に合わせて移動方向を計算
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
-		moveDir_ = Quaternion::PosAxis(cameraRot, dir);
+		moveDir_ = Quaternion::PosAxis(cameraRot, dir_);
 		movePow_ = VScale(moveDir_, moveSpeed_);
 
 		if (inputLength > 1.0f)
@@ -445,7 +483,6 @@ void Player::ProcessPush(void)
 		ObjectBossGimmick* bossGimmick = objMng_->GetBossGimmick(transform_.pos);
 
 		//// タイルの判定
-		// こっちが本物
 		ObjectTarai* tarai = objMng_->GetTarai(transform_.pos);
 
 		if (bossGimmick != nullptr)
@@ -454,7 +491,7 @@ void Player::ProcessPush(void)
 			// ギミック処理
 			bool isHitKeyNew = ins.IsPress(KEY_INPUT_R)
 				|| ins.IsPadBtnPress(
-					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+					InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::TOP);
 
 			if (isHitKeyNew) {
 
@@ -475,7 +512,9 @@ void Player::ProcessPush(void)
 
 					// ギミックすべて(3つ)がオン状態になったらタライのフラグをtrueにする
 					// タライギミック作動
-					tarai->SetFlag(true);	
+					if (tarai) {
+						tarai->SetFlag(true);
+					}
 				}
 				else {
 					bossGimmick->SetFlag(false);
@@ -484,7 +523,7 @@ void Player::ProcessPush(void)
 			else {
 				gimmickCnt_ = 0.0f;	// カウンタをリセットし、再度ギミックを動作させるために準備
 			}
-			
+
 		}
 	}
 }
@@ -558,3 +597,5 @@ void Player::CollisionReserve(void)
 		}
 	}
 }
+
+

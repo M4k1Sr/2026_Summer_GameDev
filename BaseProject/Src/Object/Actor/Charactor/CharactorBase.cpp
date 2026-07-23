@@ -25,7 +25,7 @@ CharactorBase::CharactorBase(void)
 	isJump_(false),
 	isIronBallHit_(false),
 	ActorBase()
-{
+{	
 }
 
 CharactorBase::~CharactorBase(void)
@@ -63,6 +63,9 @@ void CharactorBase::Update(void)
 	// 各キャラクターごとの更新後処理
  	UpdateProcessPost();
 
+	if (weapon_) {
+		weapon_->Update();
+	}
 }
 
 void CharactorBase::Draw(void)
@@ -76,6 +79,10 @@ void CharactorBase::Draw(void)
 	// 視野描画
 	DrawViewRange();
 
+	if (weapon_) {
+		weapon_->Draw();
+	}
+
 }
 
 void CharactorBase::Release(void)
@@ -85,6 +92,10 @@ void CharactorBase::Release(void)
 	{
 		animationController_->Release();
 		delete animationController_;
+	}
+
+	if (weapon_) {
+		weapon_->Release();
 	}
 
 	// 基底クラス解放
@@ -170,12 +181,12 @@ void CharactorBase::CollisionGravity(void)
 	for (const auto& hitCol : hitColliders_)
 	{
 
-		// ステージ・ボックス以外は処理を飛ばす
-		if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
-			&& hitCol->GetTag() != ColliderBase::TAG::BOX
-			&& hitCol->GetTag() != ColliderBase::TAG::TILE
-			&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
-			&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
+		//// ステージ・ボックス以外は処理を飛ばす
+		//if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
+		//	&& hitCol->GetTag() != ColliderBase::TAG::BOX
+		//	&& hitCol->GetTag() != ColliderBase::TAG::TILE
+		//	&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
+		//	&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
 
 		// 派生クラスへキャスト
 		const ColliderModel* colliderModel =

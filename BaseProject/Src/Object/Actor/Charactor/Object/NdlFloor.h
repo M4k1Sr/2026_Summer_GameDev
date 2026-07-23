@@ -35,6 +35,9 @@ public:
 	// 床の座標取得
 	VECTOR GetPos(void) const { return transform_.pos; }
 
+	// 針が出ている瞬間
+	bool GetStart(void) const { return isStart_; }
+
 protected:
 
 	// リソースロード
@@ -61,7 +64,7 @@ protected:
 private:
 
 	// モデルの大きさ
-	static constexpr float SCALE = 0.5f;
+	static constexpr float SCALE = 1.0f;
 
 	// モデルのローカル回転
 	static constexpr VECTOR ROT = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };
@@ -89,6 +92,9 @@ private:
 
 	// 状態
 	STATE state_;
+
+	// 針が出ている状態
+	bool isStart_;
 
 	// タイマー
 	float moveTimer_;
