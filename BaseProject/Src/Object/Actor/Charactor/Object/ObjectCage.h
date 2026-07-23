@@ -1,8 +1,11 @@
 #pragma once
 #include <DxLib.h>
+#include <memory>
 #include "ObjectBase.h"
 #include "../CharactorBase.h"
 class AnimationController;
+class ModelRenderer;
+class ModelMaterial;
 
 class ObjectCage : public ObjectBase
 {
@@ -71,7 +74,6 @@ private:
 	// 移動速度
 	VECTOR velocity_;
 
-<<<<<<< HEAD
 	//モデルレンダラー
 	std::unique_ptr<ModelRenderer> renderer_;
 
@@ -84,8 +86,6 @@ private:
 	//存在判定
 	bool isAlive_ = true;
 
-=======
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	// タイマー
 	float moveTimer_;
 

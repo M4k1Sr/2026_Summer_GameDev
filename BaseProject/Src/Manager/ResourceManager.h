@@ -31,12 +31,9 @@ public:
 		CONVEYER,
 		CAGE,
 		BREAK_CAGE,
-<<<<<<< HEAD
 		PRISON,
 
-=======
 		BOMB,
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 
 		// UI
 		CLOCK,
@@ -56,19 +53,12 @@ public:
 		IRONBALL_HIT,	// 鉄球エフェクト
 		PIXIE_FIRE,		// ピクシー炎攻撃
 		PIXIE_WAVE,		// ピクシー波状攻撃
-<<<<<<< HEAD
 		GameClearImg,	// ゲームクリア画像
 		GameOverImg,	// ゲームオーバー画像
 
 		// 武器オブジェクト
 		CLUB,
-=======
 
-		// 武器オブジェクト
-		CLUB,
-
-
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	};
 
 	// 明示的にインステンスを生成する

@@ -164,7 +164,6 @@ void BossPixie::UpdateProcess(void)
 	// ó‘Ô•ÊXV
 	stateUpdate_();
 
-<<<<<<< HEAD
 	//if (CheckHitKey(KEY_INPUT_K)) {
 	//	health_->TakeDamage(10);
 	//}
@@ -174,11 +173,9 @@ void BossPixie::UpdateProcess(void)
 	//}
 
 
-=======
 	if (CheckHitKey(KEY_INPUT_K)) {
 		health_->TakeDamage(10);
 	}
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 }
 
 void BossPixie::UpdateProcessPost(void)

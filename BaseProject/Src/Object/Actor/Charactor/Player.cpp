@@ -12,7 +12,7 @@
 #include "../../../Object/Actor/Charactor/Object/ObjectTile.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectBossGimmick.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectTarai.h"
-#include "../../../Object/Actor/Charactor/Object/ObjectBossCage.h"
+//#include "../../../Object/Actor/Charactor/Object/ObjectBossCage.h"
 #include "../../../Object/Actor/Charactor/Object/NdlFloor.h"
 #include "../../../Object/Actor/Charactor/Object/ObjectManager.h"
 #include "../../Collider/ColliderLine.h"
@@ -125,11 +125,8 @@ void Player::InitLoad(void)
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
 
-<<<<<<< HEAD
 	// 武器用のコンポジット
-=======
 	//// 武器用のコンポジット
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	//weapon_ = std::make_unique<WeaponComposite>();
 
 	//bombData_ = {
@@ -146,13 +143,10 @@ void Player::InitLoad(void)
 	//	.dmgRange = 50.0f
 	//};
 
-<<<<<<< HEAD
 	//weapon_->Add(std::make_unique<Bomb>(bombData));
 	
-=======
 	//weapon_->Add(std::make_unique<Bomb>(bombData_));
 	//
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	//weapon_->Load();
 
 }

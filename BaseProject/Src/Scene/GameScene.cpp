@@ -22,10 +22,7 @@
 #include "../Object/Actor/Charactor/Object/ObjectManager.h"
 #include"../Ranking/Ranking.h"
 #include"../Renderer/UIRenderer/UIElements/Clock.h"
-<<<<<<< HEAD
 #include "../Renderer/UIRenderer/Manager/UIManager.h"
-=======
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 #include "../Application.h"
 #include<EffekseerForDXLib.h>
 #include "../Manager/ServiceLocator.h"
@@ -405,7 +402,6 @@ void GameScene::Draw(void)
 		break;
 	}
 
-<<<<<<< HEAD
 	// “S‹…•`‰æ
 	ironBall_->Draw();
 	
@@ -427,8 +423,6 @@ void GameScene::Draw(void)
 	// UŒ‚•`‰æ
 	attackMng_->Draw();
 
-=======
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	// ƒvƒŒƒCƒ„[•`‰æ
 	player_->Draw();
 

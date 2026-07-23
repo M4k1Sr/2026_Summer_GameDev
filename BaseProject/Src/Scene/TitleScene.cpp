@@ -137,12 +137,6 @@ void TitleScene::Update(void)
 		effect_->Update();
 
 	}
-<<<<<<< HEAD
-=======
-
-	
-
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 }
 
 void TitleScene::Draw(void)

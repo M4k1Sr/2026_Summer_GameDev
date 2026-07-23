@@ -114,15 +114,12 @@ private:
 	
 	//ŽžŒv‚ÌUI
 	Clock* clockUI_;
-<<<<<<< HEAD
 
 
 
 	
 	// ŽžŒv
 	//Transform clock_;
-=======
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
 	
 	bool isPause_;
 	int pauseImg_;

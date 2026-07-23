@@ -19,14 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Src\Renderer\ModelShader\ModelMaterial.cpp" />
     <ClCompile Include="Src\Renderer\ModelShader\ModelRenderer.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.cpp" />
     <ClCompile Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.cpp" />
-=======
     <ClCompile Include="Src\Object\Actor\Stage.cpp" />
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClCompile Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Object\ObjectCage.cpp" />
@@ -98,25 +95,18 @@
     <ClCompile Include="Src\Renderer\UIRenderer\UIElements\SweatUI.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.cpp" />
     <ClCompile Include="Src\Renderer\UIRenderer\Manager\UIManager.cpp" />
-    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComponent.cpp" />
     <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage\Stage1.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage\Stage2.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage\StageBase.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="Src\Renderer\ModelShader\ModelMaterial.h" />
     <ClInclude Include="Src\Renderer\ModelShader\ModelRenderer.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\BlackOut.h" />
     <ClInclude Include="Src\Renderer\PostEffectRenderer\Src\GameOverNoise.h" />
-    <ClCompile Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.cpp" />
-    <ClCompile Include="Src\Object\Actor\Weapon\WeaponComposite.cpp" />
   </ItemGroup>
   <ItemGroup>
-=======
-    <ClInclude Include="Src\Object\Actor\Stage.h" />
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
     <ClInclude Include="Src\Object\Actor\Weapon\ItemAssets\Bomb.h" />
     <ClInclude Include="Src\Object\Actor\Weapon\WeaponAssets\HitBox.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Object\ObjectCage.h" />
@@ -187,22 +177,11 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
     <ClInclude Include="Src\Utility\AsoUtility.h" />
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Src\Object\Actor\Stage.h" />
     <ClInclude Include="Src\Object\Actor\StageBase.h" />
     <ClInclude Include="Src\Object\Actor\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage2.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
-    <ClInclude Include="Src\Renderer\UiRenderer\Base\UiBillboardBase.h" />
-=======
     <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBase.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\StaminaUI.h" />
->>>>>>> c705d334f18ebf93ee247c6d6c4234148284325c
-    <ClInclude Include="Src\Renderer\UIRenderer\UIElements\SweatUI.h" />
-    <ClInclude Include="Src\Renderer\UIRenderer\Base\UIBillboardBase.h" />
     <ClInclude Include="Src\Renderer\UIRenderer\Manager\UIManager.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComponent.h" />
-    <ClInclude Include="Src\Object\Actor\Weapon\WeaponComposite.h" />
     <ClInclude Include="Src\Object\Actor\Stage\Stage1.h" />
     <ClInclude Include="Src\Object\Actor\Stage\Stage2.h" />
     <ClInclude Include="Src\Object\Actor\Stage\StageBase.h" />
@@ -241,6 +220,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\NoTexPS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\NoTexVS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Src\Renderer\PostEffectRenderer\PostEffect\ScanLineShader.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Data/Shader/%(Filename).cso</ObjectFileOutput>
