@@ -228,7 +228,7 @@ void GameScene::Update(void)
 				// 3. プレイヤーの位置調整
 				VECTOR stage2StartPos = VGet(-1800.0f, 0.0f, -3380.0f);
 				player_->SetPosition(stage2StartPos);
-				ironBall_->SetPosition(VGet(0.0f, 400.0f, 1800.0f));
+				//ironBall_->SetPosition(VGet(0.0f, 400.0f, 1800.0f));
 
 				// 4. ObjectManager,BossManager のステージ番号を 2 に更新
 				objMng_->SetCurrentStage(2);

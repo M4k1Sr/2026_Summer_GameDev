@@ -121,18 +121,16 @@ void CharactorBase::DelayRotate(void)
 
 void CharactorBase::CalcGravityPow(void)
 {
-	// 重力方向
+	// 重力方向 (下向き)
 	VECTOR dirGravity = AsoUtility::DIR_D;
 
-	// 重力の強さ
+	// 1フレームあたりの重力加算量
 	float gravityPow = Application::GetInstance().GetGravityPow() * scnMng_.GetDeltaTime();
 
-	// 重力
-	VECTOR gravity = VScale(dirGravity, gravityPow);
+	// 加算
+	jumpPow_ = VAdd(jumpPow_, VScale(dirGravity, gravityPow));
 
-	jumpPow_ = VAdd(jumpPow_, gravity);
-
-	// 重力速度の制限
+	// 落下速度の最大値制限
 	if (jumpPow_.y < MAX_FALL_SPEED)
 	{
 		jumpPow_.y = MAX_FALL_SPEED;
@@ -157,44 +155,30 @@ void CharactorBase::Collision(void)
 
 void CharactorBase::CollisionGravity(void)
 {
-	// 落下中しか判定しない
-	if (!(VDot(AsoUtility::DIR_D, jumpPow_) > 0.9f))
-	{
-		return;
-	}
-
-	// 線分コライダ
 	int lineType = static_cast<int>(COLLIDER_TYPE::LINE);
-
-	// 線分コライダが無ければ処理を抜ける
 	if (ownColliders_.count(lineType) == 0) return;
 
-	// 線分コライダ情報
-	ColliderLine* colliderLine_ =
-		dynamic_cast<ColliderLine*>(ownColliders_.at(lineType));
+	ColliderLine* colliderLine_ = dynamic_cast<ColliderLine*>(ownColliders_.at(lineType));
 	if (colliderLine_ == nullptr) return;
 
-	bool isOnTile = false;
-	VECTOR tileVelocity = AsoUtility::VECTOR_ZERO;
+	// 今回のフレームで地面に当たったかフラグ
+	bool isGrounded = false;
 
-	// 登録されている衝突物を全てチェック
+	// 登録されている衝突物をチェック
 	for (const auto& hitCol : hitColliders_)
 	{
+		// ステージや地形タグ以外は除外
+		if (hitCol->GetTag() != ColliderBase::TAG::STAGE &&
+			hitCol->GetTag() != ColliderBase::TAG::BOX &&
+			hitCol->GetTag() != ColliderBase::TAG::TILE)
+		{
+			continue;
+		}
 
-		//// ステージ・ボックス以外は処理を飛ばす
-		//if (hitCol->GetTag() != ColliderBase::TAG::STAGE 
-		//	&& hitCol->GetTag() != ColliderBase::TAG::BOX
-		//	&& hitCol->GetTag() != ColliderBase::TAG::TILE
-		//	&& hitCol->GetTag() != ColliderBase::TAG::BOSS_GIMMICK
-		//	&& hitCol->GetTag() != ColliderBase::TAG::TARAI) continue;
-
-		// 派生クラスへキャスト
-		const ColliderModel* colliderModel =
-			dynamic_cast<const ColliderModel*>(hitCol);
-
+		const ColliderModel* colliderModel = dynamic_cast<const ColliderModel*>(hitCol);
 		if (colliderModel == nullptr) continue;
 
-		// 衝突したポリゴンの上に押し戻す
+		// 押し戻し処理
 		bool isHit = colliderLine_->PushBackUp(
 			colliderModel,
 			transform_,
@@ -202,20 +186,23 @@ void CharactorBase::CollisionGravity(void)
 			true,
 			false);
 
-		// ジャンプ判定
 		if (isHit)
 		{
-			isJump_ = false;
+			isGrounded = true; // 地面に接している
 		}
 	}
 
-	if (!isJump_)
+	// 地面への判定結果を反映
+	if (isGrounded)
 	{
-		// ジャンプリセット
-		jumpPow_ = AsoUtility::VECTOR_ZERO;
-
-		// ジャンプの入力受付時間をリセット
+		isJump_ = false;        // 接地状態にする
+		jumpPow_ = AsoUtility::VECTOR_ZERO; // 落下速度リセット
 		stepJump_ = 0.0f;
+	}
+	else
+	{
+		// 地面に当たっていなければ、落下・空中状態（ジャンプ中扱いにする）
+		isJump_ = true;
 	}
 }
 
