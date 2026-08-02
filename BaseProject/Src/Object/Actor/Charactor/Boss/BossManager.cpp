@@ -150,12 +150,12 @@ BossBase* BossManager::Create(const BossBase::BossData& data)
 	{
 		if (data.stageType == 1) {
 			case BossBase::BOSS_TYPE::PIXIE:
-			boss = new BossPixie(data);
+			//boss = new BossPixie(data);
 			break;
 		}
 		if (data.stageType == 2) {
 			case BossBase::BOSS_TYPE::GOBLIN:
-				boss = new BossGoblin(data);
+				//boss = new BossGoblin(data);
 				break;
 		}
 		// ëùÇ¶ÇÈñàÇ…í«â¡

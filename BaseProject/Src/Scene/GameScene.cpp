@@ -228,6 +228,7 @@ void GameScene::Update(void)
 				// 3. プレイヤーの位置調整
 				VECTOR stage2StartPos = VGet(-1800.0f, 0.0f, -3380.0f);
 				player_->SetPosition(stage2StartPos);
+				ironBall_->SetPosition(VGet(0.0f, 400.0f, 1800.0f));
 
 				// 4. ObjectManager,BossManager のステージ番号を 2 に更新
 				objMng_->SetCurrentStage(2);
@@ -283,6 +284,8 @@ void GameScene::Update(void)
 		//skyDome_->Update();
 		player_->Update();
 
+		ironBall_->Update();
+
 		switch (stageState_)
 		{
 		case GameScene::StageState::STAGE_1:
@@ -290,7 +293,6 @@ void GameScene::Update(void)
 			bossMng_->Update();
 			objMng_->Update();
 			attackMng_->Update();
-			ironBall_->Update();
 			break;
 		case GameScene::StageState::STAGE_2:
 			stage_->Update();
@@ -377,7 +379,6 @@ void GameScene::Update(void)
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 	}
-
 }
 
 void GameScene::Draw(void)
@@ -391,31 +392,23 @@ void GameScene::Draw(void)
 	case GameScene::StageState::STAGE_1:
 		stage_->Draw();
 		ironBall_->Draw();
-		objMng_->Draw();
+		objMng_->Draw();				
 		bossMng_->Draw();
 		attackMng_->Draw();
 		break;
 	case GameScene::StageState::STAGE_2:
 		stage_->Draw();
+		//ironBall_->Draw();
 		objMng_->Draw();
 		bossMng_->Draw();
 		break;
 	}
 
-	// 鉄球描画
-	ironBall_->Draw();
+	//// 鉄球描画
+	//ironBall_->Draw();
 	
 	// オブジェクト描画
 	objMng_->Draw();
-
-	//デバッグ用ゴール
-	DrawBillboard3D(VGet(5060.0f, 0.0f, -490.0f),
-		0.5f,                           // 中心X
-		0.5f,                           // 中心Y
-		400.0f,                         // サイズ
-		0.0f,                           // 回転
-		goalImg_,                       // 画像
-		TRUE);
     
 	//ボス描画
 	bossMng_->Draw();

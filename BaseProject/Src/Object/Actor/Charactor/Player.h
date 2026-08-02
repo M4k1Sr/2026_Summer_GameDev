@@ -195,7 +195,7 @@ private:
 	{ 0.0f, 80.0f, 0.0f };
 
 	// ジャンプ力
-	static constexpr float POW_JUMP_INIT = 25.0f; 
+	static constexpr float POW_JUMP_INIT = 30.0f; 
 
 	// 持続ジャンプ力
 	static constexpr float POW_JUMP_KEEP = 600.0f;

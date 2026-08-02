@@ -2,30 +2,30 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\BaseProject.exe</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\x64\Debug\BaseProject.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Blur.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Data\Shader\Blur.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Monotone.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Data\Shader\Monotone.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\Mosaic.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Data\Shader\Mosaic.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\x64\Debug\Noise.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\x64\Debug\Noise.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\NoTexPS.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Data\Shader\NoTexPS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\NoTexVS.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Data\Shader\NoTexVS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\2416036\Desktop\AGS\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
+      <FullPath>D:\ドキュメント\デスクトップ\トラップキャッスル\BaseProject\Data\Shader\ScanLineShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

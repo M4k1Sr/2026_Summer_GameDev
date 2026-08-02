@@ -207,7 +207,7 @@ void Player::InitPost(void)
 	nowHp_ = health_->GetHp();
 
 }
-
+																			
 void Player::UpdateProcess(void)
 {
 	isGravity_ = true;
@@ -292,8 +292,16 @@ void Player::ProcessMove(void)
 
 	if (hasInput)
 	{
-		// 移動スピードの決定
-		moveSpeed_ = isDash_ ? SPEED_DASH : SPEED_MOVE;
+
+		if (isDash_) {
+			moveSpeed_ = SPEED_DASH;
+			if (stamina_ < 1) {
+				moveSpeed_ = SPEED_MOVE;
+			}
+		}
+		else {
+			moveSpeed_ = SPEED_MOVE;
+		}
 
 		// カメラのY軸回転に合わせて移動方向を計算
 		Quaternion cameraRot = scnMng_.GetCamera()->GetQuaRotY();
@@ -448,7 +456,7 @@ void Player::ProcessJump(void)
 		if (isJumpStay && stepJump_ < TIME_JUMP_INPUT)
 		{
 			// 時間を進める
-			stepJump_ += deltaTime;
+			stepJump_ += deltaTime / 10;
 
 			// ボタンを押し続けている間は、ふわっと浮き上がる持続上昇力を加算
 			float jumpSpeed = POW_JUMP_KEEP * deltaTime;
@@ -459,10 +467,7 @@ void Player::ProcessJump(void)
 			// ボタンを離す、または受付時間を過ぎたら持続タイマーを最大にして加算を打ち切る
 			stepJump_ = TIME_JUMP_INPUT;
 		}
-
-
 	}
-
 }
 
 void Player::ProcessPush(void)
@@ -525,18 +530,18 @@ void Player::ProcessPush(void)
 // アイテム投擲処理
 void Player::ProcessThrow(void)
 {
-	auto& ins = InputManager::GetInstance();
+	//auto& ins = InputManager::GetInstance();
 
-	// ギミック処理
-	bool isHitKeyNew = ins.IsPress(KEY_INPUT_E)
-		|| ins.IsPadBtnPress(
-			InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
+	//// ギミック処理
+	//bool isHitKeyNew = ins.IsPress(KEY_INPUT_E)
+	//	|| ins.IsPadBtnPress(
+	//		InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::RIGHT);
 
-	if (isHitKeyNew) {
-		// アニメーション再生
-		animationController_->Play(
-			static_cast<int>(ANIM_TYPE::THROW));
-	}
+	//if (isHitKeyNew) {
+	//	// アニメーション再生
+	//	animationController_->Play(
+	//		static_cast<int>(ANIM_TYPE::THROW));
+	//}
 }
 
 void Player::CollisionReserve(void)

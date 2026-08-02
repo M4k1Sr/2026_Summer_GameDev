@@ -26,6 +26,8 @@ public:
 	void Draw(void) override;
 	void Release(void) override;
 
+	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
+
 protected:
 
 	// リソースロード
@@ -52,7 +54,7 @@ private:
 	static constexpr float INTERVAL_X = 300.0f;
 
 	// 鉄球の座標
-	static constexpr VECTOR IRON_BALL_POS = { 1650.0f, 400.0f, -1200.0f };
+	static constexpr VECTOR IRON_BALL_POS = { 300.0f, 400.0f, 1600.0f };
 
 	// 鉄球の座標f
 	//static constexpr VECTOR IRON_BALL_POS = { 700.0f, 400.0f, 1630.0f };

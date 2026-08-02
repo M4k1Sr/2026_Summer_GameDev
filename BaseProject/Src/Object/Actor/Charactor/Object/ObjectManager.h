@@ -55,17 +55,11 @@ public:
 	// タライを落とす用に追加
 	ObjectTarai* GetTarai(const VECTOR& pos);
 
-	// ボス檻を落とす用に追加
-	ObjectBossCage* GetBossCage(const VECTOR& pos);
-
 	// 針床判定用に追加
 	NdlFloor* GetNdl(const VECTOR& pos);
 
 	// タライが落下中か
 	bool IsTaraiFalling(void);
-
-	// 檻が落下中か
-	bool IsCageFalling(void);
 
 	// 現在のステージを取得
 	void SetCurrentStage(int stageType) { currentStageType_ = stageType; }
