@@ -1,12 +1,13 @@
 #include "Clock.h"
 #include "../../../Manager/ResourceManager.h"
+#include "../../../Manager/SceneManager.h"
 #include"../Base/UIBase.h"
 
 Clock::Clock(void)
 	:
 	UIBase(Vector2(CLOCK_POS, CLOCK_POS)),
-	maxTime_(300.0f),
-	time_(300.0f),
+	maxTime_(180.0f),
+	time_(180.0f),
 	angle_(0.0f),
 	oldTime_(GetNowCount()),
 	secondHandImg_(-1),
@@ -49,14 +50,15 @@ void Clock::Draw(void)
 
 void Clock::ClockProcess(void)
 {
-	//現在時間
-	int now = GetNowCount();
+	////現在時間
+	//int now = GetNowCount();
 
 	//デルタタイム計算
-	float deltaTime = (now - oldTime_) / 1000.0f; // ミリ秒を秒に変換
-
-	//現在時間を保存
-	oldTime_ = now;
+	//float deltaTime = (now - oldTime_) / 1000.0f; // ミリ秒を秒に変換
+	float deltaTime = SceneManager::GetInstance().GetDeltaTime();
+	
+	////現在時間を保存
+	//oldTime_ = now;
 
 	//時間減少
 	time_ -= deltaTime;
@@ -87,7 +89,7 @@ void Clock::ClockProcess(void)
 
 }
 
-bool Clock::GetIsGameOver(void) const
+bool Clock::GetIsGameOver(void)
 {
 	// 時間制限終了を返す
 	return isGameOver_;

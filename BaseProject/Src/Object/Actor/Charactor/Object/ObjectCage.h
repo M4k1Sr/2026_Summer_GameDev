@@ -51,7 +51,7 @@ private:
 	static constexpr float SCALE = 0.4f;
 
 	// モデルのローカル回転
-	static constexpr VECTOR ROT = { 0.0f, 90.0f * (DX_PI_F / 180.0f), 0.0f};
+	static constexpr VECTOR ROT = { 0.0f, 180.0f * (DX_PI_F / 180.0f), 0.0f};
 
 	// 衝突判定用線分開始
 	static constexpr VECTOR COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };

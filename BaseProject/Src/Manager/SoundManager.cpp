@@ -54,7 +54,7 @@ void SoundManager::Init(void)
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
     // ジャンプSE
-    res = new SoundResource(SOUND_ID::SE_JUMP, PATH_SE + "SE/Player/JumpVoice2.wav", false);
+    res = new SoundResource(SOUND_ID::SE_JUMP, PATH_SE + "SE/Player/JumpVoice3.wav", false);
     soundMap_[SOUND_ID::SE_JUMP] = res;
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
@@ -69,7 +69,7 @@ void SoundManager::Init(void)
     bankMap_[BANK_ID::COMMON]->containingSounds.push_back(res);
 
     // ステージ1用BGM
-    res = new SoundResource(SOUND_ID::BGM_STAGE1, PATH_SE + "BGM/Stage1.mp3", false);
+    res = new SoundResource(SOUND_ID::BGM_STAGE1, PATH_SE + "BGM/Stage.mp3", false);
     soundMap_[SOUND_ID::BGM_STAGE1] = res;
     bankMap_[BANK_ID::STAGE_1]->containingSounds.push_back(res);
 
@@ -132,7 +132,7 @@ void SoundManager::PlayEvent(SOUND_ID soundId, bool loop)
     auto sPair = soundMap_.find(soundId);
     if (sPair == soundMap_.end() || sPair->second->handleId_ == -1) return;
 
-    ChangeVolumeSoundMem(120, sPair->second->handleId_);
+    ChangeVolumeSoundMem(100, sPair->second->handleId_);
 
     int playType = loop ? DX_PLAYTYPE_LOOP : DX_PLAYTYPE_BACK;
     PlaySoundMem(sPair->second->handleId_, playType, TRUE);

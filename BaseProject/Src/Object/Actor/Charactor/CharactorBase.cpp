@@ -195,8 +195,9 @@ void CharactorBase::CollisionGravity(void)
 	// 地面への判定結果を反映
 	if (isGrounded)
 	{
-		isJump_ = false;        // 接地状態にする
-		jumpPow_ = AsoUtility::VECTOR_ZERO; // 落下速度リセット
+		isJump_ = false;
+		isJumpTriggered_ = false; // ★追加：着地したらリセット
+		jumpPow_ = AsoUtility::VECTOR_ZERO;
 		stepJump_ = 0.0f;
 	}
 	else
@@ -222,15 +223,15 @@ void CharactorBase::CollisionCapsule(void)
 	// 登録されている衝突物を全てチェック
 	for (const auto& hitCol : hitColliders_)
 	{
-		// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）
-		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
-		
-		if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+		//// ステージは除外（地形としての押し戻しはCollisionGravity等で行うため）		
+		//if (hitCol->GetTag() == ColliderBase::TAG::STAGE) continue;
+
 		// ==========================================
 		// 1. 対象の形状が「3Dモデル」の場合の処理
 		// ==========================================
 		if (hitCol->GetShape() == ColliderBase::SHAPE::MODEL)
 		{
+
 			// 派生クラスへキャスト
 			const ColliderModel* colliderModel =
 				dynamic_cast<const ColliderModel*>(hitCol);

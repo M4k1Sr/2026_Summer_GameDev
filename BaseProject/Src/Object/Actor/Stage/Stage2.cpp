@@ -12,7 +12,7 @@ void Stage2::InitLoad(void)
 void Stage2::InitTransform(void)
 {
 	transform_.scl = SECOND_STAGE_SCALE;
-	transform_.pos = MAIN_STAGE_POS;
+	transform_.pos = NEXT_STAGE_POS;
 	transform_.Update();
 }
 
@@ -20,7 +20,7 @@ void Stage2::InitCollider(void)
 {
 
 	// 基底クラスのヘルパー関数を呼ぶ
-	SetupModelCollider(ColliderBase::TAG::STAGE, { "Mush", "Grass" }, { "Ground", "Cube" });
+	SetupModelCollider(ColliderBase::TAG::STAGE, { "Mush", "Grass" }, {/* "Ground", "Cube" */});
 
 }
 

@@ -184,7 +184,7 @@ void GameScene::Init(void)
 	Camera* camera = SceneManager::GetInstance().GetCamera();
 	camera->SetFollow(&player_->GetTransform());
 	camera->AddHitCollider(stageCollider);
-	camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+	camera->ChangeMode(Camera::MODE::FOLLOW);
 
 }
 
@@ -228,7 +228,6 @@ void GameScene::Update(void)
 				// 3. プレイヤーの位置調整
 				VECTOR stage2StartPos = VGet(-1800.0f, 0.0f, -3380.0f);
 				player_->SetPosition(stage2StartPos);
-				//ironBall_->SetPosition(VGet(0.0f, 400.0f, 1800.0f));
 
 				// 4. ObjectManager,BossManager のステージ番号を 2 に更新
 				objMng_->SetCurrentStage(2);
@@ -238,7 +237,7 @@ void GameScene::Update(void)
 				player_->ClearHitCollider();
 				Camera* camera = SceneManager::GetInstance().GetCamera();
 				// camera->ClearHitCollider(); // もしCameraにもあれば呼ぶ
-
+				
 				// ★6. 新しいステージ（Stage2）の地形コライダーを登録
 				const ColliderBase* stageCollider = stage_->GetOwnCollider(static_cast<int>(StageBase::COLLIDER_TYPE::MODEL));
 				player_->AddHitCollider(stageCollider);
@@ -284,7 +283,6 @@ void GameScene::Update(void)
 		//skyDome_->Update();
 		player_->Update();
 
-		ironBall_->Update();
 
 		switch (stageState_)
 		{
@@ -292,6 +290,7 @@ void GameScene::Update(void)
 			stage_->Update();
 			bossMng_->Update();
 			objMng_->Update();
+			ironBall_->Update();
 			attackMng_->Update();
 			break;
 		case GameScene::StageState::STAGE_2:
@@ -359,8 +358,8 @@ void GameScene::Update(void)
 			}
 			else
 			{
-				camera->SetLockOnTarget(nullptr);
-				camera->ChangeMode(Camera::MODE::SCROLL_FOLLOW);
+				camera->SetLockOnTarget(&player_->GetTransform());
+				camera->ChangeMode(Camera::MODE::FOLLOW);
 			}
 		}
 		// ===========================================================
@@ -372,10 +371,10 @@ void GameScene::Update(void)
 
 	//ゲームオーバー判定
 	isEnd_ = clockUI_->GetIsGameOver();
-	isEnd_ = player_->GetDeadFlag();
+	bool dead = player_->GetDeadFlag();
 
 	//ゲームオーバーシーンへ遷移
-	if (isEnd_ )
+	if (isEnd_ || dead)
 	{
 		sceMng_.ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 	}

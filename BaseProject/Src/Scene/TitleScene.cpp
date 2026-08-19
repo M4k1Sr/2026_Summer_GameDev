@@ -108,8 +108,7 @@ void TitleScene::Update(void)
 			InputManager::JOYPAD_NO::PAD1,
 			InputManager::JOYPAD_BTN::DOWN))
 		{
-			// ƒNƒŠƒbƒN‰¹
-			//SoundManager::GetInstance().PlayEvent(SOUND_ID::SE_CLICK);
+
 			ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_CLICK);
 
 			sceMng_.ChangeScene(SceneManager::SCENE_ID::STAGE_1);

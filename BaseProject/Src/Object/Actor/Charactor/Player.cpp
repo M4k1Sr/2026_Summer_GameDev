@@ -19,7 +19,7 @@
 #include "../../Collider/ColliderCapsule.h"
 #include "../../Collider/ColliderModel.h"
 #include "../../../Renderer/UIRenderer/UIElements/StaminaUI.h"
-#include "../../../Renderer/UIRenderer/UIElements/SweatUI.h"
+#include "../../../Renderer/UiRenderer/UIElements/GimmickUi.h"
 #include "../../../Renderer/UIRenderer/Manager/UIManager.h"
 #include "../../../Renderer/UIRenderer/Base/UIBase.h"
 #include "../../../Application.h"
@@ -37,10 +37,11 @@ Player::Player(void)
 	isIronBallHit_(false),
 	stamina_(15.0f),
 	maxStamina_(15.0f),
+	gimmickCnt_(0.0f),
+	maxGimmickCnt_(5.0f),
 	isDash_(false),
 	isSlowWalk_(false)
 {
-	sweatPos_ = transform_.pos;
 }
 
 Player::~Player(void)
@@ -90,21 +91,27 @@ int Player::GetCurrentCnt(void) const
 	return currentCnt_;
 }
 
-void Player::IsClear(void) 
+void Player::IsClear(void)
 {
 	if (CheckHitKey(KEY_INPUT_C)) {
 		isClear_ = true;
+		{
+			//if (CheckHitKey(KEY_INPUT_C)) {
+			//	gameClear_ = true;
+			//}
+		}
 	}
 
 	if (currentCnt_ == 3)
 	{
 		isClear_ = true;
 	}
-	
+
 	if (currentCnt_ == 6) {
 		gameClear_ = true;
 	}
 }
+
 
 bool Player::IsGameClear(void)
 {
@@ -248,6 +255,8 @@ void Player::UpdateProcessPost(void)
 void Player::InitUI(void)
 {
 	ServiceLocator::GetUI().AddUIBase(new StaminaUI(&stamina_,&maxStamina_,Vector2(850,500)));
+	ServiceLocator::GetUI().AddUIBase(new GimmickUi(&gimmickCnt_, &maxGimmickCnt_, Vector2(1070, 500)));
+
 }
 
 void Player::ProcessMove(void)
@@ -396,8 +405,7 @@ void Player::ProcessMove(void)
 		}
 	}
 
-	//アニメーション制御
-	if (isJump_)
+	if (isJump_ && isJumpTriggered_)
 	{
 		if (currentAnimType_ != static_cast<int>(ANIM_TYPE::JUMP))
 		{
@@ -407,10 +415,10 @@ void Player::ProcessMove(void)
 	}
 	else
 	{
+		// 空中でもボタンで跳んだわけではない（ただ落ちている）場合は、通常移動/待機アニメーションを維持
 		int nextAnimType = hasInput ? (isDash_ ? static_cast<int>(ANIM_TYPE::FAST_RUN) : static_cast<int>(ANIM_TYPE::RUN))
 			: static_cast<int>(ANIM_TYPE::IDLE);
 
-		// 前回と違うアニメーションの時だけ Play を呼ぶ
 		if (currentAnimType_ != nextAnimType)
 		{
 			animationController_->Play(nextAnimType, true);
@@ -427,27 +435,26 @@ void Player::ProcessJump(void)
 
 	// 入力状態の取得
 	// 押した瞬間
-	bool isJumpTrg = ins.IsTrgDown(KEY_INPUT_SPACE) ||
+	bool isJumpTrg = ins.IsNew(KEY_INPUT_SPACE) ||
 		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
 	// 押しっぱなしの継続状態 (Press / New ※InputManagerの仕様に合わせて継続判定の関数にしてください)
 	bool isJumpStay = ins.IsNew(KEY_INPUT_SPACE) ||
 		ins.IsPadBtnNew(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
 
-	// 初期ジャンプ処理（押した瞬間）
 	if (isJumpTrg && !isJump_)
 	{
 		ServiceLocator::GetSound().PlayEvent(SOUND_ID::SE_JUMP);
 
-		// 接地状態から跳ね上がる瞬間の初速を与える
 		jumpPow_ = VScale(AsoUtility::DIR_U, POW_JUMP_INIT);
 
 		isJump_ = true;
-		stepJump_ = 0.0f; // タイマーリセット
+		isJumpTriggered_ = true; // ★追加：ボタンでジャンプしたフラグ
+		stepJump_ = 0.0f;
 
 		// アニメーション再生
 		animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
-
+		currentAnimType_ = static_cast<int>(ANIM_TYPE::JUMP);
 	}
 
 	// 持続ジャンプ処理

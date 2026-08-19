@@ -88,6 +88,8 @@ protected:
 	// ダメージを受けたか
 	bool toDamage_;
 
+	bool isJumpTriggered_ = false;
+
 	// リソースロード
 	virtual void InitLoad(void) override;
 

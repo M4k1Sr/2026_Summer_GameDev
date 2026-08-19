@@ -18,8 +18,7 @@ public:
 	// 描画
 	void Draw(void) override;
 
-
-	bool GetIsGameOver(void) const;
+	bool GetIsGameOver(void);
 
 	//マックスタイム
 	float GetMaxTime(void) const;

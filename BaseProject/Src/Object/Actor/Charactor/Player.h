@@ -62,6 +62,8 @@ public:
 	//プレイヤーの位置変更
 	void SetPosition(const VECTOR& newPos) { transform_.pos = newPos; }
 
+	VECTOR GetPos(void) const { return transform_.pos; }
+
 protected:
 
 	// リソースロード
@@ -108,6 +110,7 @@ private:
 
 	// ギミック動作カウンタ
 	float gimmickCnt_;
+	float maxGimmickCnt_; // 最大ギミックカウンタ
 	bool isGimmick_;
 
 	// ギミック動作数カウンタ
@@ -129,30 +132,12 @@ private:
 	// ボム座標
 	VECTOR bombPos_;
 
-	// プレイヤー座標
-	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
-
-	//static constexpr VECTOR PLAYER_POS = { 1800.0f, 0.0f, -750.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 9800.0f, 50.0f, -1220.0f };
-	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
-	// static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, 750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 30000.0f, 0.0f, -3750.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 3600.0f, 50.0f, -800.0f };
-	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 9000.0f };	// ボス位置
-
-
-	//static constexpr VECTOR PLAYER_POS = { 9000.0f, 2.0f, -800.0f };	// ボススタート位置
-	//static constexpr VECTOR PLAYER_POS = { 3600.0f, -98.0f, -800.0f };
-
 	// 向き
 	VECTOR dir_;
 
 	//// プレイヤー座標
-	static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
-	//static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
+	//static constexpr VECTOR PLAYER_POS = { -700.0f, 50.0f, -750.0f };	// スタート位置
+	static constexpr VECTOR PLAYER_POS = { 1500.0f, 50.0f, 8000.0f };	// ボス位置
 
 	// プレイヤースケール
 	static constexpr float PLAYER_SCALE = 1.0f;

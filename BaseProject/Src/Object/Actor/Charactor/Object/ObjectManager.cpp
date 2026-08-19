@@ -157,10 +157,10 @@ ObjectBase* ObjectManager::Create(const ObjectBase::ObjectData& data)
 		object = new ObjectBossGimmick(data);
 		break;
 	case ObjectBase::TYPE::TARAI:
-		object = new ObjectTarai(data);
+		//object = new ObjectTarai(data);
 		break;
 	case ObjectBase::TYPE::NEEDLE_FLOOR:
-		object = new NdlFloor(data);
+		//object = new NdlFloor(data);
 		break;
 	case ObjectBase::TYPE::BURNER:
 		//object = new Burner(data);
@@ -240,7 +240,7 @@ ObjectBossGimmick* ObjectManager::GetBossGimmick(const VECTOR& pos)
 			float distXZ = dx * dx + dz * dz;
 
 			// XZÇÃîÕàÕì‡Ç»ÇÁOKÇ∆Ç∑ÇÈÅiçÇÇ≥YÇÕñ≥éãÅj
-			if (distXZ < 10000.0f)
+			if (distXZ < 15000.0f)
 			{
 				return bossGimmick;
 			}

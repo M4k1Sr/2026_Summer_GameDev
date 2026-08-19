@@ -34,7 +34,7 @@ void NdlFloor::InitTransform(void)
 {
 
 	// モデルの大きさ、回転、座標の初期化
-	transform_.scl = VGet(SCALE / 2, SCALE / 5, SCALE / 2);
+	transform_.scl = VGet(SCALE / 2, SCALE, SCALE / 2);
 	transform_.quaRot = Quaternion::Identity();
 	transform_.quaRotLocal = Quaternion::Euler(ROT);
 	transform_.Update();
